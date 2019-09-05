@@ -1,9 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactTorch from '../../src'
 
 import App from './App'
 
-ReactDOM.render(
+ReactTorch.render(
   <App />,
-  document.getElementById('root')
+  'root'
 )

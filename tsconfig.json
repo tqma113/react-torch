@@ -3,26 +3,13 @@
     "module": "commonjs",
     "target": "es2017",
     "sourceMap": true,
-    "noImplicitAny": true,
-    "outDir": "./dist/lib",
-    "moduleResolution": "node",
     "esModuleInterop": true,
-    "noResolve": false,
+    "moduleResolution": "node",
     "allowJs": true,
-    "removeComments": true,
-    "diagnostics": true,
+    "strict": true,
     "jsx": "react",
-    "resolveJsonModule": true,
-    "types": [
-      "react",
-      "react-dom"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "types": ["react", "react-dom"],
+    "typeRoots": ["./node_modules/@types"]
   },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

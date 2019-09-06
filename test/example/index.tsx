@@ -1,9 +1,13 @@
-import React from 'react'
+import * as React from 'react'
 import ReactTorch from '../../src'
 
 import App from './App'
 
-ReactTorch.render(
+let app = ReactTorch.render(
   <App />,
   'root'
 )
+
+app.listen(3000, () => {
+  console.log('start')
+})

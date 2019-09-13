@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import History, { createMemoryHistory as createHistory } from "history";
 import warning from "tiny-warning";
 

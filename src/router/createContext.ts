@@ -1,9 +1,11 @@
 import React from 'react'
 
 export interface CreateContext {
-  (defaultValue: any): React.Context<any>
+  (): React.Context<any>
 }
 
-const createContext: CreateContext = (defaultValue) => React.createContext(defaultValue)
+const context = React.createContext({})
+
+const createContext: CreateContext = () => context
 
 export default createContext;

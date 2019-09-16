@@ -1,13 +1,9 @@
-import * as React from 'react'
 import ReactTorch from '../../src'
 
-import App from './App'
+const options = {
+  src: './App.tsx',
+  root: __dirname,
+  container: 'root'
+}
 
-let app = ReactTorch.render(
-  <App />,
-  'root'
-)
-
-app.listen(3000, () => {
-  console.log('start')
-})
+let app = ReactTorch.render(options)

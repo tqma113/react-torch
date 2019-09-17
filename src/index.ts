@@ -31,6 +31,12 @@ export interface GenerateConfig {
 export interface ViewProps {
   container: string
   content: string
+  initialState: object
+  publicPath: string
+  assets: {
+    index: string
+    vendor: string
+  }
 }
 
 export interface GenerateView {

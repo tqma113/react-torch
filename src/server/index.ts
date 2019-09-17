@@ -19,7 +19,13 @@ export const serverRender: ServerRender = async (src, container) => {
 
   const viewProps: ViewProps = {
     container: finalContainer,
-    content: contentStr
+    content: contentStr,
+    initialState: {},
+    publicPath: '',
+    assets: {
+      index: 'string',
+      vendor: 'string',
+    }
   }
 
   app.use(ctx => {

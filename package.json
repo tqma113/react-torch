@@ -4,7 +4,8 @@
   "description": "A tool to server-side render with react.",
   "main": "src/index.js",
   "scripts": {
-    "test": "ts-node test/example/index.tsx"
+    "start": "npm run dev",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "@types/webpack-manifest-plugin": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "history": "^4.9.0",
+    "nodemon": "^1.19.2",
     "path-to-regexp": "^3.1.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

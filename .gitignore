@@ -1,4 +1,4 @@
 node_modules
 *.lock
-package-locak.json
+package-lock.json
 /.vscode/

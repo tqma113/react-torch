@@ -1,3 +1,4 @@
+import React from 'react'
 import { GenerateView } from '../index'
 
 const generateView: GenerateView = ({
@@ -7,26 +8,26 @@ const generateView: GenerateView = ({
   publicPath,
   assets
 }) => {
-  return `
+  return (
     <html>
       <head>
         <title>ssr</title>
       </head>
       <body>
         <div id="${container}">${content}</div>
-        <Script>
+        <script>
 					{
           (function() {
               window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
               window.__PUBLIC_PATH__ = '${publicPath}'
           })()
           }
-				</Script>
+				</script>
 				<script src='${publicPath}/${assets.vendor}' />
 				<script src='${publicPath}/${assets.index}' />
       </body>
     </html>
-  `
+  )
 }
 
 export default generateView

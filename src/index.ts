@@ -40,7 +40,7 @@ export interface ViewProps {
 }
 
 export interface GenerateView {
-  (props: ViewProps): string
+  (props: ViewProps): React.ReactElement
 }
 
 export interface Render {

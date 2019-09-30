@@ -14,14 +14,16 @@ const generateView: GenerateView = ({
         <title>ssr</title>
       </head>
       <body>
-        <div id="${container}">${content}</div>
+        <div id={`${container}`} dangerouslySetInnerHTML={{ __html: content }}></div>
         <script>
-					{
-          (function() {
+					{`
+            (function() {
               window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+              window.__ASSET__ = ${JSON.stringify(assets)}
               window.__PUBLIC_PATH__ = '${publicPath}'
-          })()
-          }
+              window.__CUSTOM_LAYOUT__ = true
+            })()
+          `}
 				</script>
 				<script src='${publicPath}/${assets.vendor}' />
 				<script src='${publicPath}/${assets.index}' />

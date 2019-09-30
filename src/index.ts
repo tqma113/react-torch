@@ -6,7 +6,7 @@ import build from './build'
 import generateConfig from './config'
 
 export interface ServerRender {
-  (element: string, container?: string): Promise<Koa>
+  (element: string, container?: string): Promise<Koa<any, any>>
 }
 
 export interface RenderOptions {

@@ -10,7 +10,7 @@ const getModule = (module: any) => module.default || module
 const ROOT = 'root'
 
 export const serverRender: ServerRender = async (src, container) => {
-  const app = new Koa()
+  const app = new Koa().use(viewEngine<ViewProps>())
 
   let component = (await import(src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)
@@ -19,6 +19,21 @@ export const serverRender: ServerRender = async (src, container) => {
   let finalContainer = container || ROOT
 
   app.use(viewEngine())
+
+  app.use((ctx) => {
+    ctx.state = {
+      container: finalContainer,
+      content: contentStr,
+      initialState: {},
+      publicPath: '',
+      assets: {
+        index: '',
+        vendor: ''
+      }
+    }
+    ctx.render(generateView)
+    
+  })
 
   return app
 }

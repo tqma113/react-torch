@@ -34,8 +34,7 @@ const render: Render = async (options) => {
     public: config.public
   };
 
-  // @ts-ignore
-  window.__CONFIG__ = config
+  console.log(config)
 
   let webpackConfig: webpack.Configuration
 
@@ -45,23 +44,26 @@ const render: Render = async (options) => {
     webpackConfig = generateClientConfig(webpackOpts)
   }
 
-  let compiler = webpack(webpackConfig)
+  console.log(webpackConfig)
 
-  app.use(require('koa-static')('static'))
+  webpack(webpackConfig, (err, stats) => {
+    console.log(err)
+    console.log(stats.toString())
+  })
 
   let component = (await import(config.src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)
   let contentStr = ReactDomServer.renderToString(element)
 
-  app.use((ctx) => {
+  app.use(async (ctx) => {
     ctx.state = {
       container: config.container,
       content: contentStr,
       initialState: {},
       publicPath: '',
       assets: {
-        index: 'static/js/index.js',
-        vendor: ''
+        index: 'js/server.bundle.js',
+        vendor: 'js/vender.server.bundle.js'
       }
     }
     

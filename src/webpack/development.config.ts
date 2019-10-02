@@ -1,82 +1,46 @@
 import path from 'path'
 import webpack from 'webpack'
-import ManifestPlugin from 'webpack-manifest-plugin'
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import getBabelConfig from './babel'
 import { Options } from './index'
 import { getMode, getWatch } from '../utils'
 
-const getClientConfig = (options: Options) => {
+const getServerConfig = (options: Options) => {
   const defaultOutput: webpack.Output = {
-    path: path.join(options.root, options.public),
-    filename: 'static/js/index.js'
-    // filename: `js/[name].js`,
-    // chunkFilename: `js/[name].js`,
+    libraryTarget: 'commonjs2',
+    path: options.public + '/js',
+    filename: 'server.bundle.js',
   }
 
-  let src = path.resolve(options.root, options.src)
+  let src = options.src
   let output = defaultOutput
   let moduleConfig = {
     strictExportPresence: true,
 		rules: [
+      // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
+      // Process application JS with Babel.
+      // The preset includes JSX, Flow, TypeScript and some ESnext features.
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
         exclude: '/node_modules/',
         loader: 'babel-loader',
         options: {
+          // include presets|plugins
           babelrc: false,
           configFile: false,
           cacheDirectory: true,
-          cacheCompression: true,
-          compact: true,
-          ...getBabelConfig(false)
+          cacheCompression: false,
+          compact: false,
+          ...getBabelConfig(true)
         }
       }
     ]
   }
   let plugins = [
-    new ManifestPlugin({
-      fileName: options.manifest || 'manifest.json',
-      map: (file: ManifestPlugin.FileDescriptor) => {
-        // 删除 .js 后缀，方便直接使用 obj.name 来访问
-        if (file.name && /\.js$/.test(file.name)) {
-          file.name = file.name.slice(0, -3)
-        }
-        return file
-      }
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/ ),
     new webpack.DefinePlugin({
 			'process.env.NODE_ENV': options.env
     }),
-    new ForkTsCheckerWebpackPlugin({
-			async: true,
-			useTypescriptIncrementalApi: true,
-			checkSyntacticErrors: true,
-			tsconfig: path.join(options.root, 'tsconfig.json'),
-			reportFiles: [
-				'**',
-				'!**/*.json',
-				'!**/__tests__/**',
-				'!**/?(*.)(spec|test).*',
-				'!**/src/setupProxy.*',
-				'!**/src/setupTests.*',
-			],
-			watch: options.root
-    }),
-    new BundleAnalyzerPlugin(
-      Object.assign(
-        {
-          // Automatically open analyzer page in default browser
-          openAnalyzer: true,
-          // Analyzer HTTP-server port
-          analyzerPort: 8090
-        }
-      )
-    )
   ]
   let optimization: webpack.Options.Optimization = {
 		// Automatically split vendor and commons
@@ -115,11 +79,11 @@ const getClientConfig = (options: Options) => {
 
   let result: webpack.Configuration = {
     mode: getMode(options.env),
-    target: 'web',
+    target: 'node',
     bail: true,
     watch: getWatch(options.env),
-    devtool: 'inline-source-map',
-    entry: path.resolve(__dirname, '../../client'),
+    devtool: 'source-map',
+    entry: src,
     output,
     module: moduleConfig,
     plugins,
@@ -133,4 +97,4 @@ const getClientConfig = (options: Options) => {
   return result
 }
 
-export default getClientConfig
+export default getServerConfig

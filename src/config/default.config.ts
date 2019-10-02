@@ -5,8 +5,8 @@ const defaultConfig: Config = {
   container: 'root',
   root: '',
   public: 'public',
-  SSR: false,
-  env: 'production'
+  SSR: true,
+  env: 'development'
 }
 
 export default defaultConfig

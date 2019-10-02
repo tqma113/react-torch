@@ -26,6 +26,7 @@ const generateView: GenerateView = ({
           `}
 				</script>
 				<script src={`${publicPath}${assets.index}`}></script>
+				<script src={`${publicPath}${assets.vendor}`}></script>
       </body>
     </html>
   )

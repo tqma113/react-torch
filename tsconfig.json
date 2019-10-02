@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es2017",
+    "target": "es5",
     "sourceMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
@@ -10,7 +10,11 @@
     "strictNullChecks": false,
     "jsx": "react",
     "types": ["react", "react-dom"],
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "lib": [
+      "dom",
+      "esnext"
+    ]
   },
   "exclude": ["node_modules"]
 }

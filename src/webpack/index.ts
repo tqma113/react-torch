@@ -1,11 +1,10 @@
-import { ENV } from './util'
+import { ENV } from '../utils'
 
 export interface Options {
   env: ENV
   src: string
   root: string
-  publish: string
-  static: string
+  public: string
 
   manifest?: string
 }

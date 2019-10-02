@@ -1,4 +1,6 @@
 import React from 'react'
+import Home from './src/Home'
+import Test from './src/Test'
 
 const App = () => {
   const handleClick = () => {
@@ -7,6 +9,8 @@ const App = () => {
   return (
     <div onClick={handleClick}>
       App
+      <Home />
+      <Test />
     </div>
   )
 }

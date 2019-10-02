@@ -1,13 +1,26 @@
-import { GenerateConfig, Config } from "../index";
-import defaultConfig from './default.config'
 import path from 'path'
+import defaultConfig from './default.config'
+import { RenderOptions } from '../render'
+import { ENV } from '../utils'
 
-const generateConfig: GenerateConfig = (options) => {
+export interface Config {
+  src: string
+  root: string
+  container: string
+  public: string
+  SSR: boolean
+  env: ENV
+  [key: string]: any
+}
+
+export interface GenerateConfig {
+  (options?: RenderOptions): Config
+}
+
+const generateConfig: GenerateConfig = (options = {}) => {
   let config: Config = defaultConfig
 
-  for (let key in options) {
-    config[key] = options[key]
-  }
+  config = Object.assign(config, options)
 
   config.src = path.resolve(config.root, config.src)
   config.public = path.resolve(config.root, config.public)

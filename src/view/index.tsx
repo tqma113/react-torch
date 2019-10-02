@@ -14,19 +14,18 @@ const generateView: GenerateView = ({
         <title>ssr</title>
       </head>
       <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id={`${container}`} dangerouslySetInnerHTML={{ __html: content }}></div>
         <script>
 					{`
             (function() {
               window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-              window.__ASSET__ = ${JSON.stringify(assets)}
-              window.__PUBLIC_PATH__ = '${publicPath}'
+              window.__PUBLIC_PATH__ = ${publicPath}
               window.__CUSTOM_LAYOUT__ = true
             })()
           `}
 				</script>
-				<script src='${publicPath}/${assets.vendor}' />
-				<script src='${publicPath}/${assets.index}' />
+				<script src={`${publicPath}${assets.index}`}></script>
       </body>
     </html>
   )

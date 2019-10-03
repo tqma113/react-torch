@@ -35,8 +35,6 @@ const render: Render = async (options) => {
     public: config.public
   };
 
-  console.log(config)
-
   let webpackConfig: webpack.Configuration
 
   if (config.SSR) {
@@ -45,7 +43,9 @@ const render: Render = async (options) => {
     webpackConfig = generateClientConfig(webpackOpts)
   }
 
-  console.log(webpackConfig)
+  rimrsf(config.public, (e) => {
+    console.log(e)
+  })
 
   webpack(webpackConfig, (err, stats) => {
     console.log(err)

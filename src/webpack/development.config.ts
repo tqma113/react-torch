@@ -7,7 +7,7 @@ import { getMode, getWatch } from '../utils'
 
 const getServerConfig = (options: Options) => {
   const defaultOutput: webpack.Output = {
-    libraryTarget: 'commonjs2',
+    // libraryTarget: 'commonjs2',
     path: options.public + '/js',
     filename: 'server.bundle.js',
   }
@@ -39,7 +39,7 @@ const getServerConfig = (options: Options) => {
   }
   let plugins = [
     new webpack.DefinePlugin({
-			'process.env.NODE_ENV': options.env
+			'process.env.NODE_ENV': JSON.stringify(options.env)
     }),
   ]
   let optimization: webpack.Options.Optimization = {
@@ -79,7 +79,7 @@ const getServerConfig = (options: Options) => {
 
   let result: webpack.Configuration = {
     mode: getMode(options.env),
-    target: 'node',
+    target: 'web',
     bail: true,
     watch: getWatch(options.env),
     devtool: 'source-map',

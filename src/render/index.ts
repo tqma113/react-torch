@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDomServer from 'react-dom/server'
 import { createServer } from '../server'
 import generateConfig, { Config } from '../config'
+import rimrsf from 'rimraf'
 import { generateClientConfig, generateServerConfig, Options } from '../webpack'
 import { ENV } from '../utils'
 import generateView from '../view'
@@ -62,8 +63,8 @@ const render: Render = async (options) => {
       initialState: {},
       publicPath: '',
       assets: {
-        index: 'js/server.bundle.js',
-        vendor: 'js/vender.server.bundle.js'
+        index: 'js/main.js',
+        vendor: 'js/vendor.js'
       }
     }
     

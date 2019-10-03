@@ -11,9 +11,9 @@ import { getMode, getWatch } from '../utils'
 const getClientConfig = (options: Options) => {
   const defaultOutput: webpack.Output = {
     path: options.public,
-    filename: 'index.js'
-    // filename: `js/[name].js`,
-    // chunkFilename: `js/[name].js`,
+    // filename: 'index.js'
+    filename: `js/[name].js`,
+    chunkFilename: `js/[name].js`,
   }
 
   let src = path.resolve(options.root, options.src)
@@ -50,7 +50,7 @@ const getClientConfig = (options: Options) => {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/ ),
     new webpack.DefinePlugin({
-			'process.env.NODE_ENV': options.env
+			'process.env.NODE_ENV': JSON.stringify(options.env)
     }),
     new ForkTsCheckerWebpackPlugin({
 			async: true,
@@ -67,16 +67,7 @@ const getClientConfig = (options: Options) => {
 			],
 			watch: options.root
     }),
-    new BundleAnalyzerPlugin(
-      Object.assign(
-        {
-          // Automatically open analyzer page in default browser
-          openAnalyzer: true,
-          // Analyzer HTTP-server port
-          analyzerPort: 8090
-        }
-      )
-    )
+    // new BundleAnalyzerPlugin()
   ]
   let optimization: webpack.Options.Optimization = {
 		// Automatically split vendor and commons

@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDomServer from 'react-dom/server'
 import { createServer } from '../server'
 import generateConfig, { Config } from '../config'
-import rimrsf from 'rimraf'
 import { compile, Options } from '../webpack'
 import { ENV } from '../utils'
 import generateView from '../view'
@@ -35,7 +34,9 @@ const render: Render = async (options) => {
     public: config.public
   };
 
-  compile(webpackOpts)
+  const middleware = await compile(webpackOpts)
+
+  app.use(middleware.devMiddleware)
 
   let component = (await import(config.src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)
@@ -48,8 +49,8 @@ const render: Render = async (options) => {
       initialState: {},
       publicPath: '',
       assets: {
-        index: 'js/main.js',
-        vendor: 'js/vendor.js'
+        index: 'static/js/main.js',
+        vendor: 'static/js/vendor.js'
       }
     }
     

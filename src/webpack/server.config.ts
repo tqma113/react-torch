@@ -10,6 +10,7 @@ const getServerConfig = (options: Options) => {
     libraryTarget: 'commonjs2',
     path: options.public,
     filename: 'server.bundle.js',
+    publicPath: options.public
   }
 
   let src = options.src
@@ -83,7 +84,7 @@ const getServerConfig = (options: Options) => {
     bail: true,
     watch: getWatch(options.env),
     devtool: 'source-map',
-    entry: src,
+    entry: [src],
     output,
     module: moduleConfig,
     plugins,

@@ -6,4 +6,4 @@ const options = {
   container: 'root'
 }
 
-let app = ReactTorch.render(options)
+ReactTorch.render(options)

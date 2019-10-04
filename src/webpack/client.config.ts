@@ -11,9 +11,9 @@ import { getMode, getWatch } from '../utils'
 const getClientConfig = (options: Options) => {
   const defaultOutput: webpack.Output = {
     path: options.public + '/static',
-    // filename: 'index.js'
     filename: `js/[name].js`,
     chunkFilename: `js/[name].js`,
+    publicPath: '/static/'
   }
 
   let src = path.resolve(options.root, options.src)
@@ -105,12 +105,12 @@ const getClientConfig = (options: Options) => {
 	}
 
   let result: webpack.Configuration = {
-    mode: "production",
+    mode: getMode(options.env),
     target: 'web',
     bail: true,
     watch: getWatch(options.env),
     devtool: 'inline-source-map',
-    entry: path.resolve(__dirname, '../client/index.ts'),
+    entry: [path.resolve(__dirname, '../client/index.ts')],
     output,
     module: moduleConfig,
     plugins,

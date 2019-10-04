@@ -6,7 +6,7 @@ const defaultConfig: Config = {
   root: '',
   public: 'public',
   SSR: false,
-  env: 'production'
+  env: 'development'
 }
 
 export default defaultConfig

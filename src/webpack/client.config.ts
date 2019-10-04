@@ -10,7 +10,7 @@ import { getMode, getWatch } from '../utils'
 
 const getClientConfig = (options: Options) => {
   const defaultOutput: webpack.Output = {
-    path: options.public,
+    path: options.public + '/static',
     // filename: 'index.js'
     filename: `js/[name].js`,
     chunkFilename: `js/[name].js`,

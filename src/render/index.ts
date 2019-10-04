@@ -4,7 +4,7 @@ import ReactDomServer from 'react-dom/server'
 import { createServer } from '../server'
 import generateConfig, { Config } from '../config'
 import rimrsf from 'rimraf'
-import { generateClientConfig, generateServerConfig, Options } from '../webpack'
+import { compile, Options } from '../webpack'
 import { ENV } from '../utils'
 import generateView from '../view'
 
@@ -35,22 +35,7 @@ const render: Render = async (options) => {
     public: config.public
   };
 
-  let webpackConfig: webpack.Configuration
-
-  if (config.SSR) {
-    webpackConfig = generateServerConfig(webpackOpts)
-  } else {
-    webpackConfig = generateClientConfig(webpackOpts)
-  }
-
-  rimrsf(config.public, (e) => {
-    console.log(e)
-  })
-
-  webpack(webpackConfig, (err, stats) => {
-    console.log(err)
-    console.log(stats.toString())
-  })
+  compile(webpackOpts)
 
   let component = (await import(config.src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)

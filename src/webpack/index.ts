@@ -9,6 +9,4 @@ export interface Options {
   manifest?: string
 }
 
-export { default as generateServerConfig } from './development.config'
-
-export { default as generateClientConfig } from './production.config'
+export { default as compile } from './compile'

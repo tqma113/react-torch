@@ -7,8 +7,8 @@ import { getMode, getWatch } from '../utils'
 
 const getServerConfig = (options: Options) => {
   const defaultOutput: webpack.Output = {
-    // libraryTarget: 'commonjs2',
-    path: options.public + '/js',
+    libraryTarget: 'commonjs2',
+    path: options.public,
     filename: 'server.bundle.js',
   }
 

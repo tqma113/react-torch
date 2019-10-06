@@ -50,7 +50,7 @@
     "koa": "^2.8.2",
     "koa-react-view-typescript": "^1.0.5",
     "koa-static": "^5.0.0",
-    "koa-wdm": "^1.0.1",
+    "koa-wdm": "^1.0.2",
     "koa-webpack": "^5.2.4",
     "path-to-regexp": "^3.1.0",
     "react": "^16.10.1",

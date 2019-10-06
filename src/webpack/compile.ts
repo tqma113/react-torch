@@ -10,7 +10,7 @@ import generateServerConfig from './server.config'
 import generateClientConfig from './client.config'
 
 export interface Compile {
-  (options: Options): Promise<Koa.Middleware & koaWebpack.CombinedWebpackMiddleware>
+  (options: Options): Promise<Koa.Middleware>
 }
 
 const compile: Compile = async (options) => {
@@ -29,12 +29,9 @@ const compile: Compile = async (options) => {
     }
   })
 
-  const client = webpack(generateClientConfig(options), (err, stats) => {
-    console.log(err)
-    console.log(stats.toString())
-  })
+  const client = webpack(generateClientConfig(options))
 
-  const clientMiddleware = await KoaWebpackDevMiddleware(client)
+  const clientMiddleware = await KoaWebpackDevMiddleware(client as webpack.Compiler)
 
   return clientMiddleware
 }

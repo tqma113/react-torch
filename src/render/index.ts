@@ -33,14 +33,16 @@ const render: Render = async (options) => {
     root: config.root,  
     public: config.public
   };
+  let contentStr: string
 
   const middleware = await compile(webpackOpts)
 
-  app.use(middleware.devMiddleware)
+  app.use(middleware)
 
   let component = (await import(config.src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)
-  let contentStr = ReactDomServer.renderToString(element)
+  contentStr = ReactDomServer.renderToString(element)
+
 
   app.use(async (ctx) => {
     ctx.state = {

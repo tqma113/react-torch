@@ -6,4 +6,10 @@ const options = {
   container: 'root'
 }
 
-ReactTorch.render(options)
+try {
+  ReactTorch.render(options)
+
+} catch (e) {
+  let err = new Error(e)
+  console.log(err.stack)
+}

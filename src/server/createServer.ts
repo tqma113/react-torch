@@ -8,13 +8,13 @@ export interface ServerCreator {
 }
 
 const createServer: ServerCreator = async (config) => {
-  const app = new Koa().use(viewEngine<ViewProps>())
+  let app = new Koa()
 
   app.use(require('koa-static')(config.public))
 
-  // app.use(viewEngine())
+  let newApp = app.use(viewEngine<ViewProps>())
 
-  return app
+  return newApp
 }
 
 export default createServer

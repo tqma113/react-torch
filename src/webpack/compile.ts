@@ -20,18 +20,23 @@ const compile: Compile = async (options) => {
 
 	let mfs = new MemoryFS()
 
-  const server = webpack(generateServerConfig(options)) as webpack.Compiler
+  const server = webpack(generateServerConfig(options))
 
   server.outputFileSystem = mfs
   server.watch({}, (err, stats) => {
     if (err) {
-      throw err
+      console.log(err)
+    }
+    if (stats.hasErrors()) {
+      console.log(stats.toString({
+        colors: true
+      }))
     }
   })
 
   const client = webpack(generateClientConfig(options))
 
-  const clientMiddleware = await KoaWebpackDevMiddleware(client as webpack.Compiler)
+  const clientMiddleware = await KoaWebpackDevMiddleware(client)
 
   return clientMiddleware
 }

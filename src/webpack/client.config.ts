@@ -37,7 +37,7 @@ const getClientConfig = (options: Options) => {
       }
     ]
   }
-  let plugins = [
+  let plugins: webpack.Plugin[] = [
     new ManifestPlugin({
       fileName: options.manifest || 'manifest.json',
       map: (file: ManifestPlugin.FileDescriptor) => {

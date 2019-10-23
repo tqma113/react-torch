@@ -1,4 +1,3 @@
-import Koa from 'koa'
 import render from './render'
 import build from './build'
 

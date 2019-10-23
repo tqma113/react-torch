@@ -2,7 +2,7 @@ import path from 'path'
 import webpack from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import getBabelConfig from './babel'
 import { Options } from './index'
@@ -16,7 +16,6 @@ const getClientConfig = (options: Options) => {
     publicPath: '/static/'
   }
 
-  let src = path.resolve(options.root, options.src)
   let output = defaultOutput
   let moduleConfig = {
     strictExportPresence: true,
@@ -37,7 +36,7 @@ const getClientConfig = (options: Options) => {
       }
     ]
   }
-  let plugins = [
+  let plugins: webpack.Plugin[] = [
     new ManifestPlugin({
       fileName: options.manifest || 'manifest.json',
       map: (file: ManifestPlugin.FileDescriptor) => {

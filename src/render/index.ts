@@ -37,7 +37,7 @@ const render: Render = async (options) => {
 
   const middleware = await compile(webpackOpts)
 
-  app.use(middleware)
+  // app.use(middleware)
 
   let component = (await import(config.src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)

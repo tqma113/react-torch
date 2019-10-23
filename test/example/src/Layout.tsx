@@ -4,7 +4,7 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-        layout
+        <p>layout</p>
       </div>
     )
   }

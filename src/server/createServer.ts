@@ -12,8 +12,6 @@ const createServer: ServerCreator = async (config) => {
 
   app.use(require('koa-static')(config.public))
 
-  // app.use(viewEngine())
-
   return app
 }
 

@@ -44,7 +44,11 @@ const render: Render = async (options) => {
   contentStr = ReactDomServer.renderToString(element)
 
 
-  app.use(async (ctx) => {
+  app.use(async (ctx, next) => {
+    await next()
+
+    if (ctx.body) return
+
     ctx.state = {
       container: config.container,
       content: contentStr,

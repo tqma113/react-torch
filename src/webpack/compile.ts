@@ -31,7 +31,7 @@ const compile: Compile = async (options) => {
 
   const client = webpack(generateClientConfig(options))
 
-  const clientMiddleware = await KoaWebpackDevMiddleware(client as webpack.Compiler)
+  const clientMiddleware = KoaWebpackDevMiddleware(client)
 
   return clientMiddleware
 }

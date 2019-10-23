@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Layout from './Layout'
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div>
-        home
-        <Layout />
-      </div>
-    )
-  }
+function Home() {
+  useEffect(() => {
+    console.log('Home')
+  })
+  return (
+    <div>
+      <p>home</p>
+      <Layout />
+    </div>
+  )
 }
 
 export default Home

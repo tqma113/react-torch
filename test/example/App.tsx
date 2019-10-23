@@ -8,7 +8,7 @@ const App = () => {
   }
   return (
     <div onClick={handleClick}>
-      App
+      <p>App</p>
       <Home />
       <Test />
     </div>

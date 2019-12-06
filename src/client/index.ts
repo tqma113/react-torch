@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 
 const getModule = (module: any) => module.default || module
 
-const src = window.__SRC__
+const src = __SRC__
 
 import(src).then((component) => {
   component = getModule(component)

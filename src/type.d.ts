@@ -10,3 +10,5 @@ declare global {
     __SRC__: string
   }
 }
+
+declare let __SRC__: string

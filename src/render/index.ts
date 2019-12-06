@@ -1,10 +1,9 @@
-import webpack from 'webpack'
 import React from 'react'
 import ReactDomServer from 'react-dom/server'
 import { createServer } from '../server'
-import generateConfig, { Config } from '../config'
-import { compile, Options } from '../webpack'
-import { ENV } from '../utils'
+import generateConfig from '../config'
+import { compile, Options } from '../compile'
+import { ENV } from '../config'
 import generateView from '../view'
 
 const getModule = (module: any) => module.default || module
@@ -37,7 +36,7 @@ const render: Render = async (options) => {
 
   const middleware = await compile(webpackOpts)
 
-  // app.use(middleware)
+  app.use(middleware)
 
   let component = (await import(config.src).then(getModule)) as React.ComponentType
   let element = React.createElement(component)
@@ -57,7 +56,8 @@ const render: Render = async (options) => {
       assets: {
         index: 'static/js/main.js',
         vendor: 'static/js/vendor.js'
-      }
+      },
+      App: config.App
     }
     
     ctx.render(generateView)

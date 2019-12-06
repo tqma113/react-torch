@@ -1,4 +1,4 @@
-import { ENV } from '../utils'
+import { ENV } from '../config'
 
 export interface Options {
   env: ENV

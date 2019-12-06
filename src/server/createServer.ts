@@ -1,6 +1,6 @@
 import Koa from 'koa'
 import viewEngine, { CustomT } from 'koa-react-view-typescript'
-import { ViewProps } from '../index'
+import { ViewProps } from '../view'
 import { Config } from '../config'
 
 export interface ServerCreator {

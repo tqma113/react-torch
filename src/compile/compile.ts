@@ -15,7 +15,9 @@ export interface Compile {
 
 const compile: Compile = async (options) => {
   rimrsf(options.public, (e) => {
-    console.log(e)
+    if (e) {
+      console.log(`Fail to remove public dri: ${options.public}`, e)
+    }
   })
 
 	let mfs = new MemoryFS()

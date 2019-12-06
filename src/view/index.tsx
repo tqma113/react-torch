@@ -1,13 +1,23 @@
 import React from 'react'
-import { GenerateView } from '../index'
 
-const generateView: GenerateView = ({
+export interface ViewProps {
+  container: string
+  content: string
+  publicPath: string
+  assets: {
+    index: string
+    vendor: string
+  },
+  App: () => Promise<React.ComponentType<any>>
+}
+
+function generateView({
   container,
   content,
-  initialState,
   publicPath,
-  assets
-}) => {
+  assets,
+  App
+}: ViewProps): React.ReactElement {
   return (
     <html>
       <head>
@@ -19,9 +29,7 @@ const generateView: GenerateView = ({
         <script>
 					{`
             (function() {
-              window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-              window.__PUBLIC_PATH__ = ${publicPath}
-              window.__CUSTOM_LAYOUT__ = true
+              window.App = "${src}"
             })()
           `}
 				</script>

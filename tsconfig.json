@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "outDir": "dist",
     "declaration": true,
     "sourceMap": false,
@@ -22,10 +22,9 @@
     "jsx": "react",
     "lib": ["esnext", "dom.iterable", "dom"],
     "types": ["jest", "node"],
-    "rootDir": "./src"
+    "rootDir": "."
   },
   "include": [
-    "src/type.d.ts",
-    "src"
+    "example", "store", "start", "page", "config", "render", "dev", "client", "utils", "compile", "index.ts"
   ]
 }

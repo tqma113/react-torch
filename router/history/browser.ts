@@ -2,7 +2,7 @@ import { Action } from './constants'
 import { resolveURL } from './url'
 
 export default function createBrowserHistory() {
-  let index = window.history.length - 1
+  let index = 0
 
   window.onpopstate = handlePop
 

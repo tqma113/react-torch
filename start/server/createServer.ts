@@ -25,7 +25,7 @@ const createServer: ServerCreator = async (config) => {
   app.use((req, res, next) => {
     const viewProps: ViewProps = {
       
-    } 
+    }
     res.render('index', )
   })
 

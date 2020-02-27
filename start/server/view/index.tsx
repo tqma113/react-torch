@@ -1,24 +1,17 @@
 import React from 'react'
 
 export interface ViewProps {
-  container: string
-  content: string
-  publicPath: string
-  assets: {
-    index: string
-    vendor: string
-  },
-  App: () => Promise<React.ComponentType<any>>,
-  src: string
+  ssr: boolean,
+  container: string,
+  content: string,
+  script: string
 }
 
 function generateView({
+  ssr,
   container,
   content,
-  publicPath,
-  assets,
-  App,
-  src
+  script
 }: ViewProps): React.ReactElement {
   return (
     <html>
@@ -32,13 +25,12 @@ function generateView({
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
-              window.__SRC__ = "${src}"
+              window.__SSR__ = "${ssr}"
             })()
           `
           }}
         />
-				<script src={`${publicPath}${assets.index}`}></script>
-				<script src={`${publicPath}${assets.vendor}`}></script>
+				<script src={script}></script>
       </body>
     </html>
   )

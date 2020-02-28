@@ -2,4 +2,6 @@ import { createPage } from '../../../index'
 import store from './Model'
 import View from './View'
 
-export default createPage(View, store)
+const About = createPage(View, store)
+
+export default About

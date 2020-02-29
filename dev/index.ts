@@ -18,6 +18,12 @@ export default function dev(dir: string) {
   const app = createServer(dir)
   const server = http.createServer(app)
 
+  // static file route
+  app.use(
+    '/static',
+    express.static(path.resolve(dir, '.torch', 'client'))
+  )
+
   // client compile
   const [compiler, middleware] = compile(dir)
   app.use(middleware)
@@ -31,12 +37,6 @@ export default function dev(dir: string) {
     require(`webpack-hot-middleware`)(compiler, {
       log: false
     })
-  )
-
-  // static file route
-  app.use(
-    '/static',
-    express.static(path.resolve(dir, 'src'))
   )
 
   // 开发模式用 webpack-dev-middleware 获取 assets

@@ -5,6 +5,7 @@ import { getExternals } from './utils'
 
 export default function getConfig(dir: string): Configuration {
   const src = path.resolve(dir, 'src')
+  console.log(src)
   return {
     target: 'node',
     mode: 'development',
@@ -14,7 +15,7 @@ export default function getConfig(dir: string): Configuration {
       routes: src
     },
     output: {
-			path: path.join(dir, '.torch'),
+			path: path.join(dir, '.torch', 'server'),
 			filename: 'routes.js',
 			libraryTarget: 'commonjs2'
     },
@@ -31,10 +32,10 @@ export default function getConfig(dir: string): Configuration {
       ]
     },
     optimization: {
-      splitChunks: {
-        chunks: 'all',
-        name: 'vendor'
-      }
+      // splitChunks: {
+      //   chunks: 'all',
+      //   name: 'vendor'
+      // }
     },
     performance: {
       hints: false,

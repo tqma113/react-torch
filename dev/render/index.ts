@@ -1,7 +1,7 @@
 import vm from 'vm'
+import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
-import MFS from 'memory-fs'
 import { Request, Response, NextFunction } from 'express'
 import getConfig from './config'
 import { matchExternals } from './utils'
@@ -10,10 +10,8 @@ import createRouter from './router/index';
 export default function render (dir: string) {
   const config = getConfig(dir)
   const compiler = webpack(config)
-  const mfs = new MFS()
   const router = createRouter([])
 
-  compiler.outputFileSystem = mfs
   compiler.watch({}, (err, stats) => {
     if (err) throw err
 
@@ -21,8 +19,8 @@ export default function render (dir: string) {
     statsObj.errors.forEach(console.error)
     statsObj.warnings.forEach(console.warn)
 
-    const outputPath = path.join(dir, '.torch', 'routes.js')
-    const sourceCode: string = mfs.readFileSync(outputPath, 'utf-8')
+    const outputPath = path.join(dir, '.torch', 'server', 'routes.js')
+    const sourceCode: string = fs.readFileSync(outputPath, 'utf-8')
     const newModule = runCode(sourceCode)
     if (newModule) {
       const routes = newModule.default || newModule
@@ -33,6 +31,8 @@ export default function render (dir: string) {
   return function (req: Request, res: Response, next: NextFunction) {
     const render = (content: string) => {
       const data = {
+        src: path.resolve(dir, '.torch', 'server', 'routes'),
+        publicPath: '/static',
         ssr: true,
         content,
         container: 'root'
@@ -43,7 +43,7 @@ export default function render (dir: string) {
   }
 }
 
-function virtualRequire(modulePath: string, rootPath: string, externals: string[], mfs: MFS) {
+function virtualRequire(modulePath: string, rootPath: string, externals: string[]) {
   if (matchExternals(externals, modulePath)) {
     return require(modulePath)
   }
@@ -52,7 +52,7 @@ function virtualRequire(modulePath: string, rootPath: string, externals: string[
   let moduleResult = 'default'
 
   try {
-    sourceCode = mfs.readFileSync(filePath, 'utf-8')
+    sourceCode = fs.readFileSync(filePath, 'utf-8')
   } catch (_) {
     /**
      * externals 和 mfs 里没有这个文件

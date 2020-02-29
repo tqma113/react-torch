@@ -13,6 +13,7 @@ export default function compile(dir: string) {
       colors: true
     },
     serverSideRender: true,
+    writeToDisk: true,
     reporter
   })
   return [compiler, middleware] as const

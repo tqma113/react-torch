@@ -2,9 +2,11 @@ import React from 'react'
 
 export interface ViewProps {
   ssr: boolean,
+  src: string,
   container: string,
   content: string,
-  assert: {
+  publicPath: string,
+  assets: {
     index: string,
     vendor: string
   }
@@ -14,8 +16,10 @@ export default function Layout({
   ssr,
   container,
   content,
-  assert
+  publicPath,
+  assets
 }: ViewProps) {
+  debugger
   return (
     <html>
       <head>
@@ -34,8 +38,8 @@ export default function Layout({
           `
           }}
         />
-				<script src={assert.index}></script>
-				<script src={assert.vendor}></script>
+				<script src={`${publicPath}/${assets.index}`}></script>
+				<script src={`${publicPath}/${assets.vendor}`}></script>
       </body>
     </html>
   )

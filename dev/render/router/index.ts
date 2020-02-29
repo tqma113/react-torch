@@ -2,7 +2,7 @@ import React from 'react'
 import { Key } from 'path-to-regexp'
 import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
-import parseURL from './parseUrl';
+import parsePath from './parsePath';
 
 export type DraftRoute = {
   keys?: Key[]
@@ -26,15 +26,16 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
   let tasks: Task[] = []
 
   async function getContent(url: string) {
-    const urlObj = parseURL(url)
-    const matches = matcher(urlObj.pathname)
+    const urlObj = parsePath(url)
+    const matches = matcher(urlObj.pathname || '/')
 
     if (matches === null) return NOT_MATCH
 
     try {
-      const page = await loadPage(matches.page)
+      const page = await commonjsLoader(matches.page)
       const element = React.createElement(page)
       const content = ReactDOMServer.renderToString(element)
+      debugger
       return content
     } catch (err) {
       return JSON.stringify(err)
@@ -70,21 +71,14 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
   }
 }
 
-async function loadPage(pageModule: any) {
-  const page = commonjsLoader(pageModule)
-  if (isPromise(page)) {
-    return await page
-  } else {
-    return page
-  }
-}
-
 function commonjsLoader(
   page: any
 ): React.ComponentType | Promise<React.ComponentType> {
-  return page.default || page
+  return (
+    page() as Promise<() => React.ComponentType>
+  ).then(getModule)
 }
 
-function isPromise(value: unknown): value is Promise<unknown> {
-  return !!value && typeof (value as { then: unknown }).then === 'function'
+function getModule(module: any) {
+  return module.default || module
 }

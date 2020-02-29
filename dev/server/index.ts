@@ -1,3 +1,4 @@
+import path from 'path'
 import express from 'express'
 import logger from "morgan"
 import cookieParser from 'cookie-parser'
@@ -32,7 +33,7 @@ export default function createServer(dir: string) {
   app.engine("tsx", require("express-react-views").createEngine(viewsConfig))
 
   // view engine setup
-	app.set("views", __dirname)
+	app.set("views", path.resolve(__dirname, '../'))
   app.set("view engine", "tsx")
   
   // logger

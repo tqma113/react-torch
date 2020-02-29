@@ -24,13 +24,13 @@ function getConfig(dir: string): Configuration {
     context: src,
     entry: {
       index: [
-        path.resolve(__dirname, './client'),
+        path.resolve(__dirname, './client/index'),
         "webpack-hot-middleware/client"
       ]
     },
     devtool: 'cheap-module-eval-source-map',
     output: {
-      path: path.join(dir, './publish/static'),
+      path: path.join(dir, './.torch/static'),
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
     },
@@ -49,7 +49,7 @@ function getConfig(dir: string): Configuration {
       rules: [
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
-          exclude: '/node_modules/',
+          exclude: /node_modules/,
           loader: 'babel-loader',
           options: babelConfig
         }
@@ -57,7 +57,7 @@ function getConfig(dir: string): Configuration {
     },
     resolve: {
       alias: {
-        '$routes': src
+        '$routes': path.resolve(src, 'index.ts')
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],

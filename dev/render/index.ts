@@ -21,7 +21,7 @@ export default function render (dir: string) {
     statsObj.errors.forEach(console.error)
     statsObj.warnings.forEach(console.warn)
 
-    const outputPath = path.join(dir, 'publish', 'routes.js')
+    const outputPath = path.join(dir, '.torch', 'routes.js')
     const sourceCode: string = mfs.readFileSync(outputPath, 'utf-8')
     const newModule = runCode(sourceCode)
     if (newModule) {

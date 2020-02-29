@@ -4,14 +4,17 @@ export interface ViewProps {
   ssr: boolean,
   container: string,
   content: string,
-  script: string
+  assert: {
+    index: string,
+    vendor: string
+  }
 }
 
 export default function Layout({
   ssr,
   container,
   content,
-  script
+  assert
 }: ViewProps) {
   return (
     <html>
@@ -31,7 +34,8 @@ export default function Layout({
           `
           }}
         />
-				<script src={script}></script>
+				<script src={assert.index}></script>
+				<script src={assert.vendor}></script>
       </body>
     </html>
   )

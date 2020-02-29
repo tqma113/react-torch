@@ -14,7 +14,7 @@ export default function getConfig(dir: string): Configuration {
       routes: src
     },
     output: {
-			path: path.join(dir, 'publish'),
+			path: path.join(dir, '.torch'),
 			filename: 'routes.js',
 			libraryTarget: 'commonjs2'
     },
@@ -24,7 +24,7 @@ export default function getConfig(dir: string): Configuration {
       rules: [
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
-          exclude: '/node_modules/',
+          exclude: /node_modules/,
           loader: 'babel-loader',
           options: babelConfig
         }
@@ -44,7 +44,7 @@ export default function getConfig(dir: string): Configuration {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
       alias: {
-        '@routes': src
+        '$routes': path.resolve(src, 'index.ts')
       }
     },
     externals: getExternals(dir)

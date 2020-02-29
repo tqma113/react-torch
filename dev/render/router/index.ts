@@ -18,6 +18,8 @@ export type Task = {
   render: Render
 }
 
+const NOT_MATCH = 'not match'
+
 export default function createRouter(draftRoutes: DraftRoute[]) {
   let matcher = createMatcher(draftRoutes)
   let isBlock = true
@@ -27,7 +29,7 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
     const urlObj = parseURL(url)
     const matches = matcher(urlObj.pathname)
 
-    if (matches === null) return 'not match'
+    if (matches === null) return NOT_MATCH
 
     try {
       const page = await loadPage(matches.page)

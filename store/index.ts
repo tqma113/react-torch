@@ -58,7 +58,7 @@ export type Store<
 
 function getKeys<T extends {}>(o: T): Array<keyof T>{
   return Object.keys(o) as Array<keyof T>
-} 
+}
 
 export function createStore<
   S extends object,

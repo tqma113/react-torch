@@ -1,10 +1,13 @@
+import Home from './Home'
+import About from './About'
+
 export default [
   {
     path: '/',
-    page: () => import('./Home')
+    page: Home
   },
   {
     path: '/about',
-    page: () => import('./About')
+    page: About
   }
 ]

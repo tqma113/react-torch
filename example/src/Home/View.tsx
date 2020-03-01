@@ -8,5 +8,5 @@ type Props = {
 }
 
 export default function({ state }: Props) {
-  return <div>about {state.count}</div>
+  return <div>Home {state.count}</div>
 }

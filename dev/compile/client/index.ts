@@ -19,5 +19,6 @@ const container = window.__CONTAINER__
 // const routes = require(src)
 
 const router = createRouter($routes, container, ssr)
-debugger
 router.start()
+
+history.replaceState({ idx: 0 }, '')

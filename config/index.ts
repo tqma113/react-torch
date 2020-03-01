@@ -29,8 +29,6 @@ const generateConfig: GenerateConfig = (options = {}) => {
   config.App = () => import(config.src)
   config.public = path.resolve(config.root, config.public)
 
-  console.log(config)
-
   return config
 }
 

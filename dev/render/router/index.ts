@@ -32,10 +32,8 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
     if (matches === null) return NOT_MATCH
 
     try {
-      const page = await commonjsLoader(matches.page)
-      const element = React.createElement(page)
+      const element = React.createElement(matches.page)
       const content = ReactDOMServer.renderToString(element)
-      debugger
       return content
     } catch (err) {
       return JSON.stringify(err)
@@ -69,16 +67,4 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
       render(content)
     }
   }
-}
-
-function commonjsLoader(
-  page: any
-): React.ComponentType | Promise<React.ComponentType> {
-  return (
-    page() as Promise<() => React.ComponentType>
-  ).then(getModule)
-}
-
-function getModule(module: any) {
-  return module.default || module
 }

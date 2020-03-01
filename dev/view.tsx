@@ -19,7 +19,6 @@ export default function Layout({
   publicPath,
   assets
 }: ViewProps) {
-  debugger
   return (
     <html>
       <head>

@@ -1,4 +1,4 @@
-import { ENV } from '../config'
+export type ENV = 'test' | 'development' | 'production'
 
 export const getMode = (env: ENV) => env === 'test' ? 'development' : env || 'production'
 

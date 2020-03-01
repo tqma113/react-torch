@@ -4,16 +4,23 @@ import { Key } from 'path-to-regexp'
 import invariant from 'tiny-invariant'
 import createMatcher from './createMatcher'
 import createHistory, { Listener } from './createHistory'
+import { Page } from '../../../../page'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: () => Promise<React.ComponentType>
+  page: Page<any, any>
 }
 
-const DEFAULT_VIEW = () => React.createElement('div', {}, '')
-const NOT_MATCH = () => React.createElement('div', {}, 'not match')
+const DEFAULT_PAGE: Page<{}, {}> = [
+  () => React.createElement('div', {}, ''),
+  { state: {}, actions: {} } as any
+]
+const NOT_MATCH: Page<{}, {}> = [
+  () => React.createElement('div', {}, 'not match'),
+  {} as any
+]
 
 export default function createRouter(
   routes: DraftRoute[],
@@ -27,7 +34,7 @@ export default function createRouter(
   return {
     start() {
       const listener: Listener = ({ location }) => {
-        let page = DEFAULT_VIEW
+        let page = DEFAULT_PAGE
         const matches = matcher(location.pathname)
 
         if (matches === null) {
@@ -36,7 +43,8 @@ export default function createRouter(
           page = matches.page
         }
 
-        const element: React.ReactElement<{}> = React.createElement(page, {})
+        const [view, store] = page
+        const element: React.ReactElement<{}> = React.createElement(view, { store })
         const containerElement = document.querySelector(`#${container}`)
 
         invariant(
@@ -47,8 +55,13 @@ export default function createRouter(
         if (ssr) {
           ReactDOM.hydrate(element, containerElement)
         } else {
-          ReactDOM.hydrate(element, containerElement)
+          ReactDOM.render(element, containerElement)
         }
+
+        store.listen(() => {
+          const element: React.ReactElement<{}> = React.createElement(view, { store })
+          ReactDOM.render(element, containerElement)
+        })
       }
       history.listen(listener)
     }

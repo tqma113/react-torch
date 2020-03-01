@@ -1,5 +1,5 @@
 {
   "watch": ["dev", "example"],
   "ext": "ts,tsx",
-  "exec": "node --inspect-brk -r ts-node/register ./example/app.ts"
+  "exec": "node -r ts-node/register ./example/app.ts"
 }

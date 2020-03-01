@@ -21,4 +21,5 @@ const container = window.__CONTAINER__
 const router = createRouter($routes, container, ssr)
 router.start()
 
-history.replaceState({ idx: 0 }, '')
+history.pushState({ idx: 0 }, '')
+history.back()

@@ -32,7 +32,8 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
     if (matches === null) return NOT_MATCH
 
     try {
-      const element = React.createElement(matches.page)
+      const [view, store] = matches.page
+      const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
       return content
     } catch (err) {

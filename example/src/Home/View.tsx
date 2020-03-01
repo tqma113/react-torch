@@ -7,6 +7,7 @@ type Props = {
   actions: Currings<State, Actions>
 }
 
-export default function({ state }: Props) {
-  return <div>Home {state.count}</div>
+export default function({ state, actions }: Props) {
+  console.log('update')
+  return <div>Home {state.count} <button onClick={() => actions.INCREASE()}>Increate</button></div>
 }

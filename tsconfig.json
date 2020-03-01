@@ -25,6 +25,6 @@
     "rootDir": "."
   },
   "include": [
-    "example", "store", "start", "page", "config", "render", "dev", "client", "utils", "compile", "index.ts"
+    "example", "store", "start", "page", "config", "render", "dev", "client", "utils", "compile", "index.ts", "client"
   ]
 }

@@ -15,7 +15,8 @@ export default function getConfig(dir: string): Configuration {
     },
     output: {
 			path: path.join(dir, '.torch', 'server'),
-			filename: '[name].js',
+      filename: 'js/[name]-[contenthash:6].js',
+      chunkFilename: 'js/[name]-[contenthash:6].js',
 			libraryTarget: 'commonjs2'
     },
     devtool: 'source-map',
@@ -34,10 +35,7 @@ export default function getConfig(dir: string): Configuration {
       ]
     },
     optimization: {
-      splitChunks: {
-        chunks: 'all',
-        name: 'vendor'
-      }
+      minimize: false
     },
     performance: {
       hints: false,

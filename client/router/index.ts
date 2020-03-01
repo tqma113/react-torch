@@ -4,7 +4,7 @@ import { Key } from 'path-to-regexp'
 import invariant from 'tiny-invariant'
 import createMatcher from './createMatcher'
 import createHistory, { Listener } from './createHistory'
-import { Page } from '../../../../page'
+import { Page } from '../../page'
 
 export type DraftRoute = {
   keys?: Key[]

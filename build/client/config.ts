@@ -3,7 +3,7 @@ import { Configuration, IgnorePlugin, HotModuleReplacementPlugin } from 'webpack
 import ManifestPlugin from 'webpack-manifest-plugin'
 import babelConfig from '../babel'
 
-function getConfig(dir: string): Configuration {
+export default function getConfig(dir: string): Configuration {
   const src = path.resolve(dir, 'src')
   const manifestPluginOption: ManifestPlugin.Options = {
     fileName: './assets.json',
@@ -30,9 +30,8 @@ function getConfig(dir: string): Configuration {
     devtool: 'cheap-module-eval-source-map',
     output: {
       path: path.join(dir, '.torch', 'client'),
-      filename: `js/[name].js`,
-      chunkFilename: `js/[name].js`,
-      pathinfo: true,
+      filename: `js/[name]-[contenthash:6].js`,
+      chunkFilename: `js/[name]-[contenthash:6].js`,
     },
     optimization: {
       splitChunks: {
@@ -53,7 +52,9 @@ function getConfig(dir: string): Configuration {
           loader: 'babel-loader',
           options: {
             ...babelConfig,
-            cacheDirectory: true
+            cacheDirectory: true,
+            cacheCompression: true,
+            compact: true
           }
         }
       ]
@@ -73,8 +74,7 @@ function getConfig(dir: string): Configuration {
       new ManifestPlugin(manifestPluginOption),
       new IgnorePlugin(/^\.\/locale$/, /moment$/ ),
       new HotModuleReplacementPlugin(),
+
     ]
   }
 }
-
-export default getConfig

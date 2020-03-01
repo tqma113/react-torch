@@ -15,8 +15,7 @@ export default function getConfig(dir: string): Configuration {
     },
     output: {
 			path: path.join(dir, '.torch', 'server'),
-      filename: 'js/[name]-[contenthash:6].js',
-      chunkFilename: 'js/[name]-[contenthash:6].js',
+      filename: 'routes.js',
 			libraryTarget: 'commonjs2'
     },
     devtool: 'source-map',

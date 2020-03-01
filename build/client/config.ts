@@ -30,8 +30,8 @@ export default function getConfig(dir: string): Configuration {
     devtool: 'cheap-module-eval-source-map',
     output: {
       path: path.join(dir, '.torch', 'client'),
-      filename: `js/[name]-[contenthash:6].js`,
-      chunkFilename: `js/[name]-[contenthash:6].js`,
+      filename: `js/[name]-[hash:6].js`,
+      chunkFilename: `js/[name]-[hash:6].js`,
     },
     optimization: {
       splitChunks: {

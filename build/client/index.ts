@@ -3,5 +3,19 @@ import webpack from 'webpack'
 
 export default function compileClient(dir: string) {
   const config = getConfig(dir)
-  webpack(config)
+  return new Promise((resolve, reject) => {
+    webpack(config, (error, stats) => {
+      if (error) {
+        reject(error)
+      } else {
+        console.log(
+          '[webpack:client:build]',
+          stats.toString({
+            colors: true
+          })
+        )
+        resolve()
+      }
+    })
+  })
 }

@@ -22,7 +22,7 @@ export default function Layout({
   return (
     <html>
       <head>
-        <title>ssr</title>
+        <title>React-Torch</title>
       </head>
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>

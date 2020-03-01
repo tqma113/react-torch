@@ -1,6 +1,3 @@
-import { getKeys } from '../utils'
-
-
 export type Action<S extends {}, P = any> = (state: S, payload: P) => S
 
 export type Actions<S extends {}> = Record<string, Action<S>>
@@ -58,6 +55,10 @@ export type Store<
   readonly state: S;
   readonly actions: Currings<S, AS>;
 }
+
+function getKeys<T extends {}>(o: T): Array<keyof T>{
+  return Object.keys(o) as Array<keyof T>
+} 
 
 export function createStore<
   S extends object,

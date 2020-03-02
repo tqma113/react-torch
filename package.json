@@ -4,8 +4,11 @@
   "description": "A tool to server-side render with react.",
   "private": true,
   "scripts": {
-    "start": "npm run dev",
-    "dev": "nodemon"
+    "test:start": "node -r ts-node/register ./example/start.ts",
+    "test:dev": "node -r ts-node/register ./example/dev.ts",
+    "test:build": "node -r ts-node/register ./example/build.ts",
+    "start": "nodemon",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

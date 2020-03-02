@@ -5,7 +5,7 @@ export default function build(dir: string) {
   compileServer(dir)
     .then(() => compileClient(dir))
     .then(() => console.log('Compile finished!'))
-    .then(() => process.exit(1))
+    .then(() => process.exit())
     .catch(err => {
       throw err
     })

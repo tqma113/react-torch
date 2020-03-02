@@ -2,7 +2,7 @@
 // import "regenerator-runtime/runtime"
 import createRouter from './router'
 // @ts-ignore
-import $routes from "D:/Projects/JavaScript/react-torch/example/.torch/server/routes"
+import $routes from "@routes"
 
 declare global {
   interface Window {

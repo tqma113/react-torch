@@ -43,10 +43,7 @@ export default function getConfig(dir: string): Configuration {
     },
     resolve: {
       modules: ['node_modules'],
-      extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
-      alias: {
-        '$routes': path.resolve(src, 'index')
-      }
+      extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx']
     },
     externals: getExternals(dir)
   }

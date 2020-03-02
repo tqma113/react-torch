@@ -60,7 +60,7 @@ function getConfig(dir: string): Configuration {
     },
     resolve: {
       alias: {
-        '$routes': path.resolve(dir, '.torch', 'server', 'routes')
+        '@routes': path.resolve(dir, '.torch', 'server', 'routes.js')
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],

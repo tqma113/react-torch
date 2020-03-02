@@ -34,7 +34,7 @@ export default function createServer(dir: string) {
 
   // view engine setup
 	app.set("views", path.resolve(__dirname, '../'))
-  app.set("view engine", "tsx")
+  app.set("view engine", "js")
   
   // logger
   app.use(logger('dev'))

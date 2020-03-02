@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
 import program from 'commander'
-import { dev, build, start } from '../index'
+import dev from '../dev'
+import build from '../build'
+import start from '../start'
 
 program
-  .version('1.0.7')
+  .version('1.0.8')
   .name('torch')
 
 program

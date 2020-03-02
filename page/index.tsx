@@ -1,5 +1,5 @@
 import React from 'react'
-import { Store, Actions, Currings } from '../store'
+import { Store, Actions, Currings } from '../store/index'
 
 export type Page<
   S extends object = {},

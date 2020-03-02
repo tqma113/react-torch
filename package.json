@@ -9,6 +9,16 @@
   },
   "files": [
     "dist",
+    "build.js",
+    "build.d.ts",
+    "dev.js",
+    "dev.d.ts",
+    "page.js",
+    "page.d.ts",
+    "start.js",
+    "start.d.ts",
+    "store.js",
+    "store.d.ts",
     "AUTHORS",
     "tsconfig.json"
   ],

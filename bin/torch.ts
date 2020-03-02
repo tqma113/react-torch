@@ -4,7 +4,7 @@ import program from 'commander'
 import { dev, build, start } from '../index'
 
 program
-  .version('1.0.5')
+  .version('1.0.6')
 
 program
   .command('dev')

@@ -2,7 +2,6 @@ import path from 'path'
 import http from 'http'
 import debug from 'debug'
 import express from 'express'
-// import querystring from 'query-string'
 import createServer from './server'
 import compile from './compile'
 import render from './render'
@@ -29,10 +28,6 @@ export default function dev(dir: string) {
   app.use(middleware)
 
   // webpack-hot-middleware
-  // const whmConfig = {
-  //   quiet: true,
-  //   noInfo: true
-  // }
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
       log: false

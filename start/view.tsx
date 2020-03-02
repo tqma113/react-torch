@@ -2,21 +2,27 @@ import React from 'react'
 
 export interface ViewProps {
   ssr: boolean,
+  src: string,
   container: string,
   content: string,
-  script: string
+  publicPath: string,
+  assets: {
+    index: string,
+    vendor: string
+  }
 }
 
-function generateView({
+export default function Layout({
   ssr,
   container,
   content,
-  script
-}: ViewProps): React.ReactElement {
+  publicPath,
+  assets
+}: ViewProps) {
   return (
     <html>
       <head>
-        <title>ssr</title>
+        <title>React-Torch</title>
       </head>
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -26,14 +32,14 @@ function generateView({
             __html: `
             (function() {
               window.__SSR__ = "${ssr}"
+              window.__CONTAINER__ = "${container}"
             })()
           `
           }}
         />
-				<script src={script}></script>
+				<script src={`${publicPath}/${assets.index}`}></script>
+				<script src={`${publicPath}/${assets.vendor}`}></script>
       </body>
     </html>
   )
 }
-
-export default generateView

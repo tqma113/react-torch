@@ -8,7 +8,7 @@
   "files": [
     "dist",
     "AUTHORS",
-    "tsconfig"
+    "tsconfig.json"
   ],
   "scripts": {
     "test:start": "node -r ts-node/register ./example/start.ts",

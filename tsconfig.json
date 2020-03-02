@@ -20,11 +20,25 @@
     "esModuleInterop": true,
     "removeComments": false,
     "jsx": "react",
-    "lib": ["esnext", "dom.iterable", "dom"],
-    "types": ["jest", "node"],
+    "lib": [
+      "esnext",
+      "dom.iterable",
+      "dom"
+    ],
+    "types": [
+      "jest",
+      "node"
+    ],
     "rootDir": "."
   },
   "include": [
-    "example", "store", "start", "page", "config", "render", "dev", "client", "utils", "compile", "index.ts", "client",
+    "bin",
+    "build",
+    "client",
+    "dev",
+    "page",
+    "start",
+    "store",
+    "index.ts"
   ]
 }

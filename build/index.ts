@@ -1,7 +1,9 @@
 import compileClient from './client'
 import compileServer from './server'
 
-export default function build(dir: string) {
+export default function build(_dir?: string) {
+  const dir = _dir || process.cwd()
+
   compileServer(dir)
     .then(() => compileClient(dir))
     .then(() => console.log('Compile finished!'))

@@ -13,7 +13,10 @@ export type Result = {
 
 const PORT = '3000'
 
-export default function dev(dir: string) {
+export default function dev(_dir?: string, _port?: string) {
+  const dir = _dir || process.cwd()
+  const port = _port || PORT
+
   const app = createServer(dir)
   const server = http.createServer(app)
 
@@ -94,7 +97,7 @@ export default function dev(dir: string) {
 		/**
 		 * Listen on provided port, on all network interfaces.
 		 */
-		server.listen(PORT)
+		server.listen(port)
 		server.on('error', onError)
 		server.on('listening', onListening)
 		server.on('error', reject)

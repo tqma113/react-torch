@@ -12,7 +12,10 @@ export type Result = {
 
 const PORT = '80'
 
-export default function start(dir: string) {
+export default function start(_dir: string, _port?: string) {
+  const dir = _dir || process.cwd()
+  const port = _port || PORT
+
   const app = createServer(dir)
   const server = http.createServer(app)
 
@@ -44,7 +47,6 @@ export default function start(dir: string) {
 		/**
 		 * Event listener for HTTP server "listening" event.
 		 */
-
     const onListening = () => {
       let addr = server.address()
 			let bind = typeof addr === 'string' 
@@ -57,7 +59,6 @@ export default function start(dir: string) {
     /**
      * Event listener for HTTP server "error" event.
      */
-
     const onError = (error: any) => {
       if (error.syscall !== 'listen') {
         throw error
@@ -81,7 +82,7 @@ export default function start(dir: string) {
 		/**
 		 * Listen on provided port, on all network interfaces.
 		 */
-		server.listen(PORT)
+		server.listen(port)
 		server.on('error', onError)
 		server.on('listening', onListening)
 		server.on('error', reject)

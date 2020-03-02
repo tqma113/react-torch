@@ -14,7 +14,9 @@ export type Result = {
 const PORT = '3000'
 
 export default function dev(_dir?: string, _port?: string) {
-  const dir = _dir || process.cwd()
+  const dir = _dir
+    ? path.resolve(process.cwd(), _dir)
+    : process.cwd()
   const port = _port || PORT
 
   const app = createServer(dir)

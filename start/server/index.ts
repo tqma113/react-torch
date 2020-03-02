@@ -31,7 +31,7 @@ export default function createServer(dir: string) {
   app.engine("tsx", require("express-react-views").createEngine(viewsConfig))
 
   // view engine setup
-	app.set("views", path.resolve(__dirname, '../'))
+	app.set("views", path.resolve(dir, '.torch', 'server'))
   app.set("view engine", "tsx")
   
   // logger

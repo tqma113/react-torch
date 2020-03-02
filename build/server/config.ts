@@ -11,11 +11,12 @@ export default function getConfig(dir: string): Configuration {
     watch: true,
 		context: src,
     entry: {
-      routes: src
+      routes: src,
+      view: path.resolve(__dirname, './view')
     },
     output: {
 			path: path.join(dir, '.torch', 'server'),
-      filename: 'routes.js',
+      filename: '[name].js',
 			libraryTarget: 'commonjs2'
     },
     devtool: 'source-map',

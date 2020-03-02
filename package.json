@@ -4,7 +4,9 @@
   "description": "A lib to server-side render with react.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
-  "bin": "./dist/bin/index.js",
+  "bin": {
+    "torch": "./dist/bin/index.js"
+  },
   "files": [
     "dist",
     "AUTHORS",

@@ -1,9 +1,8 @@
 import program from 'commander'
 import { dev, build, start } from '../index'
-import pkg from '../package.json'
 
 program
-  .version(pkg.version)
+  .version('1.0.3')
   .name('torch')
 
 program

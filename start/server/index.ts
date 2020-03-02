@@ -3,7 +3,7 @@ import express from 'express'
 import logger from "morgan"
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
-// import favicon from 'serve-favicon'
+import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
 
@@ -17,25 +17,22 @@ export default function createServer(dir: string) {
   app.use(compression())
 
   // favicon
-  // app.use(favicon())
+  app.use(favicon(dir))
 
   // view engine
   const viewsConfig = {
 		babel: {
-			extensions: [".es6", ".es", ".jsx", ".js", ".mjs", ".ts", ".tsx"]
+			extensions: [".js"]
 		}
 	}
   app.engine("js", require("express-react-views").createEngine(viewsConfig))
-  app.engine("jsx", require("express-react-views").createEngine(viewsConfig))
-  app.engine("ts", require("express-react-views").createEngine(viewsConfig))
-  app.engine("tsx", require("express-react-views").createEngine(viewsConfig))
 
   // view engine setup
 	app.set("views", path.resolve(dir, '.torch', 'server'))
-  app.set("view engine", "tsx")
+  app.set("view engine", "js")
   
   // logger
-  app.use(logger('dev'))
+  app.use(logger('common'))
 
   // body parser
   app.use(bodyParser())

@@ -15,10 +15,9 @@ export type Render = (content: string) => void
 
 export type Task = {
   url: string,
-  render: Render
+  render: Render,
+  next: () => void
 }
-
-const NOT_MATCH = 'not match'
 
 export default function createRouter(draftRoutes: DraftRoute[]) {
   let matcher = createMatcher(draftRoutes)
@@ -29,7 +28,7 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
     const urlObj = parsePath(url)
     const matches = matcher(urlObj.pathname || '/')
 
-    if (matches === null) return NOT_MATCH
+    if (matches === null) return null
 
     try {
       const [view, store] = matches.page
@@ -45,27 +44,37 @@ export default function createRouter(draftRoutes: DraftRoute[]) {
     get isBlock() {
       return isBlock
     },
-    updateRoutes(draftRoutes: DraftRoute[]) {
+    setRoutes(draftRoutes: DraftRoute[]) {
       matcher = createMatcher(draftRoutes)
       if (isBlock) {
         isBlock = false
-        tasks.forEach(async ({ url, render }) => {
+        tasks.forEach(async ({ url, render, next }) => {
           const content = await getContent(url)
-          render(content)
+          if (content === null) {
+            next()
+          } else {
+            render(content)
+          }
         })
       }
     },
-    async tryRender(url: string, render: Render) {
+    async tryRender(url: string, render: Render, next: () => void) {
       if (isBlock) {
         const task: Task = {
           url,
-          render
+          render,
+          next
         }
         tasks.push(task)
+        console.log(`${url} will render after compile`)
+      } else {
+        const content = await getContent(url)
+        if (content === null) {
+          next()
+        } else {
+          render(content)
+        }
       }
-
-      const content = await getContent(url)
-      render(content)
     }
   }
 }

@@ -17,10 +17,6 @@ const DEFAULT_PAGE: Page<{}, {}> = [
   () => React.createElement('div', {}, ''),
   { state: {}, actions: {} } as any
 ]
-const NOT_MATCH: Page<{}, {}> = [
-  () => React.createElement('div', {}, 'not match'),
-  {} as any
-]
 
 export default function createRouter(
   routes: DraftRoute[],
@@ -38,7 +34,7 @@ export default function createRouter(
         const matches = matcher(location.pathname)
 
         if (matches === null) {
-          page = NOT_MATCH
+          throw new Error('Unknow page')
         } else {
           page = matches.page
         }

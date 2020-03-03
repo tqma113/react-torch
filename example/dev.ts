@@ -1,4 +1,4 @@
 import path from 'path'
-import { dev } from '../index'
+import dev from '../dev'
 
-dev(path.resolve(__dirname))
+dev(path.resolve(__dirname, '../../react-torch-example'))

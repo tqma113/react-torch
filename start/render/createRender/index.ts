@@ -15,21 +15,19 @@ export type Render = (content: string) => void
 
 export type Task = {
   url: string,
-  render: Render
+  render: Render,
+  next: () => void
 }
 
-const NOT_MATCH = 'not match'
 
 export default function createRender(draftRoutes: DraftRoute[]) {
   let matcher = createMatcher(draftRoutes)
-  let isBlock = true
-  let tasks: Task[] = []
 
   async function getContent(url: string) {
     const urlObj = parsePath(url)
     const matches = matcher(urlObj.pathname || '/')
 
-    if (matches === null) return NOT_MATCH
+    if (matches === null) return null
 
     try {
       const [view, store] = matches.page
@@ -41,16 +39,13 @@ export default function createRender(draftRoutes: DraftRoute[]) {
     }
   }
 
-  return async function tryRender(url: string, render: Render) {
-    if (isBlock) {
-      const task: Task = {
-        url,
-        render
-      }
-      tasks.push(task)
-    }
+  return async function tryRender(url: string, render: Render, next: () => void) {
 
     const content = await getContent(url)
-    render(content)
+    if (content === null) {
+      next()
+    } else {
+      render(content)
+    }
   }
 }

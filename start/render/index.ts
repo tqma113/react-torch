@@ -78,6 +78,6 @@ export default function render(dir: string) {
       }
       res.render('view', data)
     }
-    tryRender(req.url, render)
+    tryRender(req.url, render, next)
   }
 }

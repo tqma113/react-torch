@@ -6,7 +6,7 @@ import build from '../build'
 import start from '../start'
 
 program
-  .version('1.0.8')
+  .version('1.0.9')
   .name('torch')
 
 program

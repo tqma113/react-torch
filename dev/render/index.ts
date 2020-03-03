@@ -71,7 +71,6 @@ export default function render (dir: string) {
     const outputPath = path.join(dir, '.torch', 'server', 'routes.js')
     const sourceCode: string = fs.readFileSync(outputPath, 'utf-8')
     const newModule = runCode(sourceCode)
-    console.log(newModule)
     if (newModule) {
       const routes = newModule.default || newModule
       router.setRoutes(routes)

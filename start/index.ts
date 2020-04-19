@@ -3,7 +3,7 @@ import http from 'http'
 import debug from 'debug'
 import express from 'express'
 import createServer from './server'
-import render from './render'
+import createRender from './render'
 
 export type Result = {
   server: http.Server,
@@ -20,9 +20,7 @@ export default function start(_dir: string, _port?: string) {
 
   const app = createServer(dir)
   const server = http.createServer(app)
-
-  // page router
-  app.use(render(dir))
+  const render = createRender(dir)
 
   // static file route
   app.use(
@@ -36,6 +34,9 @@ export default function start(_dir: string, _port?: string) {
     res.locals.assets = require(assertPath)
     next()
   })
+
+  // page router
+  app.use(render)
   
   // error handler
   const errorHandler: express.ErrorRequestHandler 

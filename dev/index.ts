@@ -4,7 +4,7 @@ import debug from 'debug'
 import express from 'express'
 import createServer from './server'
 import compile from './compile'
-import render from './render'
+import createRender from './render'
 
 export type Result = {
   server: http.Server,
@@ -21,9 +21,7 @@ export default function dev(_dir?: string, _port?: string) {
 
   const app = createServer(dir)
   const server = http.createServer(app)
-
-  // page router
-  app.use(render(dir))
+  const render = createRender(dir)
 
   // client compile
   const [compiler, middleware] = compile(dir)
@@ -41,6 +39,9 @@ export default function dev(_dir?: string, _port?: string) {
       log: false
     })
   )
+
+  // page router
+  app.use(render)
 
   // 开发模式用 webpack-dev-middleware 获取 assets
   app.use((req, res, next) => {

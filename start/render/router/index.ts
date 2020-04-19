@@ -19,6 +19,11 @@ export type Task = {
   next: () => void
 }
 
+export type Router = {
+  readonly isBlock: boolean
+  setRoutes(draftRoutes: DraftRoute[]): void
+  tryRender(url: string, render: Render, next: () => void): Promise<void>
+}
 
 export default function createRender(draftRoutes: DraftRoute[]) {
   let matcher = createMatcher(draftRoutes)
@@ -39,13 +44,14 @@ export default function createRender(draftRoutes: DraftRoute[]) {
     }
   }
 
-  return async function tryRender(url: string, render: Render, next: () => void) {
-
-    const content = await getContent(url)
-    if (content === null) {
-      next()
-    } else {
-      render(content)
+  return {
+    tryRender: async function tryRender(url: string, render: Render, next: () => void) {
+      const content = await getContent(url)
+      if (content === null) {
+        next()
+      } else {
+        render(content)
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ import createRouter from './router/index';
 import compile from './compile'
 import type { Request, Response, NextFunction } from 'express'
 
-export default function render (dir: string) {
+export default function createRender (dir: string) {
   const router = createRouter([])
   compile(dir, router)
 

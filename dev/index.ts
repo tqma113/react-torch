@@ -40,9 +40,6 @@ export default function dev(_dir?: string, _port?: string) {
     })
   )
 
-  // page router
-  app.use(render)
-
   // 开发模式用 webpack-dev-middleware 获取 assets
   app.use((req, res, next) => {
     res.locals.assets = getAssets(
@@ -50,6 +47,9 @@ export default function dev(_dir?: string, _port?: string) {
     )
     next()
   })
+
+  // page router
+  app.use(render)
   
   // error handler
   const errorHandler: express.ErrorRequestHandler 

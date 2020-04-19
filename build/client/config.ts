@@ -19,7 +19,7 @@ export default function getConfig(dir: string): Configuration {
   }
 
   return {
-    mode: 'development',
+    mode: 'production',
     target: 'web',
     context: src,
     entry: {
@@ -74,7 +74,6 @@ export default function getConfig(dir: string): Configuration {
       new ManifestPlugin(manifestPluginOption),
       new IgnorePlugin(/^\.\/locale$/, /moment$/ ),
       new HotModuleReplacementPlugin(),
-
     ]
   }
 }

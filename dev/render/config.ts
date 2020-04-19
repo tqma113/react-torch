@@ -11,11 +11,12 @@ export default function getConfig(dir: string): Configuration {
     watch: true,
 		context: src,
     entry: {
-      routes: src
+      routes: src,
+      view: path.resolve(__dirname, './view')
     },
     output: {
 			path: path.join(dir, '.torch', 'server'),
-			filename: '[name].js',
+      filename: '[name].js',
 			libraryTarget: 'commonjs2'
     },
     devtool: 'source-map',
@@ -34,10 +35,7 @@ export default function getConfig(dir: string): Configuration {
       ]
     },
     optimization: {
-      splitChunks: {
-        chunks: 'all',
-        name: 'vendor'
-      }
+      minimize: false
     },
     performance: {
       hints: false,
@@ -45,10 +43,7 @@ export default function getConfig(dir: string): Configuration {
     },
     resolve: {
       modules: ['node_modules'],
-      extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
-      alias: {
-        '$routes': path.resolve(src, 'index')
-      }
+      extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx']
     },
     externals: getExternals(dir)
   }

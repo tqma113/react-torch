@@ -7,7 +7,7 @@ export default function getConfig(dir: string): Configuration {
   const src = path.resolve(dir, 'src')
   return {
     target: 'node',
-    mode: 'development',
+    mode: 'production',
     watch: true,
 		context: src,
     entry: {
@@ -35,10 +35,10 @@ export default function getConfig(dir: string): Configuration {
       ]
     },
     optimization: {
-      minimize: false
+      minimize: true
     },
     performance: {
-      hints: false,
+      hints: 'error',
       maxEntrypointSize: 400000,
     },
     resolve: {

@@ -19,7 +19,13 @@ export type Task = {
   next: () => void
 }
 
-export default function createRouter(draftRoutes: DraftRoute[]) {
+export type Router = {
+  readonly isBlock: boolean
+  setRoutes(draftRoutes: DraftRoute[]): void
+  tryRender(url: string, render: Render, next: () => void): Promise<void>
+}
+
+export default function createRouter(draftRoutes: DraftRoute[]): Router {
   let matcher = createMatcher(draftRoutes)
   let isBlock = true
   let tasks: Task[] = []

@@ -1,6 +1,6 @@
 import path from 'path'
-import compileClient from './client'
-import compileServer from './server'
+import compileClient from './compile'
+import compileServer from './renderCompile'
 
 export default function build(_dir?: string) {
   const dir = _dir

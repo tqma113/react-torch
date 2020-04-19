@@ -1,9 +1,9 @@
 import vm from 'vm'
 import fs from 'fs'
 import path from 'path'
-import { Request, Response, NextFunction } from 'express'
 import { matchExternals, getExternals } from './utils'
 import createRender from './createRender'
+import type { Request, Response, NextFunction } from 'express'
 
 export default function render(dir: string) {
   const rootPath = path.resolve(dir, '.torch', 'server')

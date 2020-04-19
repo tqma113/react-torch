@@ -1,7 +1,7 @@
 import path from 'path'
-import { Configuration } from 'webpack'
 import babelConfig from '../babel'
 import { getExternals } from './utils'
+import type { Configuration } from 'webpack'
 
 export default function getConfig(dir: string): Configuration {
   const src = path.resolve(dir, 'src')

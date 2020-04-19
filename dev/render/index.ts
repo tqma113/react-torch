@@ -1,7 +1,7 @@
 import path from 'path'
-import { Request, Response, NextFunction } from 'express'
 import createRouter from './router/index';
 import compile from './compile'
+import type { Request, Response, NextFunction } from 'express'
 
 export default function render (dir: string) {
   const router = createRouter([])

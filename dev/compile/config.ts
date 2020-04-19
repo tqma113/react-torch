@@ -1,7 +1,8 @@
 import path from 'path'
-import { Configuration, IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
+import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import babelConfig from '../babel'
+import type { Configuration } from 'webpack'
 
 function getConfig(dir: string): Configuration {
   const src = path.resolve(dir, 'src')

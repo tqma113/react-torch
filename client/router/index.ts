@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from "react-dom"
-import { Key } from 'path-to-regexp'
 import invariant from 'tiny-invariant'
 import createMatcher from './createMatcher'
-import createHistory, { Listener } from './createHistory'
-import { Page } from '../../page/index'
+import createHistory from './createHistory'
+import type { Key } from 'path-to-regexp'
+import type { Listener } from './createHistory'
+import type { Page } from '../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]

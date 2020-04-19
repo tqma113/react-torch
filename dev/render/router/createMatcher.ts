@@ -1,5 +1,6 @@
-import pathToRegexp, { Key, Path } from 'path-to-regexp'
-import { DraftRoute } from './index'
+import pathToRegexp from 'path-to-regexp'
+import type { Key, Path } from 'path-to-regexp'
+import type { DraftRoute } from './index'
 
 export interface Route {
   keys: Key[]

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Key } from 'path-to-regexp'
 import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
-import parsePath from './parsePath';
+import parsePath from './parsePath'
+import type { Key } from 'path-to-regexp'
 
 export type DraftRoute = {
   keys?: Key[]

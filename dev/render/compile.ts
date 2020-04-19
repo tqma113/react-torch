@@ -4,7 +4,7 @@ import path from 'path'
 import webpack from 'webpack'
 import getConfig from './config'
 import { matchExternals, getExternals } from './utils'
-import { Router } from './router'
+import type { Router } from './router'
 
 export default function compile(dir: string, router: Router) {
   const config = getConfig(dir)

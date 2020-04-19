@@ -1,6 +1,6 @@
 import React from 'react'
-import { Currings } from '../../../store/index'
-import { State, Actions } from './Model'
+import type { Currings } from '../../../store/index'
+import type { State, Actions } from './Model'
 
 type Props = {
   state: State,

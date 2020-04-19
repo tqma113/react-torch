@@ -21,6 +21,9 @@ export default function start(_dir: string, _port?: string) {
   const app = createServer(dir)
   const server = http.createServer(app)
 
+  // page router
+  app.use(render(dir))
+
   // static file route
   app.use(
     '/static',
@@ -33,9 +36,6 @@ export default function start(_dir: string, _port?: string) {
     res.locals.assets = require(assertPath)
     next()
   })
-
-  // page router
-  app.use(render(dir))
   
   // error handler
   const errorHandler: express.ErrorRequestHandler 

@@ -22,15 +22,18 @@ export default function dev(_dir?: string, _port?: string) {
   const app = createServer(dir)
   const server = http.createServer(app)
 
+  // page router
+  app.use(render(dir))
+
+  // client compile
+  const [compiler, middleware] = compile(dir)
+  app.use(middleware)
+
   // static file route
   app.use(
     '/static',
     express.static(path.resolve(dir, '.torch', 'client'))
   )
-
-  // client compile
-  const [compiler, middleware] = compile(dir)
-  app.use(middleware)
 
   // webpack-hot-middleware
   app.use(
@@ -46,9 +49,6 @@ export default function dev(_dir?: string, _port?: string) {
     )
     next()
   })
-
-  // page router
-  app.use(render(dir))
   
   // error handler
   const errorHandler: express.ErrorRequestHandler 

@@ -12,7 +12,7 @@ export default function getConfig(dir: string): Configuration {
 		context: src,
     entry: {
       routes: src,
-      view: path.resolve(__dirname, './view')
+      view: path.resolve(__dirname, '../view')
     },
     output: {
 			path: path.join(dir, '.torch', 'server'),
@@ -38,7 +38,7 @@ export default function getConfig(dir: string): Configuration {
       minimize: false
     },
     performance: {
-      hints: false,
+      hints: 'warning',
       maxEntrypointSize: 400000,
     },
     resolve: {

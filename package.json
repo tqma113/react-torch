@@ -51,8 +51,8 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
   },
   "dependencies": {
     "@babel/core": "^7.6.2",
@@ -92,8 +92,6 @@
     "morgan": "^1.9.1",
     "path-to-regexp": "^3.1.0",
     "query-string": "^6.11.0",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
     "serve-favicon": "^2.5.0",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
@@ -127,6 +125,8 @@
     "@types/webpack-manifest-plugin": "^2.1.0",
     "jest": "^25.1.0",
     "nodemon": "^1.19.3",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
     "rimraf": "^3.0.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",

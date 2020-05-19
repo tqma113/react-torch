@@ -1,12 +1,12 @@
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
-import babelConfig from '../babel'
+import { babelConfig } from '../../config'
 import type { Configuration } from 'webpack'
+import type { IntegralTorchConfig } from 'type'
 
 
-export default function getConfig(dir: string): Configuration {
-  const src = path.resolve(dir, 'src')
+export default function getConfig(config: IntegralTorchConfig): Configuration {
   const manifestPluginOption: ManifestPlugin.Options = {
     fileName: './assets.json',
     map(
@@ -23,7 +23,7 @@ export default function getConfig(dir: string): Configuration {
   return {
     mode: 'production',
     target: 'web',
-    context: src,
+    context: config.src,
     entry: {
       index: [
         path.resolve(__dirname, '../../client/index'),
@@ -31,7 +31,7 @@ export default function getConfig(dir: string): Configuration {
     },
     devtool: 'cheap-module-eval-source-map',
     output: {
-      path: path.join(dir, '.torch', 'client'),
+      path: path.join(config.dir, '.torch', 'client'),
       filename: `js/[name]-[hash:6].js`,
       chunkFilename: `js/[name]-[hash:6].js`,
     },
@@ -63,7 +63,7 @@ export default function getConfig(dir: string): Configuration {
     },
     resolve: {
       alias: {
-        '@routes': path.resolve(dir, '.torch', 'server', 'routes.js')
+        '@routes': path.resolve(config.dir, '.torch', 'server', 'routes.js')
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],

@@ -4,33 +4,30 @@ import debug from 'debug'
 import express from 'express'
 import createServer from './server'
 import createRender from './render'
+import { mergeConfig } from '../config'
+import type { TorchConfig } from 'type'
 
 export type Result = {
   server: http.Server,
   app: express.Express
 }
 
-const PORT = '80'
+export default function start(draftConfig: TorchConfig) {
+  const config = mergeConfig(draftConfig, 'production')
 
-export default function start(_dir: string, _port?: string) {
-  const dir = _dir
-    ? path.resolve(process.cwd(), _dir)
-    : process.cwd()
-  const port = _port || PORT
-
-  const app = createServer(dir)
+  const app = createServer(config.dir)
   const server = http.createServer(app)
-  const render = createRender(dir)
+  const render = createRender(config)
 
   // static file route
   app.use(
     '/static',
-    express.static(path.resolve(dir, '.torch', 'client'))
+    express.static(path.resolve(config.dir, '.torch', 'client'))
   )
 
   // static assets
   app.use((req, res, next) => {
-    const assertPath = path.resolve(dir, '.torch', 'client', 'assets.json')
+    const assertPath = path.resolve(config.dir, '.torch', 'client', 'assets.json')
     res.locals.assets = require(assertPath)
     next()
   })
@@ -70,11 +67,11 @@ export default function start(_dir: string, _port?: string) {
       // handle specific listen errors with friendly messages
       switch (error.code) {
         case 'EACCES':
-          console.error(PORT + ' requires elevated privileges')
+          console.error(config.port + ' requires elevated privileges')
           process.exit(1)
           break
         case 'EADDRINUSE':
-          console.error(PORT + ' is already in use')
+          console.error(config.port + ' is already in use')
           process.exit(1)
           break
         default:
@@ -85,7 +82,7 @@ export default function start(_dir: string, _port?: string) {
 		/**
 		 * Listen on provided port, on all network interfaces.
 		 */
-		server.listen(port)
+		server.listen(config.port)
 		server.on('error', onError)
 		server.on('listening', onListening)
 		server.on('error', reject)

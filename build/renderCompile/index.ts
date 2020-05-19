@@ -1,10 +1,11 @@
-import getConfig from './config'
 import webpack from 'webpack'
+import getWebpackConfig from './webpackConfig'
+import type { IntegralTorchConfig } from 'type'
 
-export default function compileServer(dir: string) {
-  const config = getConfig(dir)
+export default function compileServer(config: IntegralTorchConfig) {
+  const webpackConfig = getWebpackConfig(config)
   return new Promise((resolve, reject) => {
-    webpack(config, (error, stats) => {
+    webpack(webpackConfig, (error, stats) => {
       if (error) {
         reject(error)
       } else {

@@ -5,10 +5,11 @@ import webpack from 'webpack'
 import getConfig from './config'
 import { matchExternals, getExternals } from './utils'
 import type { Router } from './router'
+import type { IntegralTorchConfig } from 'type'
 
-export default function compile(dir: string, router: Router) {
-  const config = getConfig(dir)
-  const compiler = webpack(config)
+export default function compile(config: IntegralTorchConfig, router: Router) {
+  const webpackConfig = getConfig(config)
+  const compiler = webpack(webpackConfig)
 
   compiler.watch({}, (err, stats) => {
     if (err) throw err
@@ -17,8 +18,8 @@ export default function compile(dir: string, router: Router) {
     statsObj.errors.forEach(console.error)
     statsObj.warnings.forEach(console.warn)
 
-    const rootPath = path.resolve(dir, '.torch', 'server')
-    const externals = getExternals(dir)
+    const rootPath = path.resolve(config.dir, '.torch', 'server')
+    const externals = getExternals(config.dir)
 
     function virtualRequire(modulePath: string) {
       if (matchExternals(externals, modulePath)) {
@@ -66,7 +67,7 @@ export default function compile(dir: string, router: Router) {
       `)(virtualRequire)
     }
 
-    const outputPath = path.join(dir, '.torch', 'server', 'routes.js')
+    const outputPath = path.join(config.dir, '.torch', 'server', 'routes.js')
     const sourceCode: string = fs.readFileSync(outputPath, 'utf-8')
     const newModule = runCode(sourceCode)
     if (newModule) {

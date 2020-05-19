@@ -6,7 +6,7 @@ import compression from 'compression'
 // import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
-import babelConfig from '../babel'
+import { babelConfig } from '../../config'
 
 export default function createServer(dir: string) {
   const app = express()

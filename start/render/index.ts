@@ -3,9 +3,10 @@ import createRouter from './router'
 import getRoutes from './getRoutes'
 import type { DraftRoute } from './router'
 import type { Request, Response, NextFunction } from 'express'
+import type { IntegralTorchConfig } from 'type'
 
-export default function createRender(dir: string) {
-  let routes: DraftRoute[] = getRoutes(dir)
+export default function createRender(config: IntegralTorchConfig) {
+  let routes: DraftRoute[] = getRoutes(config)
 
   if (!routes) {
     throw new Error('You need run `npm run build` before `npm start`!')
@@ -16,7 +17,7 @@ export default function createRender(dir: string) {
   return function (req: Request, res: Response, next: NextFunction) {
     const render = (content: string) => {
       const data = {
-        src: path.resolve(dir, '.torch', 'server', 'routes'),
+        src: path.resolve(config.dir, '.torch', 'server', 'routes'),
         publicPath: '/static',
         ssr: true,
         content,

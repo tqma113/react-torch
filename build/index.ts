@@ -1,17 +1,15 @@
-import path from 'path'
 import compile from './compile'
 import renderCompile from './renderCompile'
+import { mergeConfig } from '../config'
+import type { TorchConfig } from 'type'
 
-export default function build(_dir?: string) {
-  const dir = _dir
-    ? path.resolve(process.cwd(), _dir)
-    : process.cwd()
-
-    renderCompile(dir)
-      .then(() => compile(dir))
-      .then(() => console.log('Compile finished!'))
-      .then(() => process.exit())
-      .catch(err => {
-        throw err
-      })
+export default function build(draftConfig: TorchConfig) {
+  const config = mergeConfig(draftConfig)
+  renderCompile(config)
+    .then(() => compile(config))
+    .then(() => console.log('Compile finished!'))
+    .then(() => process.exit())
+    .catch(err => {
+      throw err
+    })
 }

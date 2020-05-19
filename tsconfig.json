@@ -29,7 +29,10 @@
       "jest",
       "node"
     ],
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "type": ["./index.ts"]
+    }
   },
   "include": [
     "bin",
@@ -39,6 +42,7 @@
     "page",
     "start",
     "store",
+    "config",
     "index.ts"
   ]
 }

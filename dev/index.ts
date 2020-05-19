@@ -5,6 +5,8 @@ import express from 'express'
 import createServer from './server'
 import compile from './compile'
 import createRender from './render'
+import { mergeConfig } from '../config'
+import type { TorchConfig } from 'type'
 
 export type Result = {
   server: http.Server,
@@ -13,24 +15,21 @@ export type Result = {
 
 const PORT = '3000'
 
-export default function dev(_dir?: string, _port?: string) {
-  const dir = _dir
-    ? path.resolve(process.cwd(), _dir)
-    : process.cwd()
-  const port = _port || PORT
-
-  const app = createServer(dir)
+export default function dev(draftConfig: TorchConfig) {
+  const config = mergeConfig(draftConfig)
+  
+  const app = createServer(config.dir)
   const server = http.createServer(app)
-  const render = createRender(dir)
+  const render = createRender(config)
 
   // client compile
-  const [compiler, middleware] = compile(dir)
+  const [compiler, middleware] = compile(config)
   app.use(middleware)
 
   // static file route
   app.use(
     '/static',
-    express.static(path.resolve(dir, '.torch', 'client'))
+    express.static(path.resolve(config.dir, '.torch', 'client'))
   )
 
   // webpack-hot-middleware
@@ -100,7 +99,7 @@ export default function dev(_dir?: string, _port?: string) {
 		/**
 		 * Listen on provided port, on all network interfaces.
 		 */
-		server.listen(port)
+		server.listen(config.port)
 		server.on('error', onError)
 		server.on('listening', onListening)
 		server.on('error', reject)

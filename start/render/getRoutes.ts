@@ -2,10 +2,11 @@ import vm from 'vm'
 import fs from 'fs'
 import path from 'path'
 import { matchExternals, getExternals } from './utils'
+import type { IntegralTorchConfig } from 'type'
 
-export default function getRoutes(dir: string) {
-    const rootPath = path.resolve(dir, '.torch', 'server')
-    const externals = getExternals(dir)
+export default function getRoutes(config: IntegralTorchConfig) {
+    const rootPath = path.resolve(config.dir, '.torch', 'server')
+    const externals = getExternals(config.dir)
 
     function virtualRequire(modulePath: string) {
         if (matchExternals(externals, modulePath)) {
@@ -53,7 +54,7 @@ export default function getRoutes(dir: string) {
       `)(virtualRequire)
     }
 
-    const outputPath = path.join(dir, '.torch', 'server', 'routes.js')
+    const outputPath = path.join(config.dir, '.torch', 'server', 'routes.js')
     const sourceCode: string = fs.readFileSync(outputPath, 'utf-8')
     let module = runCode(sourceCode)
     return module.default || module

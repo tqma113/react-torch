@@ -1,21 +1,21 @@
 import path from 'path'
-import babelConfig from '../babel'
+import { babelConfig } from '../../config'
 import { getExternals } from './utils'
 import type { Configuration } from 'webpack'
+import type { IntegralTorchConfig } from 'type'
 
-export default function getConfig(dir: string): Configuration {
-  const src = path.resolve(dir, 'src')
+export default function getConfig(config: IntegralTorchConfig): Configuration {
   return {
     target: 'node',
     mode: 'production',
     watch: true,
-		context: src,
+		context: config.src,
     entry: {
-      routes: src,
+      routes: config.src,
       view: path.resolve(__dirname, './view')
     },
     output: {
-			path: path.join(dir, '.torch', 'server'),
+			path: path.join(config.dir, '.torch', 'server'),
       filename: '[name].js',
 			libraryTarget: 'commonjs2'
     },
@@ -45,6 +45,6 @@ export default function getConfig(dir: string): Configuration {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx']
     },
-    externals: getExternals(dir)
+    externals: getExternals(config.dir)
   }
 }

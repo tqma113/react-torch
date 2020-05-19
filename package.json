@@ -27,7 +27,8 @@
     "test:dev": "node -r ts-node/register ./example/dev.ts",
     "test:build": "node -r ts-node/register ./example/build.ts",
     "start": "nodemon",
-    "build": "rimraf dist&&tsc"
+    "build": "rimraf dist&&tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",

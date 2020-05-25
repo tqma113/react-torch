@@ -54,6 +54,7 @@ export type Store<
   listen: (listener: Listener<S, AS>) => void;
   readonly state: S;
   readonly actions: Currings<S, AS>;
+  readonly UNSAFE_setState: (s: S) => void
 }
 
 function getKeys<T extends {}>(o: T): Array<keyof T>{
@@ -64,7 +65,6 @@ export function createStore<
   S extends object,
   AS extends Actions<S>
 >(state: S, actions: AS) {
-  
 
   const curryActions = getKeys(actions).reduce(
     (obj, actionType) => {
@@ -158,6 +158,15 @@ export function createStore<
     },
     get actions(): Currings<S, AS> {
       return curryActions
+    },
+    UNSAFE_setState(s: S) {
+      updateState(
+        s,
+        state,
+        [],
+        (new Date()).getTime(),
+        (new Date()).getTime()
+      )
     }
   }
 }

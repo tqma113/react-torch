@@ -9,13 +9,14 @@ export default function createRender (config: IntegralTorchConfig) {
   compile(config, router)
 
   return function (req: Request, res: Response, next: NextFunction) {
-    const render = (content: string) => {
+    const render = (content: string, state: object) => {
       const data = {
         src: path.resolve(config.dir, '.torch', 'server', 'routes'),
         publicPath: '/static',
-        ssr: true,
+        ssr: config.ssr,
         content,
-        container: 'root'
+        container: 'root',
+        state
       }
       res.render('view', data)
     }

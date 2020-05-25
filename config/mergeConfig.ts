@@ -20,11 +20,13 @@ export default function merge(config: TorchConfig, env: Env = 'development'): In
   const mdlws = config.mdlws
     ? path.resolve(dir, config.mdlws)
     : path.resolve(dir, MDLWS)
+  const ssr = config.ssr === undefined ? true : config.ssr
 
   return {
     dir,
     port,
     src,
-    mdlws
+    mdlws,
+    ssr
   }
 }

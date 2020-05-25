@@ -6,19 +6,19 @@ import $routes from "@routes"
 
 declare global {
   interface Window {
-    // __SRC__: string
     __SSR__: boolean,
     __CONTAINER__: string
+    __STATE__: string
   }
 }
 
-// const src = window.__SRC__
-const ssr = window.__SSR__
+const ssr = Boolean(window.__SSR__)
 const container = window.__CONTAINER__
+const state = JSON.parse(window.__STATE__)
 
 // const routes = require(src)
 
-const router = createRouter($routes, container, ssr)
+const router = createRouter($routes, container, ssr, state)
 router.start()
 
 history.pushState({ idx: 0 }, '')

@@ -3,15 +3,16 @@ import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import parsePath from './parsePath'
 import type { Key } from 'path-to-regexp'
+import type { Page } from '../../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: () => Promise<React.ComponentType>
+  page: Page
 }
 
-export type Render = (content: string) => void
+export type Render = (content: string, state: object) => void
 
 export type Task = {
   url: string,
@@ -30,7 +31,7 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
   let isBlock = true
   let tasks: Task[] = []
 
-  async function getContent(url: string) {
+  async function getContentAndState(url: string) {
     const urlObj = parsePath(url)
     const matches = matcher(urlObj.pathname || '/')
 
@@ -40,9 +41,10 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       const [view, store] = matches.page
       const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
-      return content
+      const state = store.state
+      return [content, state] as const
     } catch (err) {
-      return JSON.stringify(err)
+      throw err
     }
   }
 
@@ -55,11 +57,12 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       if (isBlock) {
         isBlock = false
         tasks.forEach(async ({ url, render, next }) => {
-          const content = await getContent(url)
-          if (content === null) {
+          const contentAndState = await getContentAndState(url)
+          if (contentAndState === null) {
             next()
           } else {
-            render(content)
+            const [content, state] = contentAndState
+            render(content, state)
           }
         })
       }
@@ -74,12 +77,13 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
         tasks.push(task)
         console.log(`${url} will render after compile`)
       } else {
-        const content = await getContent(url)
-        if (content === null) {
-          next()
-        } else {
-          render(content)
-        }
+        const contentAndState = await getContentAndState(url)
+          if (contentAndState === null) {
+            next()
+          } else {
+            const [content, state] = contentAndState
+            render(content, state)
+          }
       }
     }
   }

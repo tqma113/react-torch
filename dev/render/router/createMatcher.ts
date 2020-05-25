@@ -1,12 +1,13 @@
 import pathToRegexp from 'path-to-regexp'
 import type { Key, Path } from 'path-to-regexp'
 import type { DraftRoute } from './index'
+import type { Page } from '../../../page/index'
 
 export interface Route {
   keys: Key[]
   regexp: RegExp
   path: Path
-  page: unknown
+  page: Page
 }
 
 export interface Params {
@@ -16,7 +17,7 @@ export interface Params {
 export interface Matches {
   path: Path
   params: Params
-  page: any
+  page: Page
 }
 
 export interface Matcher {
@@ -27,15 +28,15 @@ export default function createMatcher(routes: DraftRoute[]): Matcher {
   const finalRoutes: Route[] = routes.map(createRoute)
   const routeLength: number = finalRoutes.length
   const matcher: Matcher = (pathname) => {
-    let finalPathname = cleanPath(pathname)
+    const finalPathname = cleanPath(pathname)
     for (let i = 0; i < routeLength; i++) {
-      let route: Route = finalRoutes[i]
-      let strMatches: RegExpExecArray | null = route.regexp.exec(finalPathname)
+      const route: Route = finalRoutes[i]
+      const strMatches: RegExpExecArray | null = route.regexp.exec(finalPathname)
       if (!strMatches) {
         continue
       }
-      let params: Params = getParams(strMatches, route.keys)
-      let page = route.page
+      const params: Params = getParams(strMatches, route.keys)
+      const page = route.page
 
       return {
         path: route.path,

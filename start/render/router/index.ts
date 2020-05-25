@@ -3,12 +3,13 @@ import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import parsePath from './parsePath'
 import type { Key } from 'path-to-regexp'
+import type { Page } from '../../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: () => Promise<React.ComponentType>
+  page: Page
 }
 
 export type Render = (content: string) => void

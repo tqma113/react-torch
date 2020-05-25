@@ -13,6 +13,7 @@ export type TorchConfig = {
   dir?: string
   src?: string
   mdlws?: string
+  ssr?: boolean
 }
 
 export type IntegralTorchConfig = Required<TorchConfig>

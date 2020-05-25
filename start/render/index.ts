@@ -19,7 +19,7 @@ export default function createRender(config: IntegralTorchConfig) {
       const data = {
         src: path.resolve(config.dir, '.torch', 'server', 'routes'),
         publicPath: '/static',
-        ssr: true,
+        ssr: config.ssr,
         content,
         container: 'root'
       }

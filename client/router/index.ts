@@ -11,7 +11,7 @@ export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: Page<any, any>
+  page: Page
 }
 
 const DEFAULT_PAGE: Page<{}, {}> = [
@@ -22,11 +22,11 @@ const DEFAULT_PAGE: Page<{}, {}> = [
 export default function createRouter(
   routes: DraftRoute[],
   container: string,
-  ssr: boolean
+  ssr: boolean,
+  state: object
 ) {
   const history = createHistory()
   const matcher = createMatcher(routes)
-  
 
   return {
     start() {
@@ -41,6 +41,11 @@ export default function createRouter(
         }
 
         const [view, store] = page
+
+        if (ssr) {
+          store.UNSAFE_setState(state)
+        }
+
         const element: React.ReactElement<{}> = React.createElement(view, { store })
         const containerElement = document.querySelector(`#${container}`)
 

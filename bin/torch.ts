@@ -4,10 +4,7 @@ import program from 'commander'
 import dev from '../dev'
 import build from '../build'
 import start from '../start'
-import {
-  mergeConfig,
-  requireConfig
-} from '../config'
+import { requireConfig } from '../config'
 
 program
   .version('1.0.12')
@@ -32,15 +29,12 @@ program
           draftConfig.port = port
         }
 
-        const internalConfig = mergeConfig(draftConfig)
-        dev(internalConfig)
+        dev(draftConfig)
       } else {
-        const internalConfig = mergeConfig({ dir, port })
-        dev(internalConfig)
+        dev({ dir, port })
       }
     } else {
-      const internalConfig = mergeConfig({ dir, port })
-      dev(internalConfig)
+      dev({ dir, port })
     }
   })
 
@@ -63,15 +57,12 @@ program
           draftConfig.port = port
         }
 
-        const internalConfig = mergeConfig(draftConfig)
-        build(internalConfig)
+        build(draftConfig)
       } else {
-        const internalConfig = mergeConfig({ dir, port })
-        build(internalConfig)
+        build({ dir, port })
       }
     } else {
-      const internalConfig = mergeConfig({ dir, port })
-      build(internalConfig)
+      build({ dir, port })
     }
   })
 
@@ -80,6 +71,7 @@ program
   .description(`start production mode at ${process.cwd()}`)
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
+  .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config }) => {
     if (config) {
       let draftConfig = requireConfig(config)
@@ -93,15 +85,12 @@ program
           draftConfig.port = port
         }
 
-        const internalConfig = mergeConfig(draftConfig)
-        start(internalConfig)
+        start(draftConfig)
       } else {
-        const internalConfig = mergeConfig({ dir, port })
-        start(internalConfig)
+        start({ dir, port })
       }
     } else {
-      const internalConfig = mergeConfig({ dir, port })
-      start(internalConfig)
+      start({ dir, port })
     }
   })
 

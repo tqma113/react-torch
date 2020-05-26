@@ -9,7 +9,8 @@ export interface ViewProps {
   assets: {
     index: string,
     vendor: string
-  }
+  },
+  state: object
 }
 
 export default function Layout({
@@ -17,7 +18,8 @@ export default function Layout({
   container,
   content,
   publicPath,
-  assets
+  assets,
+  state
 }: ViewProps) {
   return (
     <html>
@@ -33,6 +35,7 @@ export default function Layout({
             (function() {
               window.__SSR__ = "${ssr}"
               window.__CONTAINER__ = "${container}"
+              window.__STATE__ = '${JSON.stringify(state)}'
             })()
           `
           }}

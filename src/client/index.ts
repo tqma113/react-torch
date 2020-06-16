@@ -1,5 +1,6 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
+
 import createRouter from './router'
 // @ts-ignore
 import $routes from "@routes"

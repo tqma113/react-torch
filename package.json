@@ -23,14 +23,14 @@
     "tsconfig.json"
   ],
   "scripts": {
-    "test:start": "node -r ts-node/register ./example/start.ts",
-    "test:dev": "node -r ts-node/register ./example/dev.ts",
-    "test:build": "node -r ts-node/register ./example/build.ts",
     "start": "nodemon",
     "prebuild": "rimraf dist",
     "build": "tsc",
     "postbuild": "cp ./src/torch.d.ts ./dist/torch.d.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:start": "node -r ts-node/register ./example/start.ts",
+    "test:dev": "node -r ts-node/register ./example/dev.ts",
+    "test:build": "node -r ts-node/register ./example/build.ts"
   },
   "repository": {
     "type": "git",

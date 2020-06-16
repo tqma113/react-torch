@@ -1,4 +1,4 @@
-import { createPage } from '../../../page/index'
+import { createPage } from '../../../src/page/index'
 import store from './Model'
 import View from './View'
 

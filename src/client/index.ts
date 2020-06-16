@@ -1,5 +1,5 @@
-// import "core-js/stable"
-// import "regenerator-runtime/runtime"
+import "core-js/stable"
+import "regenerator-runtime/runtime"
 import createRouter from './router'
 // @ts-ignore
 import $routes from "@routes"
@@ -15,8 +15,6 @@ declare global {
 const ssr = Boolean(window.__SSR__)
 const container = window.__CONTAINER__
 const state = JSON.parse(window.__STATE__)
-
-// const routes = require(src)
 
 const router = createRouter($routes, container, ssr, state)
 router.start()

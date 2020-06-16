@@ -1,6 +1,6 @@
 import path from 'path'
-import { start } from '../index'
+import { build } from '../src/index'
 
-start({
+build({
   src: path.resolve(__dirname)
 })

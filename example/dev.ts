@@ -1,5 +1,5 @@
 import path from 'path'
-import dev from '../dev/index'
+import dev from '../src/dev/index'
 
 dev({
   dir: path.resolve(__dirname)

@@ -12,7 +12,7 @@ export type DraftRoute = {
   page: Page
 }
 
-export type Render = (content: string) => void
+export type Render = (content: string, state: object) => void
 
 export type Task = {
   url: string,
@@ -39,19 +39,21 @@ export default function createRender(draftRoutes: DraftRoute[]) {
       const [view, store] = matches.page
       const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
-      return content
+      const state = store.state
+      return [content, state] as const
     } catch (err) {
-      return JSON.stringify(err)
+      return [JSON.stringify(err), {}] as const
     }
   }
 
   return {
     tryRender: async function tryRender(url: string, render: Render, next: () => void) {
-      const content = await getContent(url)
-      if (content === null) {
+      const result = await getContent(url)
+      if (result === null) {
         next()
       } else {
-        render(content)
+        const [content, state] = result
+        render(content, state)
       }
     }
   }

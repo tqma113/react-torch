@@ -44,7 +44,7 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       const state = store.state
       return [content, state] as const
     } catch (err) {
-      throw err
+      return [JSON.stringify(err), {}] as const
     }
   }
 

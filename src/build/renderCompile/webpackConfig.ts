@@ -8,7 +8,6 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
   return {
     target: 'node',
     mode: 'production',
-    watch: true,
 		context: config.src,
     entry: {
       routes: config.src,

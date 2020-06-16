@@ -1,5 +1,5 @@
 import path from 'path'
-import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
+import { IgnorePlugin } from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { babelConfig } from '../../config'
 import type { Configuration } from 'webpack'
@@ -32,14 +32,17 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     devtool: 'cheap-module-eval-source-map',
     output: {
       path: path.join(config.dir, '.torch', 'client'),
-      filename: `js/[name]-[hash:6].js`,
-      chunkFilename: `js/[name]-[hash:6].js`,
+      filename: `js/[name]-[contenthash:6].js`,
+      chunkFilename: `js/[name]-[contenthash:6].js`,
     },
     optimization: {
       splitChunks: {
         chunks: 'all',
         name: 'vendor'
-      }
+      },
+      minimizer: [
+        
+      ]
     },
     performance: {
       hints: false,
@@ -74,8 +77,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     plugins: [
       new ManifestPlugin(manifestPluginOption),
-      new IgnorePlugin(/^\.\/locale$/, /moment$/ ),
-      new HotModuleReplacementPlugin(),
+      new IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
   }
 }

@@ -30,19 +30,21 @@
     "test": "jest",
     "test:start": "node -r ts-node/register ./example/start.ts",
     "test:dev": "node -r ts-node/register ./example/dev.ts",
-    "test:build": "node -r ts-node/register ./example/build.ts"
+    "test:build": "node -r ts-node/register ./example/build.ts",
+    "debug:start": "node --inspect-brk -r ts-node/register ./example/start.ts",
+    "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Monsooon/react-torch.git"
+    "url": "git+https://github.com/tqma113/react-torch.git"
   },
-  "keywords": [],
+  "keywords": ["react", "ssr", "server-side-render"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Monsooon/react-torch/issues"
+    "url": "https://github.com/tqma113/react-torch/issues"
   },
-  "homepage": "https://github.com/Monsooon/react-torch#readme",
+  "homepage": "https://github.com/tqma113/react-torch#readme",
   "lint-staged": {
     "*.js": [
       "prettier --write",

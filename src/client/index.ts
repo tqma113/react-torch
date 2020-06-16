@@ -1,9 +1,10 @@
-import "core-js/stable"
-import "regenerator-runtime/runtime"
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
 
 import createRouter from './router'
 // @ts-ignore
 import $routes from "@routes"
+console.log($routes)
 
 declare global {
   interface Window {

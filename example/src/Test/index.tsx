@@ -7,7 +7,7 @@ const About = usePage(() => {
     console.log('about update')
     return <div>about {state.a}</div>
   }
-  
+
   const store = createStore(
     {
       a: 1
@@ -16,8 +16,6 @@ const About = usePage(() => {
   )
 
   return [View, store]
-}
-  
-)
+})
 
 export default About

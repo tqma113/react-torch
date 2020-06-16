@@ -34,7 +34,7 @@ function createPage<
       null
     ] as PageWithoutStore
   } else {
-    return [
+    return () => [
       ({ store }: { store: Store<S, AS> }) =>  <View state={store.state} actions={store.actions} />,
       store
     ]

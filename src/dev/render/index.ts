@@ -20,6 +20,6 @@ export default function createRender (config: IntegralTorchConfig) {
       }
       res.render('view', data)
     }
-    router.tryRender(req.url, render, next)
+    router.tryRender(render, req, res, next)
   }
 }

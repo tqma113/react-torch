@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import parsePath from './parsePath'
+import type { Request, Response, NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
 import type { Page } from '../../../page/index'
 
@@ -15,7 +16,8 @@ export type DraftRoute = {
 export type Render = (content: string, state: object) => void
 
 export type Task = {
-  url: string,
+  req: Request,
+  res: Response,
   render: Render,
   next: () => void
 }
@@ -23,7 +25,7 @@ export type Task = {
 export type Router = {
   readonly isBlock: boolean
   setRoutes(draftRoutes: DraftRoute[]): void
-  tryRender(url: string, render: Render, next: () => void): Promise<void>
+  tryRender(render: Render, req: Request, res: Response, next: NextFunction): Promise<void>
 }
 
 export default function createRouter(draftRoutes: DraftRoute[]): Router {
@@ -31,14 +33,14 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
   let isBlock = true
   let tasks: Task[] = []
 
-  async function getContentAndState(url: string) {
-    const urlObj = parsePath(url)
+  async function getContentAndState(req: Request, res: Response) {
+    const urlObj = parsePath(req.url)
     const matches = matcher(urlObj.pathname || '/')
 
     if (matches === null) return null
 
     try {
-      const [view, store] = matches.page
+      const [view, store] = matches.page()
       const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
       const state = store.state
@@ -56,8 +58,8 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       matcher = createMatcher(draftRoutes)
       if (isBlock) {
         isBlock = false
-        tasks.forEach(async ({ url, render, next }) => {
-          const contentAndState = await getContentAndState(url)
+        tasks.forEach(async ({ req, res, render, next }) => {
+          const contentAndState = await getContentAndState(req, res)
           if (contentAndState === null) {
             next()
           } else {
@@ -67,17 +69,18 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
         })
       }
     },
-    async tryRender(url: string, render: Render, next: () => void) {
+    async tryRender(render, req, res, next) {
       if (isBlock) {
         const task: Task = {
-          url,
+          req,
+          res,
           render,
           next
         }
         tasks.push(task)
-        console.log(`${url} will render after compile`)
+        console.log(`${req.url} will render after compile`)
       } else {
-        const contentAndState = await getContentAndState(url)
+        const contentAndState = await getContentAndState(req, res)
           if (contentAndState === null) {
             next()
           } else {

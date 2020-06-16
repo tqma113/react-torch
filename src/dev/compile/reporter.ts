@@ -1,8 +1,8 @@
-import webpackDevMiddleware from 'webpack-dev-middleware'
+import type { Options, ReporterOptions } from 'webpack-dev-middleware'
 
 export default function reporter(
-	middlewareOptions: webpackDevMiddleware.Options,
-	options: webpackDevMiddleware.ReporterOptions
+	middlewareOptions: Options,
+	options: ReporterOptions
 ): void {
 	const { log, state, stats } = options
 	if (state) {

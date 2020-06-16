@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "outDir": "dist",
     "declaration": true,
     "sourceMap": false,
@@ -25,24 +25,12 @@
       "dom.iterable",
       "dom"
     ],
-    "types": [
-      "jest",
-      "node"
-    ],
-    "rootDir": ".",
+    "rootDir": "./src",
     "paths": {
-      "type": ["./index.ts"]
+      "type": ["src/index.ts"]
     }
   },
   "include": [
-    "bin",
-    "build",
-    "client",
-    "dev",
-    "page",
-    "start",
-    "store",
-    "config",
-    "index.ts"
+    "src"
   ]
 }

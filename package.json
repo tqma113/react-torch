@@ -1,6 +1,6 @@
 {
   "name": "react-torch",
-  "version": "1.1.0-0",
+  "version": "1.1.0-1",
   "description": "A lib to server-side render with react.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -27,7 +27,9 @@
     "test:dev": "node -r ts-node/register ./example/dev.ts",
     "test:build": "node -r ts-node/register ./example/build.ts",
     "start": "nodemon",
-    "build": "rimraf dist&&tsc",
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "postbuild": "cp ./src/torch.d.ts ./dist/torch.d.ts",
     "test": "jest"
   },
   "repository": {

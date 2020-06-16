@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('./dist/bin/torch.js')
+require('../dist/bin/torch.js')

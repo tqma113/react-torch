@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "bin": {
-    "torch": "./dist/bin/torch.js"
+    "torch": "./bin/torch.js"
   },
   "files": [
     "dist",

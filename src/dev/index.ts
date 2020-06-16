@@ -35,7 +35,9 @@ export default function dev(draftConfig: TorchConfig) {
   // webpack-hot-middleware
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
-      log: false
+      log: false,
+      quiet: true,
+      noInfo: true
     })
   )
 

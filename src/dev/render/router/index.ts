@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
-import parsePath from './parsePath'
-import type { Request, Response, NextFunction } from 'express'
+import createHistory from '../../../history/memory'
+import type { NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
+import type { ServerContext } from '../../../index'
 import type { Page } from '../../../page/index'
 
 export type DraftRoute = {
@@ -16,8 +17,7 @@ export type DraftRoute = {
 export type Render = (content: string, state: object) => void
 
 export type Task = {
-  req: Request,
-  res: Response,
+  context: ServerContext,
   render: Render,
   next: () => void
 }
@@ -25,7 +25,7 @@ export type Task = {
 export type Router = {
   readonly isBlock: boolean
   setRoutes(draftRoutes: DraftRoute[]): void
-  tryRender(render: Render, req: Request, res: Response, next: NextFunction): Promise<void>
+  tryRender(render: Render, context: ServerContext, next: NextFunction): Promise<void>
 }
 
 export default function createRouter(draftRoutes: DraftRoute[]): Router {
@@ -33,14 +33,16 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
   let isBlock = true
   let tasks: Task[] = []
 
-  async function getContentAndState(req: Request, res: Response) {
-    const urlObj = parsePath(req.url)
-    const matches = matcher(urlObj.pathname || '/')
+  async function getContentAndState(context: ServerContext) {
+    const history = createHistory()
+    history.push(context.req.url)
+    const location = history.location
+    const matches = matcher(location.pathname || '/')
 
     if (matches === null) return null
 
     try {
-      const [view, store] = matches.page()
+      const [view, store] = matches.page(location, context)
       const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
       const state = store.state
@@ -58,8 +60,8 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       matcher = createMatcher(draftRoutes)
       if (isBlock) {
         isBlock = false
-        tasks.forEach(async ({ req, res, render, next }) => {
-          const contentAndState = await getContentAndState(req, res)
+        tasks.forEach(async ({ context, render, next }) => {
+          const contentAndState = await getContentAndState(context)
           if (contentAndState === null) {
             next()
           } else {
@@ -69,18 +71,17 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
         })
       }
     },
-    async tryRender(render, req, res, next) {
+    async tryRender(render, context, next) {
       if (isBlock) {
         const task: Task = {
-          req,
-          res,
+          context,
           render,
           next
         }
         tasks.push(task)
-        console.log(`${req.url} will render after compile`)
+        console.log(`${context.req.url} will render after compile`)
       } else {
-        const contentAndState = await getContentAndState(req, res)
+        const contentAndState = await getContentAndState(context)
           if (contentAndState === null) {
             next()
           } else {

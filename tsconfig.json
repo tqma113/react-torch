@@ -25,12 +25,12 @@
       "dom.iterable",
       "dom"
     ],
-    "rootDir": "./src",
-    "paths": {
-      "type": ["src/index.ts"]
-    }
+    "rootDir": "./src"
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "dist"
   ]
 }

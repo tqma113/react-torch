@@ -1,3 +1,5 @@
+/// <reference path="../torch.d.ts" />
+
 import compile from './compile'
 import renderCompile from './renderCompile'
 import { mergeConfig } from '../config'

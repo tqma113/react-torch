@@ -1,3 +1,5 @@
+/// <reference path="../torch.d.ts" />
+
 import path from 'path'
 import http from 'http'
 import debug from 'debug'
@@ -13,7 +15,7 @@ export type Result = {
 }
 
 export default function start(draftConfig: TorchConfig) {
-  const config = mergeConfig(draftConfig, 'production')
+  const config = mergeConfig(draftConfig)
 
   const app = createServer(config.dir)
   const server = http.createServer(app)

@@ -1,7 +1,7 @@
 import path from 'path'
 import type {
   TorchConfig,
-  IntegralTorchConfig, Env
+  IntegralTorchConfig
 } from '../index'
 
 const DEVELOPMENT_PORT = '3000'
@@ -9,11 +9,21 @@ const PRODUCTION_PORT = '80'
 const SRC = 'src'
 const MDLWS = 'middlewares'
 
-export default function merge(config: TorchConfig, env: Env = 'development'): IntegralTorchConfig {
+export default function merge(config: TorchConfig): IntegralTorchConfig {
+  if (process.env) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+  } else {
+    process.env = {
+      NODE_ENV: 'development'
+    }
+  }
+
+  globalThis.__DEV__ = process.env.NODE_ENV === 'development'
+
   const dir = config.dir
     ? path.resolve(process.cwd(), config.dir)
     : process.cwd()
-  const port = config.port || (env === 'development' ? DEVELOPMENT_PORT : PRODUCTION_PORT)
+  const port = config.port || (process.env.NODE_ENV === 'development' ? DEVELOPMENT_PORT : PRODUCTION_PORT)
   const src = config.src
     ? path.resolve(dir, config.src)
     : path.resolve(dir, SRC)

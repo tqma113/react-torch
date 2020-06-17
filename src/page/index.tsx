@@ -1,7 +1,8 @@
 export { default as createPage } from './createPage'
 export { default as usePage } from './usePage'
 
-import type { Location, Context } from '../index'
+import type { Context } from '../index'
+import type { Location } from '../history'
 import type { Store, Actions } from '../store/index'
 
 export type Page<

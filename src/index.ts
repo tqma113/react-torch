@@ -9,7 +9,6 @@ export * from '../store';
 export * from '../page'
 
 import type { Request, Response } from 'express'
-import type { Path } from 'path-to-regexp';
 
 export type TorchConfig = {
   port?: string
@@ -22,25 +21,19 @@ export type TorchConfig = {
 export type IntegralTorchConfig = Required<TorchConfig>
 
 export type Env = 'development' | 'production' | 'test'
-export type Protocal = 'http' | 'https'
 export type Side = 'client' | 'server'
 
-export type Location = {
-  pattern: Path,
-  protocal: Protocal,
-  host: string,
-  port: string,
-  path: string,
-  pathname: string,
-  search: string,
-  hash: string
+export type ClientContext = {
+  ssr: boolean,
+  env: Env,
+  side: 'client'
 }
-
-export type Context = {
+export type ServerContext = {
   req: Request,
   res: Response,
   ssr: boolean,
   env: Env,
-  basename: string,
-  side: Side
+  side: 'server'
 }
+
+export type Context = ClientContext | ServerContext

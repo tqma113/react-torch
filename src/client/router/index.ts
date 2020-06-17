@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from "react-dom"
 import invariant from 'tiny-invariant'
 import createMatcher from './createMatcher'
-import createHistory from './createHistory'
+import createHistory from '../../history/browser'
 import type { Key } from 'path-to-regexp'
-import type { Listener } from './createHistory'
+import type { Context } from '../../index'
+import type { Listener } from '../../history'
 import type { Page } from '../../page/index'
 
 export type DraftRoute = {
@@ -14,7 +15,7 @@ export type DraftRoute = {
   page: Page
 }
 
-const DEFAULT_PAGE: Page<{}, {}> = [
+const DEFAULT_PAGE: Page<{}, {}> = () => [
   () => React.createElement('div', {}, ''),
   { state: {}, actions: {} } as any
 ]
@@ -22,7 +23,7 @@ const DEFAULT_PAGE: Page<{}, {}> = [
 export default function createRouter(
   routes: DraftRoute[],
   container: string,
-  ssr: boolean,
+  context: Context,
   state: object
 ) {
   const history = createHistory()
@@ -40,9 +41,9 @@ export default function createRouter(
           page = matches.page
         }
 
-        const [view, store] = page
+        const [view, store] = page(location, context)
 
-        if (ssr) {
+        if (context.ssr) {
           store.UNSAFE_setState(state)
         }
 
@@ -54,7 +55,7 @@ export default function createRouter(
           `The container: ${container} is not exist`
         )
 
-        if (ssr) {
+        if (context.ssr) {
           ReactDOM.hydrate(element, containerElement)
         } else {
           ReactDOM.render(element, containerElement)

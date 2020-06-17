@@ -3,7 +3,7 @@ import createRouter from './router'
 import getRoutes from './getRoutes'
 import type { DraftRoute } from './router'
 import type { Request, Response, NextFunction } from 'express'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig, ClientContext, ServerContext } from '../../index'
 
 export default function createRender(config: IntegralTorchConfig) {
   let routes: DraftRoute[] = getRoutes(config)
@@ -16,16 +16,28 @@ export default function createRender(config: IntegralTorchConfig) {
 
   return function (req: Request, res: Response, next: NextFunction) {
     const render = (content: string, state: object) => {
+      const context: ClientContext = {
+        ssr: config.ssr,
+        env: process.env.NODE_ENV,
+        side: 'client'
+      }
       const data = {
         src: path.resolve(config.dir, '.torch', 'server', 'routes'),
         publicPath: '/static',
-        ssr: config.ssr,
+        context,
         content,
         container: 'root',
         state
       }
       res.render('view', data)
     }
-    router.tryRender(req.url, render, next)
+    const context: ServerContext = {
+      req,
+      res,
+      ssr: config.ssr,
+      env: process.env.NODE_ENV,
+      side: 'server'
+    }
+    router.tryRender(render, context, next)
   }
 }

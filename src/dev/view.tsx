@@ -1,7 +1,8 @@
 import React from 'react'
+import type { Context } from '../index'
 
 export interface ViewProps {
-  ssr: boolean,
+  context: Context,
   src: string,
   container: string,
   content: string,
@@ -14,7 +15,7 @@ export interface ViewProps {
 }
 
 export default function Layout({
-  ssr,
+  context,
   container,
   content,
   publicPath,
@@ -33,8 +34,9 @@ export default function Layout({
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
-              window.__SSR__ = "${ssr}"
-              window.__CONTAINER__ = "${container}"
+              window.__DEV__ = ${context.env === 'development'}
+              window.__CONTEXT__ = '${JSON.stringify(context)}'
+              window.__CONTAINER__ = '${container}'
               window.__STATE__ = '${JSON.stringify(state)}'
             })()
           `

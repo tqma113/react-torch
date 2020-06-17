@@ -1,3 +1,5 @@
+/// <reference path="../torch.d.ts" />
+
 import path from 'path'
 import http from 'http'
 import debug from 'debug'

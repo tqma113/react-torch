@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
-import parsePath from './parsePath'
+import createHistory from '../../../history/memory'
 import type { Key } from 'path-to-regexp'
 import type { Page } from '../../../page/index'
+import type { ServerContext } from '../../../index'
 
 export type DraftRoute = {
   keys?: Key[]
@@ -21,22 +22,22 @@ export type Task = {
 }
 
 export type Router = {
-  readonly isBlock: boolean
-  setRoutes(draftRoutes: DraftRoute[]): void
-  tryRender(url: string, render: Render, next: () => void): Promise<void>
+  tryRender(render: Render, context: ServerContext, next: () => void): Promise<void>
 }
 
-export default function createRender(draftRoutes: DraftRoute[]) {
+export default function createRender(draftRoutes: DraftRoute[]): Router {
   let matcher = createMatcher(draftRoutes)
 
-  async function getContent(url: string) {
-    const urlObj = parsePath(url)
-    const matches = matcher(urlObj.pathname || '/')
+  function getContentAndState(context: ServerContext) {
+    const history = createHistory()
+    history.push(context.req.url)
+    const location = history.location
+    const matches = matcher(location.pathname || '/')
 
     if (matches === null) return null
 
     try {
-      const [view, store] = matches.page()
+      const [view, store] = matches.page(location, context)
       const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
       const state = store.state
@@ -47,8 +48,8 @@ export default function createRender(draftRoutes: DraftRoute[]) {
   }
 
   return {
-    tryRender: async function tryRender(url: string, render: Render, next: () => void) {
-      const result = await getContent(url)
+    tryRender: async (render, context, next) => {
+      const result = getContentAndState(context)
       if (result === null) {
         next()
       } else {

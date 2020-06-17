@@ -26,10 +26,46 @@ export default function createRouter(
   context: Context,
   state: object
 ) {
-  const history = createHistory()
+  const history = createHistory({ window })
   const matcher = createMatcher(routes)
 
   return {
+    init() {
+      let page = DEFAULT_PAGE
+      const location = history.location
+      const matches = matcher(location.pathname)
+
+      if (matches === null) {
+        throw new Error('Unknow page')
+      } else {
+        page = matches.page
+      }
+
+      const [view, store] = page(history, context)
+
+      if (context.ssr) {
+        store.UNSAFE_setState(state)
+      }
+
+      const element: React.ReactElement<{}> = React.createElement(view, { store })
+      const containerElement = document.querySelector(`#${container}`)
+
+      invariant(
+        containerElement !== null,
+        `The container: ${container} is not exist`
+      )
+
+      if (context.ssr) {
+        ReactDOM.hydrate(element, containerElement)
+      } else {
+        ReactDOM.render(element, containerElement)
+      }
+
+      store.listen(() => {
+        const element: React.ReactElement<{}> = React.createElement(view, { store })
+        ReactDOM.render(element, containerElement)
+      })
+    },
     start() {
       const listener: Listener = ({ location }) => {
         let page = DEFAULT_PAGE
@@ -41,11 +77,11 @@ export default function createRouter(
           page = matches.page
         }
 
-        const [view, store] = page(location, context)
-
-        if (context.ssr) {
-          store.UNSAFE_setState(state)
+        const ctx = {
+          ...context,
+          ssr: false
         }
+        const [view, store] = page(history, ctx)
 
         const element: React.ReactElement<{}> = React.createElement(view, { store })
         const containerElement = document.querySelector(`#${container}`)
@@ -55,17 +91,14 @@ export default function createRouter(
           `The container: ${container} is not exist`
         )
 
-        if (context.ssr) {
-          ReactDOM.hydrate(element, containerElement)
-        } else {
-          ReactDOM.render(element, containerElement)
-        }
+        ReactDOM.render(element, containerElement)
 
         store.listen(() => {
           const element: React.ReactElement<{}> = React.createElement(view, { store })
           ReactDOM.render(element, containerElement)
         })
       }
+
       history.listen(listener)
     }
   }

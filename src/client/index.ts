@@ -19,7 +19,5 @@ const container = window.__CONTAINER__
 const state = JSON.parse(window.__STATE__)
 
 const router = createRouter($routes, container, context, state)
+router.init()
 router.start()
-
-history.pushState({ idx: 0 }, '')
-history.back()

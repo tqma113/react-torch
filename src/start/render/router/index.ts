@@ -37,7 +37,7 @@ export default function createRender(draftRoutes: DraftRoute[]): Router {
     if (matches === null) return null
 
     try {
-      const [view, store] = matches.page(location, context)
+      const [view, store] = matches.page(history, context)
       const element = React.createElement(view, { store })
       const content = ReactDOMServer.renderToString(element)
       const state = store.state

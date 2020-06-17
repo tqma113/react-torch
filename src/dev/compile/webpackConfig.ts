@@ -62,7 +62,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     },
     resolve: {
       alias: {
-        '@routes': path.resolve(config.dir, '.torch', 'server', 'routes.js')
+        '@routes': config.src
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],

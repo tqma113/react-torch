@@ -1,38 +1,24 @@
 import React from 'react'
-import type { Store, Actions } from '../store/index'
-import type { Page, PageWithoutStore } from './index'
+import type {  Actions } from '../store/index'
+import type { PageCreator } from './index'
+import type { History } from '../history'
+import type { Context } from '../index'
 
-function createPage(
-  View: React.ComponentType<{}>,
-): PageWithoutStore
+export type StateFromPageCreator<PC extends PageCreator<any, any>> = PC extends PageCreator<infer S, any> ? S : never
+export type ActionsFromPageCreator<PC extends PageCreator<any, any>> = PC extends PageCreator<any, infer AS> ? AS : never
 
-function createPage<
-  S extends object = {},
-  AS extends Actions<S> = {}
->(
-  View: React.ComponentType,
-  store: Store<S, AS>
-): Page<S, AS>
-
-function createPage<
-  S extends object = {},
-  AS extends Actions<S> = {}
->(
-  View: React.ComponentType,
-  store?: Store<S, AS>
-): Page<S, AS> | PageWithoutStore {
-  if (!store) {
+function usePage<
+  Creator extends PageCreator<any, any>,
+  S extends Object = StateFromPageCreator<Creator>,
+  AS extends Actions<S> = ActionsFromPageCreator<Creator>
+>(creator: Creator): PageCreator<S, AS> {
+  return (history: History, context: Context) => {
+    const [View, store] = creator(history, context)
     return [
-      // @ts-ignore
-      () =>  <View />,
-      null
-    ] as PageWithoutStore
-  } else {
-    return () => [
       () =>  <View />,
       store
     ]
   }
 }
 
-export default createPage
+export default usePage

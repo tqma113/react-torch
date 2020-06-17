@@ -15,6 +15,8 @@ const View = () => {
   return <div>about {state.a}</div>
 }
 
-const About = createPage(View, store)
+const About = createPage(() => {
+  return [View, store]
+})
 
 export default About

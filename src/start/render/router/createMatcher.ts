@@ -1,13 +1,13 @@
 import pathToRegexp from 'path-to-regexp'
 import type { Key, Path } from 'path-to-regexp'
 import type { DraftRoute } from './index'
-import type { Page } from '../../../page/index'
+import type { PageCreator } from '../../../page/index'
 
 export interface Route {
   keys: Key[]
   regexp: RegExp
   path: Path
-  page: Page
+  page: PageCreator<any, any>
 }
 
 export interface Params {
@@ -17,7 +17,7 @@ export interface Params {
 export interface Matches {
   path: Path
   params: Params
-  page: Page
+  page: PageCreator<any, any>
 }
 
 export interface Matcher {

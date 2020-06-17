@@ -1,8 +1,8 @@
 import React from 'react'
-import { usePage } from '../../../src/page/index'
+import { createPage } from '../../../src/page/index'
 import { createStore } from '../../../src/store/index'
 
-const About = usePage((history, context) => {
+const About = createPage((history, context) => {
   const store = createStore(
     {
       a: 1

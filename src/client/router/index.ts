@@ -6,16 +6,16 @@ import createHistory from '../../history/browser'
 import type { Key } from 'path-to-regexp'
 import type { Context } from '../../index'
 import type { Listener } from '../../history'
-import type { Page } from '../../page/index'
+import type { PageCreator } from '../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: Page
+  page: PageCreator<any, any>
 }
 
-const DEFAULT_PAGE: Page<{}, {}> = () => [
+const DEFAULT_PAGE: PageCreator<{}, {}> = () => [
   () => React.createElement('div', {}, ''),
   { state: {}, actions: {} } as any
 ]
@@ -47,7 +47,7 @@ export default function createRouter(
         store.UNSAFE_setState(state)
       }
 
-      const element: React.ReactElement<{}> = React.createElement(view, { store })
+      const element: React.ReactElement<{}> = React.createElement(view)
       const containerElement = document.querySelector(`#${container}`)
 
       invariant(
@@ -62,7 +62,7 @@ export default function createRouter(
       }
 
       store.listen(() => {
-        const element: React.ReactElement<{}> = React.createElement(view, { store })
+        const element: React.ReactElement<{}> = React.createElement(view)
         ReactDOM.render(element, containerElement)
       })
     },
@@ -83,7 +83,7 @@ export default function createRouter(
         }
         const [view, store] = page(history, ctx)
 
-        const element: React.ReactElement<{}> = React.createElement(view, { store })
+        const element: React.ReactElement<{}> = React.createElement(view)
         const containerElement = document.querySelector(`#${container}`)
 
         invariant(
@@ -94,7 +94,7 @@ export default function createRouter(
         ReactDOM.render(element, containerElement)
 
         store.listen(() => {
-          const element: React.ReactElement<{}> = React.createElement(view, { store })
+          const element: React.ReactElement<{}> = React.createElement(view)
           ReactDOM.render(element, containerElement)
         })
       }

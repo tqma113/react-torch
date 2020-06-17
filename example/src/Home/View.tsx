@@ -7,7 +7,7 @@ export default function() {
   const actions = store.actions
   const handleClick = () => {
   }
-  return (
+  return () => (
     <div>
       Home {state.count} <button onClick={() => actions.INCREASE()}>Increate</button>
       <hr/>

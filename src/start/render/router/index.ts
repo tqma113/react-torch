@@ -3,14 +3,14 @@ import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import createHistory from '../../../history/memory'
 import type { Key } from 'path-to-regexp'
-import type { Page } from '../../../page/index'
+import type { PageCreator } from '../../../page/index'
 import type { ServerContext } from '../../../index'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: Page
+  page: PageCreator<any ,any>
 }
 
 export type Render = (content: string, state: object) => void
@@ -38,7 +38,7 @@ export default function createRender(draftRoutes: DraftRoute[]): Router {
 
     try {
       const [view, store] = matches.page(history, context)
-      const element = React.createElement(view, { store })
+      const element = React.createElement(view)
       const content = ReactDOMServer.renderToString(element)
       const state = store.state
       return [content, state] as const

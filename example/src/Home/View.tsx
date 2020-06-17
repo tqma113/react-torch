@@ -1,13 +1,9 @@
 import React from 'react'
-import type { Currings } from '../../../src/store/index'
-import type { State, Actions } from './Model'
+import store from './Model'
 
-type Props = {
-  state: State,
-  actions: Currings<State, Actions>
-}
-
-export default function({ state, actions }: Props) {
+export default function() {
   console.log('update')
+  const state = store.state
+  const actions = store.actions
   return <div>Home {state.count} <button onClick={() => actions.INCREASE()}>Increate</button></div>
 }

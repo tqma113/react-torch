@@ -1,5 +1,6 @@
 import Home from './Home'
 import About from './About'
+import Test from './Test'
 
 export default [
   {
@@ -9,5 +10,9 @@ export default [
   {
     path: '/about',
     page: About
+  },
+  {
+    path: '/test',
+    page: Test
   }
 ]

@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Context } from '../../index'
+import type { Context, TORCH_DATA } from '../../index'
 
 export interface ViewProps {
   context: Context,
@@ -22,6 +22,11 @@ export default function Layout({
   assets,
   state
 }: ViewProps) {
+  const data: TORCH_DATA = {
+    context,
+    container,
+    state
+  }
   return (
     <html>
       <head>
@@ -31,13 +36,15 @@ export default function Layout({
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id={`${container}`} dangerouslySetInnerHTML={{ __html: content }}></div>
         <script
+          id="__TORCH_DATA__"
+          type="application/json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
+        <script
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
               window.__DEV__ = ${context.env === 'development'}
-              window.__CONTEXT__ = '${JSON.stringify(context)}'
-              window.__CONTAINER__ = '${container}'
-              window.__STATE__ = '${JSON.stringify(state)}'
             })()
           `
           }}

@@ -4,20 +4,37 @@ import 'regenerator-runtime/runtime'
 import createRouter from './router'
 // @ts-ignore
 import $routes from "@routes"
+import type { TORCH_DATA } from '../index'
 
 declare global {
   interface Window {
-    __CONTEXT__: string
-    __CONTAINER__: string
-    __STATE__: string
+    __TORCH_DATA__: TORCH_DATA
     __DEV__: boolean
   }
 }
+const dataScript = document.getElementById('__NEXT_DATA__') as HTMLScriptElement | null
+if (dataScript) {
+  const jsonStr = dataScript.textContent
+  if (jsonStr) {
+    try {
+      const data: TORCH_DATA = JSON.parse(jsonStr)
 
-const context = JSON.parse(window.__CONTEXT__)
-const container = window.__CONTAINER__
-const state = JSON.parse(window.__STATE__)
+      window.__TORCH_DATA__ = data
 
-const router = createRouter($routes, container, context, state)
-router.init()
-router.start()
+      const router = createRouter(
+        $routes,
+        data.container,
+        data.context,
+        data.state
+      )
+      router.init()
+      router.start()
+    } catch (err) {
+      console.log(`Init with data: ${jsonStr} failed!`)
+      console.log(err)
+    }
+  } else {
+  }
+} else {
+  console.error('Render fail. Can\' find __NEXT_DATA__ script element!')
+}

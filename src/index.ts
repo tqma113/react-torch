@@ -43,6 +43,12 @@ export type ServerEntry = {
   mdlw?: string
 }
 
+export type TORCH_DATA = {
+  context: Context,
+  container: string,
+  state: object
+}
+
 export type Context = ClientContext | ServerContext
 
 export type Mdlw = (app: Application, server: Server) => void

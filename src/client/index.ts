@@ -12,7 +12,7 @@ declare global {
     __DEV__: boolean
   }
 }
-const dataScript = document.getElementById('__NEXT_DATA__') as HTMLScriptElement | null
+const dataScript = document.getElementById('__TORCH_DATA__') as HTMLScriptElement | null
 if (dataScript) {
   const jsonStr = dataScript.textContent
   if (jsonStr) {
@@ -36,5 +36,5 @@ if (dataScript) {
   } else {
   }
 } else {
-  console.error('Render fail. Can\' find __NEXT_DATA__ script element!')
+  console.error('Render fail. Can\' find __TORCH_DATA__ script element!')
 }

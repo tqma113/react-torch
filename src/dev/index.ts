@@ -9,7 +9,7 @@ import compile from './compile'
 import createRender from './render'
 import { mergeConfig } from '../config'
 import { hasModuleFile } from './render/utils'
-import type { TorchConfig } from '../index'
+import type { TorchConfig, Mdlw } from '../index'
 
 export type Result = {
   server: http.Server,
@@ -23,16 +23,23 @@ export default function dev(draftConfig: TorchConfig) {
   
   const app = createServer(config.dir)
   const server = http.createServer(app)
-  
+
   createRender(config).then(render => {
     // custome middlewares
     if (config.mdlw) {
-      const middlewarePath = path.resolve(config.dir, '.torch', 'server', 'mdlw.js')
+      const middlewarePath = path.resolve(
+        config.dir,
+        '.torch',
+        'server',
+        'mdlw.js'
+      )
+
       if (hasModuleFile(middlewarePath)) {
-        let middlewares = require(middlewarePath)
-        middlewares = middlewares.default || middlewares
+        const middlewares: Record<string, Mdlw> = require(middlewarePath)
+
         Object.keys(middlewares).forEach(key => {
           let middleware = middlewares[key]
+
           if (typeof middleware === 'function') {
             middleware(app, server)
           } else {

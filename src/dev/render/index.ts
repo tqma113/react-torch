@@ -17,7 +17,7 @@ export default async function createRender (config: IntegralTorchConfig) {
       }
       const data = {
         src: path.resolve(config.dir, '.torch', 'server', 'routes'),
-        publicPath: '/static',
+        publicPath: '/__torch',
         context,
         content,
         container: 'root',

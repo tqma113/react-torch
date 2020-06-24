@@ -20,7 +20,8 @@ const PORT = '3000'
 
 export default function dev(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)
-  
+
+  // start
   const app = createServer(config.dir)
   const server = http.createServer(app)
 
@@ -34,12 +35,12 @@ export default function dev(draftConfig: TorchConfig) {
 
     // static file route
     app.use(
-      '/static',
+      '/__torch',
       express.static(path.resolve(config.dir, '.torch', 'client'))
     )
 
     app.use(
-      '/',
+      '/static',
       express.static(path.resolve(config.dir, 'public'))
     )
 

@@ -7,9 +7,9 @@ import express from 'express'
 import createServer from './server'
 import compile from './compile'
 import createRender from './render'
+import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
-import { hasModuleFile } from './render/utils'
-import type { TorchConfig, Mdlw } from '../index'
+import type { TorchConfig } from '../index'
 
 export type Result = {
   server: http.Server,
@@ -26,30 +26,7 @@ export default function dev(draftConfig: TorchConfig) {
 
   createRender(config).then(render => {
     // custome middlewares
-    if (config.mdlw) {
-      const middlewarePath = path.resolve(
-        config.dir,
-        '.torch',
-        'server',
-        'mdlw.js'
-      )
-
-      if (hasModuleFile(middlewarePath)) {
-        const middlewares: Record<string, Mdlw> = require(middlewarePath)
-
-        Object.keys(middlewares).forEach(key => {
-          let middleware = middlewares[key]
-
-          if (typeof middleware === 'function') {
-            middleware(app, server)
-          } else {
-            console.warn(`The middelware: ${middleware} is not a function`)
-          }
-        })
-      } else {
-        console.warn(`The middelware module: ${config.mdlw} is invalid`)
-      }
-    }
+    attachMiddleware(app, server, config)
 
     // client compile
     const [compiler, middleware] = compile(config)
@@ -59,6 +36,11 @@ export default function dev(draftConfig: TorchConfig) {
     app.use(
       '/static',
       express.static(path.resolve(config.dir, '.torch', 'client'))
+    )
+
+    app.use(
+      '/',
+      express.static(path.resolve(config.dir, 'public'))
     )
 
     // webpack-hot-middleware

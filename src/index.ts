@@ -37,12 +37,6 @@ export type ServerContext = {
   side: 'server'
 }
 
-export type ServerEntry = {
-  routes: string,
-  view: string,
-  mdlw?: string
-}
-
 export type TORCH_DATA = {
   context: Context,
   container: string,

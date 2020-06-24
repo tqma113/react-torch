@@ -2,7 +2,13 @@ import path from 'path'
 import { babelConfig } from '../../config'
 import { getExternals, hasModuleFile } from './utils'
 import type { Configuration } from 'webpack'
-import type { IntegralTorchConfig, ServerEntry } from '../../index'
+import type { IntegralTorchConfig } from '../../index'
+
+export type ServerEntry = {
+  routes: string,
+  view: string,
+  mdlw?: string
+}
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   let entry: ServerEntry = {

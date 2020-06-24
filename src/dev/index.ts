@@ -8,6 +8,7 @@ import createServer from './server'
 import compile from './compile'
 import createRender from './render'
 import { mergeConfig } from '../config'
+import { hasModuleFile } from './render/utils'
 import type { TorchConfig } from '../index'
 
 export type Result = {
@@ -22,45 +23,65 @@ export default function dev(draftConfig: TorchConfig) {
   
   const app = createServer(config.dir)
   const server = http.createServer(app)
-  const render = createRender(config)
-
-  // client compile
-  const [compiler, middleware] = compile(config)
-  app.use(middleware)
-
-  // static file route
-  app.use(
-    '/static',
-    express.static(path.resolve(config.dir, '.torch', 'client'))
-  )
-
-  // webpack-hot-middleware
-  app.use(
-    require(`webpack-hot-middleware`)(compiler, {
-      log: false,
-      quiet: true,
-      noInfo: true
-    })
-  )
-
-  // 开发模式用 webpack-dev-middleware 获取 assets
-  app.use((req, res, next) => {
-    res.locals.assets = getAssets(
-      res.locals.webpackStats.toJson().assetsByChunkName
-    )
-    next()
-  })
-
-  // page router
-  app.use(render)
   
-  // error handler
-  const errorHandler: express.ErrorRequestHandler 
-    = (err: any, req, res, next) => {
-    res.status(err.status || 500)
-    res.json(err.message)
-  }
-  app.use(errorHandler)
+  createRender(config).then(render => {
+    // custome middlewares
+    if (config.mdlw) {
+      const middlewarePath = path.resolve(config.dir, '.torch', 'server', 'mdlw.js')
+      if (hasModuleFile(middlewarePath)) {
+        let middlewares = require(middlewarePath)
+        middlewares = middlewares.default || middlewares
+        Object.keys(middlewares).forEach(key => {
+          let middleware = middlewares[key]
+          if (typeof middleware === 'function') {
+            middleware(app, server)
+          } else {
+            console.warn(`The middelware: ${middleware} is not a function`)
+          }
+        })
+      } else {
+        console.warn(`The middelware module: ${config.mdlw} is invalid`)
+      }
+    }
+
+    // client compile
+    const [compiler, middleware] = compile(config)
+    app.use(middleware)
+
+    // static file route
+    app.use(
+      '/static',
+      express.static(path.resolve(config.dir, '.torch', 'client'))
+    )
+
+    // webpack-hot-middleware
+    app.use(
+      require(`webpack-hot-middleware`)(compiler, {
+        log: false,
+        quiet: true,
+        noInfo: true
+      })
+    )
+
+    // 开发模式用 webpack-dev-middleware 获取 assets
+    app.use((req, res, next) => {
+      res.locals.assets = getAssets(
+        res.locals.webpackStats.toJson().assetsByChunkName
+      )
+      next()
+    })
+
+    // page router
+    app.use(render)
+
+    // error handler
+    const errorHandler: express.ErrorRequestHandler 
+      = (err: any, req, res, next) => {
+      res.status(err.status || 500)
+      res.json(err.message)
+    }
+    app.use(errorHandler)
+  })
 
   return new Promise<Result>((resolve, reject) => {
 		/**

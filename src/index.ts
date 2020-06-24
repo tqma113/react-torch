@@ -8,13 +8,14 @@ export { default as dev } from './dev/index'
 export * from '../store';
 export * from '../page'
 
-import type { Request, Response } from 'express'
+import type { Server } from 'http'
+import type { Request, Response, Application } from 'express'
 
 export type TorchConfig = {
   port?: string
   dir?: string
   src?: string
-  mdlws?: string
+  mdlw?: string | false
   ssr?: boolean
 }
 
@@ -36,4 +37,12 @@ export type ServerContext = {
   side: 'server'
 }
 
+export type ServerEntry = {
+  routes: string,
+  view: string,
+  mdlw?: string
+}
+
 export type Context = ClientContext | ServerContext
+
+export type Mdlw = (app: Application, server: Server) => void

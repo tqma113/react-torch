@@ -7,7 +7,7 @@ import type {
 const DEVELOPMENT_PORT = '3000'
 const PRODUCTION_PORT = '80'
 const SRC = 'src'
-const MDLWS = 'middlewares'
+const MDLW = 'mdlw'
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
   if (process.env) {
@@ -27,16 +27,18 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
   const src = config.src
     ? path.resolve(dir, config.src)
     : path.resolve(dir, SRC)
-  const mdlws = config.mdlws
-    ? path.resolve(dir, config.mdlws)
-    : path.resolve(dir, MDLWS)
+  const mdlw = config.mdlw === false
+    ? config.mdlw
+    : config.mdlw
+      ? path.resolve(dir, config.mdlw)
+      : path.resolve(dir, MDLW)
   const ssr = config.ssr === undefined ? true : config.ssr
 
   return {
     dir,
     port,
     src,
-    mdlws,
+    mdlw,
     ssr
   }
 }

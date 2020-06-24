@@ -2,17 +2,26 @@ import path from 'path'
 import { babelConfig } from '../../config'
 import { getExternals } from './utils'
 import type { Configuration } from 'webpack'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig, ServerEntry } from '../../index'
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
+  let entry: ServerEntry = {
+    routes: config.src,
+    view: path.resolve(__dirname, '../view'),
+  }
+
+  if (config.mdlw) {
+    if (hasModuleFile(config.mdlw)) {
+      entry.mdlw = config.mdlw
+    }
+  }
+
   return {
     target: 'node',
     mode: 'production',
-		context: config.src,
-    entry: {
-      routes: config.src,
-      view: path.resolve(__dirname, './view')
-    },
+    context: config.src,
+    // @ts-ignore
+    entry,
     output: {
 			path: path.join(config.dir, '.torch', 'server'),
       filename: '[name].js',
@@ -46,4 +55,12 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     externals: getExternals(config.dir)
   }
+}
+
+export function hasModuleFile(filename: string): boolean {
+	try {
+		return !!require.resolve(filename)
+	} catch (_) {
+		return false
+	}
 }

@@ -1,19 +1,30 @@
 import path from 'path'
 import { babelConfig } from '../../config'
-import { getExternals } from './utils'
+import { getExternals, hasModuleFile } from './utils'
 import type { Configuration } from 'webpack'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig, ServerEntry } from '../../index'
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
+  let entry: ServerEntry = {
+    routes: config.src,
+    view: path.resolve(__dirname, '../view'),
+  }
+
+  if (config.mdlw) {
+    if (hasModuleFile(config.mdlw)) {
+      entry.mdlw = config.mdlw
+    } else {
+      console.warn(`The middleware path: ${config.mdlw} is invalid.`)
+    }
+  }
+
   return {
     target: 'node',
     mode: 'development',
     watch: true,
-		context: config.src,
-    entry: {
-      routes: config.src,
-      view: path.resolve(__dirname, '../view')
-    },
+    context: config.src,
+    // @ts-ignore
+    entry,
     output: {
 			path: path.join(config.dir, '.torch', 'server'),
       filename: '[name].js',

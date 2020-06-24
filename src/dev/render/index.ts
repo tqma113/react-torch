@@ -4,9 +4,9 @@ import compile from './compile'
 import type { Request, Response, NextFunction } from 'express'
 import type { IntegralTorchConfig, ServerContext, ClientContext } from '../../index'
 
-export default function createRender (config: IntegralTorchConfig) {
+export default async function createRender (config: IntegralTorchConfig) {
   const router = createRouter([])
-  compile(config, router)
+  await compile(config, router)
 
   return function (req: Request, res: Response, next: NextFunction) {
     const render = (content: string, state: object) => {

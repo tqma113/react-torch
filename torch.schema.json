@@ -17,7 +17,7 @@
       "description": "The main dir of code.",
       "type": "string"
     },
-    "mdlws": {
+    "mdlw": {
       "description": "The dir of middlewares.",
       "type": "string"
     },

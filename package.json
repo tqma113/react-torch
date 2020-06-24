@@ -21,7 +21,8 @@
     "store.js",
     "store.d.ts",
     "AUTHORS",
-    "tsconfig.json"
+    "tsconfig.json",
+    "torch.schema.json"
   ],
   "scripts": {
     "start": "nodemon",

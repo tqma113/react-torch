@@ -7,7 +7,7 @@ import type { Context } from '../index'
 export type StateFromPageCreator<PC extends PageCreator<any, any>> = PC extends PageCreator<infer S, any> ? S : never
 export type ActionsFromPageCreator<PC extends PageCreator<any, any>> = PC extends PageCreator<any, infer AS> ? AS : never
 
-function usePage<
+function createPage<
   Creator extends PageCreator<any, any>,
   S extends Object = StateFromPageCreator<Creator>,
   AS extends Actions<S> = ActionsFromPageCreator<Creator>
@@ -21,4 +21,4 @@ function usePage<
   }
 }
 
-export default usePage
+export default createPage

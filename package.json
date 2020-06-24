@@ -9,6 +9,7 @@
   },
   "files": [
     "dist",
+    "bin",
     "build.js",
     "build.d.ts",
     "dev.js",
@@ -31,9 +32,6 @@
     "test:start": "node -r ts-node/register ./example/start.ts",
     "test:dev": "node -r ts-node/register ./example/dev.ts",
     "test:build": "node -r ts-node/register ./example/build.ts",
-    "deno:start": "deno run ./example/start.ts",
-    "deno:dev": "deno run example/dev.ts",
-    "deno:build": "deno run ./example/build.ts",
     "debug:start": "node --inspect-brk -r ts-node/register ./example/start.ts",
     "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts"
   },

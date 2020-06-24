@@ -36,5 +36,5 @@ if (dataScript) {
   } else {
   }
 } else {
-  console.error('Render fail. Can\' find __TORCH_DATA__ script element!')
+  console.error('Render failed. Can\' find __TORCH_DATA__ script element!')
 }

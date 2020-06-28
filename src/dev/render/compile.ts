@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
 import getConfig from './webpackConfig'
-import { matchExternals, getExternals } from './utils'
+import { matchExternals, getExternals } from '../../utils'
 import type { Router } from './router'
 import type { IntegralTorchConfig } from '../../index'
 

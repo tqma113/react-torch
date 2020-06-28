@@ -52,7 +52,7 @@ export default function start(draftConfig: TorchConfig) {
   // static file route
   app.use(
     '/static',
-    express.static(path.resolve(config.dir, 'public'))
+    express.static(path.resolve(config.dir, '.torch', 'public'))
   )
 
   // static assets

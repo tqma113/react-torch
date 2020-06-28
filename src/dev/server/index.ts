@@ -41,8 +41,8 @@ export default function createServer(dir: string) {
   app.use(logger('dev'))
 
   // body parser
-  app.use(bodyParser())
-  app.use(bodyParser.urlencoded())
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: false }))
 
   // cookie parser
   app.use(cookieParser('torch'))

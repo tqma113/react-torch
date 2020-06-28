@@ -7,7 +7,7 @@ import express from 'express'
 import createServer from './server'
 import createRender from './render'
 import { mergeConfig } from '../config'
-import { hasModuleFile } from './render/utils'
+import { hasModuleFile } from '../utils'
 import type { TorchConfig, Mdlw } from '../index'
 
 export type Result = {
@@ -45,8 +45,14 @@ export default function start(draftConfig: TorchConfig) {
 
   // static file route
   app.use(
-    '/static',
+    '/__torch',
     express.static(path.resolve(config.dir, '.torch', 'client'))
+  )
+
+  // static file route
+  app.use(
+    '/static',
+    express.static(path.resolve(config.dir, 'public'))
   )
 
   // static assets

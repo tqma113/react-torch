@@ -1,8 +1,12 @@
-import path from 'path'
 import createRouter from './router/index';
 import compile from './compile'
 import type { Request, Response, NextFunction } from 'express'
-import type { IntegralTorchConfig, ServerContext, ClientContext } from '../../index'
+import type {
+  IntegralTorchConfig,
+  ServerContext,
+  ClientContext,
+  RenderData
+} from '../../index'
 
 export default async function createRender (config: IntegralTorchConfig) {
   const router = createRouter([])
@@ -15,8 +19,8 @@ export default async function createRender (config: IntegralTorchConfig) {
         env: process.env.NODE_ENV,
         side: 'client'
       }
-      const data = {
-        src: path.resolve(config.dir, '.torch', 'server', 'routes'),
+      const data: RenderData = {
+        title: config.title,
         publicPath: '/__torch',
         context,
         content,

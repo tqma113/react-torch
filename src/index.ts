@@ -10,6 +10,11 @@ export * from '../page'
 
 import type { Server } from 'http'
 import type { Request, Response, Application } from 'express'
+import type {
+  DocumentProps
+} from './document'
+
+export type RenderData = Omit<DocumentProps, 'assets'>
 
 export type TorchConfig = {
   port?: string
@@ -17,6 +22,7 @@ export type TorchConfig = {
   src?: string
   mdlw?: string | false
   ssr?: boolean
+  title?: string
 }
 
 export type IntegralTorchConfig = Required<TorchConfig>
@@ -46,3 +52,21 @@ export type TORCH_DATA = {
 export type Context = ClientContext | ServerContext
 
 export type Mdlw = (app: Application, server: Server) => void
+
+export type PreloadType = 'inner' | 'link'
+
+export type StylePreload = {
+  type: 'inner',
+  content: string
+} | {
+  type: 'link',
+  href: string
+}
+
+export type ScriptPreload = {
+  type: 'inner',
+  content: string,
+} | {
+  type: 'link',
+  src: string
+}

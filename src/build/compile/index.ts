@@ -4,6 +4,9 @@ import type { IntegralTorchConfig } from '../../index'
 
 export default function compileClient(config: IntegralTorchConfig) {
   const webpackConfig = getWebpackConfig(config)
+  
+  console.info(`Compiling client...`)
+  
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
       if (error) {
@@ -15,6 +18,8 @@ export default function compileClient(config: IntegralTorchConfig) {
             colors: true
           })
         )
+        console.info(`Compile client finish!\n`)
+
         resolve()
       }
     })

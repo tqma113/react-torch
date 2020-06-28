@@ -1,5 +1,5 @@
 import path from 'path'
-import { hasModuleFile } from './render/utils'
+import { hasModuleFile } from '../utils'
 import type { Server } from 'http'
 import type { Application } from 'express'
 import type { TorchConfig, Mdlw } from '../index'

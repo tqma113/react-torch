@@ -1,9 +1,13 @@
-import path from 'path'
 import createRouter from './router'
 import getRoutes from './getRoutes'
 import type { DraftRoute } from './router'
 import type { Request, Response, NextFunction } from 'express'
-import type { IntegralTorchConfig, ClientContext, ServerContext } from '../../index'
+import type {
+  IntegralTorchConfig,
+  ClientContext,
+  ServerContext,
+  RenderData
+} from '../../index'
 
 export default function createRender(config: IntegralTorchConfig) {
   let routes: DraftRoute[] = getRoutes(config)
@@ -21,9 +25,9 @@ export default function createRender(config: IntegralTorchConfig) {
         env: process.env.NODE_ENV,
         side: 'client'
       }
-      const data = {
-        src: path.resolve(config.dir, '.torch', 'server', 'routes'),
-        publicPath: '/static',
+      const data: RenderData = {
+        title: config.title,
+        publicPath: '/__torch',
         context,
         content,
         container: 'root',

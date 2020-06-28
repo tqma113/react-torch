@@ -4,6 +4,7 @@ import type {
   IntegralTorchConfig
 } from '../index'
 
+const TITLE = 'React Torch'
 const DEVELOPMENT_PORT = '3000'
 const PRODUCTION_PORT = '80'
 const SRC = 'src'
@@ -20,6 +21,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   globalThis.__DEV__ = process.env.NODE_ENV === 'development'
 
+  const title = config.title || TITLE
   const dir = config.dir
     ? path.resolve(process.cwd(), config.dir)
     : process.cwd()
@@ -35,6 +37,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
   const ssr = config.ssr === undefined ? true : config.ssr
 
   return {
+    title,
     dir,
     port,
     src,

@@ -9,6 +9,7 @@ import compile from './compile'
 import createRender from './render'
 import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
+import { rmTorchProjectFiles } from '../utils'
 import type { TorchConfig } from '../index'
 
 export type Result = {
@@ -20,6 +21,9 @@ const PORT = '3000'
 
 export default function dev(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)
+
+  // remove before
+  rmTorchProjectFiles(config.dir)
 
   // start
   const app = createServer(config.dir)
@@ -33,12 +37,13 @@ export default function dev(draftConfig: TorchConfig) {
     const [compiler, middleware] = compile(config)
     app.use(middleware)
 
-    // static file route
+    // client compiled static file route
     app.use(
       '/__torch',
       express.static(path.resolve(config.dir, '.torch', 'client'))
     )
 
+    // static file route
     app.use(
       '/static',
       express.static(path.resolve(config.dir, 'public'))

@@ -1,7 +1,7 @@
 import vm from 'vm'
 import fs from 'fs'
 import path from 'path'
-import { matchExternals, getExternals } from './utils'
+import { matchExternals, getExternals } from '../../utils'
 import type { IntegralTorchConfig } from '../../index'
 
 export default function getRoutes(config: IntegralTorchConfig) {

@@ -3,7 +3,7 @@ import express from 'express'
 import logger from "morgan"
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
-// import favicon from 'serve-favicon'
+import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
 
@@ -17,7 +17,8 @@ export default function createServer(dir: string) {
   app.use(compression())
 
   // favicon
-  // app.use(favicon(dir))
+  const favPath = path.join(dir, 'public', 'favicon.ico')
+  app.use(favicon(favPath))
 
   // view engine
   const viewsConfig = {
@@ -39,7 +40,7 @@ export default function createServer(dir: string) {
   app.use(bodyParser.urlencoded())
 
   // cookie parser
-  app.use(cookieParser('torch'))
+  app.use(cookieParser('__TORCH__'))
 
   return app
 }

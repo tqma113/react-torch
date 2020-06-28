@@ -1,6 +1,6 @@
 import path from 'path'
 
-export function getExternals(dir: string): string[] {
+export default function getExternals(dir: string): string[] {
   let dependencies: string[] = []
 
   let list: string[] = [
@@ -38,24 +38,4 @@ export function getExternals(dir: string): string[] {
   })
 
   return dependencies
-}
-
-export function matchExternals(
-  externals: string[],
-  modulePath: string
-): boolean {
-  for (let i = 0; i < externals.length; i++) {
-    if (modulePath.startsWith(externals[i])) {
-      return true
-    }
-  }
-  return false
-}
-
-export function hasModuleFile(filename: string): boolean {
-	try {
-		return !!require.resolve(filename)
-	} catch (_) {
-		return false
-	}
 }

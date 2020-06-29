@@ -30,7 +30,7 @@ export default function createRouter(
   const matcher = createMatcher(routes)
 
   return {
-    init() {
+    async init() {
       let page = DEFAULT_PAGE
       const location = history.location
       const matches = matcher(location.pathname)
@@ -38,7 +38,7 @@ export default function createRouter(
       if (matches === null) {
         throw new Error('Unknow page')
       } else {
-        page = matches.page
+        page = await loadPageCreator(matches.page)
       }
 
       const [view, store] = page(history, context)
@@ -67,14 +67,14 @@ export default function createRouter(
       })
     },
     start() {
-      const listener: Listener = ({ location }) => {
+      const listener: Listener = async ({ location }) => {
         let page = DEFAULT_PAGE
         const matches = matcher(location.pathname)
 
         if (matches === null) {
           throw new Error('Unknow page')
         } else {
-          page = matches.page
+          page = await loadPageCreator(matches.page)
         }
 
         const ctx = {
@@ -102,4 +102,20 @@ export default function createRouter(
       history.listen(listener)
     }
   }
+}
+
+async function loadPageCreator(draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>) {
+  let pageCreator: PageCreator<any, any>
+  if (isPromise(draftPageCreator)) {
+    pageCreator = await draftPageCreator
+  } else {
+    pageCreator = draftPageCreator
+  }
+
+  // @ts-ignore
+  return pageCreator.default || pageCreator
+}
+
+export function isPromise(obj: any): obj is Promise<any> {
+  return obj && obj.then && typeof obj.then === 'function'
 }

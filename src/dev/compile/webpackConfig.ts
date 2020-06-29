@@ -34,6 +34,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       path: path.join(config.dir, '.torch', 'client'),
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
+      publicPath: '__torch/',
       pathinfo: true,
     },
     optimization: {

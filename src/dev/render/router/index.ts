@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import createHistory from '../../../history/memory'
+import { isPromise } from '../../../utils'
 import type { NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
 import type { ServerContext } from '../../../index'
@@ -42,7 +43,8 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
     if (matches === null) return null
 
     try {
-      const [view, store] = matches.page(history, context)
+      const page = await loadPageCreator(matches.page)
+      const [view, store] = page(history, context)
       const element = React.createElement(view)
       const content = ReactDOMServer.renderToString(element)
       const state = store.state
@@ -82,13 +84,25 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
         console.log(`${context.req.url} will render after compile`)
       } else {
         const contentAndState = await getContentAndState(context)
-          if (contentAndState === null) {
-            next()
-          } else {
-            const [content, state] = contentAndState
-            render(content, state)
-          }
+        if (contentAndState === null) {
+          next()
+        } else {
+          const [content, state] = contentAndState
+          render(content, state)
+        }
       }
     }
   }
+}
+
+async function loadPageCreator(draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>) {
+  let pageCreator: PageCreator<any, any>
+  if (isPromise(draftPageCreator)) {
+    pageCreator = await draftPageCreator
+  } else {
+    pageCreator = draftPageCreator
+  }
+
+  // @ts-ignore
+  return pageCreator.default || pageCreator
 }

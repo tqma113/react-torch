@@ -7,7 +7,7 @@ export interface Route {
   keys: Key[]
   regexp: RegExp
   path: Path
-  page: PageCreator<any, any>
+  page: PageCreator<any, any> | Promise<PageCreator<any, any>>
 }
 
 export interface Params {
@@ -17,7 +17,7 @@ export interface Params {
 export interface Matches {
   path: Path
   params: Params
-  page: PageCreator<any, any>
+  page: PageCreator<any, any> | Promise<PageCreator<any, any>>
 }
 
 export interface Matcher {

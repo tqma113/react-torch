@@ -1,18 +1,18 @@
-import Home from './Home'
-import About from './About'
-import Test from './Test'
+// import Home from './Home'
+// import About from './About'
+// import Test from './Test'
 
 export default [
   {
     path: '/',
-    page: Home
+    page: import('./Home'),
   },
   {
     path: '/about',
-    page: About
+    page: import('./About'),
   },
   {
     path: '/test',
-    page: Test
+    page: import('./Test')
   }
 ]

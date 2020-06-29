@@ -1,6 +1,7 @@
 import path from 'path'
 import { IgnorePlugin } from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { babelConfig } from '../../config'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
@@ -77,7 +78,13 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     plugins: [
       new ManifestPlugin(manifestPluginOption),
-      new IgnorePlugin(/^\.\/locale$/, /moment$/)
+      new IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: 'css/[name].css',
+        chunkFilename: 'css/[id].css',
+      }),
     ]
   }
 }

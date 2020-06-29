@@ -27,7 +27,7 @@ export default function createRender(config: IntegralTorchConfig) {
       }
       const data: RenderData = {
         title: config.title,
-        publicPath: '/__torch',
+        publicPath: '',
         context,
         content,
         container: 'root',

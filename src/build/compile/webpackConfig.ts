@@ -30,20 +30,20 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
         path.resolve(__dirname, '../../client/index'),
       ]
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'source-map',
     output: {
       path: path.join(config.dir, '.torch', 'client'),
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,
+      publicPath: '__torch/',
+      pathinfo: true,
     },
     optimization: {
       splitChunks: {
         chunks: 'all',
         name: 'vendor'
       },
-      minimizer: [
-        
-      ]
+      minimize: true
     },
     performance: {
       hints: false,
@@ -62,12 +62,24 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
             cacheCompression: true,
             compact: true
           }
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '/__torch',
+              },
+            },
+            'css-loader',
+          ],
         }
       ]
     },
     resolve: {
       alias: {
-        '@routes': path.resolve(config.dir, '.torch', 'server', 'routes.js')
+        '@routes': config.src
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],

@@ -6,13 +6,13 @@ import { isPromise } from '../../../utils'
 import type { NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
 import type { ServerContext } from '../../../index'
-import type { PageCreator } from '../../../page/index'
+import type { PageCreatorLoader, PageCreator } from '../../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: PageCreator<any, any>
+  page: PageCreatorLoader<any, any>
 }
 
 export type Render = (content: string, state: object) => void
@@ -43,7 +43,7 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
     if (matches === null) return null
 
     try {
-      const page = await loadPageCreator(matches.page)
+      const page = await loadPageCreator(matches.page())
       const [view, store] = page(history, context)
       const element = React.createElement(view)
       const content = ReactDOMServer.renderToString(element)
@@ -95,14 +95,13 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
   }
 }
 
-async function loadPageCreator(draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>) {
-  let pageCreator: PageCreator<any, any>
+async function loadPageCreator(
+  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
+): Promise<PageCreator<any, any>> {
   if (isPromise(draftPageCreator)) {
-    pageCreator = await draftPageCreator
+    // @ts-ignore
+    return (await draftPageCreator).default
   } else {
-    pageCreator = draftPageCreator
+    return draftPageCreator
   }
-
-  // @ts-ignore
-  return pageCreator.default || pageCreator
 }

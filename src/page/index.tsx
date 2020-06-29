@@ -4,6 +4,11 @@ import type { Context } from '../index'
 import type { History } from '../history'
 import type { Store, Actions } from '../store/index'
 
+export type PageCreatorLoader<
+  S extends object,
+  AS extends Actions<S>
+> = () => PageCreator<S, AS> | Promise<PageCreator<S, AS>>
+
 export type PageCreator<
   S extends object,
   AS extends Actions<S>

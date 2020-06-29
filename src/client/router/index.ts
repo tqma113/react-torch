@@ -6,13 +6,13 @@ import createHistory from '../../history/browser'
 import type { Key } from 'path-to-regexp'
 import type { Context } from '../../index'
 import type { Listener } from '../../history'
-import type { PageCreator } from '../../page/index'
+import type { PageCreator, PageCreatorLoader } from '../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
   path: string,
-  page: PageCreator<any, any>
+  page: PageCreatorLoader<any, any>
 }
 
 const DEFAULT_PAGE: PageCreator<{}, {}> = () => [
@@ -38,7 +38,7 @@ export default function createRouter(
       if (matches === null) {
         throw new Error('Unknow page')
       } else {
-        page = await loadPageCreator(matches.page)
+        page = await loadPageCreator(matches.page())
       }
 
       const [view, store] = page(history, context)
@@ -74,7 +74,7 @@ export default function createRouter(
         if (matches === null) {
           throw new Error('Unknow page')
         } else {
-          page = await loadPageCreator(matches.page)
+          page = await loadPageCreator(matches.page())
         }
 
         const ctx = {
@@ -104,16 +104,15 @@ export default function createRouter(
   }
 }
 
-async function loadPageCreator(draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>) {
-  let pageCreator: PageCreator<any, any>
+async function loadPageCreator(
+  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
+):  Promise<PageCreator<any, any>> {
   if (isPromise(draftPageCreator)) {
-    pageCreator = await draftPageCreator
+    // @ts-ignore
+    return (await draftPageCreator).default
   } else {
-    pageCreator = draftPageCreator
+    return draftPageCreator
   }
-
-  // @ts-ignore
-  return pageCreator.default || pageCreator
 }
 
 export function isPromise(obj: any): obj is Promise<any> {

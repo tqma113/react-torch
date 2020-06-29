@@ -5,14 +5,14 @@
 export default [
   {
     path: '/',
-    page: import('./Home'),
+    page: () => import('./Home'),
   },
   {
     path: '/about',
-    page: import('./About'),
+    page: () => import('./About'),
   },
   {
     path: '/test',
-    page: import('./Test')
+    page: () => import('./Test')
   }
 ]

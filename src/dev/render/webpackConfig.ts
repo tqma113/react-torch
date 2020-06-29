@@ -1,6 +1,7 @@
 import path from 'path'
 import { babelConfig } from '../../config'
 import { getExternals, hasModuleFile } from '../../utils'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -33,7 +34,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     target: 'node',
     mode: 'development',
     watch: true,
-    context: config.src,
+    context: config.dir,
     entry,
     output: {
 			path: path.join(config.dir, '.torch', 'server'),
@@ -52,6 +53,19 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
             ...babelConfig,
             cacheDirectory: true
           }
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '/.torch/server',
+                hmr: true
+              },
+            },
+            'css-loader',
+          ],
         }
       ]
     },
@@ -66,6 +80,14 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx']
     },
-    externals: getExternals(config.dir)
+    externals: getExternals(config.dir),
+    plugins: [
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: 'css/[name].css',
+        chunkFilename: 'css/[id].css',
+      })
+    ]
   }
 }

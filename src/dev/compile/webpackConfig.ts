@@ -1,6 +1,7 @@
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { babelConfig } from '../../config'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
@@ -22,7 +23,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
   return {
     mode: 'development',
     target: 'web',
-    context: config.src,
+    context: config.dir,
     entry: {
       index: [
         'webpack-hot-middleware/client',
@@ -58,6 +59,19 @@ function getConfig(config: IntegralTorchConfig): Configuration {
             ...babelConfig,
             cacheDirectory: true
           }
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '/__torch',
+                hmr: true
+              },
+            },
+            'css-loader',
+          ],
         }
       ]
     },
@@ -76,6 +90,12 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       new ManifestPlugin(manifestPluginOption),
       new IgnorePlugin(/^\.\/locale$/, /moment$/ ),
       new HotModuleReplacementPlugin(),
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: 'css/[name].css',
+        chunkFilename: 'css/[id].css',
+      }),
     ]
   }
 }

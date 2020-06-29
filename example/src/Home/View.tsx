@@ -15,7 +15,7 @@ export default function() {
       <hr/>
       <a href="/test">test</a>
       <hr/>
-      <a onClick={handleClick}>test</a>
+      <a className="test" onClick={handleClick}>test</a>
     </div>
   )
 }

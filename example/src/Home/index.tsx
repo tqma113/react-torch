@@ -3,6 +3,7 @@ import { createPage } from '../../../src/page'
 import { Context } from '../../../src/index'
 import { History } from '../../../src/history'
 import store from './Model'
+import './style.css'
 
 const ignorePropsChanged = View => {
   let MemoizedView = (props) => {
@@ -31,7 +32,7 @@ const getView = (history: History, context: Context) => () => {
       <hr/>
       <a href="/test">test</a>
       <hr/>
-      <a onClick={handleClick}>test</a>
+      <a className="test" onClick={handleClick}>test</a>
     </div>
   )
 }

@@ -50,7 +50,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
           loader: 'babel-loader',
           options: {
             ...babelConfig,
-            cacheDirectory: true
+            cacheDirectory: true,
           }
         },
         {

@@ -1,0 +1,77 @@
+import type { TorchConfig } from '../index'
+
+export type LifeCircle = {
+  config: (config: TorchConfig) => TorchConfig,
+
+  willCreate: () => void,
+  willRend: () => void,
+  willMount: () => void
+  didMount: () => void
+}
+
+type Value<T, Key extends keyof T> = T[Key]
+
+
+function createLifeCircle(): LifeCircle {
+  return {
+    config: (config) => config,
+    willCreate: () => {},
+    willRend: () => {},
+    willMount: () => {},
+    didMount: () => {}
+  }
+}
+
+function createHookContext() {
+  let _symbol: symbol | null = null
+  let dict: Record<symbol, LifeCircle> = {}
+
+  function setPageLifeCircle(symbol: symbol) {
+    _symbol = symbol
+    dict = {
+      ...dict,
+      [_symbol]: createLifeCircle()
+    }
+    console.log('setPageLifeCircle', { dict, _symbol })
+  }
+
+  function getLifeCircle(symbol: symbol): LifeCircle {
+    console.log(dict)
+    // @ts-ignore
+    const lifeCircle = dict[symbol]
+    _symbol = null
+    return lifeCircle
+  }
+
+  function setHook<Keys extends keyof LifeCircle, Hook extends Value<LifeCircle, Keys>>(
+    name: Keys,
+    hook: Hook
+  ) {
+    console.log({dict,_symbol})
+    // @ts-ignore
+    dict[_symbol][name] = hook
+  }
+
+  return {
+    setPageLifeCircle,
+    getLifeCircle,
+    setHook
+  }
+}
+
+const context = createHookContext()
+
+export function setPageLifeCircle(symbol: symbol) {
+  context.setPageLifeCircle(symbol)
+}
+
+export function getLifeCircle(symbol: symbol) {
+  return context.getLifeCircle(symbol)
+}
+
+export function setHook<Keys extends keyof LifeCircle, Hook extends Value<LifeCircle, Keys>>(
+  name: Keys,
+  hook: Hook
+) {
+  context.setHook(name, hook)
+}

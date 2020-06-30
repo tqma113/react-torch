@@ -2,18 +2,19 @@ import React from 'react'
 import { createPage } from '../../../src/page'
 import { Context } from '../../../src/index'
 import { History } from '../../../src/history'
+import { useWillCreate, useWillMount } from '../../../src/hook'
 import store from './Model'
-import './style.css'
+// import './style.css'
 
-const ignorePropsChanged = View => {
-  let MemoizedView = (props) => {
-    let view = React.useMemo(() => {
-      return <View />
-    }, [])
+// const ignorePropsChanged = View => {
+//   let MemoizedView = (props) => {
+//     let view = React.useMemo(() => {
+//       return <View />
+//     }, [])
 
-  return view
-  }
-}
+//   return view
+//   }
+// }
 
 
 const getView = (history: History, context: Context) => () => {
@@ -38,6 +39,13 @@ const getView = (history: History, context: Context) => () => {
 }
 
 const Home = createPage((history, context) => {
+  useWillCreate(() => {
+    console.log('willCreate')
+  })
+
+  useWillMount(() => {
+    console.log('willMount')
+  })
 
   return [getView(history, context), store]
 })

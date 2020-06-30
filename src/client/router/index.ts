@@ -3,6 +3,10 @@ import ReactDOM from "react-dom"
 import invariant from 'tiny-invariant'
 import createMatcher from './createMatcher'
 import createHistory from '../../history/browser'
+import {
+  setPageLifeCircle,
+  getLifeCircle
+} from '../../lifecircle'
 import type { Key } from 'path-to-regexp'
 import type { Context } from '../../index'
 import type { Listener } from '../../history'
@@ -11,7 +15,7 @@ import type { PageCreator, PageCreatorLoader } from '../../page/index'
 export type DraftRoute = {
   keys?: Key[]
   regexp?: RegExp
-  path: string,
+  path: string
   page: PageCreatorLoader<any, any>
 }
 
@@ -41,7 +45,18 @@ export default function createRouter(
         page = await loadPageCreator(matches.page())
       }
 
+      const symbol = Symbol('TORCH_PAGE')
+      setPageLifeCircle(symbol)
       const [view, store] = page(history, context)
+      const lifecircle = getLifeCircle(symbol)
+
+      if (context.ssr === false) {
+        lifecircle.willCreate()
+        lifecircle.willRend
+      }
+
+      lifecircle.willMount()
+      lifecircle.didMount()
 
       if (context.ssr) {
         store.UNSAFE_setState(state)

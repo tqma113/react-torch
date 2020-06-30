@@ -3,6 +3,10 @@ import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import createHistory from '../../../history/memory'
 import { isPromise } from '../../../utils'
+import {
+  setPageLifeCircle,
+  getLifeCircle
+} from '../../../lifecircle'
 import type { NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
 import type { ServerContext } from '../../../index'
@@ -44,12 +48,24 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
 
     try {
       const page = await loadPageCreator(matches.page())
+      const symbol = Symbol('TORCH_PAGE')
+      // set life circle
+      setPageLifeCircle(symbol)
+      // create page
       const [view, store] = page(history, context)
+      const lifecircle = getLifeCircle(symbol)
+
+      console.log(lifecircle)
+
+      lifecircle.willCreate()
+      lifecircle.willRend()
+
       const element = React.createElement(view)
       const content = ReactDOMServer.renderToString(element)
       const state = store.state
       return [content, state] as const
     } catch (err) {
+      console.log(err)
       return [JSON.stringify(err), {}] as const
     }
   }

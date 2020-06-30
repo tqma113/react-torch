@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.5.0
+
+> 2020/6/30
+
+* feat: support life circle hook
+
 ## 1.4.0
 
 > 2020/6/29

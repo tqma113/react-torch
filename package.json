@@ -20,6 +20,8 @@
     "start.d.ts",
     "store.js",
     "store.d.ts",
+    "hook.js",
+    "hook.d.ts",
     "AUTHORS",
     "tsconfig.json",
     "torch.schema.json"

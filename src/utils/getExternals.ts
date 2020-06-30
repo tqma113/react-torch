@@ -1,12 +1,21 @@
 import path from 'path'
 
+const TORCH_EXTERNALS = [
+  'react-torch/page',
+  'react-torch/store',
+  'react-torch/dev',
+  'react-torch/start',
+  'react-torch/build',
+  'react-torch/hook',
+]
+
 export default function getExternals(dir: string): string[] {
   let dependencies: string[] = []
 
   let list: string[] = [
     path.resolve('package.json'),
     path.join(__dirname, '../../package.json'),
-    path.join(dir, '../package.json')
+    path.join(dir, 'package.json')
   ]
 
   while (true) {
@@ -37,5 +46,5 @@ export default function getExternals(dir: string): string[] {
     return true
   })
 
-  return dependencies
+  return [...dependencies, ...TORCH_EXTERNALS]
 }

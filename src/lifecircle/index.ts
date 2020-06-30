@@ -32,11 +32,9 @@ function createHookContext() {
       ...dict,
       [_symbol]: createLifeCircle()
     }
-    console.log('setPageLifeCircle', { dict, _symbol })
   }
 
   function getLifeCircle(symbol: symbol): LifeCircle {
-    console.log(dict)
     // @ts-ignore
     const lifeCircle = dict[symbol]
     _symbol = null
@@ -47,7 +45,6 @@ function createHookContext() {
     name: Keys,
     hook: Hook
   ) {
-    console.log({dict,_symbol})
     // @ts-ignore
     dict[_symbol][name] = hook
   }

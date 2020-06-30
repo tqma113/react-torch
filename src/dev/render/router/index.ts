@@ -55,8 +55,6 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       const [view, store] = page(history, context)
       const lifecircle = getLifeCircle(symbol)
 
-      console.log(lifecircle)
-
       lifecircle.willCreate()
       lifecircle.willRend()
 

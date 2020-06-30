@@ -1,10 +1,10 @@
 import React from 'react'
-import { createPage } from '../../../src/page'
-import { Context } from '../../../src/index'
-import { History } from '../../../src/history'
-import { useWillCreate, useWillMount } from '../../../src/hook'
+import { createPage } from '../../../page'
+import { useWillCreate, useWillMount } from '../../../hook'
 import store from './Model'
 // import './style.css'
+import type { History } from '../../../src/history'
+import type { Context } from '../../../src/index'
 
 // const ignorePropsChanged = View => {
 //   let MemoizedView = (props) => {

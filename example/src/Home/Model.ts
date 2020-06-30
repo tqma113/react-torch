@@ -1,4 +1,4 @@
-import { createStore } from '../../../src/store'
+import { createStore } from '../../../store'
 
 export type State = {
   count: number

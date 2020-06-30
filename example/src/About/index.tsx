@@ -1,6 +1,6 @@
 import React from 'react'
-import { createPage } from '../../../src/page/index'
-import { createStore } from '../../../src/store/index'
+import { createPage } from '../../../page'
+import { createStore } from '../../../store'
 
 const store = createStore(
   {

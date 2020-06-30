@@ -1,5 +1,5 @@
 import path from 'path'
-import { build } from '../src/index'
+import { build } from '../dist/index'
 
 build({
   dir: path.resolve(__dirname)

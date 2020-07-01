@@ -4,9 +4,8 @@ import rimraf from 'rimraf'
 export default function rmTorchProjectFiles(dir: string) {
   const torchProjectDir = path.resolve(dir, '.torch')
 
-  console.info(`Removing ${torchProjectDir}...`)
+  console.info(`Removing ${torchProjectDir}...\n`)
 
   rimraf.sync(torchProjectDir)
 
-  console.info(`Remove ${torchProjectDir} finish!\n`)
 }

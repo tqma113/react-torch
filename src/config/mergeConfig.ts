@@ -19,7 +19,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     }
   }
 
-  __DEV__ = process.env.NODE_ENV === 'development'
+  globalThis.__DEV__ = process.env.NODE_ENV === 'development'
 
   const title = config.title || TITLE
   const dir = config.dir

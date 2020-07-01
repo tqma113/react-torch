@@ -3,6 +3,7 @@ module.exports = {
     'ts-jest': {
       tsConfig: 'tsconfig.json',
     },
+    '__DEV__': false
   },
   transform: {
     '.(ts|tsx)': 'ts-jest',

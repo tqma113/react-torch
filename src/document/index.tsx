@@ -1,11 +1,6 @@
 import React from 'react'
-import Html from './Html'
-import Head from './Head'
-import Main from './Main'
-import NoScript from './NoScript'
-import TorchData from './TorchData'
-import TorchScripts from './TorchScripts'
 import type {
+  Env,
   Context,
   TORCH_DATA,
   ScriptPreload,
@@ -61,5 +56,120 @@ export default function Document({
         />
       </body>
     </Html>
+  )
+}
+
+function Html(props: React.PropsWithChildren<{}>) {
+  return (
+    <html {...props} />
+  )
+}
+
+type HeadProps = {
+  title: string,
+  styles: StylePreload[],
+  scripts: ScriptPreload[]
+}
+
+function Head({ title, styles, scripts }: HeadProps) {
+  return (
+    <head>
+      <title>{title}</title>
+      <meta
+        name="viewport"
+        content="width=device-width,minimum-scale=1,initial-scale=1"
+      />
+      {
+        styles.map((style) => {
+          if (style.type == 'inner') {
+            return (
+              <style
+                type="text/css"
+                dangerouslySetInnerHTML={{ __html: style.content }}
+              />
+            )
+          } else {
+            return (
+              <link rel="stylesheet" type="text/css" href={style.href} />
+            )
+          }
+        })
+      }
+      {
+        scripts.map((script) => {
+          if (script.type == 'inner') {
+            return (
+              <script
+                dangerouslySetInnerHTML={{ __html: script.content.replace(/<\/script/gi, '&lt/script') }}
+              />
+            )
+          } else {
+            return (
+              <script src={script.src} />
+            )
+          }
+        })
+      }
+    </head>
+  )
+}
+
+function NoScript() {
+  return (
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+  )
+}
+
+type MainProps = {
+  container: string,
+  content: string
+}
+
+function Main({ container, content }: MainProps) {
+  return (
+    <div id={`${container}`} dangerouslySetInnerHTML={{ __html: content }}></div>
+  )
+}
+
+type TorchDataProps = {
+  env: Env,
+  data: TORCH_DATA
+}
+
+function TorchData({ env, data }: TorchDataProps) {
+  return (
+    <>
+      <script
+        id="__TORCH_DATA__"
+        type="application/json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function() {
+            window.__DEV__ = ${env === 'development'}
+          })()
+        `
+        }}
+      />
+    </>
+  )
+}
+
+
+type TorchScriptsProps = {
+  index: string,
+  vendor: string
+}
+
+function TorchScripts({ index, vendor }: TorchScriptsProps) {
+  return (
+    <>
+      <script src={index}></script>
+      <script src={vendor}></script>
+    </>
   )
 }

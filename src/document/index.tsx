@@ -80,17 +80,18 @@ function Head({ title, styles, scripts }: HeadProps) {
         content="width=device-width,minimum-scale=1,initial-scale=1"
       />
       {
-        styles.map((style) => {
+        styles.map((style, index) => {
           if (style.type == 'inner') {
             return (
               <style
+                key={index}
                 type="text/css"
                 dangerouslySetInnerHTML={{ __html: style.content }}
               />
             )
           } else {
             return (
-              <link rel="stylesheet" type="text/css" href={style.href} />
+              <link rel="stylesheet" type="text/css" key={style.href} href={style.href} />
             )
           }
         })

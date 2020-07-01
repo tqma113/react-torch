@@ -77,7 +77,7 @@ export default createPage((history, context) => {
 
 #### Start With Development
 
-```shel
+```shell
 npm run dev
 ```
 

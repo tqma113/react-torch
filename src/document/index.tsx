@@ -91,22 +91,23 @@ function Head({ title, styles, scripts }: HeadProps) {
             )
           } else {
             return (
-              <link rel="stylesheet" type="text/css" key={style.href} href={style.href} />
+              <link key={index} rel="stylesheet" type="text/css" href={style.href} />
             )
           }
         })
       }
       {
-        scripts.map((script) => {
+        scripts.map((script, index) => {
           if (script.type == 'inner') {
             return (
               <script
+                key={index}
                 dangerouslySetInnerHTML={{ __html: script.content.replace(/<\/script/gi, '&lt/script') }}
               />
             )
           } else {
             return (
-              <script src={script.src} />
+              <script key={index} src={script.src} />
             )
           }
         })

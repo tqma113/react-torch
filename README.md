@@ -1,7 +1,7 @@
 # React-torch
 
 [![License](https://img.shields.io/npm/v/react-torch.svg)](https://www.npmjs.com/package/react-torch)
-[![Action Status](https://github.com/tqma113/react-torch/workflows/Torch/badge.svg)](https://github.com/Front-End-Resort/react-imvc/actions)
+[![Action Status](https://github.com/tqma113/react-torch/workflows/Torch/badge.svg)](https://github.com/tqma113/react-torch/actions)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://www.npmjs.com/package/react-torch)
 [![PRs-welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/tqma113/react-torch/pull/new/master)
 

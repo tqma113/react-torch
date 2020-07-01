@@ -23,7 +23,7 @@ A react framework.
 
 #### Install Dependences
 
-```
+```shell
 > npm install react react-dom react-torch typescript
 ```
 

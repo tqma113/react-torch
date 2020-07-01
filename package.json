@@ -32,9 +32,9 @@
     "build": "tsc",
     "postbuild": "cp ./src/torch.d.ts ./dist/torch.d.ts",
     "test": "jest",
-    "test:start": "node -r ts-node/register ./example/start.ts",
-    "test:dev": "node -r ts-node/register ./example/dev.ts",
-    "test:build": "node -r ts-node/register ./example/build.ts",
+    "dev:start": "node -r ts-node/register ./example/start.ts",
+    "dev:dev": "node -r ts-node/register ./example/dev.ts",
+    "dev:build": "node -r ts-node/register ./example/build.ts",
     "debug:start": "node --inspect-brk -r ts-node/register ./example/start.ts",
     "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts"
   },

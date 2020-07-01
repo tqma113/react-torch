@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.5.1
+
+> 2020/7/1
+
+* feat: support async life circle hook
+
 ## 1.5.0
 
 > 2020/6/30

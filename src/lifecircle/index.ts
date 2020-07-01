@@ -1,12 +1,14 @@
 import type { TorchConfig } from '../index'
 
-export type LifeCircle = {
-  config: (config: TorchConfig) => TorchConfig,
+export type ConfigHook = ((config: TorchConfig) => TorchConfig) | ((config: TorchConfig) => Promise<TorchConfig>)
+export type Hook = (() => void) | (() => Promise<void>)
 
-  willCreate: () => void,
-  willRend: () => void,
-  willMount: () => void
-  didMount: () => void
+export type LifeCircle = {
+  config: ConfigHook,
+
+  willCreate: Hook,
+  willMount: Hook
+  didMount: Hook
 }
 
 type Value<T, Key extends keyof T> = T[Key]
@@ -16,7 +18,6 @@ function createLifeCircle(): LifeCircle {
   return {
     config: (config) => config,
     willCreate: () => {},
-    willRend: () => {},
     willMount: () => {},
     didMount: () => {}
   }

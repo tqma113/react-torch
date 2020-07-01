@@ -19,7 +19,7 @@ export type DraftRoute = {
   page: PageCreatorLoader<any, any>
 }
 
-const DEFAULT_PAGE: PageCreator<{}, {}> = () => [
+const DEFAULT_PAGE_CREATOR: PageCreator<{}, {}> = () => [
   () => React.createElement('div', {}, ''),
   { state: {}, actions: {} } as any
 ]
@@ -35,31 +35,27 @@ export default function createRouter(
 
   return {
     async init() {
-      let page = DEFAULT_PAGE
+      let pageCreator = DEFAULT_PAGE_CREATOR
       const location = history.location
       const matches = matcher(location.pathname)
 
       if (matches === null) {
         throw new Error('Unknow page')
       } else {
-        page = await loadPageCreator(matches.page())
+        pageCreator = await loadPageCreator(matches.page())
       }
 
       const symbol = Symbol('TORCH_PAGE')
       setPageLifeCircle(symbol)
-      const [view, store] = page(history, context)
+      const [view, store] = pageCreator(history, context)
       const lifecircle = getLifeCircle(symbol)
-
-      if (context.ssr === false) {
-        lifecircle.willCreate()
-        lifecircle.willRend
-      }
-
-      lifecircle.willMount()
-      lifecircle.didMount()
 
       if (context.ssr) {
         store.UNSAFE_setState(state)
+      }
+
+      if (context.ssr === false) {
+        await lifecircle.willCreate()
       }
 
       const element: React.ReactElement<{}> = React.createElement(view)
@@ -70,11 +66,15 @@ export default function createRouter(
         `The container: ${container} is not exist`
       )
 
+      await lifecircle.willMount()
+
       if (context.ssr) {
         ReactDOM.hydrate(element, containerElement)
       } else {
         ReactDOM.render(element, containerElement)
       }
+
+      await lifecircle.didMount()
 
       store.listen(() => {
         const element: React.ReactElement<{}> = React.createElement(view)
@@ -83,20 +83,25 @@ export default function createRouter(
     },
     start() {
       const listener: Listener = async ({ location }) => {
-        let page = DEFAULT_PAGE
+        let pageCreator = DEFAULT_PAGE_CREATOR
         const matches = matcher(location.pathname)
 
         if (matches === null) {
           throw new Error('Unknow page')
         } else {
-          page = await loadPageCreator(matches.page())
+          pageCreator = await loadPageCreator(matches.page())
         }
 
         const ctx = {
           ...context,
           ssr: false
         }
-        const [view, store] = page(history, ctx)
+        const symbol = Symbol('TORCH_PAGE')
+        setPageLifeCircle(symbol)
+        const [view, store] = pageCreator(history, ctx)
+        const lifecircle = getLifeCircle(symbol)
+
+        await lifecircle.willCreate()
 
         const element: React.ReactElement<{}> = React.createElement(view)
         const containerElement = document.querySelector(`#${container}`)
@@ -105,8 +110,12 @@ export default function createRouter(
           containerElement !== null,
           `The container: ${container} is not exist`
         )
+      
+        await lifecircle.willMount()
 
         ReactDOM.render(element, containerElement)
+
+        await lifecircle.didMount()
 
         store.listen(() => {
           const element: React.ReactElement<{}> = React.createElement(view)

@@ -149,6 +149,17 @@ export function createStore<
   let listeners: Listener<S, AS>[] = []
   function listen(listener: Listener<S, AS>) {
     listeners.push(listener)
+
+    return () => {
+      const nextListeners = listeners.filter(ltnr => ltnr !== listener)
+      if (nextListeners.length === listeners.length) {
+        console.warn(
+          "You want to unsubscribe a nonexistent listener. Maybe you had unsubscribed it"
+        )
+      } else {
+        listeners = nextListeners
+      }
+    }
   }
 
   return {

@@ -1,4 +1,4 @@
-import { createStore } from '../store'
+import { createStore } from '../src/store'
 
 describe('store', () => {
   it('should get current state by store.state', () => {

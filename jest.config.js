@@ -13,6 +13,7 @@ module.exports = {
     'js',
     'ts',
     'tsx',
+    'json'
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',

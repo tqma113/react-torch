@@ -1,5 +1,6 @@
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
+import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { babelConfig } from '../../config'
@@ -81,10 +82,16 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+      plugins: [
+        PnpWebpackPlugin
+      ]
     },
     resolveLoader: {
       modules: ['node_modules'],
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
+      plugins: [
+        PnpWebpackPlugin.moduleLoader
+      ]
     },
     plugins: [
       new ManifestPlugin(manifestPluginOption),

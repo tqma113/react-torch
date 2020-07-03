@@ -44,7 +44,7 @@ export default function Document({
       <Head title={title} scripts={scripts} styles={styles} />
 
       <body>
-        <NoScript />
+        <NoScript title={title} />
 
         <Main container={container} content={content} />
 
@@ -75,10 +75,9 @@ function Head({ title, styles, scripts }: HeadProps) {
   return (
     <head>
       <title>{title}</title>
-      <meta
-        name="viewport"
-        content="width=device-width,minimum-scale=1,initial-scale=1"
-      />
+      <meta charSet="utf-8" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
       {
         styles.map((style, index) => {
           if (style.type == 'inner') {
@@ -116,10 +115,15 @@ function Head({ title, styles, scripts }: HeadProps) {
   )
 }
 
-function NoScript() {
+export type NoScriptProps = {
+  title: string
+}
+function NoScript({
+  title
+}: NoScriptProps) {
   return (
     <noscript>
-      You need to enable JavaScript to run this app.
+      <strong>We're sorry but ${title} doesn't work properly without JavaScript enabled.You need to enable JavaScript to run this app.</strong>
     </noscript>
   )
 }

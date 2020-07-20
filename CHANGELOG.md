@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 1.5.3
+
+> 2020/7/1
+
+* fix: document
+
+## 1.5.2
+
+> 2020/7/1
+
+* refactor: document
+* fix: middleware can not work
+
 ## 1.5.1
 
 > 2020/7/1

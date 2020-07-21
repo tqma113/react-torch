@@ -14,23 +14,19 @@ program
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config }) => {
-    if (config) {
-      let draftConfig = requireConfig(config)
-      
-      if (typeof draftConfig === 'object') {
-        if (typeof dir === 'string') {
-          draftConfig.dir = dir
-        }
-
-        if (typeof port === 'string') {
-          draftConfig.port = port
-        }
-
-        dev(draftConfig)
-      } else {
-        dev({ dir, port })
+  .action(({ dir, port, config = 'torch.config.ts' }) => {
+    let draftConfig = requireConfig(config)
+    
+    if (typeof draftConfig === 'object') {
+      if (typeof dir === 'string') {
+        draftConfig.dir = dir
       }
+
+      if (typeof port === 'string') {
+        draftConfig.port = port
+      }
+
+      dev(draftConfig)
     } else {
       dev({ dir, port })
     }
@@ -42,23 +38,19 @@ program
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config }) => {
-    if (config) {
-      let draftConfig = requireConfig(config)
-      
-      if (typeof draftConfig === 'object') {
-        if (typeof dir === 'string') {
-          draftConfig.dir = dir
-        }
-
-        if (typeof port === 'string') {
-          draftConfig.port = port
-        }
-
-        build(draftConfig)
-      } else {
-        build({ dir, port })
+  .action(({ dir, port, config = 'torch.config.ts' }) => {
+    let draftConfig = requireConfig(config)
+    
+    if (typeof draftConfig === 'object') {
+      if (typeof dir === 'string') {
+        draftConfig.dir = dir
       }
+
+      if (typeof port === 'string') {
+        draftConfig.port = port
+      }
+
+      build(draftConfig)
     } else {
       build({ dir, port })
     }
@@ -70,23 +62,19 @@ program
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config }) => {
-    if (config) {
-      let draftConfig = requireConfig(config)
-      
-      if (typeof draftConfig === 'object') {
-        if (typeof dir === 'string') {
-          draftConfig.dir = dir
-        }
-
-        if (typeof port === 'string') {
-          draftConfig.port = port
-        }
-
-        start(draftConfig)
-      } else {
-        start({ dir, port })
+  .action(({ dir, port, config = 'torch.config.ts' }) => {
+    let draftConfig = requireConfig(config)
+    
+    if (typeof draftConfig === 'object') {
+      if (typeof dir === 'string') {
+        draftConfig.dir = dir
       }
+
+      if (typeof port === 'string') {
+        draftConfig.port = port
+      }
+
+      start(draftConfig)
     } else {
       start({ dir, port })
     }

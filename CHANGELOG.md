@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.5.4
+
+> 2020/7/21
+
+* feat: update dependence
+* feat: update config file path setting
+
 ## 1.5.3
 
 > 2020/7/1

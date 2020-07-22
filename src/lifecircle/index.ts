@@ -13,14 +13,11 @@ export type LifeCircle = {
 
 type Value<T, Key extends keyof T> = T[Key]
 
-
-function createLifeCircle(): LifeCircle {
-  return {
-    config: (config) => config,
-    willCreate: () => {},
-    willMount: () => {},
-    didMount: () => {}
-  }
+const defaultLifeCircle: LifeCircle = {
+  config: (config) => config,
+  willCreate: () => {},
+  willMount: () => {},
+  didMount: () => {}
 }
 
 function createHookContext() {
@@ -31,7 +28,7 @@ function createHookContext() {
     _symbol = symbol
     dict = {
       ...dict,
-      [_symbol]: createLifeCircle()
+      [_symbol]: defaultLifeCircle
     }
   }
 

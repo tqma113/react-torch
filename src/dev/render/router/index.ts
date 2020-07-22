@@ -7,6 +7,7 @@ import {
   setPageLifeCircle,
   getLifeCircle
 } from '../../../lifecircle'
+import GlobalContext from '../../../context'
 import type { NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
 import type { ServerContext } from '../../../index'
@@ -58,9 +59,16 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       await lifecircle.willCreate()
 
       const element = React.createElement(view)
-      const content = ReactDOMServer.renderToString(element)
-      const state = store.state
-      return [content, state] as const
+      const globalElement = React.createElement(GlobalContext.Provider, {
+        value: {
+          location,
+          history,
+          store
+        },
+        children: element
+      })
+      const content = ReactDOMServer.renderToString(globalElement)
+      return [content, store.state] as const
     } catch (err) {
       console.log(err)
       return [JSON.stringify(err), {}] as const

@@ -7,6 +7,7 @@ import {
   setPageLifeCircle,
   getLifeCircle
 } from '../../lifecircle'
+import GlobalContext from '../../context'
 import type { Key } from 'path-to-regexp'
 import type { Context } from '../../index'
 import type { Listener } from '../../history'
@@ -59,6 +60,14 @@ export default function createRouter(
       }
 
       const element: React.ReactElement<{}> = React.createElement(view)
+      const globalElement = React.createElement(GlobalContext.Provider, {
+        value: {
+          location,
+          history,
+          store
+        },
+        children: element
+      })
       const containerElement = document.querySelector(`#${container}`)
 
       invariant(
@@ -69,16 +78,24 @@ export default function createRouter(
       await lifecircle.willMount()
 
       if (context.ssr) {
-        ReactDOM.hydrate(element, containerElement)
+        ReactDOM.hydrate(globalElement, containerElement)
       } else {
-        ReactDOM.render(element, containerElement)
+        ReactDOM.render(globalElement, containerElement)
       }
 
       await lifecircle.didMount()
 
       store.listen(() => {
         const element: React.ReactElement<{}> = React.createElement(view)
-        ReactDOM.render(element, containerElement)
+        const globalElement = React.createElement(GlobalContext.Provider, {
+          value: {
+            location,
+            history,
+            store
+          },
+          children: element
+        })
+        ReactDOM.render(globalElement, containerElement)
       })
     },
     start() {
@@ -104,6 +121,14 @@ export default function createRouter(
         await lifecircle.willCreate()
 
         const element: React.ReactElement<{}> = React.createElement(view)
+        const globalElement = React.createElement(GlobalContext.Provider, {
+          value: {
+            location,
+            history,
+            store
+          },
+          children: element
+        })
         const containerElement = document.querySelector(`#${container}`)
 
         invariant(
@@ -113,13 +138,21 @@ export default function createRouter(
       
         await lifecircle.willMount()
 
-        ReactDOM.render(element, containerElement)
+        ReactDOM.render(globalElement, containerElement)
 
         await lifecircle.didMount()
 
         store.listen(() => {
           const element: React.ReactElement<{}> = React.createElement(view)
-          ReactDOM.render(element, containerElement)
+          const globalElement = React.createElement(GlobalContext.Provider, {
+            value: {
+              location,
+              history,
+              store
+            },
+            children: element
+          })
+          ReactDOM.render(globalElement, containerElement)
         })
       }
 

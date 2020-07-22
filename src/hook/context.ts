@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import GlobalContext from '../context'
+import type { Store, Actions, Currings } from '../store'
 
 export const useLocation = () => {
   const { location } = useContext(GlobalContext)
@@ -11,17 +12,23 @@ export const useHistory = () => {
   return history
 }
 
-export const useStore = () => {
+export const useStore = <
+  S extends object,
+  AS extends Actions<S>
+>() => {
   const { store } = useContext(GlobalContext)
-  return store
+  return store as Store<S, AS>
 }
 
-export const useState = () => {
+export const useState = <S extends object>() => {
   const { store } = useContext(GlobalContext)
-  return store.state
+  return store.state as S
 }
 
-export const useActions = () => {
+export const useActions = <
+  S extends object,
+  AS extends Actions<S>
+>() => {
   const { store } = useContext(GlobalContext)
-  return store.actions
+  return store.actions as Currings<S, AS>
 }

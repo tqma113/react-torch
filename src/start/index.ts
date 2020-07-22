@@ -6,9 +6,9 @@ import debug from 'debug'
 import express from 'express'
 import createServer from './server'
 import createRender from './render'
+import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
-import { hasModuleFile } from '../utils'
-import type { TorchConfig, Mdlw } from '../index'
+import type { TorchConfig } from '../index'
 
 export type Result = {
   server: http.Server,
@@ -23,25 +23,7 @@ export default function start(draftConfig: TorchConfig) {
   const render = createRender(config)
 
   // custome middlewares
-  if (config.mdlw) {
-    const middlewarePath = path.resolve(
-      config.dir,
-      '.torch',
-      'server',
-      'mdlw.js'
-    )
-
-    if (hasModuleFile(middlewarePath)) {
-      const middlewares: Record<string, Mdlw> = require(middlewarePath)
-
-      Object.keys(middlewares).forEach(key => {
-        let middleware = middlewares[key]
-        if (typeof middleware === 'function') {
-          middleware(app, server)
-        }
-      })
-    }
-  }
+  attachMiddleware(app, server, config)
 
   // static file route
   app.use(

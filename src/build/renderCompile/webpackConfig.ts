@@ -1,6 +1,6 @@
 import path from 'path'
 import { babelConfig } from '../../config'
-import { getExternals, hasModuleFile } from '../../utils'
+import { getExternals } from '../../utils'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
@@ -17,7 +17,7 @@ export type ServerEntry = {
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   let entry: ServerEntry
 
-  if (config.mdlw && hasModuleFile(config.mdlw)) {
+  if (config.mdlw) {
     entry = {
       routes: config.src,
       view: path.resolve(__dirname, '../../document'),

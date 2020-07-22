@@ -12,8 +12,8 @@ function createPage<
   S extends Object = StateFromPageCreator<Creator>,
   AS extends Actions<S> = ActionsFromPageCreator<Creator>
 >(creator: Creator): PageCreator<S, AS> {
-  return (history: History, context: Context) => {
-    const [View, store] = creator(history, context)
+  return async (history: History, context: Context) => {
+    const [View, store] = await creator(history, context)
     return [
       () =>  <View />,
       store

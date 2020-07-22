@@ -38,6 +38,8 @@ function createHookContext() {
   function getLifeCircle(symbol: symbol): LifeCircle {
     // @ts-ignore
     const lifeCircle = dict[symbol]
+    // @ts-ignore
+    delete dict[symbol]
     _symbol = null
     return lifeCircle
   }
@@ -46,8 +48,12 @@ function createHookContext() {
     name: Keys,
     hook: Hook
   ) {
-    // @ts-ignore
-    dict[_symbol][name] = hook
+    if (_symbol == null) {
+      console.warn('You can\'t call lifecircle hook at here.')
+    } else {
+      // @ts-ignore
+      dict[_symbol][name] = hook
+    }
   }
 
   return {

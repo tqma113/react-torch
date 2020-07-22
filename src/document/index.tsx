@@ -72,57 +72,69 @@ type HeadProps = {
 }
 
 function Head({ title, styles, scripts }: HeadProps) {
+  const preloadLinkElements = styles.map((style, index) => {
+    if (style.type === 'link' && style.preload) {
+      return React.createElement('link', {
+        key: index,
+        href: style.href,
+        rel: 'preload',
+        as: 'style',
+        type: "text/css"
+      })
+    } else {
+      return null
+    }
+  }).filter(Boolean)
+
+  const linkElement = styles.map((style, index) => {
+    if (style.type === 'link') {
+      return (
+        <link key={index} rel="stylesheet" type="text/css" href={style.href} />
+      )
+    } else {
+      return null
+    }
+  }).filter(Boolean)
+
+  const styleElements = styles.map((style, index) => {
+    if (style.type === 'inner') {
+      return (
+        <style
+          key={index}
+          type="text/css"
+          dangerouslySetInnerHTML={{ __html: style.content }}
+        />
+      ) 
+    } else {
+      return null
+    }
+  }).filter(Boolean)
+
+  const scriptElements = scripts.map((script, index) => {
+    if (script.type == 'inner') {
+      return (
+        <script
+          key={index}
+          dangerouslySetInnerHTML={{ __html: script.content.replace(/<\/script/gi, '&lt/script') }}
+        />
+      )
+    } else {
+      return (
+        <script key={index} src={script.src} />
+      )
+    }
+  })
+  
   return (
     <head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-      {
-        styles.map((style, index) => {
-          if (style.type == 'inner') {
-            return (
-              <style
-                key={index}
-                type="text/css"
-                dangerouslySetInnerHTML={{ __html: style.content }}
-              />
-            )
-          } else {
-            if (style.preload) {
-              return React.createElement('link', {
-                key: index,
-                href: style.href,
-                rel: 'preload',
-                type: "text/css",
-                onLoad: function() {
-                  this.rel = 'stylesheet'
-                }
-              })
-            } else {
-              return (
-                <link key={index} rel="preload" type="text/css" href={style.href} />
-              )
-            }
-          }
-        })
-      }
-      {
-        scripts.map((script, index) => {
-          if (script.type == 'inner') {
-            return (
-              <script
-                key={index}
-                dangerouslySetInnerHTML={{ __html: script.content.replace(/<\/script/gi, '&lt/script') }}
-              />
-            )
-          } else {
-            return (
-              <script key={index} src={script.src} />
-            )
-          }
-        })
-      }
+      {preloadLinkElements}
+      {linkElement}
+      {scriptElements}
+      {styleElements}
     </head>
   )
 }

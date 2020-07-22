@@ -97,7 +97,6 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-react-views": "^0.11.0",
-    "fork-ts-checker-webpack-plugin": "^1.5.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-plumber": "^1.2.1",

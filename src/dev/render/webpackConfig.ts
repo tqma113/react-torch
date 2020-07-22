@@ -7,11 +7,9 @@ import type { IntegralTorchConfig } from '../../index'
 
 export type ServerEntry = {
   routes: string,
-  view: string,
   mdlw: string
 } | {
   routes: string,
-  view: string,
 }
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
@@ -20,13 +18,11 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
   if (config.mdlw) {
     entry = {
       routes: config.src,
-      view: path.resolve(__dirname, '../../document'),
       mdlw: config.mdlw
     }
   } else {
     entry = {
       routes: config.src,
-      view: path.resolve(__dirname, '../../document'),
     }
   }
 

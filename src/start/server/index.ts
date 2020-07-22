@@ -19,18 +19,6 @@ export default function createServer(dir: string) {
   // favicon
   const favPath = path.join(dir, 'public', 'favicon.ico')
   app.use(favicon(favPath))
-
-  // view engine
-  const viewsConfig = {
-		babel: {
-			extensions: [".js"]
-		}
-	}
-  app.engine("js", require("express-react-views").createEngine(viewsConfig))
-
-  // view engine setup
-	app.set("views", path.resolve(dir, '.torch', 'server'))
-  app.set("view engine", "js")
   
   // logger
   app.use(logger('common'))

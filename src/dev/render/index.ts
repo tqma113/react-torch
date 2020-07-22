@@ -1,11 +1,14 @@
+import ReactDOMServer from 'react-dom/server'
 import createRouter from './router/index';
 import compile from './compile'
+import createHtml from '../../document'
+import type { ReactElement } from 'react';
 import type { Request, Response, NextFunction } from 'express'
+import type { DocumentProps } from '../../document'
 import type {
   IntegralTorchConfig,
   ServerContext,
   ClientContext,
-  RenderData
 } from '../../index'
 
 export default async function createRender (config: IntegralTorchConfig) {
@@ -13,21 +16,24 @@ export default async function createRender (config: IntegralTorchConfig) {
   await compile(config, router)
 
   return function (req: Request, res: Response, next: NextFunction) {
-    const render = (content: string, state: object) => {
+    const render = (element: ReactElement, state: object) => {
       const context: ClientContext = {
         ssr: config.ssr,
         env: process.env.NODE_ENV,
         side: 'client'
       }
-      const data: RenderData = {
+      const data: DocumentProps = {
         title: config.title,
         publicPath: '/__torch',
         context,
-        content,
+        element,
         container: 'root',
-        state
+        state,
+        ...res.locals
       }
-      res.render('view', data)
+      const html = createHtml(data)
+      const stream = ReactDOMServer.renderToStaticNodeStream(html)
+      stream.pipe(res)
     }
     const context: ServerContext = {
       req,

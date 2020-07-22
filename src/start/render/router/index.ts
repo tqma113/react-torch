@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
 import createMatcher from './createMatcher'
 import createHistory from '../../../history/memory'
 import { isPromise } from '../../../utils'
@@ -7,10 +5,13 @@ import {
   setPageLifeCircle,
   getLifeCircle
 } from '../../../lifecircle'
-import GlobalContext from '../../../context'
+import { connect } from '../../../context'
+import { createErrorElement } from '../../../error'
+import type { ReactElement } from 'react'
 import type { Key } from 'path-to-regexp'
 import type { PageCreator, PageCreatorLoader } from '../../../page/index'
 import type { ServerContext } from '../../../index'
+import type { GlobalContextType } from '../../../context'
 
 export type DraftRoute = {
   keys?: Key[]
@@ -19,7 +20,7 @@ export type DraftRoute = {
   page: PageCreatorLoader<any ,any>
 }
 
-export type Render = (content: string, state: object) => void
+export type Render = (element: ReactElement, state: object) => void
 
 export type Task = {
   url: string,
@@ -55,21 +56,17 @@ export default function createRender(draftRoutes: DraftRoute[]): Router {
 
       await lifecircle.willCreate()
 
-      const element = React.createElement(view)
-      const globalElement = React.createElement(GlobalContext.Provider, {
-        value: {
-          location,
-          history,
-          store,
-          context
-        },
-        children: element
-      })
-      const content = ReactDOMServer.renderToString(globalElement)
-      return [content, store.state] as const
+      const globalContext: GlobalContextType = {
+        location,
+        history,
+        store,
+        context
+      }
+      const element = connect(view)(globalContext)
+      return [element, store.state] as const
     } catch (err) {
       console.error(err)
-      return [JSON.stringify(err), {}] as const
+      return [createErrorElement(JSON.stringify(err)), {}] as const
     }
   }
 
@@ -79,8 +76,8 @@ export default function createRender(draftRoutes: DraftRoute[]): Router {
       if (result === null) {
         next()
       } else {
-        const [content, state] = result
-        render(content, state)
+        const [element, state] = result
+        render(element, state)
       }
     }
   }

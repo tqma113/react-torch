@@ -6,12 +6,14 @@ import type {
   ScriptPreload,
   StylePreload
 } from '../index'
+import type { ReactElement } from 'react'
 
-export interface DocumentProps {
+
+export type DocumentProps = {
   title: string,
   context: Context,
   container: string,
-  content: string,
+  element: ReactElement,
   publicPath: string,
   assets: {
     index: string,
@@ -22,11 +24,11 @@ export interface DocumentProps {
   scripts?: ScriptPreload[]
 }
 
-export default function Document({
+export default function createDocument({
   title,
   context,
   container,
-  content,
+  element,
   publicPath,
   assets,
   state,
@@ -46,7 +48,7 @@ export default function Document({
       <body>
         <NoScript title={title} />
 
-        <Main container={container} content={content} />
+        <Main container={container} element={element} />
 
         <TorchData env={context.env} data={data} />
 
@@ -124,7 +126,7 @@ function Head({ title, styles, scripts }: HeadProps) {
       )
     }
   })
-  
+
   return (
     <head>
       <title>{title}</title>
@@ -154,12 +156,12 @@ function NoScript({
 
 type MainProps = {
   container: string,
-  content: string
+  element: ReactElement
 }
 
-function Main({ container, content }: MainProps) {
+function Main({ container, element }: MainProps) {
   return (
-    <div id={`${container}`} dangerouslySetInnerHTML={{ __html: content }}></div>
+  <div id={`${container}`}>{element}</div>
   )
 }
 

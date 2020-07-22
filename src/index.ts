@@ -10,11 +10,6 @@ export * from '../page'
 
 import type { Server } from 'http'
 import type { Request, Response, Application } from 'express'
-import type {
-  DocumentProps
-} from './document'
-
-export type RenderData = Omit<DocumentProps, 'assets'>
 
 export type TorchConfig = {
   port?: string

@@ -6,7 +6,6 @@ import compression from 'compression'
 import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
-import { babelConfig } from '../../config'
 
 export default function createServer(dir: string) {
   const app = express()
@@ -20,22 +19,6 @@ export default function createServer(dir: string) {
   // favicon
   const favPath = path.resolve(dir, 'public', 'favicon.ico')
   app.use(favicon(favPath))
-
-  // view engine
-  const viewsConfig = {
-		babel: {
-			...babelConfig,
-			extensions: [".es6", ".es", ".jsx", ".js", ".mjs", ".ts", ".tsx"]
-		}
-	}
-  app.engine("js", require("express-react-views").createEngine(viewsConfig))
-  app.engine("jsx", require("express-react-views").createEngine(viewsConfig))
-  app.engine("ts", require("express-react-views").createEngine(viewsConfig))
-  app.engine("tsx", require("express-react-views").createEngine(viewsConfig))
-
-  // view engine setup
-	app.set("views", path.resolve(dir, '.torch', 'server'))
-  app.set("view engine", "js")
   
   // logger
   app.use(logger('dev'))

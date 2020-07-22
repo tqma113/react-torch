@@ -1,12 +1,15 @@
+import ReactDOMServer from 'react-dom/server'
 import createRouter from './router'
 import getRoutes from './getRoutes'
+import createHtml from '../../document'
+import type { ReactElement } from 'react';
 import type { DraftRoute } from './router'
 import type { Request, Response, NextFunction } from 'express'
+import type { DocumentProps } from '../../document'
 import type {
   IntegralTorchConfig,
   ClientContext,
   ServerContext,
-  RenderData
 } from '../../index'
 
 export default function createRender(config: IntegralTorchConfig) {
@@ -19,21 +22,24 @@ export default function createRender(config: IntegralTorchConfig) {
   const router = createRouter(routes)
 
   return function (req: Request, res: Response, next: NextFunction) {
-    const render = (content: string, state: object) => {
+    const render = (element: ReactElement, state: object) => {
       const context: ClientContext = {
         ssr: config.ssr,
         env: process.env.NODE_ENV,
         side: 'client'
       }
-      const data: RenderData = {
+      const data: DocumentProps = {
         title: config.title,
         publicPath: '',
         context,
-        content,
+        element,
         container: 'root',
-        state
+        state,
+        ...res.locals
       }
-      res.render('view', data)
+      const html = createHtml(data)
+      const stream = ReactDOMServer.renderToStaticNodeStream(html)
+      stream.pipe(res)
     }
     const context: ServerContext = {
       req,

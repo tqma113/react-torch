@@ -10,5 +10,7 @@ export {
   useHistory,
   useStore,
   useState,
-  useActions
+  useActions,
+  useTorchContext,
+  useCookie
 } from './context'

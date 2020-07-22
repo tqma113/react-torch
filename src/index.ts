@@ -60,7 +60,8 @@ export type StylePreload = {
   content: string
 } | {
   type: 'link',
-  href: string
+  href: string,
+  preload: boolean
 }
 
 export type ScriptPreload = {

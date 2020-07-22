@@ -89,9 +89,21 @@ function Head({ title, styles, scripts }: HeadProps) {
               />
             )
           } else {
-            return (
-              <link key={index} rel="stylesheet" type="text/css" href={style.href} />
-            )
+            if (style.preload) {
+              return React.createElement('link', {
+                key: index,
+                href: style.href,
+                rel: 'preload',
+                type: "text/css",
+                onLoad: function() {
+                  this.rel = 'stylesheet'
+                }
+              })
+            } else {
+              return (
+                <link key={index} rel="preload" type="text/css" href={style.href} />
+              )
+            }
           }
         })
       }

@@ -15,7 +15,10 @@ export type PageCreator<
 > = (history: History, context: Context) => [
   React.ComponentType,
   Store<S, AS>
-]
+] | Promise<[
+  React.ComponentType,
+  Store<S, AS>
+]>
 
 export type Page<
   S extends object = {},

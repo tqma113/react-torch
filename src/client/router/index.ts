@@ -48,7 +48,7 @@ export default function createRouter(
 
       const symbol = Symbol('TORCH_PAGE')
       setPageLifeCircle(symbol)
-      const [view, store] = pageCreator(history, context)
+      const [view, store] = await pageCreator(history, context)
       const lifecircle = getLifeCircle(symbol)
 
       if (context.ssr) {
@@ -115,7 +115,7 @@ export default function createRouter(
         }
         const symbol = Symbol('TORCH_PAGE')
         setPageLifeCircle(symbol)
-        const [view, store] = pageCreator(history, ctx)
+        const [view, store] = await pageCreator(history, ctx)
         const lifecircle = getLifeCircle(symbol)
 
         await lifecircle.willCreate()

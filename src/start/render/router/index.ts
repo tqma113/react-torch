@@ -60,7 +60,8 @@ export default function createRender(draftRoutes: DraftRoute[]): Router {
         value: {
           location,
           history,
-          store
+          store,
+          context
         },
         children: element
       })

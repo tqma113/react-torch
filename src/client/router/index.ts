@@ -64,7 +64,8 @@ export default function createRouter(
         value: {
           location,
           history,
-          store
+          store,
+          context
         },
         children: element
       })
@@ -91,7 +92,8 @@ export default function createRouter(
           value: {
             location,
             history,
-            store
+            store,
+            context
           },
           children: element
         })
@@ -125,7 +127,8 @@ export default function createRouter(
           value: {
             location,
             history,
-            store
+            store,
+            context
           },
           children: element
         })
@@ -148,7 +151,8 @@ export default function createRouter(
             value: {
               location,
               history,
-              store
+              store,
+              context
             },
             children: element
           })

@@ -35,7 +35,7 @@ export default function createRender(config: IntegralTorchConfig) {
         element,
         container: 'root',
         state,
-        ...res.locals
+        assets: res.locals.assets
       }
       const html = createHtml(data)
       const stream = ReactDOMServer.renderToStaticNodeStream(html)

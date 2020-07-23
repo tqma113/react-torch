@@ -1,5 +1,91 @@
 # CHANGELOG
 
+## 1.6.2
+
+> 2020/7/23
+
+* refactor: render
+* refactor: router
+
+## 1.6.2
+
+> 2020/7/23
+
+* fix: render
+* feat: client router
+
+## 1.6.1
+
+> 2020/7/23
+
+* fix: render html
+
+## 1.6.0
+
+> 2020/7/22
+
+* refactor: render
+
+## 1.5.14
+
+> 2020/7/22
+
+* perf: lifecircle hook again
+
+## 1.5.13
+
+> 2020/7/22
+
+* perf: lifecircle hook
+
+## 1.5.12
+
+> 2020/7/22
+
+* fix: mdlw in production mode
+
+## 1.5.11
+
+> 2020/7/22
+
+* fix: useCookie bug
+
+## 1.5.10
+
+> 2020/7/22
+
+* feat: add useCookie
+
+## 1.5.9
+
+> 2020/7/22
+
+* feat: update context value
+
+## 1.5.8
+
+> 2020/7/22
+
+* feat: support async page
+
+## 1.5.7
+
+> 2020/7/22
+
+* feat: add context
+
+## 1.5.6
+
+> 2020/7/22
+
+* fix: fix link preload options bug
+
+## 1.5.5
+
+> 2020/7/22
+
+* feat: link add preload options
+
 ## 1.5.4
 
 > 2020/7/21

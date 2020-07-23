@@ -1,5 +1,5 @@
 import ReactDOMServer from 'react-dom/server'
-import createRouter from './router'
+import createRouter from '../../router'
 import getRoutes from './getRoutes'
 import {
   setPageLifeCircle,
@@ -10,7 +10,7 @@ import createHistory from '../../history/memory'
 import { createErrorElement } from '../../error'
 import { connect } from '../../context'
 import { isPromise } from '../../utils'
-import type { DraftRoute } from './router'
+import type { DraftRoute } from '../../router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../document'
 import type { PageCreatorLoader, PageCreator } from '../../page'
@@ -95,7 +95,7 @@ export default function createRender(config: IntegralTorchConfig) {
         stream.pipe(res)
       }
     }
-    router.tryRender(render, location.pathname)
+    router(render, location.pathname)
   }
 }
 

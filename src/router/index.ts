@@ -1,6 +1,6 @@
 import createMatcher from './createMatcher'
 import type { Key } from 'path-to-regexp'
-import type { PageCreatorLoader } from '../../page/index'
+import type { PageCreatorLoader } from '../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
@@ -11,11 +11,9 @@ export type DraftRoute = {
 
 export type Render = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => void
 
-export type Router = {
-  tryRender(render: Render, path: string): Promise<void>
-}
-
-export default function createRender(draftRoutes: DraftRoute[]): Router {
+export default function createRender(
+  draftRoutes: DraftRoute[]
+): (render: Render, path: string) => Promise<void> {
   const matcher = createMatcher(draftRoutes)
 
   async function getPageCreatorLoader(path: string) {
@@ -28,10 +26,8 @@ export default function createRender(draftRoutes: DraftRoute[]): Router {
     }
   }
 
-  return {
-    tryRender: async (render, path) => {
-      const pageCreatorLoader = await getPageCreatorLoader(path)
-      render(pageCreatorLoader)
-    }
+  return async (render, path) => {
+    const pageCreatorLoader = await getPageCreatorLoader(path)
+    render(pageCreatorLoader)
   }
 }

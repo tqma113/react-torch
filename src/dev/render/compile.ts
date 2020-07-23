@@ -4,10 +4,9 @@ import path from 'path'
 import webpack from 'webpack'
 import getConfig from './webpackConfig'
 import { matchExternals, getExternals } from '../../utils'
-import type { Router } from './router'
 import type { IntegralTorchConfig } from '../../index'
 
-export default function compile(config: IntegralTorchConfig, router: Router) {
+export default function compile(config: IntegralTorchConfig) {
   const webpackConfig = getConfig(config)
   const compiler = webpack(webpackConfig)
 
@@ -73,8 +72,9 @@ export default function compile(config: IntegralTorchConfig, router: Router) {
       const newModule = runCode(sourceCode)
       if (newModule) {
         const routes = newModule.default || newModule
-        router.setRoutes(routes)
-        resolve()
+        resolve(routes)
+      } else {
+        reject('cannot find routes')
       }
     })
   })

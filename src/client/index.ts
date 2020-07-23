@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime'
 
 import ReactDOM from "react-dom"
 import invariant from 'tiny-invariant'
-import createRouter from './router'
+import createRouter from '../router'
 import createHistory from '../history/browser'
 import {
   setPageLifeCircle,
@@ -94,7 +94,7 @@ if (dataScript) {
         }
       }
 
-      router.tryRender(init,location.pathname)
+      router(init,location.pathname)
 
       const listener: Listener = async ({ location }) => {
         const render = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
@@ -156,7 +156,7 @@ if (dataScript) {
           }
         }
   
-        router.tryRender(render, location.pathname)
+        router(render, location.pathname)
       }
       
       history.listen(listener)

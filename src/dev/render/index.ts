@@ -1,5 +1,5 @@
 import ReactDOMServer from 'react-dom/server'
-import createRouter from './router/index';
+import createRouter from '../../router/index';
 import compile from './compile'
 import {
   setPageLifeCircle,
@@ -21,8 +21,8 @@ import type {
 } from '../../index'
 
 export default async function createRender (config: IntegralTorchConfig) {
-  const router = createRouter([])
-  await compile(config, router)
+  const routes = await compile(config)
+  const router = createRouter(routes)
 
   return function (req: Request, res: Response, next: NextFunction) {
     const history = createHistory()
@@ -90,7 +90,7 @@ export default async function createRender (config: IntegralTorchConfig) {
         stream.pipe(res)
       }
     }
-    router.tryRender(render, location.pathname)
+    router(render, location.pathname)
   }
 }
 

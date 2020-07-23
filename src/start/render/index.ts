@@ -73,7 +73,6 @@ export default function createRender(config: IntegralTorchConfig) {
             const element = connect(view)(globalContext)
             return [element, store.state] as const
           } catch (err) {
-            console.log(err)
             return [createErrorElement(JSON.stringify(err)), {}] as const
           }
         }
@@ -89,7 +88,7 @@ export default function createRender(config: IntegralTorchConfig) {
           assets: res.locals.assets
         }
         const html = createHtml(data)
-        const stream = ReactDOMServer.renderToStaticNodeStream(html)
+        const stream = ReactDOMServer.renderToNodeStream(html)
         res.setHeader('Content-type', 'text/html')
         res.write('<!DOCTYPE html>')
         stream.pipe(res)

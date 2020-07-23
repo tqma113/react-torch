@@ -1,7 +1,9 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
+import React from 'react'
 import ReactDOM from "react-dom"
+import ReactDOMServer from "react-dom/server"
 import invariant from 'tiny-invariant'
 import createRouter from '../router'
 import createHistory from '../history/browser'
@@ -40,61 +42,6 @@ if (dataScript) {
 
       const router = createRouter($routes)
 
-      const init = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
-        if (pageCreatorLoader === null) {
-          const globalContext = {
-            location,
-            history,
-            context
-          }
-          const error = new Error(`Unknow path: ${location.pathname}`)
-          const msg = JSON.stringify(error)
-          const element = connect(() => createErrorElement(msg))(globalContext as any)
-          const containerElement = document.querySelector(`#${container}`)
-          ReactDOM.render(element, containerElement)
-        } else {
-          loadPageCreator(pageCreatorLoader()).then(async (pageCreator) => {
-            const symbol = Symbol('TORCH_PAGE')
-            setPageLifeCircle(symbol)
-            const [view, store] = await pageCreator(history, context)
-            const lifecircle = getLifeCircle(symbol)
-
-            if (context.ssr) {
-              store.UNSAFE_setState(state)
-            }
-
-            if (context.ssr === false) {
-              await lifecircle.willCreate()
-            }
-
-            const globalContext: GlobalContextType = {
-              location,
-              history,
-              store,
-              context
-            }
-            const element = connect(view)(globalContext)
-            const containerElement = document.querySelector(`#${container}`)
-
-            invariant(
-              containerElement !== null,
-              `The container: ${container} is not exist`
-            )
-
-            await lifecircle.willMount()
-
-            if (context.ssr) {
-              ReactDOM.hydrate(element, containerElement)
-            } else {
-              ReactDOM.render(element, containerElement)
-            }
-
-            await lifecircle.didMount()
-          })
-        }
-      }
-
-      router(init,location.pathname)
 
       const listener: Listener = async ({ location }) => {
         const render = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
@@ -159,7 +106,74 @@ if (dataScript) {
         router(render, location.pathname)
       }
       
-      history.listen(listener)
+      const init = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
+        if (pageCreatorLoader === null) {
+          const globalContext = {
+            location,
+            history,
+            context
+          }
+          const error = new Error(`Unknow path: ${location.pathname}`)
+          const msg = JSON.stringify(error)
+          const element = connect(() => createErrorElement(msg))(globalContext as any)
+          const containerElement = document.querySelector(`#${container}`)
+          ReactDOM.render(element, containerElement)
+        } else {
+          loadPageCreator(pageCreatorLoader()).then(async (pageCreator) => {
+            const symbol = Symbol('TORCH_PAGE')
+            setPageLifeCircle(symbol)
+            const [view, store] = await pageCreator(history, context)
+            const lifecircle = getLifeCircle(symbol)
+
+            if (context.ssr) {
+              store.UNSAFE_setState(state)
+            }
+
+            if (!context.ssr) {
+              await lifecircle.willCreate()
+            }
+
+            const globalContext: GlobalContextType = {
+              location,
+              history,
+              store,
+              context
+            }
+            const element = connect(view)(globalContext)
+            const containerElement = document.querySelector(`#${container}`)
+
+            invariant(
+              containerElement !== null,
+              `The container: ${container} is not exist`
+            )
+
+            await lifecircle.willMount()
+
+            if (context.ssr) {
+              ReactDOM.hydrate(element, containerElement)
+            } else {
+              ReactDOM.render(element, containerElement)
+            }
+
+            await lifecircle.didMount()
+        
+            store.listen((data) => {
+              const globalContext: GlobalContextType = {
+                location,
+                history,
+                store,
+                context
+              }
+              const element = connect(view)(globalContext)
+              ReactDOM.render(element, containerElement)
+            })
+          }).then(() => {
+            history.listen(listener)
+          })
+        }
+      }
+
+      router(init, location.pathname)
     } catch (err) {
       console.error(err)
     }

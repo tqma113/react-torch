@@ -80,7 +80,9 @@ export default async function createRender (config: IntegralTorchConfig) {
           element,
           container: 'root',
           state,
-          assets: res.locals.assets
+          assets: res.locals.assets,
+          styles: res.locals.styles,
+          scripts: res.locals.scripts
         }
         const html = createHtml(data)
         const stream = ReactDOMServer.renderToNodeStream(html)

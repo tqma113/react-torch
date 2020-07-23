@@ -1,9 +1,7 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
-import React from 'react'
 import ReactDOM from "react-dom"
-import ReactDOMServer from "react-dom/server"
 import invariant from 'tiny-invariant'
 import createRouter from '../router'
 import createHistory from '../history/browser'

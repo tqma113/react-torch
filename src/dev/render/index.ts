@@ -86,6 +86,7 @@ export default async function createRender (config: IntegralTorchConfig) {
         }
         const html = createHtml(data)
         const stream = ReactDOMServer.renderToNodeStream(html)
+        res.status(200)
         res.setHeader('Content-type', 'text/html')
         res.write('<!DOCTYPE html>')
         stream.pipe(res)

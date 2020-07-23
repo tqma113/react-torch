@@ -1,18 +1,6 @@
 import createMatcher from './createMatcher'
-import createHistory from '../../../history/memory'
-import { isPromise } from '../../../utils'
-import {
-  setPageLifeCircle,
-  getLifeCircle
-} from '../../../lifecircle'
-import { connect } from '../../../context'
-import { createErrorElement } from '../../../error'
-import type { ReactElement } from 'react'
-import type { NextFunction } from 'express'
 import type { Key } from 'path-to-regexp'
-import type { ServerContext } from '../../../index'
-import type { PageCreatorLoader, PageCreator } from '../../../page/index'
-import type { GlobalContextType } from '../../../context'
+import type { PageCreatorLoader } from '../../../page/index'
 
 export type DraftRoute = {
   keys?: Key[]
@@ -21,18 +9,17 @@ export type DraftRoute = {
   page: PageCreatorLoader<any, any>
 }
 
-export type Render = (element: ReactElement, state: object) => void
+export type Render = (pageCreateLoader: PageCreatorLoader<any, any> | null) => void
 
 export type Task = {
-  context: ServerContext,
+  path: string,
   render: Render,
-  next: () => void
 }
 
 export type Router = {
   readonly isBlock: boolean
   setRoutes(draftRoutes: DraftRoute[]): void
-  tryRender(render: Render, context: ServerContext, next: NextFunction): Promise<void>
+  tryRender(render: Render, path: string): Promise<void>
 }
 
 export default function createRouter(draftRoutes: DraftRoute[]): Router {
@@ -40,36 +27,13 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
   let isBlock = true
   let tasks: Task[] = []
 
-  async function getContentAndState(context: ServerContext) {
-    const history = createHistory()
-    history.push(context.req.url)
-    const location = history.location
-    const matches = matcher(location.pathname || '/')
+  function getPageCreatorLoader(path: string) {
+    const matches = matcher(path || '/')
 
-    if (matches === null) return null
-
-    try {
-      const page = await loadPageCreator(matches.page())
-      const symbol = Symbol('TORCH_PAGE')
-      // set life circle
-      setPageLifeCircle(symbol)
-      // create page
-      const [view, store] = await page(history, context)
-      const lifecircle = getLifeCircle(symbol)
-
-      await lifecircle.willCreate()
-
-      const globalContext: GlobalContextType = {
-        location,
-        history,
-        store,
-        context
-      }
-      const element = connect(view)(globalContext)
-      return [element, store.state] as const
-    } catch (err) {
-      console.log(err)
-      return [createErrorElement(JSON.stringify(err)), {}] as const
+    if (matches === null) {
+      return null
+    } else {
+      return matches.page
     }
   }
 
@@ -81,46 +45,24 @@ export default function createRouter(draftRoutes: DraftRoute[]): Router {
       matcher = createMatcher(draftRoutes)
       if (isBlock) {
         isBlock = false
-        tasks.forEach(async ({ context, render, next }) => {
-          const contentAndState = await getContentAndState(context)
-          if (contentAndState === null) {
-            next()
-          } else {
-            const [element, state] = contentAndState
-            render(element, state)
-          }
+        tasks.forEach(async ({ path, render }) => {
+          const pageCreatorLoader = await getPageCreatorLoader(path)
+          render(pageCreatorLoader)
         })
       }
     },
-    async tryRender(render, context, next) {
+    async tryRender(render, path) {
       if (isBlock) {
         const task: Task = {
-          context,
-          render,
-          next
+          path,
+          render
         }
         tasks.push(task)
-        console.log(`${context.req.url} will render after compile`)
+        console.log(`${path} will render after compile`)
       } else {
-        const contentAndState = await getContentAndState(context)
-        if (contentAndState === null) {
-          next()
-        } else {
-          const [element, state] = contentAndState
-          render(element, state)
-        }
+        const pageCreatorLoader = getPageCreatorLoader(path)
+        render(pageCreatorLoader)
       }
     }
-  }
-}
-
-async function loadPageCreator(
-  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
-): Promise<PageCreator<any, any>> {
-  if (isPromise(draftPageCreator)) {
-    // @ts-ignore
-    return (await draftPageCreator).default
-  } else {
-    return draftPageCreator
   }
 }

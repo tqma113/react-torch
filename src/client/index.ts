@@ -1,10 +1,22 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
+import ReactDOM from "react-dom"
+import invariant from 'tiny-invariant'
 import createRouter from './router'
+import createHistory from '../history/browser'
+import {
+  setPageLifeCircle,
+  getLifeCircle
+} from '../lifecircle'
+import { connect } from '../context'
+import { createErrorElement } from '../error'
 // @ts-ignore
 import $routes from "@routes"
+import type { Listener } from '../history'
 import type { TORCH_DATA } from '../index'
+import type { GlobalContextType } from '../context'
+import type { PageCreator, PageCreatorLoader } from '../page/index'
 
 declare global {
   interface Window {
@@ -12,29 +24,162 @@ declare global {
     __DEV__: boolean
   }
 }
+
 const dataScript = document.getElementById('__TORCH_DATA__') as HTMLScriptElement | null
 if (dataScript) {
   const jsonStr = dataScript.textContent
   if (jsonStr) {
+    const history = createHistory({ window })
+    const location = history.location
+    
     try {
       const data: TORCH_DATA = JSON.parse(jsonStr)
+      const { context, container, state } = data
 
       window.__TORCH_DATA__ = data
 
-      const router = createRouter(
-        $routes,
-        data.container,
-        data.context,
-        data.state
-      )
-      router.init()
-      router.start()
+      const router = createRouter($routes)
+
+      const init = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
+        if (pageCreatorLoader === null) {
+          const globalContext = {
+            location,
+            history,
+            context
+          }
+          const error = new Error(`Unknow path: ${location.pathname}`)
+          const msg = JSON.stringify(error)
+          const element = connect(() => createErrorElement(msg))(globalContext as any)
+          const containerElement = document.querySelector(`#${container}`)
+          ReactDOM.render(element, containerElement)
+        } else {
+          loadPageCreator(pageCreatorLoader()).then(async (pageCreator) => {
+            const symbol = Symbol('TORCH_PAGE')
+            setPageLifeCircle(symbol)
+            const [view, store] = await pageCreator(history, context)
+            const lifecircle = getLifeCircle(symbol)
+
+            if (context.ssr) {
+              store.UNSAFE_setState(state)
+            }
+
+            if (context.ssr === false) {
+              await lifecircle.willCreate()
+            }
+
+            const globalContext: GlobalContextType = {
+              location,
+              history,
+              store,
+              context
+            }
+            const element = connect(view)(globalContext)
+            const containerElement = document.querySelector(`#${container}`)
+
+            invariant(
+              containerElement !== null,
+              `The container: ${container} is not exist`
+            )
+
+            await lifecircle.willMount()
+
+            if (context.ssr) {
+              ReactDOM.hydrate(element, containerElement)
+            } else {
+              ReactDOM.render(element, containerElement)
+            }
+
+            await lifecircle.didMount()
+          })
+        }
+      }
+
+      router.tryRender(init,location.pathname)
+
+      const listener: Listener = async ({ location }) => {
+        const render = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
+          if (pageCreatorLoader === null) {
+            const globalContext = {
+              location,
+              history,
+              context
+            }
+            const error = new Error(`Unknow path: ${location.pathname}`)
+            const msg = JSON.stringify(error)
+            const element = connect(() => createErrorElement(msg))(globalContext as any)
+            const containerElement = document.querySelector(`#${container}`)
+            ReactDOM.render(element, containerElement)
+          } else {
+            loadPageCreator(pageCreatorLoader()).then(async (pageCreator) => {
+              const ctx = {
+                ...context,
+                ssr: false
+              }
+              const symbol = Symbol('TORCH_PAGE')
+              setPageLifeCircle(symbol)
+              const [view, store] = await pageCreator(history, ctx)
+              const lifecircle = getLifeCircle(symbol)
+        
+              await lifecircle.willCreate()
+        
+              const globalContext: GlobalContextType = {
+                location,
+                history,
+                store,
+                context
+              }
+              const element = connect(view)(globalContext)
+              const containerElement = document.querySelector(`#${container}`)
+        
+              invariant(
+                containerElement !== null,
+                `The container: ${container} is not exist`
+              )
+            
+              await lifecircle.willMount()
+        
+              ReactDOM.render(element, containerElement)
+        
+              await lifecircle.didMount()
+        
+              store.listen(() => {
+                const globalContext: GlobalContextType = {
+                  location,
+                  history,
+                  store,
+                  context
+                }
+                const element = connect(view)(globalContext)
+                ReactDOM.render(element, containerElement)
+              })
+            })
+          }
+        }
+  
+        router.tryRender(render, location.pathname)
+      }
+      
+      history.listen(listener)
     } catch (err) {
-      console.log(`Init with data: ${jsonStr} failed!`)
-      console.log(err)
+      console.error(err)
     }
   } else {
   }
 } else {
   console.error('Render failed. Can\' find __TORCH_DATA__ script element!')
+}
+
+async function loadPageCreator(
+  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
+):  Promise<PageCreator<any, any>> {
+  if (isPromise(draftPageCreator)) {
+    // @ts-ignore
+    return (await draftPageCreator).default
+  } else {
+    return draftPageCreator
+  }
+}
+
+export function isPromise(obj: any): obj is Promise<any> {
+  return obj && obj.then && typeof obj.then === 'function'
 }

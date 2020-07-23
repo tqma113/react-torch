@@ -7,10 +7,11 @@ import {
   setPageLifeCircle,
   getLifeCircle
 } from '../../lifecircle'
-import GlobalContext from '../../context'
+import { connect } from '../../context'
 import type { Key } from 'path-to-regexp'
 import type { Context } from '../../index'
 import type { Listener } from '../../history'
+import type { GlobalContextType } from '../../context'
 import type { PageCreator, PageCreatorLoader } from '../../page/index'
 
 export type DraftRoute = {
@@ -59,16 +60,13 @@ export default function createRouter(
         await lifecircle.willCreate()
       }
 
-      const element: React.ReactElement<{}> = React.createElement(view)
-      const globalElement = React.createElement(GlobalContext.Provider, {
-        value: {
-          location,
-          history,
-          store,
-          context
-        },
-        children: element
-      })
+      const globalContext: GlobalContextType = {
+        location,
+        history,
+        store,
+        context
+      }
+      const element = connect(view)(globalContext)
       const containerElement = document.querySelector(`#${container}`)
 
       invariant(
@@ -79,25 +77,22 @@ export default function createRouter(
       await lifecircle.willMount()
 
       if (context.ssr) {
-        ReactDOM.hydrate(globalElement, containerElement)
+        ReactDOM.hydrate(element, containerElement)
       } else {
-        ReactDOM.render(globalElement, containerElement)
+        ReactDOM.render(element, containerElement)
       }
 
       await lifecircle.didMount()
 
       store.listen(() => {
-        const element: React.ReactElement<{}> = React.createElement(view)
-        const globalElement = React.createElement(GlobalContext.Provider, {
-          value: {
-            location,
-            history,
-            store,
-            context
-          },
-          children: element
-        })
-        ReactDOM.render(globalElement, containerElement)
+        const globalContext: GlobalContextType = {
+          location,
+          history,
+          store,
+          context
+        }
+        const element = connect(view)(globalContext)
+        ReactDOM.render(element, containerElement)
       })
     },
     start() {
@@ -122,16 +117,13 @@ export default function createRouter(
 
         await lifecircle.willCreate()
 
-        const element: React.ReactElement<{}> = React.createElement(view)
-        const globalElement = React.createElement(GlobalContext.Provider, {
-          value: {
-            location,
-            history,
-            store,
-            context
-          },
-          children: element
-        })
+        const globalContext: GlobalContextType = {
+          location,
+          history,
+          store,
+          context
+        }
+        const element = connect(view)(globalContext)
         const containerElement = document.querySelector(`#${container}`)
 
         invariant(
@@ -141,22 +133,19 @@ export default function createRouter(
       
         await lifecircle.willMount()
 
-        ReactDOM.render(globalElement, containerElement)
+        ReactDOM.render(element, containerElement)
 
         await lifecircle.didMount()
 
         store.listen(() => {
-          const element: React.ReactElement<{}> = React.createElement(view)
-          const globalElement = React.createElement(GlobalContext.Provider, {
-            value: {
-              location,
-              history,
-              store,
-              context
-            },
-            children: element
-          })
-          ReactDOM.render(globalElement, containerElement)
+          const globalContext: GlobalContextType = {
+            location,
+            history,
+            store,
+            context
+          }
+          const element = connect(view)(globalContext)
+          ReactDOM.render(element, containerElement)
         })
       }
 

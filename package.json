@@ -36,7 +36,8 @@
     "dev:dev": "node -r ts-node/register ./example/dev.ts",
     "dev:build": "node -r ts-node/register ./example/build.ts",
     "debug:start": "node --inspect-brk -r ts-node/register ./example/start.ts",
-    "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts"
+    "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",

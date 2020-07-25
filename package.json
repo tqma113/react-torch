@@ -37,6 +37,7 @@
     "dev:build": "node -r ts-node/register ./example/build.ts",
     "debug:start": "node --inspect-brk -r ts-node/register ./example/start.ts",
     "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts",
+    "commit": "git-cz",
     "precommit": "lint-staged"
   },
   "repository": {
@@ -148,6 +149,7 @@
     "@types/webpack-bundle-analyzer": "^2.13.3",
     "@types/webpack-dev-middleware": "^3.7.0",
     "@types/webpack-manifest-plugin": "^2.1.0",
+    "commitizen": "^4.1.2",
     "jest": "^26.1.0",
     "nodemon": "^1.19.3",
     "react": "^16.13.1",

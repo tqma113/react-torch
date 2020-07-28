@@ -1,6 +1,31 @@
 # CHANGELOG
 
-## 1.6.2
+## 1.7.0
+
+> 2020/7/28
+
+* refactor: lifecircle
+* feat: support mutiple lifecircle
+
+## 1.6.6
+
+> 2020/7/23
+
+* fix: production mode
+
+## 1.6.5
+
+> 2020/7/23
+
+* fix: attachment
+
+## 1.6.4
+
+> 2020/7/23
+
+* perf: render compile
+
+## 1.6.3
 
 > 2020/7/23
 

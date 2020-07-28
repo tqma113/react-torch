@@ -1,10 +1,6 @@
 import ReactDOMServer from 'react-dom/server'
 import createRouter from '../../router'
 import getRoutes from './getRoutes'
-import {
-  setPageLifeCircle,
-  getLifeCircle
-} from '../../lifecircle'
 import createHtml from '../../document'
 import createHistory from '../../history/memory'
 import { createErrorElement } from '../../error'
@@ -54,13 +50,11 @@ export default function createRender(config: IntegralTorchConfig) {
         const getElementAndState = async () => {
           try {
             const page = await loadPageCreator(pageCreatorLoader())
-            
-            const symbol = Symbol('TORCH_PAGE')
-            // set life circle
-            setPageLifeCircle(symbol)
-            // create page
-            const [view, store] = await page(history, serverContext)
-            const lifecircle = getLifeCircle(symbol)
+            const [
+              view,
+              store,
+              lifecircle
+            ] = await page(history, serverContext)
   
             await lifecircle.willCreate()
   

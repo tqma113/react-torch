@@ -3,6 +3,14 @@ import type { TorchConfig } from '../index'
 export type ConfigHook = ((config: TorchConfig) => TorchConfig) | ((config: TorchConfig) => Promise<TorchConfig>)
 export type Hook = (() => void) | (() => Promise<void>)
 
+export type LifeCircleCache = {
+  config: ConfigHook[],
+
+  willCreate: Hook[],
+  willMount: Hook[]
+  didMount: Hook[]
+}
+
 export type LifeCircle = {
   config: ConfigHook,
 
@@ -13,11 +21,11 @@ export type LifeCircle = {
 
 type Value<T, Key extends keyof T> = T[Key]
 
-const defaultLifeCircle: LifeCircle = {
-  config: (config) => config,
-  willCreate: () => {},
-  willMount: () => {},
-  didMount: () => {}
+const defaultLifeCircle: LifeCircleCache = {
+  config: [],
+  willCreate: [],
+  willMount: [],
+  didMount: []
 }
 
 function createHookContext() {
@@ -32,7 +40,7 @@ function createHookContext() {
     }
   }
 
-  function getLifeCircle(symbol: symbol): LifeCircle {
+  function getLifeCircle(symbol: symbol): LifeCircleCache {
     // @ts-ignore
     const lifeCircle = dict[symbol]
     // @ts-ignore
@@ -46,10 +54,10 @@ function createHookContext() {
     hook: Hook
   ) {
     if (_symbol == null) {
-      console.warn('You can\'t call lifecircle hook at here.')
+      console.trace('You can\'t call lifecircle hook at here.')
     } else {
       // @ts-ignore
-      dict[_symbol][name] = hook
+      dict[_symbol][name].push(hook)
     }
   }
 
@@ -66,8 +74,41 @@ export function setPageLifeCircle(symbol: symbol) {
   context.setPageLifeCircle(symbol)
 }
 
-export function getLifeCircle(symbol: symbol) {
-  return context.getLifeCircle(symbol)
+export function getLifeCircle(symbol: symbol): LifeCircle {
+  const cache = context.getLifeCircle(symbol)
+
+  const config: ConfigHook = async (config) => {
+    cache.config.forEach(async (hook) => {
+      config = await hook(config)
+    })
+
+    return config
+  }
+
+  const willCreate: Hook = async () => {
+    cache.willCreate.forEach(async (hook) => {
+      await hook()
+    })
+  }
+
+  const willMount: Hook = async () => {
+    cache.willMount.forEach(async (hook) => {
+      await hook()
+    })
+  }
+
+  const didMount: Hook = async () => {
+    cache.didMount.forEach(async (hook) => {
+      await hook()
+    })
+  }
+
+  return {
+    config,
+    willCreate,
+    willMount,
+    didMount
+  }
 }
 
 export function setHook<Keys extends keyof LifeCircle, Hook extends Value<LifeCircle, Keys>>(

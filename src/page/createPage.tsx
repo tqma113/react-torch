@@ -1,4 +1,5 @@
 import React from 'react'
+import { setPageLifeCircle, getLifeCircle } from '../lifecircle'
 import type {  Actions } from '../store/index'
 import type { PageCreator } from './index'
 import type { History } from '../history'
@@ -13,10 +14,15 @@ function createPage<
   AS extends Actions<S> = ActionsFromPageCreator<Creator>
 >(creator: Creator): PageCreator<S, AS> {
   return async (history: History, context: Context) => {
+    const symbol = Symbol('TORCH_PAGE')
+    setPageLifeCircle(symbol)
     const [View, store] = await creator(history, context)
+    const lifecircle = getLifeCircle(symbol)
+    
     return [
       () =>  <View />,
-      store
+      store,
+      lifecircle
     ]
   }
 }

@@ -60,10 +60,7 @@ if (dataScript) {
                 ...context,
                 ssr: false
               }
-              const symbol = Symbol('TORCH_PAGE')
-              setPageLifeCircle(symbol)
-              const [view, store] = await pageCreator(history, ctx)
-              const lifecircle = getLifeCircle(symbol)
+              const [view, store, lifecircle] = await pageCreator(history, ctx)
         
               await lifecircle.willCreate()
         

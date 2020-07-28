@@ -2,7 +2,7 @@ import React from 'react'
 import { createPage } from '../../../page'
 import { useWillCreate, useWillMount } from '../../../hook'
 import store from './Model'
-// import './style.css'
+import './style.css'
 import type { History } from '../../../src/history'
 import type { Context } from '../../../src/index'
 

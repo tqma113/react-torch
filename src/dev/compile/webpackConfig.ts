@@ -36,13 +36,23 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       path: path.join(config.dir, '.torch', 'client'),
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
-      publicPath: '__torch/',
       pathinfo: true,
     },
     optimization: {
       splitChunks: {
-        chunks: 'all',
-        name: 'vendor'
+        cacheGroups: {
+          scripts: {
+            name: 'scripts',
+            test: /\.(js|ts|jsx|tsx)$/,
+            chunks: 'all',
+          },
+          styles: {
+            name: 'styles',
+            test: /\.css$/,
+            chunks: 'all',
+            enforce: true,
+          }
+        }
       }
     },
     performance: {
@@ -67,7 +77,6 @@ function getConfig(config: IntegralTorchConfig): Configuration {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                publicPath: '/__torch',
                 hmr: true
               },
             },

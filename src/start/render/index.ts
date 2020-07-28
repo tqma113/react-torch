@@ -73,12 +73,14 @@ export default function createRender(config: IntegralTorchConfig) {
 
         const [element, state] = await getElementAndState()
         const data: DocumentProps = {
+          dir: config.dir,
           title: config.title,
-          publicPath: '',
+          publicPath: '__torch',
           context: clientContext,
           element,
           container: 'root',
           state,
+          mode: config.styleMode,
           assets: res.locals.assets,
           styles: res.locals.styles,
           scripts: res.locals.scripts

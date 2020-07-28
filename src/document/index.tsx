@@ -1,8 +1,10 @@
+import fs from 'fs'
+import path from 'path'
 import React from 'react'
 import type {
-  Env,
   Context,
   TORCH_DATA,
+  PreloadType,
   ScriptPreload,
   StylePreload
 } from '../index'
@@ -10,21 +12,24 @@ import type { ReactElement } from 'react'
 
 
 export type DocumentProps = {
+  dir: string,
   title: string,
   context: Context,
   container: string,
   element: ReactElement,
   publicPath: string,
   assets: {
-    index: string,
-    vendor: string
+    scripts: string[],
+    styles: string[]
   },
   state: object,
+  mode: PreloadType,
   styles?: StylePreload[],
-  scripts?: ScriptPreload[]
+  scripts?: ScriptPreload[],
 }
 
 export default function createDocument({
+  dir,
   title,
   context,
   container,
@@ -32,6 +37,7 @@ export default function createDocument({
   publicPath,
   assets,
   state,
+  mode,
   styles = [],
   scripts = []
 }: DocumentProps) {
@@ -41,41 +47,11 @@ export default function createDocument({
     state
   }
 
-  return (
-    <Html>
-      <Head title={title} scripts={scripts} styles={styles} />
-
-      <body>
-        <NoScript title={title} />
-
-        <Main container={container} element={element} />
-
-        <TorchData env={context.env} data={data} />
-
-        <TorchScripts
-          index={`${publicPath}/${assets.index}`}
-          vendor={`${publicPath}/${assets.vendor}`}
-        />
-      </body>
-    </Html>
-  )
-}
-
-function Html(props: React.PropsWithChildren<{}>) {
-  return (
-    <html {...props} />
-  )
-}
-
-type HeadProps = {
-  title: string,
-  styles: StylePreload[],
-  scripts: ScriptPreload[]
-}
-
-function Head({ title, styles, scripts }: HeadProps) {
-  const preloadLinkElements = styles.map((style, index) => {
+  const styleElements = styles.map((style, index) => {
     if (style.type === 'link' && style.preload) {
+      if (mode === 'inner') {
+        return null
+      }
       return React.createElement('link', {
         key: index,
         href: style.href,
@@ -86,19 +62,52 @@ function Head({ title, styles, scripts }: HeadProps) {
     } else {
       return null
     }
-  }).filter(Boolean)
-
-  const linkElement = styles.map((style, index) => {
+  }).concat(assets.styles.map((style, index) => {
+    if (mode === 'inner') {
+      return null
+    }
+    return React.createElement('link', {
+      key: index,
+      href: `${publicPath}/${style}`,
+      rel: 'preload',
+      as: 'style',
+      type: "text/css"
+    })
+  })).concat(styles.map((style, index) => {
     if (style.type === 'link') {
+      if (mode === 'inner') {
+        const filePath = path.resolve(dir, '.torch', 'client', style.href.replace('static', 'public'))
+        const code = fs.readFileSync(filePath)
+        return (
+          <style
+            key={index}
+            type="text/css"
+            dangerouslySetInnerHTML={{ __html: code.toString() }}
+          />
+        ) 
+      }
       return (
         <link key={index} rel="stylesheet" type="text/css" href={style.href} />
       )
     } else {
       return null
     }
-  }).filter(Boolean)
-
-  const styleElements = styles.map((style, index) => {
+  })).concat(assets.styles.map((style, index) => {
+    if (mode === 'inner') {
+      const filePath = path.resolve(dir, '.torch', 'client', style)
+      const code = fs.readFileSync(filePath)
+      return (
+        <style
+          key={index}
+          type="text/css"
+          dangerouslySetInnerHTML={{ __html: code.toString() }}
+        />
+      ) 
+    }
+    return (
+      <link key={index} rel="stylesheet" type="text/css" href={`${publicPath}/${style}`} />
+    )
+  })).concat(styles.map((style, index) => {
     if (style.type === 'inner') {
       return (
         <style
@@ -110,98 +119,67 @@ function Head({ title, styles, scripts }: HeadProps) {
     } else {
       return null
     }
-  }).filter(Boolean)
+  })).filter(Boolean)
 
   const scriptElements = scripts.map((script, index) => {
     if (script.type == 'inner') {
       return (
         <script
           key={index}
+          type="application/javascript"
           dangerouslySetInnerHTML={{ __html: script.content.replace(/<\/script/gi, '&lt/script') }}
         />
       )
     } else {
       return (
-        <script key={index} src={script.src} />
+        <script key={index} src={script.src} type="application/javascript" />
       )
     }
   })
 
+
+  const deferScriptElement = assets.scripts.map((script, index) => {
+    return (
+      <script key={index} src={`${publicPath}/${script}`} />
+    )
+  })
+
   return (
-    <head>
-      <title>{title}</title>
-      <meta charSet="utf-8" />
-      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-      {preloadLinkElements}
-      {linkElement}
-      {scriptElements}
-      {styleElements}
-    </head>
-  )
-}
+    <html>
+      <head>
+        <title>{title}</title>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        {styleElements}
+        {scriptElements}
+      </head>
 
-export type NoScriptProps = {
-  title: string
-}
-function NoScript({
-  title
-}: NoScriptProps) {
-  return (
-    <noscript>
-      <strong>We're sorry but ${title} doesn't work properly without JavaScript enabled.You need to enable JavaScript to run this app.</strong>
-    </noscript>
-  )
-}
+      <body>
+        <noscript>
+          <strong>We're sorry but ${title} doesn't work properly without JavaScript enabled.You need to enable JavaScript to run this app.</strong>
+        </noscript>
 
-type MainProps = {
-  container: string,
-  element: ReactElement
-}
+        <div id={`${container}`}>{element}</div>
 
-function Main({ container, element }: MainProps) {
-  return (
-  <div id={`${container}`}>{element}</div>
-  )
-}
+        <script
+          id="__TORCH_DATA__"
+          type="application/json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
+        <script
+          type="application/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              window.__DEV__ = ${context.env === 'development'}
+            })()
+          `
+          }}
+        />
 
-type TorchDataProps = {
-  env: Env,
-  data: TORCH_DATA
-}
-
-function TorchData({ env, data }: TorchDataProps) {
-  return (
-    <>
-      <script
-        id="__TORCH_DATA__"
-        type="application/json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-      />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-          (function() {
-            window.__DEV__ = ${env === 'development'}
-          })()
-        `
-        }}
-      />
-    </>
-  )
-}
-
-
-type TorchScriptsProps = {
-  index: string,
-  vendor: string
-}
-
-function TorchScripts({ index, vendor }: TorchScriptsProps) {
-  return (
-    <>
-      <script src={index}></script>
-      <script src={vendor}></script>
-    </>
+        {deferScriptElement}
+      </body>
+    </html>
   )
 }

@@ -18,6 +18,7 @@ export type TorchConfig = {
   mdlw?: string | false
   ssr?: boolean
   title?: string
+  styleMode?: PreloadType
 }
 
 export type IntegralTorchConfig = Required<TorchConfig>

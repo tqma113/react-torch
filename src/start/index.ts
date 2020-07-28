@@ -42,7 +42,7 @@ export default function start(draftConfig: TorchConfig) {
   // static assets
   app.use((req, res, next) => {
     const assertPath = path.resolve(config.dir, '.torch', 'client', 'assets.json')
-    res.locals.assets = require(assertPath)
+    res.locals.assets = getAssets(require(assertPath))
     next()
   })
 
@@ -102,4 +102,24 @@ export default function start(draftConfig: TorchConfig) {
 		server.on('error', reject)
 		server.on('listening', () => resolve({ server, app }))
 	})
+}
+
+function getAssets(stats: Record<string, string>) {
+  let scripts: string[] = []
+  let styles: string[] = []
+
+  const add = (item: string) => {
+    if (item.endsWith('.js')) {
+      scripts.push(item)
+    } else if (item.endsWith('.css')) {
+      styles.push(item)
+    }
+  }
+
+	Object.values(stats).forEach(add)
+  
+  return {
+    scripts,
+    styles
+  }
 }

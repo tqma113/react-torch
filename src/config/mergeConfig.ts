@@ -25,6 +25,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
       ? path.resolve(dir, config.mdlw)
       : path.resolve(dir, MDLW)
   const ssr = config.ssr === undefined ? true : config.ssr
+  const styleMode = config.styleMode || 'inner'
 
   return {
     title,
@@ -32,6 +33,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     port,
     src,
     mdlw,
-    ssr
+    ssr,
+    styleMode
   }
 }

@@ -5,10 +5,6 @@ import ReactDOM from "react-dom"
 import invariant from 'tiny-invariant'
 import createRouter from '../router'
 import createHistory from '../history/browser'
-import {
-  setPageLifeCircle,
-  getLifeCircle
-} from '../lifecircle'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
 // @ts-ignore
@@ -115,10 +111,7 @@ if (dataScript) {
           ReactDOM.render(element, containerElement)
         } else {
           loadPageCreator(pageCreatorLoader()).then(async (pageCreator) => {
-            const symbol = Symbol('TORCH_PAGE')
-            setPageLifeCircle(symbol)
-            const [view, store] = await pageCreator(history, context)
-            const lifecircle = getLifeCircle(symbol)
+            const [view, store, lifecircle] = await pageCreator(history, context)
 
             if (context.ssr) {
               store.UNSAFE_setState(state)

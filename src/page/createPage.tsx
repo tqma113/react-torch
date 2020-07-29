@@ -14,8 +14,7 @@ function createPage<
   AS extends Actions<S> = ActionsFromPageCreator<Creator>
 >(creator: Creator): PageCreator<S, AS> {
   return async (history: History, context: Context) => {
-    const symbol = Symbol('TORCH_PAGE')
-    setPageLifeCircle(symbol)
+    const symbol = setPageLifeCircle()
     const [View, store] = await creator(history, context)
     const lifecircle = getLifeCircle(symbol)
     

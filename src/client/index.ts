@@ -1,6 +1,3 @@
-import 'core-js/stable'
-import 'regenerator-runtime/runtime'
-
 import ReactDOM from "react-dom"
 import invariant from 'tiny-invariant'
 import createRouter from '../router'

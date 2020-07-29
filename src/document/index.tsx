@@ -17,8 +17,8 @@ export type DocumentProps = {
   element: ReactElement,
   publicPath: string,
   assets: {
-    scripts: string[],
-    styles: string[]
+    vendor: string,
+    index: string
   },
   state: object,
   mode: PreloadType,
@@ -47,15 +47,12 @@ export default function createDocument({
 
   const styleElements = styles.map(getStyle)
 
-  const assetsStyleElements = assets.styles.map(
-    (style, index) => getStyleLink(`${publicPath}/${style}`, index)
-  )
-
   const scriptElements = scripts.map(getScript)
 
-  const assetsScriptElement = assets.scripts.map(
-    (script, index) => getSrcScript(`${publicPath}/${script}`, index)
-  )
+  const assetsScriptElement = [
+    getSrcScript(`${publicPath}/${assets.vendor}`, 'vendor'),
+    getSrcScript(`${publicPath}/${assets.index}`, 'index')
+  ]
 
   return (
     <html>
@@ -65,7 +62,6 @@ export default function createDocument({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         {styleElements}
-        {assetsStyleElements}
         {scriptElements}
       </head>
 

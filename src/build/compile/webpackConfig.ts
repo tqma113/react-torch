@@ -42,19 +42,8 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     optimization: {
       splitChunks: {
-        cacheGroups: {
-          scripts: {
-            name: 'scripts',
-            test: /\.(js|ts|jsx|tsx)$/,
-            chunks: 'all',
-          },
-          styles: {
-            name: 'styles',
-            test: /\.css$/,
-            chunks: 'all',
-            enforce: true,
-          }
-        }
+        chunks: 'all',
+        name: 'vendor'
       },
       minimize: true,
       minimizer: [

@@ -104,22 +104,10 @@ export default function start(draftConfig: TorchConfig) {
 	})
 }
 
-function getAssets(stats: Record<string, string>) {
-  let scripts: string[] = []
-  let styles: string[] = []
-
-  const add = (item: string) => {
-    if (item.endsWith('.js')) {
-      scripts.push(item)
-    } else if (item.endsWith('.css')) {
-      styles.push(item)
-    }
-  }
-
-	Object.values(stats).forEach(add)
-  
-  return {
-    scripts,
-    styles
-  }
+function getAssets(stats: Record<string, string | string[]>) {
+  return Object.keys(stats).reduce((result, assetName) => {
+		const value = stats[assetName]
+		result[assetName] = Array.isArray(value) ? value[0] : value
+		return result
+	}, {} as Record<string, string>)
 }

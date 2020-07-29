@@ -1,6 +1,7 @@
 import React from 'react'
 import { createPage } from '../../../page'
 import { createStore } from '../../../store'
+import './about.css'
 
 const store = createStore(
   {

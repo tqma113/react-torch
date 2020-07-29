@@ -350,9 +350,7 @@ export interface MemoryHistory<S extends State = State> extends History<S> {
   index: number;
 }
 
-const readOnly: <T extends unknown>(obj: T) => T = globalThis.__DEV__
-  ? obj => Object.freeze(obj)
-  : obj => obj;
+const readOnly: <T extends unknown>(obj: T) => T = obj => obj;
 
 function warning(cond: boolean, message: string) {
   if (!cond) {

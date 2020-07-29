@@ -1,6 +1,6 @@
 /// <reference path="../torch.d.ts" />
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+process.env.NODE_ENV = 'development'
 
 import path from 'path'
 import http from 'http'

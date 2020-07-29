@@ -34,6 +34,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     devtool: 'cheap-module-eval-source-map',
     output: {
       path: path.join(config.dir, '.torch', 'client'),
+      publicPath: '__torch/',
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
       pathinfo: true,
@@ -77,6 +78,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
+                publicPath: '__torch/',
                 hmr: true
               },
             },

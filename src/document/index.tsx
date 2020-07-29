@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import React from 'react'
 import type {
   Context,
@@ -47,102 +45,17 @@ export default function createDocument({
     state
   }
 
-  const styleElements = styles.map((style, index) => {
-    if (style.type === 'link' && style.preload) {
-      if (mode === 'inner') {
-        return null
-      }
-      return React.createElement('link', {
-        key: index,
-        href: style.href,
-        rel: 'preload',
-        as: 'style',
-        type: "text/css"
-      })
-    } else {
-      return null
-    }
-  }).concat(assets.styles.map((style, index) => {
-    if (mode === 'inner') {
-      return null
-    }
-    return React.createElement('link', {
-      key: index,
-      href: `${publicPath}/${style}`,
-      rel: 'preload',
-      as: 'style',
-      type: "text/css"
-    })
-  })).concat(styles.map((style, index) => {
-    if (style.type === 'link') {
-      if (mode === 'inner') {
-        const filePath = path.resolve(dir, '.torch', 'client', style.href.replace('static', 'public'))
-        const code = fs.readFileSync(filePath)
-        return (
-          <style
-            key={index}
-            type="text/css"
-            dangerouslySetInnerHTML={{ __html: code.toString() }}
-          />
-        ) 
-      }
-      return (
-        <link key={index} rel="stylesheet" type="text/css" href={style.href} />
-      )
-    } else {
-      return null
-    }
-  })).concat(assets.styles.map((style, index) => {
-    if (mode === 'inner') {
-      const filePath = path.resolve(dir, '.torch', 'client', style)
-      const code = fs.readFileSync(filePath)
-      return (
-        <style
-          key={index}
-          type="text/css"
-          dangerouslySetInnerHTML={{ __html: code.toString() }}
-        />
-      ) 
-    }
-    return (
-      <link key={index} rel="stylesheet" type="text/css" href={`${publicPath}/${style}`} />
-    )
-  })).concat(styles.map((style, index) => {
-    if (style.type === 'inner') {
-      return (
-        <style
-          key={index}
-          type="text/css"
-          dangerouslySetInnerHTML={{ __html: style.content }}
-        />
-      ) 
-    } else {
-      return null
-    }
-  })).filter(Boolean)
+  const styleElements = styles.map(getStyle)
 
-  const scriptElements = scripts.map((script, index) => {
-    if (script.type == 'inner') {
-      return (
-        <script
-          key={index}
-          type="application/javascript"
-          dangerouslySetInnerHTML={{ __html: script.content.replace(/<\/script/gi, '&lt/script') }}
-        />
-      )
-    } else {
-      return (
-        <script key={index} src={script.src} type="application/javascript" />
-      )
-    }
-  })
+  const assetsStyleElements = assets.styles.map(
+    (style, index) => getStyleLink(`${publicPath}/${style}`, index)
+  )
 
+  const scriptElements = scripts.map(getScript)
 
-  const deferScriptElement = assets.scripts.map((script, index) => {
-    return (
-      <script key={index} src={`${publicPath}/${script}`} />
-    )
-  })
+  const assetsScriptElement = assets.scripts.map(
+    (script, index) => getSrcScript(`${publicPath}/${script}`, index)
+  )
 
   return (
     <html>
@@ -152,6 +65,7 @@ export default function createDocument({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         {styleElements}
+        {assetsStyleElements}
         {scriptElements}
       </head>
 
@@ -178,8 +92,73 @@ export default function createDocument({
           }}
         />
 
-        {deferScriptElement}
+        {assetsScriptElement}
       </body>
     </html>
+  )
+}
+
+function getStyle(style: StylePreload, index?: number) {
+  return style.type === 'link'
+    ? [
+        getPreloadStyleLink(style.href, index + 'preload'),
+        getStyleLink(style.href, index)
+      ]
+    : getInnerStyle(style.content, index)
+}
+
+function getInnerStyle(content: string, key?: string | number) {
+  return (
+    <style
+      key={key}
+      type="text/css"
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
+  )
+}
+
+function getPreloadStyleLink(href: string, key?: string | number) {
+  return React.createElement('link', {
+    key: key,
+    href: href,
+    rel: 'preload',
+    as: 'style',
+  })
+}
+
+function getStyleLink(href: string, key?: string | number) {
+  return (
+    <link
+      key={key}
+      rel="stylesheet"
+      type="text/css"
+      href={href}
+    />
+  )
+}
+
+function getScript(script: ScriptPreload, key?: string | number) {
+  return script.type == 'inner'
+    ? getInnerScript(script.content, key)
+    : getSrcScript(script.src, key)
+}
+
+function getSrcScript(src: string, key?: string | number) {
+  return (
+    <script
+      key={key}
+      src={src}
+      type="application/javascript"
+    />
+  )
+}
+
+function getInnerScript(content: string, key?: string | number) {
+  return (
+    <script
+      key={key}
+      type="application/javascript"
+      dangerouslySetInnerHTML={{ __html: content.replace(/<\/script/gi, '&lt/script') }}
+    />
   )
 }

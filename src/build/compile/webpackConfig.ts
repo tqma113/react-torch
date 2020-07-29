@@ -37,6 +37,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       path: path.join(config.dir, '.torch', 'client'),
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,
+      publicPath: '__torch/',
       pathinfo: true,
     },
     optimization: {
@@ -124,7 +125,10 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
           test: /\.css$/,
           use: [
             {
-              loader: MiniCssExtractPlugin.loader
+              loader: MiniCssExtractPlugin.loader,
+              options: {	
+                publicPath: '/__torch',	
+              },
             },
             'css-loader',
           ],

@@ -75,7 +75,7 @@ export default function createRender(config: IntegralTorchConfig) {
         const data: DocumentProps = {
           dir: config.dir,
           title: config.title,
-          publicPath: '__torch',
+          publicPath: '',
           context: clientContext,
           element,
           container: 'root',

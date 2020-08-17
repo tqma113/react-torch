@@ -23,6 +23,18 @@ export type PageCreator<
   LifeCircle
 ]>
 
+
+export type Creater<
+S extends object,
+AS extends Actions<S>
+> = (history: History, context: Context) => [
+  React.ComponentType,
+  Store<S, AS>,
+] | Promise<[
+  React.ComponentType,
+  Store<S, AS>,
+]>
+
 export type Page<
   S extends object = {},
   AS extends Actions<S> = {}

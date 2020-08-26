@@ -1,21 +1,21 @@
-import React from "react";
-import type { History, Location } from "../history";
-import type { Store } from "../store";
-import type { Context } from "..";
+import React from 'react'
+import type { History, Location } from '../history'
+import type { Store } from '../store'
+import type { Context } from '..'
 
 export type GlobalContextType = {
-  location: Location;
-  history: History;
-  context: Context;
-  store: Store<any, any>;
-};
-
-function createContext() {
-  return React.createContext<GlobalContextType>({} as any);
+  location: Location
+  history: History
+  context: Context
+  store: Store<any, any>
 }
 
-const GlobalContext = createContext();
+function createContext() {
+  return React.createContext<GlobalContextType>({} as any)
+}
 
-export default GlobalContext;
+const GlobalContext = createContext()
 
-export { connect } from "./connect";
+export default GlobalContext
+
+export { connect } from './connect'

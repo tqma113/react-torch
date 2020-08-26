@@ -1,10 +1,10 @@
-import React from "react";
-import { createPage } from "../../../page";
-import { useWillCreate, useWillMount } from "../../../hook";
-import store from "./Model";
-import "./style.css";
-import type { History } from "../../../src/history";
-import type { Context } from "../../../src/index";
+import React from 'react'
+import { createPage } from '../../../page'
+import { useWillCreate, useWillMount } from '../../../hook'
+import store from './Model'
+import './style.css'
+import type { History } from '../../../src/history'
+import type { Context } from '../../../src/index'
 
 // const ignorePropsChanged = View => {
 //   let MemoizedView = (props) => {
@@ -17,16 +17,16 @@ import type { Context } from "../../../src/index";
 // }
 
 const getView = (history: History, context: Context) => () => {
-  console.log("update");
-  const state = store.state;
-  const actions = store.actions;
+  console.log('update')
+  const state = store.state
+  const actions = store.actions
   const handleClick = () => {
-    history.push("/test");
-  };
+    history.push('/test')
+  }
 
   return (
     <div>
-      Home {state.count}{" "}
+      Home {state.count}{' '}
       <button onClick={() => actions.INCREASE()}>Increate</button>
       <hr />
       <a href="/about">about</a>
@@ -37,19 +37,19 @@ const getView = (history: History, context: Context) => () => {
         test
       </a>
     </div>
-  );
-};
+  )
+}
 
 const Home = createPage((history, context) => {
   useWillCreate(() => {
-    console.log("willCreate");
-  });
+    console.log('willCreate')
+  })
 
   useWillMount(() => {
-    console.log("willMount");
-  });
+    console.log('willMount')
+  })
 
-  return [getView(history, context), store];
-});
+  return [getView(history, context), store]
+})
 
-export default Home;
+export default Home

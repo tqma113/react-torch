@@ -1,6 +1,6 @@
-import React from "react";
-import GlobalContext from "./index";
-import type { GlobalContextType } from "./index";
+import React from 'react'
+import GlobalContext from './index'
+import type { GlobalContextType } from './index'
 
 export const connect = (component: React.ComponentType) => {
   return ({ location, history, store, context }: GlobalContextType) =>
@@ -12,5 +12,5 @@ export const connect = (component: React.ComponentType) => {
         context,
       },
       children: React.createElement(component),
-    });
-};
+    })
+}

@@ -11,20 +11,20 @@ export enum Action {
    *
    * Note: This is the default action for newly created history objects.
    */
-  Pop = "POP",
+  Pop = 'POP',
 
   /**
    * A PUSH indicates a new entry being added to the history stack, such as when
    * a link is clicked and a new page loads. When this happens, all subsequent
    * entries in the stack are lost.
    */
-  Push = "PUSH",
+  Push = 'PUSH',
 
   /**
    * A REPLACE indicates the entry at the current index in the history stack
    * being replaced by a new one.
    */
-  Replace = "REPLACE",
+  Replace = 'REPLACE',
 }
 
 /**
@@ -32,21 +32,21 @@ export enum Action {
  *
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.pathname
  */
-export type Pathname = string;
+export type Pathname = string
 
 /**
  * A URL search string, beginning with a ?.
  *
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.search
  */
-export type Search = string;
+export type Search = string
 
 /**
  * A URL fragment identifier, beginning with a #.
  *
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.hash
  */
-export type Hash = string;
+export type Hash = string
 
 /**
  * An object that is used to associate some arbitrary data with a location, but
@@ -54,7 +54,7 @@ export type Hash = string;
  *
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.state
  */
-export type State = object | null;
+export type State = object | null
 
 /**
  * A unique string associated with a location. May be used to safely store
@@ -62,7 +62,7 @@ export type State = object | null;
  *
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.key
  */
-export type Key = string;
+export type Key = string
 
 /**
  * The pathname, search, and hash values of a URL.
@@ -73,21 +73,21 @@ export interface Path {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.pathname
    */
-  pathname: Pathname;
+  pathname: Pathname
 
   /**
    * A URL search string, beginning with a ?.
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.search
    */
-  search: Search;
+  search: Search
 
   /**
    * A URL fragment identifier, beginning with a #.
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.hash
    */
-  hash: Hash;
+  hash: Hash
 }
 
 /**
@@ -102,7 +102,7 @@ export interface Location<S extends State = State> extends Path {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.state
    */
-  state: S;
+  state: S
 
   /**
    * A unique string associated with this location. May be used to safely store
@@ -112,7 +112,7 @@ export interface Location<S extends State = State> extends Path {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.key
    */
-  key: Key;
+  key: Key
 }
 
 /**
@@ -124,21 +124,21 @@ export interface PartialPath {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.pathname
    */
-  pathname?: Pathname;
+  pathname?: Pathname
 
   /**
    * The URL search string, beginning with a ?.
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.search
    */
-  search?: Search;
+  search?: Search
 
   /**
    * The URL fragment identifier, beginning with a #.
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.hash
    */
-  hash?: Hash;
+  hash?: Hash
 }
 
 /**
@@ -150,7 +150,7 @@ export interface PartialLocation<S extends State = State> extends PartialPath {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.state
    */
-  state?: S;
+  state?: S
 
   /**
    * A unique string associated with this location. May be used to safely store
@@ -160,7 +160,7 @@ export interface PartialLocation<S extends State = State> extends PartialPath {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#location.key
    */
-  key?: Key;
+  key?: Key
 }
 
 /**
@@ -170,19 +170,19 @@ export interface Update<S extends State = State> {
   /**
    * The action that triggered the change.
    */
-  action: Action;
+  action: Action
 
   /**
    * The new location.
    */
-  location: Location<S>;
+  location: Location<S>
 }
 
 /**
  * A function that receives notifications about location changes.
  */
 export interface Listener<S extends State = State> {
-  (update: Update<S>): void;
+  (update: Update<S>): void
 }
 
 /**
@@ -193,14 +193,14 @@ export interface Transition<S extends State = State> extends Update<S> {
   /**
    * Retries the update to the current location.
    */
-  retry(): void;
+  retry(): void
 }
 
 /**
  * A function that receives transitions when navigation is blocked.
  */
 export interface Blocker<S extends State = State> {
-  (tx: Transition<S>): void;
+  (tx: Transition<S>): void
 }
 
 /**
@@ -208,7 +208,7 @@ export interface Blocker<S extends State = State> {
  * `history.push` or `history.replace`. May be either a URL or the pieces of a
  * URL path.
  */
-export type To = string | PartialPath;
+export type To = string | PartialPath
 
 /**
  * A history is an interface to the navigation stack. The history serves as the
@@ -225,14 +225,14 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.action
    */
-  readonly action: Action;
+  readonly action: Action
 
   /**
    * The current location. This value is mutable.
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.location
    */
-  readonly location: Location<S>;
+  readonly location: Location<S>
 
   /**
    * Returns a valid href for the given `to` value that may be used as
@@ -242,7 +242,7 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.createHref
    */
-  createHref(to: To): string;
+  createHref(to: To): string
 
   /**
    * Pushes a new location onto the history stack, increasing its length by one.
@@ -254,7 +254,7 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.push
    */
-  push(to: To, state?: S): void;
+  push(to: To, state?: S): void
 
   /**
    * Replaces the current location in the history stack with a new one.  The
@@ -265,7 +265,7 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.replace
    */
-  replace(to: To, state?: S): void;
+  replace(to: To, state?: S): void
 
   /**
    * Navigates `n` entries backward/forward in the history stack relative to the
@@ -275,7 +275,7 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.go
    */
-  go(delta: number): void;
+  go(delta: number): void
 
   /**
    * Navigates to the previous entry in the stack. Identical to go(-1).
@@ -285,14 +285,14 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.back
    */
-  back(): void;
+  back(): void
 
   /**
    * Navigates to the next entry in the stack. Identical to go(1).
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.forward
    */
-  forward(): void;
+  forward(): void
 
   /**
    * Sets up a listener that will be called whenever the current location
@@ -303,7 +303,7 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.listen
    */
-  listen(listener: Listener<S>): () => void;
+  listen(listener: Listener<S>): () => void
 
   /**
    * Prevents the current location from changing and sets up a listener that
@@ -314,7 +314,7 @@ export interface History<S extends State = State> {
    *
    * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#history.block
    */
-  block(blocker: Blocker<S>): () => void;
+  block(blocker: Blocker<S>): () => void
 }
 
 /**
@@ -347,15 +347,15 @@ export interface HashHistory<S extends State = State> extends History<S> {}
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#memoryhistory
  */
 export interface MemoryHistory<S extends State = State> extends History<S> {
-  index: number;
+  index: number
 }
 
-const readOnly: <T extends unknown>(obj: T) => T = (obj) => obj;
+const readOnly: <T extends unknown>(obj: T) => T = (obj) => obj
 
 function warning(cond: boolean, message: string) {
   if (!cond) {
     // eslint-disable-next-line no-console
-    if (typeof console !== "undefined") console.warn(message);
+    if (typeof console !== 'undefined') console.warn(message)
 
     try {
       // Welcome to debugging history!
@@ -363,7 +363,7 @@ function warning(cond: boolean, message: string) {
       // This error is thrown as a convenience so you can more easily
       // find the source for a warning that appears in the console by
       // enabling "pause on exceptions" in your JavaScript debugger.
-      throw new Error(message);
+      throw new Error(message)
       // eslint-disable-next-line no-empty
     } catch (e) {}
   }
@@ -374,16 +374,16 @@ function warning(cond: boolean, message: string) {
 ////////////////////////////////////////////////////////////////////////////////
 
 type HistoryState = {
-  usr: State;
-  key?: string;
-  idx: number;
-};
+  usr: State
+  key?: string
+  idx: number
+}
 
-const BeforeUnloadEventType = "beforeunload";
-const HashChangeEventType = "hashchange";
-const PopStateEventType = "popstate";
+const BeforeUnloadEventType = 'beforeunload'
+const HashChangeEventType = 'hashchange'
+const PopStateEventType = 'popstate'
 
-export type BrowserHistoryOptions = { window?: Window };
+export type BrowserHistoryOptions = { window?: Window }
 
 /**
  * Browser history stores the location in regular URLs. This is the standard for
@@ -395,12 +395,12 @@ export type BrowserHistoryOptions = { window?: Window };
 export function createBrowserHistory(
   options: BrowserHistoryOptions = {}
 ): BrowserHistory {
-  let { window = document.defaultView! } = options;
-  let globalHistory = window.history;
+  let { window = document.defaultView! } = options
+  let globalHistory = window.history
 
   function getIndexAndLocation(): [number, Location] {
-    let { pathname, search, hash } = window.location;
-    let state = globalHistory.state || {};
+    let { pathname, search, hash } = window.location
+    let state = globalHistory.state || {}
     return [
       state.idx,
       readOnly<Location>({
@@ -408,34 +408,34 @@ export function createBrowserHistory(
         search,
         hash,
         state: state.usr || null,
-        key: state.key || "default",
+        key: state.key || 'default',
       }),
-    ];
+    ]
   }
 
-  let blockedPopTx: Transition | null = null;
+  let blockedPopTx: Transition | null = null
   function handlePop() {
     if (blockedPopTx) {
-      blockers.call(blockedPopTx);
-      blockedPopTx = null;
+      blockers.call(blockedPopTx)
+      blockedPopTx = null
     } else {
-      let nextAction = Action.Pop;
-      let [nextIndex, nextLocation] = getIndexAndLocation();
+      let nextAction = Action.Pop
+      let [nextIndex, nextLocation] = getIndexAndLocation()
 
       if (blockers.length) {
         if (nextIndex != null) {
-          let delta = index - nextIndex;
+          let delta = index - nextIndex
           if (delta) {
             // Revert the POP
             blockedPopTx = {
               action: nextAction,
               location: nextLocation,
               retry() {
-                go(delta * -1);
+                go(delta * -1)
               },
-            };
+            }
 
-            go(delta);
+            go(delta)
           }
         } else {
           // Trying to POP to a location with no index. We did not create
@@ -450,37 +450,37 @@ export function createBrowserHistory(
               `production, but in general you should do all navigation with the ` +
               `history library (instead of using window.history.pushState directly) ` +
               `to avoid this situation.`
-          );
+          )
         }
       } else {
-        applyTx(nextAction);
+        applyTx(nextAction)
       }
     }
   }
 
-  window.addEventListener(PopStateEventType, handlePop);
+  window.addEventListener(PopStateEventType, handlePop)
 
-  let action = Action.Pop;
-  let [index, location] = getIndexAndLocation();
-  let listeners = createEvents<Listener>();
-  let blockers = createEvents<Blocker>();
+  let action = Action.Pop
+  let [index, location] = getIndexAndLocation()
+  let listeners = createEvents<Listener>()
+  let blockers = createEvents<Blocker>()
 
   if (index == null) {
-    index = 0;
-    globalHistory.replaceState({ ...globalHistory.state, idx: index }, "");
+    index = 0
+    globalHistory.replaceState({ ...globalHistory.state, idx: index }, '')
   }
 
   function createHref(to: To) {
-    return typeof to === "string" ? to : createPath(to);
+    return typeof to === 'string' ? to : createPath(to)
   }
 
   function getNextLocation(to: To, state: State = null): Location {
     return readOnly<Location>({
       ...location,
-      ...(typeof to === "string" ? parsePath(to) : to),
+      ...(typeof to === 'string' ? parsePath(to) : to),
       state,
       key: createKey(),
-    });
+    })
   }
 
   function getHistoryStateAndUrl(
@@ -494,114 +494,114 @@ export function createBrowserHistory(
         idx: index,
       },
       createHref(nextLocation),
-    ];
+    ]
   }
 
   function allowTx(action: Action, location: Location, retry: () => void) {
     return (
       !blockers.length || (blockers.call({ action, location, retry }), false)
-    );
+    )
   }
 
   function applyTx(nextAction: Action) {
-    action = nextAction;
-    [index, location] = getIndexAndLocation();
-    listeners.call({ action, location });
+    action = nextAction
+    ;[index, location] = getIndexAndLocation()
+    listeners.call({ action, location })
   }
 
   function push(to: To, state?: State) {
-    let nextAction = Action.Push;
-    let nextLocation = getNextLocation(to, state);
+    let nextAction = Action.Push
+    let nextLocation = getNextLocation(to, state)
     function retry() {
-      push(to, state);
+      push(to, state)
     }
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index + 1);
+      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index + 1)
 
       // TODO: Support forced reloading
       // try...catch because iOS limits us to 100 pushState calls :/
       try {
-        globalHistory.pushState(historyState, "", url);
+        globalHistory.pushState(historyState, '', url)
       } catch (error) {
         // They are going to lose state here, but there is no real
         // way to warn them about it since the page will refresh...
-        window.location.assign(url);
+        window.location.assign(url)
       }
 
-      applyTx(nextAction);
+      applyTx(nextAction)
     }
   }
 
   function replace(to: To, state?: State) {
-    let nextAction = Action.Replace;
-    let nextLocation = getNextLocation(to, state);
+    let nextAction = Action.Replace
+    let nextLocation = getNextLocation(to, state)
     function retry() {
-      replace(to, state);
+      replace(to, state)
     }
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index);
+      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index)
 
       // TODO: Support forced reloading
-      globalHistory.replaceState(historyState, "", url);
+      globalHistory.replaceState(historyState, '', url)
 
-      applyTx(nextAction);
+      applyTx(nextAction)
     }
   }
 
   function go(delta: number) {
-    globalHistory.go(delta);
+    globalHistory.go(delta)
   }
 
   let history: BrowserHistory = {
     get action() {
-      return action;
+      return action
     },
     get location() {
-      return location;
+      return location
     },
     createHref,
     push,
     replace,
     go,
     back() {
-      go(-1);
+      go(-1)
     },
     forward() {
-      go(1);
+      go(1)
     },
     listen(listener) {
-      return listeners.push(listener);
+      return listeners.push(listener)
     },
     block(blocker) {
-      let unblock = blockers.push(blocker);
+      let unblock = blockers.push(blocker)
 
       if (blockers.length === 1) {
-        window.addEventListener(BeforeUnloadEventType, promptBeforeUnload);
+        window.addEventListener(BeforeUnloadEventType, promptBeforeUnload)
       }
 
       return function () {
-        unblock();
+        unblock()
 
         // Remove the beforeunload listener so the document may
         // still be salvageable in the pagehide event.
         // See https://html.spec.whatwg.org/#unloading-documents
         if (!blockers.length) {
-          window.removeEventListener(BeforeUnloadEventType, promptBeforeUnload);
+          window.removeEventListener(BeforeUnloadEventType, promptBeforeUnload)
         }
-      };
+      }
     },
-  };
+  }
 
-  return history;
+  return history
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // HASH
 ////////////////////////////////////////////////////////////////////////////////
 
-export type HashHistoryOptions = { window?: Window };
+export type HashHistoryOptions = { window?: Window }
 
 /**
  * Hash history stores the location in window.location.hash. This makes it ideal
@@ -614,14 +614,14 @@ export type HashHistoryOptions = { window?: Window };
 export function createHashHistory(
   options: HashHistoryOptions = {}
 ): HashHistory {
-  let { window = document.defaultView! } = options;
-  let globalHistory = window.history;
+  let { window = document.defaultView! } = options
+  let globalHistory = window.history
 
   function getIndexAndLocation(): [number, Location] {
-    let { pathname = "/", search = "", hash = "" } = parsePath(
+    let { pathname = '/', search = '', hash = '' } = parsePath(
       window.location.hash.substr(1)
-    );
-    let state = globalHistory.state || {};
+    )
+    let state = globalHistory.state || {}
     return [
       state.idx,
       readOnly<Location>({
@@ -629,34 +629,34 @@ export function createHashHistory(
         search,
         hash,
         state: state.usr || null,
-        key: state.key || "default",
+        key: state.key || 'default',
       }),
-    ];
+    ]
   }
 
-  let blockedPopTx: Transition | null = null;
+  let blockedPopTx: Transition | null = null
   function handlePop() {
     if (blockedPopTx) {
-      blockers.call(blockedPopTx);
-      blockedPopTx = null;
+      blockers.call(blockedPopTx)
+      blockedPopTx = null
     } else {
-      let nextAction = Action.Pop;
-      let [nextIndex, nextLocation] = getIndexAndLocation();
+      let nextAction = Action.Pop
+      let [nextIndex, nextLocation] = getIndexAndLocation()
 
       if (blockers.length) {
         if (nextIndex != null) {
-          let delta = index - nextIndex;
+          let delta = index - nextIndex
           if (delta) {
             // Revert the POP
             blockedPopTx = {
               action: nextAction,
               location: nextLocation,
               retry() {
-                go(delta * -1);
+                go(delta * -1)
               },
-            };
+            }
 
-            go(delta);
+            go(delta)
           }
         } else {
           // Trying to POP to a location with no index. We did not create
@@ -671,61 +671,61 @@ export function createHashHistory(
               `production, but in general you should do all navigation with the ` +
               `history library (instead of using window.history.pushState directly) ` +
               `to avoid this situation.`
-          );
+          )
         }
       } else {
-        applyTx(nextAction);
+        applyTx(nextAction)
       }
     }
   }
 
-  window.addEventListener(PopStateEventType, handlePop);
+  window.addEventListener(PopStateEventType, handlePop)
 
   // popstate does not fire on hashchange in IE 11 and old (trident) Edge
   // https://developer.mozilla.org/de/docs/Web/API/Window/popstate_event
   window.addEventListener(HashChangeEventType, () => {
-    let [, nextLocation] = getIndexAndLocation();
+    let [, nextLocation] = getIndexAndLocation()
 
     // Ignore extraneous hashchange events.
     if (createPath(nextLocation) !== createPath(location)) {
-      handlePop();
+      handlePop()
     }
-  });
+  })
 
-  let action = Action.Pop;
-  let [index, location] = getIndexAndLocation();
-  let listeners = createEvents<Listener>();
-  let blockers = createEvents<Blocker>();
+  let action = Action.Pop
+  let [index, location] = getIndexAndLocation()
+  let listeners = createEvents<Listener>()
+  let blockers = createEvents<Blocker>()
 
   if (index == null) {
-    index = 0;
-    globalHistory.replaceState({ ...globalHistory.state, idx: index }, "");
+    index = 0
+    globalHistory.replaceState({ ...globalHistory.state, idx: index }, '')
   }
 
   function getBaseHref() {
-    let base = document.querySelector("base");
-    let href = "";
+    let base = document.querySelector('base')
+    let href = ''
 
-    if (base && base.getAttribute("href")) {
-      let url = window.location.href;
-      let hashIndex = url.indexOf("#");
-      href = hashIndex === -1 ? url : url.slice(0, hashIndex);
+    if (base && base.getAttribute('href')) {
+      let url = window.location.href
+      let hashIndex = url.indexOf('#')
+      href = hashIndex === -1 ? url : url.slice(0, hashIndex)
     }
 
-    return href;
+    return href
   }
 
   function createHref(to: To) {
-    return getBaseHref() + "#" + (typeof to === "string" ? to : createPath(to));
+    return getBaseHref() + '#' + (typeof to === 'string' ? to : createPath(to))
   }
 
   function getNextLocation(to: To, state: State = null): Location {
     return readOnly<Location>({
       ...location,
-      ...(typeof to === "string" ? parsePath(to) : to),
+      ...(typeof to === 'string' ? parsePath(to) : to),
       state,
       key: createKey(),
-    });
+    })
   }
 
   function getHistoryStateAndUrl(
@@ -739,121 +739,121 @@ export function createHashHistory(
         idx: index,
       },
       createHref(nextLocation),
-    ];
+    ]
   }
 
   function allowTx(action: Action, location: Location, retry: () => void) {
     return (
       !blockers.length || (blockers.call({ action, location, retry }), false)
-    );
+    )
   }
 
   function applyTx(nextAction: Action) {
-    action = nextAction;
-    [index, location] = getIndexAndLocation();
-    listeners.call({ action, location });
+    action = nextAction
+    ;[index, location] = getIndexAndLocation()
+    listeners.call({ action, location })
   }
 
   function push(to: To, state?: State) {
-    let nextAction = Action.Push;
-    let nextLocation = getNextLocation(to, state);
+    let nextAction = Action.Push
+    let nextLocation = getNextLocation(to, state)
     function retry() {
-      push(to, state);
+      push(to, state)
     }
 
     warning(
-      nextLocation.pathname.charAt(0) === "/",
+      nextLocation.pathname.charAt(0) === '/',
       `Relative pathnames are not supported in hash history.push(${JSON.stringify(
         to
       )})`
-    );
+    )
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index + 1);
+      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index + 1)
 
       // TODO: Support forced reloading
       // try...catch because iOS limits us to 100 pushState calls :/
       try {
-        globalHistory.pushState(historyState, "", url);
+        globalHistory.pushState(historyState, '', url)
       } catch (error) {
         // They are going to lose state here, but there is no real
         // way to warn them about it since the page will refresh...
-        window.location.assign(url);
+        window.location.assign(url)
       }
 
-      applyTx(nextAction);
+      applyTx(nextAction)
     }
   }
 
   function replace(to: To, state?: State) {
-    let nextAction = Action.Replace;
-    let nextLocation = getNextLocation(to, state);
+    let nextAction = Action.Replace
+    let nextLocation = getNextLocation(to, state)
     function retry() {
-      replace(to, state);
+      replace(to, state)
     }
 
     warning(
-      nextLocation.pathname.charAt(0) === "/",
+      nextLocation.pathname.charAt(0) === '/',
       `Relative pathnames are not supported in hash history.replace(${JSON.stringify(
         to
       )})`
-    );
+    )
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index);
+      let [historyState, url] = getHistoryStateAndUrl(nextLocation, index)
 
       // TODO: Support forced reloading
-      globalHistory.replaceState(historyState, "", url);
+      globalHistory.replaceState(historyState, '', url)
 
-      applyTx(nextAction);
+      applyTx(nextAction)
     }
   }
 
   function go(delta: number) {
-    globalHistory.go(delta);
+    globalHistory.go(delta)
   }
 
   let history: HashHistory = {
     get action() {
-      return action;
+      return action
     },
     get location() {
-      return location;
+      return location
     },
     createHref,
     push,
     replace,
     go,
     back() {
-      go(-1);
+      go(-1)
     },
     forward() {
-      go(1);
+      go(1)
     },
     listen(listener) {
-      return listeners.push(listener);
+      return listeners.push(listener)
     },
     block(blocker) {
-      let unblock = blockers.push(blocker);
+      let unblock = blockers.push(blocker)
 
       if (blockers.length === 1) {
-        window.addEventListener(BeforeUnloadEventType, promptBeforeUnload);
+        window.addEventListener(BeforeUnloadEventType, promptBeforeUnload)
       }
 
       return function () {
-        unblock();
+        unblock()
 
         // Remove the beforeunload listener so the document may
         // still be salvageable in the pagehide event.
         // See https://html.spec.whatwg.org/#unloading-documents
         if (!blockers.length) {
-          window.removeEventListener(BeforeUnloadEventType, promptBeforeUnload);
+          window.removeEventListener(BeforeUnloadEventType, promptBeforeUnload)
         }
-      };
+      }
     },
-  };
+  }
 
-  return history;
+  return history
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -864,12 +864,12 @@ export function createHashHistory(
  * A user-supplied object that describes a location. Used when providing
  * entries to `createMemoryHistory` via its `initialEntries` option.
  */
-export type InitialEntry = string | PartialLocation;
+export type InitialEntry = string | PartialLocation
 
 export type MemoryHistoryOptions = {
-  initialEntries?: InitialEntry[];
-  initialIndex?: number;
-};
+  initialEntries?: InitialEntry[]
+  initialIndex?: number
+}
 
 /**
  * Memory history stores the current location in memory. It is designed for use
@@ -880,146 +880,146 @@ export type MemoryHistoryOptions = {
 export function createMemoryHistory(
   options: MemoryHistoryOptions = {}
 ): MemoryHistory {
-  let { initialEntries = ["/"], initialIndex } = options;
+  let { initialEntries = ['/'], initialIndex } = options
   let entries: Location[] = initialEntries.map((entry) => {
     let location = readOnly<Location>({
-      pathname: "/",
-      search: "",
-      hash: "",
+      pathname: '/',
+      search: '',
+      hash: '',
       state: null,
       key: createKey(),
-      ...(typeof entry === "string" ? parsePath(entry) : entry),
-    });
+      ...(typeof entry === 'string' ? parsePath(entry) : entry),
+    })
 
     warning(
-      location.pathname.charAt(0) === "/",
+      location.pathname.charAt(0) === '/',
       `Relative pathnames are not supported in createMemoryHistory({ initialEntries }) (invalid entry: ${JSON.stringify(
         entry
       )})`
-    );
+    )
 
-    return location;
-  });
+    return location
+  })
   let index = clamp(
     initialIndex == null ? entries.length - 1 : initialIndex,
     0,
     entries.length - 1
-  );
+  )
 
-  let action = Action.Pop;
-  let location = entries[index];
-  let listeners = createEvents<Listener>();
-  let blockers = createEvents<Blocker>();
+  let action = Action.Pop
+  let location = entries[index]
+  let listeners = createEvents<Listener>()
+  let blockers = createEvents<Blocker>()
 
   function createHref(to: To) {
-    return typeof to === "string" ? to : createPath(to);
+    return typeof to === 'string' ? to : createPath(to)
   }
 
   function getNextLocation(to: To, state: State = null): Location {
     return readOnly<Location>({
       ...location,
-      ...(typeof to === "string" ? parsePath(to) : to),
+      ...(typeof to === 'string' ? parsePath(to) : to),
       state,
       key: createKey(),
-    });
+    })
   }
 
   function allowTx(action: Action, location: Location, retry: () => void) {
     return (
       !blockers.length || (blockers.call({ action, location, retry }), false)
-    );
+    )
   }
 
   function applyTx(nextAction: Action, nextLocation: Location) {
-    action = nextAction;
-    location = nextLocation;
-    listeners.call({ action, location });
+    action = nextAction
+    location = nextLocation
+    listeners.call({ action, location })
   }
 
   function push(to: To, state?: State) {
-    let nextAction = Action.Push;
-    let nextLocation = getNextLocation(to, state);
+    let nextAction = Action.Push
+    let nextLocation = getNextLocation(to, state)
     function retry() {
-      push(to, state);
+      push(to, state)
     }
 
     warning(
-      location.pathname.charAt(0) === "/",
+      location.pathname.charAt(0) === '/',
       `Relative pathnames are not supported in memory history.push(${JSON.stringify(
         to
       )})`
-    );
+    )
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      index += 1;
-      entries.splice(index, entries.length, nextLocation);
-      applyTx(nextAction, nextLocation);
+      index += 1
+      entries.splice(index, entries.length, nextLocation)
+      applyTx(nextAction, nextLocation)
     }
   }
 
   function replace(to: To, state?: State) {
-    let nextAction = Action.Replace;
-    let nextLocation = getNextLocation(to, state);
+    let nextAction = Action.Replace
+    let nextLocation = getNextLocation(to, state)
     function retry() {
-      replace(to, state);
+      replace(to, state)
     }
 
     warning(
-      location.pathname.charAt(0) === "/",
+      location.pathname.charAt(0) === '/',
       `Relative pathnames are not supported in memory history.replace(${JSON.stringify(
         to
       )})`
-    );
+    )
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      entries[index] = nextLocation;
-      applyTx(nextAction, nextLocation);
+      entries[index] = nextLocation
+      applyTx(nextAction, nextLocation)
     }
   }
 
   function go(delta: number) {
-    let nextIndex = clamp(index + delta, 0, entries.length - 1);
-    let nextAction = Action.Pop;
-    let nextLocation = entries[nextIndex];
+    let nextIndex = clamp(index + delta, 0, entries.length - 1)
+    let nextAction = Action.Pop
+    let nextLocation = entries[nextIndex]
     function retry() {
-      go(delta);
+      go(delta)
     }
 
     if (allowTx(nextAction, nextLocation, retry)) {
-      index = nextIndex;
-      applyTx(nextAction, nextLocation);
+      index = nextIndex
+      applyTx(nextAction, nextLocation)
     }
   }
 
   let history: MemoryHistory = {
     get index() {
-      return index;
+      return index
     },
     get action() {
-      return action;
+      return action
     },
     get location() {
-      return location;
+      return location
     },
     createHref,
     push,
     replace,
     go,
     back() {
-      go(-1);
+      go(-1)
     },
     forward() {
-      go(1);
+      go(1)
     },
     listen(listener) {
-      return listeners.push(listener);
+      return listeners.push(listener)
     },
     block(blocker) {
-      return blockers.push(blocker);
+      return blockers.push(blocker)
     },
-  };
+  }
 
-  return history;
+  return history
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1027,43 +1027,43 @@ export function createMemoryHistory(
 ////////////////////////////////////////////////////////////////////////////////
 
 function clamp(n: number, lowerBound: number, upperBound: number) {
-  return Math.min(Math.max(n, lowerBound), upperBound);
+  return Math.min(Math.max(n, lowerBound), upperBound)
 }
 
 function promptBeforeUnload(event: BeforeUnloadEvent) {
   // Cancel the event.
-  event.preventDefault();
+  event.preventDefault()
   // Chrome (and legacy IE) requires returnValue to be set.
-  event.returnValue = "";
+  event.returnValue = ''
 }
 
 type Events<F> = {
-  length: number;
-  push: (fn: F) => () => void;
-  call: (arg: any) => void;
-};
+  length: number
+  push: (fn: F) => () => void
+  call: (arg: any) => void
+}
 
 function createEvents<F extends Function>(): Events<F> {
-  let handlers: F[] = [];
+  let handlers: F[] = []
 
   return {
     get length() {
-      return handlers.length;
+      return handlers.length
     },
     push(fn: F) {
-      handlers.push(fn);
+      handlers.push(fn)
       return function () {
-        handlers = handlers.filter((handler) => handler !== fn);
-      };
+        handlers = handlers.filter((handler) => handler !== fn)
+      }
     },
     call(arg) {
-      handlers.forEach((fn) => fn && fn(arg));
+      handlers.forEach((fn) => fn && fn(arg))
     },
-  };
+  }
 }
 
 function createKey() {
-  return Math.random().toString(36).substr(2, 8);
+  return Math.random().toString(36).substr(2, 8)
 }
 
 /**
@@ -1072,11 +1072,11 @@ function createKey() {
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#createpath
  */
 export function createPath({
-  pathname = "/",
-  search = "",
-  hash = "",
+  pathname = '/',
+  search = '',
+  hash = '',
 }: PartialPath) {
-  return pathname + search + hash;
+  return pathname + search + hash
 }
 
 /**
@@ -1085,25 +1085,25 @@ export function createPath({
  * @see https://github.com/ReactTraining/history/tree/dev/docs/api-reference.md#parsepath
  */
 export function parsePath(path: string) {
-  let partialPath: PartialPath = {};
+  let partialPath: PartialPath = {}
 
   if (path) {
-    let hashIndex = path.indexOf("#");
+    let hashIndex = path.indexOf('#')
     if (hashIndex >= 0) {
-      partialPath.hash = path.substr(hashIndex);
-      path = path.substr(0, hashIndex);
+      partialPath.hash = path.substr(hashIndex)
+      path = path.substr(0, hashIndex)
     }
 
-    let searchIndex = path.indexOf("?");
+    let searchIndex = path.indexOf('?')
     if (searchIndex >= 0) {
-      partialPath.search = path.substr(searchIndex);
-      path = path.substr(0, searchIndex);
+      partialPath.search = path.substr(searchIndex)
+      path = path.substr(0, searchIndex)
     }
 
     if (path) {
-      partialPath.pathname = path;
+      partialPath.pathname = path
     }
   }
 
-  return partialPath;
+  return partialPath
 }

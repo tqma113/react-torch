@@ -4,8 +4,8 @@ export default function matchExternals(
 ): boolean {
   for (let i = 0; i < externals.length; i++) {
     if (modulePath.startsWith(externals[i])) {
-      return true;
+      return true
     }
   }
-  return false;
+  return false
 }

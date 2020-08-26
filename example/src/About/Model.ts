@@ -1,14 +1,14 @@
-import { createStore } from "../../../store";
+import { createStore } from '../../../store'
 
 export type State = {
   // count: number
-};
+}
 
-export type Actions = typeof actions;
+export type Actions = typeof actions
 
 const initialState: State = {
   // count: 0
-};
+}
 
 const actions = {
   // UPDATE_COUNT(state: State, nextCount: number) {
@@ -29,8 +29,8 @@ const actions = {
   //     count: state.count - 1
   //   }
   // },
-};
+}
 
-const store = createStore(initialState, actions);
+const store = createStore(initialState, actions)
 
-export default store;
+export default store

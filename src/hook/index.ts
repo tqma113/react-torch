@@ -3,7 +3,7 @@ export {
   useWillCreate,
   useDidMount,
   useWillMount,
-} from "./lifecircle";
+} from './lifecircle'
 
 export {
   useLocation,
@@ -13,4 +13,4 @@ export {
   useActions,
   useTorchContext,
   useCookie,
-} from "./context";
+} from './context'

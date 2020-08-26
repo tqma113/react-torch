@@ -1,52 +1,52 @@
 /// <reference path="../torch.d.ts" />
 
-process.env.NODE_ENV = "development";
+process.env.NODE_ENV = 'development'
 
-import path from "path";
-import http from "http";
-import debug from "debug";
-import express from "express";
-import createServer from "./server";
-import compile from "./compile";
-import createRender from "./render";
-import attachMiddleware from "./attachMiddleware";
-import { mergeConfig } from "../config";
-import { rmTorchProjectFiles } from "../utils";
-import type { TorchConfig } from "../index";
+import path from 'path'
+import http from 'http'
+import debug from 'debug'
+import express from 'express'
+import createServer from './server'
+import compile from './compile'
+import createRender from './render'
+import attachMiddleware from './attachMiddleware'
+import { mergeConfig } from '../config'
+import { rmTorchProjectFiles } from '../utils'
+import type { TorchConfig } from '../index'
 
 export type Result = {
-  server: http.Server;
-  app: express.Express;
-};
+  server: http.Server
+  app: express.Express
+}
 
-const PORT = "3000";
+const PORT = '3000'
 
 export default function dev(draftConfig: TorchConfig) {
-  const config = mergeConfig(draftConfig);
+  const config = mergeConfig(draftConfig)
 
   // remove before
-  rmTorchProjectFiles(config.dir);
+  rmTorchProjectFiles(config.dir)
 
   // start
-  const app = createServer(config.dir);
-  const server = http.createServer(app);
+  const app = createServer(config.dir)
+  const server = http.createServer(app)
 
   createRender(config).then((render) => {
     // custome middlewares
-    attachMiddleware(app, server, config);
+    attachMiddleware(app, server, config)
 
     // client compile
-    const [compiler, middleware] = compile(config);
-    app.use(middleware);
+    const [compiler, middleware] = compile(config)
+    app.use(middleware)
 
     // client compiled static file route
     app.use(
-      "/__torch",
-      express.static(path.resolve(config.dir, ".torch", "client"))
-    );
+      '/__torch',
+      express.static(path.resolve(config.dir, '.torch', 'client'))
+    )
 
     // static file route
-    app.use("/static", express.static(path.resolve(config.dir, "public")));
+    app.use('/static', express.static(path.resolve(config.dir, 'public')))
 
     // webpack-hot-middleware
     app.use(
@@ -55,18 +55,18 @@ export default function dev(draftConfig: TorchConfig) {
         quiet: true,
         noInfo: true,
       })
-    );
+    )
 
     // 开发模式用 webpack-dev-middleware 获取 assets
     app.use((req, res, next) => {
       res.locals.assets = getAssets(
         res.locals.webpackStats.toJson().assetsByChunkName
-      );
-      next();
-    });
+      )
+      next()
+    })
 
     // page router
-    app.use(render);
+    app.use(render)
 
     // error handler
     const errorHandler: express.ErrorRequestHandler = (
@@ -75,11 +75,11 @@ export default function dev(draftConfig: TorchConfig) {
       res,
       next
     ) => {
-      res.status(err.status || 500);
-      res.json(err.message);
-    };
-    app.use(errorHandler);
-  });
+      res.status(err.status || 500)
+      res.json(err.message)
+    }
+    app.use(errorHandler)
+  })
 
   return new Promise<Result>((resolve, reject) => {
     /**
@@ -87,52 +87,52 @@ export default function dev(draftConfig: TorchConfig) {
      */
 
     const onListening = () => {
-      let addr = server.address();
+      let addr = server.address()
       let bind =
-        typeof addr === "string" ? "pipe " + addr : "port " + addr?.port;
-      debug("Listening on " + bind);
-      console.log("Listening on " + bind);
-    };
+        typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
+      debug('Listening on ' + bind)
+      console.log('Listening on ' + bind)
+    }
 
     /**
      * Event listener for HTTP server "error" event.
      */
 
     const onError = (error: any) => {
-      if (error.syscall !== "listen") {
-        throw error;
+      if (error.syscall !== 'listen') {
+        throw error
       }
 
       // handle specific listen errors with friendly messages
       switch (error.code) {
-        case "EACCES":
-          console.error(PORT + " requires elevated privileges");
-          process.exit(1);
-          break;
-        case "EADDRINUSE":
-          console.error(PORT + " is already in use");
-          process.exit(1);
-          break;
+        case 'EACCES':
+          console.error(PORT + ' requires elevated privileges')
+          process.exit(1)
+          break
+        case 'EADDRINUSE':
+          console.error(PORT + ' is already in use')
+          process.exit(1)
+          break
         default:
-          throw error;
+          throw error
       }
-    };
+    }
 
     /**
      * Listen on provided port, on all network interfaces.
      */
-    server.listen(config.port);
-    server.on("error", onError);
-    server.on("listening", onListening);
-    server.on("error", reject);
-    server.on("listening", () => resolve({ server, app }));
-  });
+    server.listen(config.port)
+    server.on('error', onError)
+    server.on('listening', onListening)
+    server.on('error', reject)
+    server.on('listening', () => resolve({ server, app }))
+  })
 }
 
 function getAssets(stats: Record<string, string | string[]>) {
   return Object.keys(stats).reduce((result, assetName) => {
-    const value = stats[assetName];
-    result[assetName] = Array.isArray(value) ? value[0] : value;
-    return result;
-  }, {} as Record<string, string>);
+    const value = stats[assetName]
+    result[assetName] = Array.isArray(value) ? value[0] : value
+    return result
+  }, {} as Record<string, string>)
 }

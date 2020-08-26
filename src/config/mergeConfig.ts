@@ -1,33 +1,33 @@
-import path from "path";
-import type { TorchConfig, IntegralTorchConfig } from "../index";
+import path from 'path'
+import type { TorchConfig, IntegralTorchConfig } from '../index'
 
-const TITLE = "React Torch";
-const DEVELOPMENT_PORT = "3000";
-const PRODUCTION_PORT = "80";
-const SRC = "src";
-const MDLW = "mdlw";
+const TITLE = 'React Torch'
+const DEVELOPMENT_PORT = '3000'
+const PRODUCTION_PORT = '80'
+const SRC = 'src'
+const MDLW = 'mdlw'
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
-  const title = config.title || TITLE;
+  const title = config.title || TITLE
   const dir = config.dir
     ? path.resolve(process.cwd(), config.dir)
-    : process.cwd();
+    : process.cwd()
   const port =
     config.port ||
-    (process.env.NODE_ENV === "development"
+    (process.env.NODE_ENV === 'development'
       ? DEVELOPMENT_PORT
-      : PRODUCTION_PORT);
+      : PRODUCTION_PORT)
   const src = config.src
     ? path.resolve(dir, config.src)
-    : path.resolve(dir, SRC);
+    : path.resolve(dir, SRC)
   const mdlw =
     config.mdlw === false
       ? config.mdlw
       : config.mdlw
       ? path.resolve(dir, config.mdlw)
-      : path.resolve(dir, MDLW);
-  const ssr = config.ssr === undefined ? true : config.ssr;
-  const styleMode = config.styleMode || "inner";
+      : path.resolve(dir, MDLW)
+  const ssr = config.ssr === undefined ? true : config.ssr
+  const styleMode = config.styleMode || 'inner'
 
   return {
     title,
@@ -37,5 +37,5 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     mdlw,
     ssr,
     styleMode,
-  };
+  }
 }

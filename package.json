@@ -31,6 +31,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "postbuild": "cp ./src/torch.d.ts ./dist/torch.d.ts",
+    "format": "prettier --write --parser typescript \"{src,__tests__,example}/**/*.ts?(x)\"",
     "test": "jest --silent",
     "dev:start": "node -r ts-node/register ./example/start.ts",
     "dev:dev": "node -r ts-node/register ./example/dev.ts",
@@ -60,7 +61,7 @@
       "prettier --write",
       "git add"
     ],
-    "*.ts": [
+    "*.ts?(x)": [
       "prettier --parser=typescript --write",
       "git add"
     ]
@@ -149,8 +150,9 @@
     "@types/webpack-manifest-plugin": "^2.1.0",
     "commitizen": "^4.1.2",
     "jest": "^26.1.0",
-    "lint-staged": "^10.2.11",
+    "lint-staged": "^10.2.13",
     "nodemon": "^1.19.3",
+    "prettier": "^2.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rimraf": "^3.0.2",

@@ -1,49 +1,44 @@
-import path from 'path'
-import { IgnorePlugin } from 'webpack'
-import TerserPlugin from 'terser-webpack-plugin'
-import PnpWebpackPlugin from 'pnp-webpack-plugin'
-import ManifestPlugin from 'webpack-manifest-plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import { babelConfig } from '../../config'
-import type { Configuration } from 'webpack'
-import type { IntegralTorchConfig } from '../../index'
-
+import path from "path";
+import { IgnorePlugin } from "webpack";
+import TerserPlugin from "terser-webpack-plugin";
+import PnpWebpackPlugin from "pnp-webpack-plugin";
+import ManifestPlugin from "webpack-manifest-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import { babelConfig } from "../../config";
+import type { Configuration } from "webpack";
+import type { IntegralTorchConfig } from "../../index";
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   const manifestPluginOption: ManifestPlugin.Options = {
-    fileName: './assets.json',
-    map(
-      file: ManifestPlugin.FileDescriptor
-    ): ManifestPlugin.FileDescriptor {
+    fileName: "./assets.json",
+    map(file: ManifestPlugin.FileDescriptor): ManifestPlugin.FileDescriptor {
       // 删除 .js 后缀，方便直接使用 obj.name 来访问
       if (file.name && /\.js$/.test(file.name)) {
-        file.name = file.name.slice(0, -3)
+        file.name = file.name.slice(0, -3);
       }
-      return file
-    }
-  }
+      return file;
+    },
+  };
 
   return {
-    mode: 'production',
-    target: 'web',
+    mode: "production",
+    target: "web",
     context: config.src,
     entry: {
-      index: [
-        path.resolve(__dirname, '../../client/index'),
-      ]
+      index: [path.resolve(__dirname, "../../client/index")],
     },
-    devtool: 'source-map',
+    devtool: "source-map",
     output: {
-      path: path.join(config.dir, '.torch', 'client'),
+      path: path.join(config.dir, ".torch", "client"),
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,
-      publicPath: '__torch/',
+      publicPath: "__torch/",
       pathinfo: true,
     },
     optimization: {
       splitChunks: {
-        chunks: 'all',
-        name: 'vendor'
+        chunks: "all",
+        name: "vendor",
       },
       minimize: true,
       minimizer: [
@@ -55,7 +50,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
               // into invalid ecma 5 code. This is why the 'compress' and 'output'
               // sections only apply transformations that are ecma 5 safe
               // https://github.com/facebook/create-react-app/pull/4234
-              ecma: 8
+              ecma: 8,
             },
             compress: {
               // ecma: 5, // 默认为5，但目前ts似乎不支持该参数
@@ -70,31 +65,31 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
               // https://github.com/facebook/create-react-app/issues/5250
               // Pending futher investigation:
               // https://github.com/terser-js/terser/issues/120
-              inline: 2
+              inline: 2,
             },
             mangle: {
-              safari10: true
+              safari10: true,
             },
             output: {
               ecma: 5,
               comments: false,
               // Turned on because emoji and regex is not minified properly using default
               // https://github.com/facebook/create-react-app/issues/2488
-              ascii_only: true
-            }
+              ascii_only: true,
+            },
           },
           // Use multi-process parallel running to improve the build speed
           // Default number of concurrent runs: os.cpus().length - 1
           parallel: true,
           // Enable file caching
           cache: true,
-          sourceMap: false
-        })
-      ]
+          sourceMap: false,
+        }),
+      ],
     },
     performance: {
       hints: false,
-      maxEntrypointSize: 400000
+      maxEntrypointSize: 400000,
     },
     module: {
       strictExportPresence: true,
@@ -102,44 +97,40 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             ...babelConfig,
             cacheDirectory: true,
             cacheCompression: true,
-            compact: true
-          }
+            compact: true,
+          },
         },
         {
           test: /\.css$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {	
-                publicPath: '/__torch',	
+              options: {
+                publicPath: "/__torch",
               },
             },
-            'css-loader',
+            "css-loader",
           ],
-        }
-      ]
+        },
+      ],
     },
     resolve: {
       alias: {
-        '@routes': config.src
+        "@routes": config.src,
       },
-      modules: ['node_modules'],
-      extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-      plugins: [
-        PnpWebpackPlugin
-      ]
+      modules: ["node_modules"],
+      extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+      plugins: [PnpWebpackPlugin],
     },
     resolveLoader: {
-      modules: ['node_modules'],
-      extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
-      plugins: [
-        PnpWebpackPlugin.moduleLoader(module)
-      ]
+      modules: ["node_modules"],
+      extensions: [".js", ".json", ".ts", ".jsx", ".tsx"],
+      plugins: [PnpWebpackPlugin.moduleLoader(module)],
     },
     plugins: [
       new ManifestPlugin(manifestPluginOption),
@@ -147,9 +138,9 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: 'css/[name].css',
-        chunkFilename: 'css/[id].css',
+        filename: "css/[name].css",
+        chunkFilename: "css/[id].css",
       }),
-    ]
-  }
+    ],
+  };
 }

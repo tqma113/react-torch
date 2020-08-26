@@ -1,4 +1,4 @@
-import { createBrowserHistory } from './index';
+import { createBrowserHistory } from "./index";
 
 /**
  * Create a default instance for the current document.

@@ -1,4 +1,4 @@
-import { createMemoryHistory } from './index';
+import { createMemoryHistory } from "./index";
 
 /**
  * Create a default instance for the current document.

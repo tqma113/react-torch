@@ -4,15 +4,15 @@
 
 export default [
   {
-    path: '/',
-    page: () => import('./Home'),
+    path: "/",
+    page: () => import("./Home"),
   },
   {
-    path: '/about',
-    page: () => import('./About'),
+    path: "/about",
+    page: () => import("./About"),
   },
   {
-    path: '/test',
-    page: () => import('./Test')
-  }
-]
+    path: "/test",
+    page: () => import("./Test"),
+  },
+];

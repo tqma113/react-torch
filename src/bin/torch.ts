@@ -1,83 +1,81 @@
-import program from 'commander'
-import dev from '../dev'
-import build from '../build'
-import start from '../start'
-import { requireConfig } from '../config'
+import program from "commander";
+import dev from "../dev";
+import build from "../build";
+import start from "../start";
+import { requireConfig } from "../config";
+
+program.version("1.0.12").name("torch");
 
 program
-  .version('1.0.12')
-  .name('torch')
-
-program
-  .command('dev')
+  .command("dev")
   .description(`start development mode at ${process.cwd()}`)
-  .option('-d, --dir <dir>', 'root path')
-  .option('-p, --port <port>', 'listening port')
-  .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config = 'torch.config.ts' }) => {
-    let draftConfig = requireConfig(config)
-    
-    if (typeof draftConfig === 'object') {
-      if (typeof dir === 'string') {
-        draftConfig.dir = dir
+  .option("-d, --dir <dir>", "root path")
+  .option("-p, --port <port>", "listening port")
+  .option("-c, --config <config>", "config file path")
+  .action(({ dir, port, config = "torch.config.ts" }) => {
+    let draftConfig = requireConfig(config);
+
+    if (typeof draftConfig === "object") {
+      if (typeof dir === "string") {
+        draftConfig.dir = dir;
       }
 
-      if (typeof port === 'string') {
-        draftConfig.port = port
+      if (typeof port === "string") {
+        draftConfig.port = port;
       }
 
-      dev(draftConfig)
+      dev(draftConfig);
     } else {
-      dev({ dir, port })
+      dev({ dir, port });
     }
-  })
+  });
 
 program
-  .command('build')
+  .command("build")
   .description(`build project at ${process.cwd()}`)
-  .option('-d, --dir <dir>', 'root path')
-  .option('-p, --port <port>', 'listening port')
-  .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config = 'torch.config.ts' }) => {
-    let draftConfig = requireConfig(config)
-    
-    if (typeof draftConfig === 'object') {
-      if (typeof dir === 'string') {
-        draftConfig.dir = dir
+  .option("-d, --dir <dir>", "root path")
+  .option("-p, --port <port>", "listening port")
+  .option("-c, --config <config>", "config file path")
+  .action(({ dir, port, config = "torch.config.ts" }) => {
+    let draftConfig = requireConfig(config);
+
+    if (typeof draftConfig === "object") {
+      if (typeof dir === "string") {
+        draftConfig.dir = dir;
       }
 
-      if (typeof port === 'string') {
-        draftConfig.port = port
+      if (typeof port === "string") {
+        draftConfig.port = port;
       }
 
-      build(draftConfig)
+      build(draftConfig);
     } else {
-      build({ dir, port })
+      build({ dir, port });
     }
-  })
+  });
 
 program
-  .command('start')
+  .command("start")
   .description(`start production mode at ${process.cwd()}`)
-  .option('-d, --dir <dir>', 'root path')
-  .option('-p, --port <port>', 'listening port')
-  .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config = 'torch.config.ts' }) => {
-    let draftConfig = requireConfig(config)
-    
-    if (typeof draftConfig === 'object') {
-      if (typeof dir === 'string') {
-        draftConfig.dir = dir
+  .option("-d, --dir <dir>", "root path")
+  .option("-p, --port <port>", "listening port")
+  .option("-c, --config <config>", "config file path")
+  .action(({ dir, port, config = "torch.config.ts" }) => {
+    let draftConfig = requireConfig(config);
+
+    if (typeof draftConfig === "object") {
+      if (typeof dir === "string") {
+        draftConfig.dir = dir;
       }
 
-      if (typeof port === 'string') {
-        draftConfig.port = port
+      if (typeof port === "string") {
+        draftConfig.port = port;
       }
 
-      start(draftConfig)
+      start(draftConfig);
     } else {
-      start({ dir, port })
+      start({ dir, port });
     }
-  })
+  });
 
-program.parse(process.argv)
+program.parse(process.argv);

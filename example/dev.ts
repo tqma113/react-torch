@@ -1,6 +1,6 @@
-import path from 'path'
-import dev from '../dist/dev/index'
+import path from "path";
+import dev from "../dist/dev/index";
 
 dev({
-  dir: path.resolve(__dirname)
-})
+  dir: path.resolve(__dirname),
+});

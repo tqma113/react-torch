@@ -1,4 +1,4 @@
-import { createHashHistory } from './index';
+import { createHashHistory } from "./index";
 
 /**
  * Create a default instance for the current document.

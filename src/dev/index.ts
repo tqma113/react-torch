@@ -1,7 +1,5 @@
 /// <reference path="../torch.d.ts" />
 
-process.env.NODE_ENV = 'development'
-
 import path from 'path'
 import http from 'http'
 import debug from 'debug'
@@ -22,6 +20,7 @@ export type Result = {
 const PORT = '3000'
 
 export default function dev(draftConfig: TorchConfig) {
+  process.env.NODE_ENV = 'development'
   const config = mergeConfig(draftConfig)
 
   // remove before

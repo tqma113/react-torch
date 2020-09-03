@@ -1,7 +1,5 @@
 /// <reference path="../torch.d.ts" />
 
-process.env.NODE_ENV = 'production'
-
 import path from 'path'
 import http from 'http'
 import debug from 'debug'
@@ -18,6 +16,7 @@ export type Result = {
 }
 
 export default function start(draftConfig: TorchConfig) {
+  process.env.NODE_ENV = 'production'
   const config = mergeConfig(draftConfig)
 
   const app = createServer(config.dir)

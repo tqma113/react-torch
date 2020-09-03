@@ -108,9 +108,7 @@ async function main() {
   }
 
   // publish packages
-  for (const pkg of packages) {
-    await publishPackage(pkg, targetVersion, runIfNotDry)
-  }
+  await publishPackage(targetVersion, runIfNotDry)
 
   // push to GitHub
   step('\nPushing to GitHub...')

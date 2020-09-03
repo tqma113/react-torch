@@ -28,11 +28,11 @@ export default function dev(draftConfig: TorchConfig) {
   }
   const clientContext: PackContext = {
     ...tinyContext,
-    packSide: 'client'
+    packSide: 'client',
   }
   const serverContext: PackContext = {
     ...tinyContext,
-    packSide: 'server'
+    packSide: 'server',
   }
 
   // remove before

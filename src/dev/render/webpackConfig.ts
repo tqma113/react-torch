@@ -51,7 +51,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
             ...babelConfig,
             cacheDirectory: true,
           },
-        }
+        },
       ],
     },
     optimization: {

@@ -4,7 +4,10 @@ import getWebpackConfig from './webpackConfig'
 import reporter from './reporter'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compile(config: IntegralTorchConfig, packContext: PackContext) {
+export default function compile(
+  config: IntegralTorchConfig,
+  packContext: PackContext
+) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)
   const middleware = webpackDevMiddleware(compiler, {

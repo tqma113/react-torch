@@ -3,7 +3,10 @@ import webpack from 'webpack'
 import getWebpackConfig from './webpackConfig'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compile(config: IntegralTorchConfig, packContext: PackContext) {
+export default function compile(
+  config: IntegralTorchConfig,
+  packContext: PackContext
+) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)
 

@@ -14,10 +14,13 @@ import type {
   IntegralTorchConfig,
   ServerContext,
   ClientContext,
-  PackContext
+  PackContext,
 } from '../../index'
 
-export default async function createRender(config: IntegralTorchConfig, packContext: PackContext) {
+export default async function createRender(
+  config: IntegralTorchConfig,
+  packContext: PackContext
+) {
   const routes = await compile(config, packContext)
   const router = createRouter(routes)
 

@@ -6,6 +6,7 @@ const DEVELOPMENT_PORT = '3000'
 const PRODUCTION_PORT = '80'
 const SRC = 'src'
 const MDLW = 'mdlw'
+const noop = (a: any) => a
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
   const title = config.title || TITLE
@@ -28,6 +29,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
       : path.resolve(dir, MDLW)
   const ssr = config.ssr === undefined ? true : config.ssr
   const styleMode = config.styleMode || 'inner'
+  const webpack = config.webpack || noop
 
   return {
     title,
@@ -37,5 +39,6 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     mdlw,
     ssr,
     styleMode,
+    webpack,
   }
 }

@@ -2,10 +2,10 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import getWebpackConfig from './webpackConfig'
 import reporter from './reporter'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compile(config: IntegralTorchConfig) {
-  const webpackConfig = getWebpackConfig(config)
+export default function compile(config: IntegralTorchConfig, packContext: PackContext) {
+  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)
   const middleware = webpackDevMiddleware(compiler, {
     publicPath: 'static',

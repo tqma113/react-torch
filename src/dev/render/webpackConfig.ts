@@ -51,11 +51,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
             ...babelConfig,
             cacheDirectory: true,
           },
-        },
-        {
-          test: /\.css$/,
-          use: ['null-loader'],
-        },
+        }
       ],
     },
     optimization: {

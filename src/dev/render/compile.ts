@@ -1,10 +1,10 @@
 import path from 'path'
 import webpack from 'webpack'
-import getConfig from './webpackConfig'
-import type { IntegralTorchConfig } from '../../index'
+import getWebpackConfig from './webpackConfig'
+import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compile(config: IntegralTorchConfig) {
-  const webpackConfig = getConfig(config)
+export default function compile(config: IntegralTorchConfig, packContext: PackContext) {
+  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)
 
   return new Promise<never>((resolve, reject) => {

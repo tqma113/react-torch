@@ -10,7 +10,7 @@ import createRender from './render'
 import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
 import { rmTorchProjectFiles } from '../utils'
-import type { TorchConfig } from '../index'
+import type { TorchConfig, TinyContext, PackContext } from '../index'
 
 export type Result = {
   server: http.Server
@@ -22,6 +22,18 @@ const PORT = '3000'
 export default function dev(draftConfig: TorchConfig) {
   process.env.NODE_ENV = 'development'
   const config = mergeConfig(draftConfig)
+  const tinyContext: TinyContext = {
+    ssr: config.ssr,
+    env: process.env.NODE_ENV,
+  }
+  const clientContext: PackContext = {
+    ...tinyContext,
+    packSide: 'client'
+  }
+  const serverContext: PackContext = {
+    ...tinyContext,
+    packSide: 'server'
+  }
 
   // remove before
   rmTorchProjectFiles(config.dir)
@@ -30,12 +42,12 @@ export default function dev(draftConfig: TorchConfig) {
   const app = createServer(config.dir)
   const server = http.createServer(app)
 
-  createRender(config).then((render) => {
+  createRender(config, serverContext).then((render) => {
     // custome middlewares
     attachMiddleware(app, server, config)
 
     // client compile
-    const [compiler, middleware] = compile(config)
+    const [compiler, middleware] = compile(config, clientContext)
     app.use(middleware)
 
     // client compiled static file route

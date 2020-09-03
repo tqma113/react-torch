@@ -1,9 +1,9 @@
 import webpack from 'webpack'
 import getWebpackConfig from './webpackConfig'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compileServer(config: IntegralTorchConfig) {
-  const webpackConfig = getWebpackConfig(config)
+export default function compileServer(config: IntegralTorchConfig, packContext: PackContext) {
+  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
 
   console.info(`Compiling server...`)
 

@@ -10,6 +10,7 @@ export * from '../page'
 
 import type { Server } from 'http'
 import type { Request, Response, Application } from 'express'
+import type { Configuration } from 'webpack'
 
 export type TorchConfig = {
   port?: string
@@ -19,6 +20,7 @@ export type TorchConfig = {
   ssr?: boolean
   title?: string
   styleMode?: PreloadType
+  webpack?: (config: Configuration, packContext: PackContext) => Configuration
 }
 
 export type IntegralTorchConfig = Required<TorchConfig>
@@ -26,16 +28,19 @@ export type IntegralTorchConfig = Required<TorchConfig>
 export type Env = 'development' | 'production' | 'test'
 export type Side = 'client' | 'server'
 
-export type ClientContext = {
+export type TinyContext = {
   ssr: boolean
   env: Env
+}
+export type PackContext = TinyContext & {
+  packSide: Side
+}
+export type ClientContext = TinyContext & {
   side: 'client'
 }
-export type ServerContext = {
+export type ServerContext = TinyContext & {
   req: Request
   res: Response
-  ssr: boolean
-  env: Env
   side: 'server'
 }
 

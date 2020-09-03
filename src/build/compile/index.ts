@@ -1,9 +1,9 @@
 import getWebpackConfig from './webpackConfig'
 import webpack from 'webpack'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compileClient(config: IntegralTorchConfig) {
-  const webpackConfig = getWebpackConfig(config)
+export default function compileClient(config: IntegralTorchConfig, packContext: PackContext) {
+  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
 
   console.info(`Compiling client...`)
 

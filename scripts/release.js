@@ -108,7 +108,6 @@ async function main() {
   }
 
   // publish packages
-  step('\nPublishing packages...')
   for (const pkg of packages) {
     await publishPackage(pkg, targetVersion, runIfNotDry)
   }
@@ -147,10 +146,7 @@ function updatePackage(pkgRoot, version) {
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
 }
 
-async function publishPackage(pkgName, version, runIfNotDry) {
-  if (skippedPackages.includes(pkgName)) {
-    return
-  }
+async function publishPackage(version, runIfNotDry) {
   const pkgPath = path.resolve(pkgRoot, 'package.json')
   const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
   if (pkg.private) {
@@ -159,6 +155,7 @@ async function publishPackage(pkgName, version, runIfNotDry) {
 
   // for now (alpha/beta phase), every package except "gtl" can be published as
   // `latest`, whereas "gtl" will be published under the "next" tag.
+  const pkgName = pkg.name
   const releaseTag = pkgName === 'gtl' ? 'next' : null
 
   // TODO use inferred release channel after official 3.0 release

@@ -1,3 +1,17 @@
+## [1.7.4](https://github.com/tqma113/react-torch/compare/v1.7.1...v1.7.4) (2020-09-03)
+
+
+### Bug Fixes
+
+* process.env.NODE_ENV ([dacced7](https://github.com/tqma113/react-torch/commit/dacced7831a0322814e9ececc74f12f61b6aec85))
+
+
+### Features
+
+* **config:** custome webpack config ([fb5520a](https://github.com/tqma113/react-torch/commit/fb5520a8ae04ce5e2a69db69077323a05a03d52b))
+
+
+
 # CHANGELOG
 
 ## 1.7.1

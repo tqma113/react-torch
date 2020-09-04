@@ -21,8 +21,7 @@ export default function compile(
     const serverPath = path.join(
       config.dir,
       TORCH_DIR,
-      TORCH_SERVER_DIR,
-      TORCH_ROUTES_FILE_NAME
+      TORCH_SERVER_DIR
     )
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)

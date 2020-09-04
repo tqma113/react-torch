@@ -36,15 +36,13 @@ export default async function createRender(
         next()
       } else {
         const serverContext: ServerContext = {
+          ...packContext,
           req,
           res,
-          ssr: config.ssr,
-          env: process.env.NODE_ENV,
           side: 'server',
         }
         const clientContext: ClientContext = {
-          ssr: config.ssr,
-          env: process.env.NODE_ENV,
+          ...packContext,
           side: 'client',
         }
 

@@ -1,3 +1,7 @@
+## [1.7.7](https://github.com/tqma113/react-torch/compare/v1.7.6...v1.7.7) (2020-09-04)
+
+
+
 ## [1.7.6](https://github.com/tqma113/react-torch/compare/v1.7.5...v1.7.6) (2020-09-04)
 
 

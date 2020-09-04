@@ -1,3 +1,11 @@
+export * from './context'
+export * from './hook'
+export * from './store'
+export * from './page'
+
+///////////////////////////////////////////////////////////////////////////////
+// CONSTANTS
+///////////////////////////////////////////////////////////////////////////////
 export const TORCH_DIR = '.torch'
 export const TORCH_CLIENT_DIR = 'client'
 export const TORCH_SERVER_DIR = 'server'
@@ -6,12 +14,25 @@ export const TORCH_MDLW_FILE_NAME = 'mdlw.js'
 export const TORCH_ROUTES_FILE_NAME = 'routes.js'
 export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 
+export enum Env {
+  Development = 'development',
+  Production = 'production',
+  Test = 'test',
+}
+
+export enum Side {
+  Client = 'client',
+  Server = 'server',
+}
+
+export enum PreloadType {
+  Link = 'link',
+  Inner = 'inner',
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // TYPES
 ///////////////////////////////////////////////////////////////////////////////
-export * from '../store'
-export * from '../page'
-
 import type { Server } from 'http'
 import type { Request, Response, Application } from 'express'
 import type { Configuration } from 'webpack'
@@ -29,9 +50,6 @@ export type TorchConfig = {
 
 export type IntegralTorchConfig = Required<TorchConfig>
 
-export type Env = 'development' | 'production' | 'test'
-export type Side = 'client' | 'server'
-
 export type TinyContext = {
   ssr: boolean
   env: Env
@@ -40,12 +58,12 @@ export type PackContext = TinyContext & {
   packSide: Side
 }
 export type ClientContext = TinyContext & {
-  side: 'client'
+  side: Side.Client
 }
 export type ServerContext = TinyContext & {
   req: Request
   res: Response
-  side: 'server'
+  side: Side.Server
 }
 
 export type TORCH_DATA = {
@@ -58,25 +76,23 @@ export type Context = ClientContext | ServerContext
 
 export type Mdlw = (app: Application, server: Server) => void
 
-export type PreloadType = 'inner' | 'link'
-
 export type StylePreload =
   | {
-      type: 'inner'
+      type: PreloadType.Inner
       content: string
     }
   | {
-      type: 'link'
+      type: PreloadType.Link
       href: string
       preload: boolean
     }
 
 export type ScriptPreload =
   | {
-      type: 'inner'
+      type: PreloadType.Inner
       content: string
     }
   | {
-      type: 'link'
+      type: PreloadType.Link
       src: string
     }

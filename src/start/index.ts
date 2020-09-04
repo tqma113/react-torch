@@ -9,6 +9,7 @@ import createRender from './render'
 import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
 import {
+  Env,
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_DIR,
@@ -22,7 +23,7 @@ export type Result = {
 }
 
 export default function start(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = 'production'
+  process.env.NODE_ENV = Env.Production
   const config = mergeConfig(draftConfig)
 
   const app = createServer(config.dir)

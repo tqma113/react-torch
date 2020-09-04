@@ -10,7 +10,13 @@ import createRender from './render'
 import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
 import { rmTorchProjectFiles } from '../utils'
-import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_DIR } from '../index'
+import {
+  Env,
+  Side,
+  TORCH_DIR,
+  TORCH_CLIENT_DIR,
+  TORCH_PUBLIC_DIR,
+} from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
 export type Result = {
@@ -21,7 +27,7 @@ export type Result = {
 const PORT = '3000'
 
 export default function dev(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = 'development'
+  process.env.NODE_ENV = Env.Development
   const config = mergeConfig(draftConfig)
   const tinyContext: TinyContext = {
     ssr: config.ssr,
@@ -29,11 +35,11 @@ export default function dev(draftConfig: TorchConfig) {
   }
   const clientContext: PackContext = {
     ...tinyContext,
-    packSide: 'client',
+    packSide: Side.Client,
   }
   const serverContext: PackContext = {
     ...tinyContext,
-    packSide: 'server',
+    packSide: Side.Server,
   }
 
   // remove before

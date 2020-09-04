@@ -6,6 +6,7 @@ import createHistory from '../../history/memory'
 import { createErrorElement } from '../../error'
 import { connect } from '../../context'
 import { isPromise } from '../../utils'
+import { Side } from '../../index'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../document'
 import type { PageCreatorLoader, PageCreator } from '../../page'
@@ -39,11 +40,11 @@ export default async function createRender(
           ...packContext,
           req,
           res,
-          side: 'server',
+          side: Side.Server,
         }
         const clientContext: ClientContext = {
           ...packContext,
-          side: 'client',
+          side: Side.Client,
         }
 
         const getElementAndState = async () => {

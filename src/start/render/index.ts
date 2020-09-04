@@ -6,6 +6,7 @@ import createHistory from '../../history/memory'
 import { createErrorElement } from '../../error'
 import { connect } from '../../context'
 import { isPromise } from '../../utils'
+import { Side } from '../../index'
 import type { DraftRoute } from '../../router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../document'
@@ -42,12 +43,12 @@ export default function createRender(config: IntegralTorchConfig) {
           res,
           ssr: config.ssr,
           env: process.env.NODE_ENV,
-          side: 'server',
+          side: Side.Server,
         }
         const clientContext: ClientContext = {
           ssr: config.ssr,
           env: process.env.NODE_ENV,
-          side: 'client',
+          side: Side.Client,
         }
         const getElementAndState = async () => {
           try {

@@ -5,6 +5,7 @@ import renderCompile from './renderCompile'
 import copyPublic from './copyPublic'
 import { mergeConfig } from '../config'
 import { rmTorchProjectFiles } from '../utils'
+import { Side } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
 export default function build(draftConfig: TorchConfig) {
@@ -15,11 +16,11 @@ export default function build(draftConfig: TorchConfig) {
   }
   const clientContext: PackContext = {
     ...tinyContext,
-    packSide: 'client',
+    packSide: Side.Client,
   }
   const serverContext: PackContext = {
     ...tinyContext,
-    packSide: 'server',
+    packSide: Side.Server,
   }
 
   // remove before

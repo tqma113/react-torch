@@ -33,9 +33,6 @@
 * **config:** custome webpack config ([fb5520a](https://github.com/tqma113/react-torch/commit/fb5520a8ae04ce5e2a69db69077323a05a03d52b))
 
 
-
-# CHANGELOG
-
 ## 1.7.1
 
 > 2020/7/29

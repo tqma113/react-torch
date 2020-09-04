@@ -1,3 +1,12 @@
+## [1.7.8](https://github.com/tqma113/react-torch/compare/v1.7.7...v1.7.8) (2020-09-04)
+
+
+### Bug Fixes
+
+* **dev:** server render hot replace ([47d83f9](https://github.com/tqma113/react-torch/commit/47d83f9c568f629564e7ae03f6deb662dbaadb57))
+
+
+
 ## [1.7.7](https://github.com/tqma113/react-torch/compare/v1.7.6...v1.7.7) (2020-09-04)
 
 

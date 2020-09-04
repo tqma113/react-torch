@@ -11,12 +11,13 @@ import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compile(
   config: IntegralTorchConfig,
-  packContext: PackContext
+  packContext: PackContext,
+  update: (routes: DraftRoute[]) => void
 ) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)
 
-  return new Promise<DraftRoute[]>((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)
 
@@ -33,7 +34,8 @@ export default function compile(
       const newModule = require(outputPath)
       if (newModule) {
         const routes = newModule.default || newModule
-        resolve(routes)
+        update(routes)
+        resolve()
       } else {
         reject('cannot find routes')
       }

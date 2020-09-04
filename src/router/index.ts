@@ -13,9 +13,11 @@ export type Render = (
   pageCreatorLoader: PageCreatorLoader<any, any> | null
 ) => void
 
+export type Router = (render: Render, path: string) => Promise<void>
+
 export default function createRender(
   draftRoutes: DraftRoute[]
-): (render: Render, path: string) => Promise<void> {
+): Router {
   const matcher = createMatcher(draftRoutes)
 
   async function getPageCreatorLoader(path: string) {

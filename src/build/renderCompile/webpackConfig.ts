@@ -2,6 +2,7 @@ import path from 'path'
 import { babelConfig } from '../../config'
 import { getExternals } from '../../utils'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
+import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -34,7 +35,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     context: config.src,
     entry,
     output: {
-      path: path.join(config.dir, '.torch', 'server'),
+      path: path.join(config.dir, TORCH_DIR, TORCH_SERVER_DIR),
       filename: '[name].js',
       libraryTarget: 'commonjs2',
     },

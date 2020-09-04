@@ -1,6 +1,10 @@
-export { default as build } from './build/index'
-export { default as start } from './start/index'
-export { default as dev } from './dev/index'
+export const TORCH_DIR = '.torch'
+export const TORCH_CLIENT_DIR = 'client'
+export const TORCH_SERVER_DIR = 'server'
+export const TORCH_PUBLIC_DIR = 'public'
+export const TORCH_MDLW_FILE_NAME = 'mdlw.js'
+export const TORCH_ROUTES_FILE_NAME = 'routes.js'
+export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 
 ///////////////////////////////////////////////////////////////////////////////
 // TYPES

@@ -3,6 +3,7 @@ import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { babelConfig } from '../../config'
+import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -30,7 +31,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'cheap-module-eval-source-map',
     output: {
-      path: path.join(config.dir, '.torch', 'client'),
+      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
       publicPath: '__torch/',
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,

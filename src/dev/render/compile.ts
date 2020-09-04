@@ -1,6 +1,11 @@
 import path from 'path'
 import webpack from 'webpack'
 import getWebpackConfig from './webpackConfig'
+import {
+  TORCH_DIR,
+  TORCH_SERVER_DIR,
+  TORCH_ROUTES_FILE_NAME,
+} from '../../index'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compile(
@@ -18,7 +23,12 @@ export default function compile(
       statsObj.errors.forEach(console.error)
       statsObj.warnings.forEach(console.warn)
 
-      const outputPath = path.join(config.dir, '.torch', 'server', 'routes.js')
+      const outputPath = path.join(
+        config.dir,
+        TORCH_DIR,
+        TORCH_SERVER_DIR,
+        TORCH_ROUTES_FILE_NAME
+      )
       const newModule = require(outputPath)
       if (newModule) {
         const routes = newModule.default || newModule

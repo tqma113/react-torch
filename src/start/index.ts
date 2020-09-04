@@ -8,6 +8,12 @@ import createServer from './server'
 import createRender from './render'
 import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
+import {
+  TORCH_DIR,
+  TORCH_CLIENT_DIR,
+  TORCH_PUBLIC_DIR,
+  TORCH_ASSETS_FILE_NAME,
+} from '../index'
 import type { TorchConfig } from '../index'
 
 export type Result = {
@@ -29,22 +35,22 @@ export default function start(draftConfig: TorchConfig) {
   // static file route
   app.use(
     '/__torch',
-    express.static(path.resolve(config.dir, '.torch', 'client'))
+    express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
   )
 
   // static file route
   app.use(
     '/static',
-    express.static(path.resolve(config.dir, '.torch', 'public'))
+    express.static(path.resolve(config.dir, TORCH_DIR, TORCH_PUBLIC_DIR))
   )
 
   // static assets
   app.use((req, res, next) => {
     const assertPath = path.resolve(
       config.dir,
-      '.torch',
-      'client',
-      'assets.json'
+      TORCH_DIR,
+      TORCH_CLIENT_DIR,
+      TORCH_ASSETS_FILE_NAME
     )
     res.locals.assets = getAssets(require(assertPath))
     next()

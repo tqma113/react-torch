@@ -4,6 +4,7 @@ import TerserPlugin from 'terser-webpack-plugin'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { babelConfig } from '../../config'
+import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -28,7 +29,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'source-map',
     output: {
-      path: path.join(config.dir, '.torch', 'client'),
+      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,
       publicPath: '__torch/',

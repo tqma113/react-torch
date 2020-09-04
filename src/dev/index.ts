@@ -10,6 +10,7 @@ import createRender from './render'
 import attachMiddleware from './attachMiddleware'
 import { mergeConfig } from '../config'
 import { rmTorchProjectFiles } from '../utils'
+import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_DIR } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
 export type Result = {
@@ -53,11 +54,14 @@ export default function dev(draftConfig: TorchConfig) {
     // client compiled static file route
     app.use(
       '/__torch',
-      express.static(path.resolve(config.dir, '.torch', 'client'))
+      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
     )
 
     // static file route
-    app.use('/static', express.static(path.resolve(config.dir, 'public')))
+    app.use(
+      '/static',
+      express.static(path.resolve(config.dir, TORCH_PUBLIC_DIR))
+    )
 
     // webpack-hot-middleware
     app.use(

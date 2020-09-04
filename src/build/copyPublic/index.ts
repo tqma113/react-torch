@@ -4,6 +4,7 @@ import uglify from 'gulp-uglify'
 import plumber from 'gulp-plumber'
 // @ts-ignore
 import cleanCSS from 'gulp-clean-css'
+import { TORCH_DIR, TORCH_PUBLIC_DIR } from '../../index'
 
 export default function copyPublic(dir: string) {
   return new Promise((resolve, reject) => {
@@ -21,22 +22,28 @@ export default function copyPublic(dir: string) {
 }
 
 function createTask(dir: string) {
-  const dest = path.resolve(dir, '.torch', 'public')
+  const dest = path.resolve(dir, TORCH_DIR, TORCH_PUBLIC_DIR)
 
-  const allSrc = [dir + '/public/*', dir + '/public/**/*']
+  const allSrc = [
+    dir + `/${TORCH_PUBLIC_DIR}/*`,
+    dir + `/${TORCH_PUBLIC_DIR}/**/*`,
+  ]
   const all = () => {
     gulp.src(allSrc).pipe(plumber()).pipe(gulp.dest(dest))
   }
 
   const jsSrc = [
-    dir + '/public/*.(js|ts|jsx|tsx)',
-    dir + '/public/**/*.(js|ts|jsx|tsx)',
+    dir + `/${TORCH_PUBLIC_DIR}/*.(js|ts|jsx|tsx)`,
+    dir + `/${TORCH_PUBLIC_DIR}/**/*.(js|ts|jsx|tsx)`,
   ]
   const minifyJs = () => {
     gulp.src(jsSrc).pipe(plumber()).pipe(uglify()).pipe(gulp.dest(dest))
   }
 
-  const cssSrc = [dir + '/public/*.css', dir + '/public/**/*.css']
+  const cssSrc = [
+    dir + `/${TORCH_PUBLIC_DIR}/*.css`,
+    dir + `/${TORCH_PUBLIC_DIR}/**/*.css`,
+  ]
   const minifyCss = () => {
     gulp.src(cssSrc).pipe(plumber()).pipe(cleanCSS()).pipe(gulp.dest(dest))
   }

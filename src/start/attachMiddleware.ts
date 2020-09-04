@@ -1,5 +1,6 @@
 import path from 'path'
 import { hasModuleFile } from '../utils'
+import { TORCH_DIR, TORCH_SERVER_DIR, TORCH_MDLW_FILE_NAME } from '../index'
 import type { Server } from 'http'
 import type { Application } from 'express'
 import type { TorchConfig, Mdlw } from '../index'
@@ -12,9 +13,9 @@ export default function attachMiddleware(
   if (config.mdlw) {
     const middlewarePath = path.resolve(
       config.dir,
-      '.torch',
-      'server',
-      'mdlw.js'
+      TORCH_DIR,
+      TORCH_SERVER_DIR,
+      TORCH_MDLW_FILE_NAME
     )
 
     if (hasModuleFile(middlewarePath)) {

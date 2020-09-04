@@ -1,3 +1,12 @@
+## [1.7.10](https://github.com/tqma113/react-torch/compare/v1.7.9...v1.7.10) (2020-09-04)
+
+
+### Bug Fixes
+
+* **dev:** path ([a10b82f](https://github.com/tqma113/react-torch/commit/a10b82fbd81600c8f0d438b07afa5679e3ea5146))
+
+
+
 ## [1.7.9](https://github.com/tqma113/react-torch/compare/v1.7.8...v1.7.9) (2020-09-04)
 
 

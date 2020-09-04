@@ -6,6 +6,7 @@ import {
   TORCH_SERVER_DIR,
   TORCH_ROUTES_FILE_NAME,
 } from '../../index'
+import type { DraftRoute } from '../../router'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compile(
@@ -15,7 +16,7 @@ export default function compile(
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)
 
-  return new Promise<never>((resolve, reject) => {
+  return new Promise<DraftRoute[]>((resolve, reject) => {
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)
 

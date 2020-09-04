@@ -159,7 +159,7 @@ async function publishPackage(version, runIfNotDry) {
   // TODO use inferred release channel after official 3.0 release
   // const releaseTag = semver.prerelease(version)[0] || null
 
-  step(`Publishing ${pkgName}...`)
+  step(`\nPublishing ${pkgName}...`)
   try {
     await runIfNotDry(
       'yarn', [

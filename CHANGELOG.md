@@ -1,3 +1,12 @@
+## [1.7.9](https://github.com/tqma113/react-torch/compare/v1.7.8...v1.7.9) (2020-09-04)
+
+
+### Bug Fixes
+
+* **dev:** require cache ([cdeb798](https://github.com/tqma113/react-torch/commit/cdeb7981113a6ef0c01413ceccaf21b67452edeb))
+
+
+
 ## [1.7.8](https://github.com/tqma113/react-torch/compare/v1.7.7...v1.7.8) (2020-09-04)
 
 

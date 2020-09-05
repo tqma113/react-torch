@@ -1,6 +1,6 @@
 import React from 'react'
-import { createPage } from '../../../page'
-import { createStore } from '../../../store'
+import { createPage } from '../../../src'
+import { createStore } from '../../../src'
 
 const About = createPage((history, context) => {
   const store = createStore(

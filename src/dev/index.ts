@@ -7,7 +7,7 @@ import express from 'express'
 import createServer from './server'
 import compile from './compile'
 import createRender from './render'
-import attachMiddleware from './attachMiddleware'
+import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
 import { mergeConfig } from '../config'
 import { rmTorchProjectFiles } from '../utils'
 import {
@@ -85,6 +85,9 @@ export default function dev(draftConfig: TorchConfig) {
       )
       next()
     })
+
+    // custome assets middlewares
+    attachAssetsMiddleware(app, server, config)
 
     // page router
     app.use(render)

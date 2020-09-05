@@ -8,7 +8,7 @@ const TITLE = 'React Torch'
 const DEVELOPMENT_PORT = '3000'
 const PRODUCTION_PORT = '80'
 const SRC = 'src'
-const MDLW = 'mdlw'
+const MDLW = 'middleware'
 const noop = (a: any) => a
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
@@ -24,11 +24,11 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
   const src = config.src
     ? path.resolve(dir, config.src)
     : path.resolve(dir, SRC)
-  const mdlw =
-    config.mdlw === false
-      ? config.mdlw
-      : config.mdlw
-      ? path.resolve(dir, config.mdlw)
+  const middleware =
+    config.middlewares === false
+      ? config.middlewares
+      : config.middlewares
+      ? path.resolve(dir, config.middlewares)
       : path.resolve(dir, MDLW)
   const ssr = config.ssr === undefined ? true : config.ssr
   const styleMode = config.styleMode || PreloadType.Inner
@@ -43,7 +43,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     dir,
     port,
     src,
-    mdlw,
+    middlewares: middleware,
     ssr,
     styleMode,
     webpack,

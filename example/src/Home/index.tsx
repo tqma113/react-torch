@@ -1,6 +1,6 @@
 import React from 'react'
-import { createPage } from '../../../page'
-import { useWillCreate, useWillMount } from '../../../hook'
+import { createPage } from '../../../src'
+import { useWillCreate, useWillMount } from '../../../src'
 import store from './Model'
 import './style.css'
 import type { History } from '../../../src/history'

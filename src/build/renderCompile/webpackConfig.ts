@@ -9,7 +9,7 @@ import type { IntegralTorchConfig } from '../../index'
 export type ServerEntry =
   | {
       routes: string
-      mdlw: string
+      middleware: string
     }
   | {
       routes: string
@@ -18,10 +18,10 @@ export type ServerEntry =
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   let entry: ServerEntry
 
-  if (config.mdlw) {
+  if (config.middlewares) {
     entry = {
       routes: config.src,
-      mdlw: config.mdlw,
+      middleware: config.middlewares,
     }
   } else {
     entry = {

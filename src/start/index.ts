@@ -6,7 +6,7 @@ import debug from 'debug'
 import express from 'express'
 import createServer from './server'
 import createRender from './render'
-import attachMiddleware from './attachMiddleware'
+import {attachMiddleware, attachAssetsMiddleware} from '../middleware'
 import { mergeConfig } from '../config'
 import {
   Env,
@@ -56,6 +56,9 @@ export default function start(draftConfig: TorchConfig) {
     res.locals.assets = getAssets(require(assertPath))
     next()
   })
+
+  // custome assets middlewares
+  attachAssetsMiddleware(app, server, config)
 
   // page router
   app.use(render)

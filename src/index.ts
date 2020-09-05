@@ -10,7 +10,7 @@ export const TORCH_DIR = '.torch'
 export const TORCH_CLIENT_DIR = 'client'
 export const TORCH_SERVER_DIR = 'server'
 export const TORCH_PUBLIC_DIR = 'public'
-export const TORCH_MDLW_FILE_NAME = 'mdlw.js'
+export const TORCH_MDLW_FILE_NAME = 'middleware.js'
 export const TORCH_ROUTES_FILE_NAME = 'routes.js'
 export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 
@@ -41,7 +41,7 @@ export type TorchConfig = {
   port?: string
   dir?: string
   src?: string
-  mdlw?: string | false
+  middlewares?: string | false
   ssr?: boolean
   title?: string
   styleMode?: PreloadType
@@ -74,7 +74,11 @@ export type TORCH_DATA = {
 
 export type Context = ClientContext | ServerContext
 
-export type Mdlw = (app: Application, server: Server) => void
+export type Middleware = (app: Application, server: Server) => void
+
+export type Middlewares = {
+  assets?: Middleware
+} & Record<string, Middleware>
 
 export type StylePreload =
   | {

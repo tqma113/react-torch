@@ -1,6 +1,6 @@
-import { Mdlw } from '../../src'
+import { Middleware } from '../../src'
 
-export const attachCss: Mdlw = (app, server) => {
+export const attachCss: Middleware = (app, server) => {
   app.use((req, res, next) => {
     res.locals = {
       styles: [

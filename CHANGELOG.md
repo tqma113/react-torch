@@ -1,3 +1,12 @@
+## [1.7.11](https://github.com/tqma113/react-torch/compare/v1.7.10...v1.7.11) (2020-09-05)
+
+
+### Bug Fixes
+
+* **config:** webpack config rule ([91e58d6](https://github.com/tqma113/react-torch/commit/91e58d6848d59ae440d41cccda31ccb23fe60fdf))
+
+
+
 ## [1.7.10](https://github.com/tqma113/react-torch/compare/v1.7.9...v1.7.10) (2020-09-04)
 
 

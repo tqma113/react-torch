@@ -1,6 +1,8 @@
 import path from 'path'
 import { PreloadType } from '../index'
-import type { TorchConfig, IntegralTorchConfig } from '../index'
+import { fixWebpackConfig } from './fixWebpackConfig'
+import type { Configuration } from 'webpack'
+import type { TorchConfig, IntegralTorchConfig, PackContext } from '../index'
 
 const TITLE = 'React Torch'
 const DEVELOPMENT_PORT = '3000'
@@ -30,7 +32,11 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
       : path.resolve(dir, MDLW)
   const ssr = config.ssr === undefined ? true : config.ssr
   const styleMode = config.styleMode || PreloadType.Inner
-  const webpack = config.webpack || noop
+  const draftWebpack = config.webpack
+  const webpack = draftWebpack
+    ? (wc: Configuration, packContext: PackContext) =>
+        fixWebpackConfig(draftWebpack(wc, packContext))
+    : noop
 
   return {
     title,

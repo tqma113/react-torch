@@ -18,11 +18,7 @@ export default function compile(
   const compiler = webpack(webpackConfig)
 
   return new Promise<void>((resolve, reject) => {
-    const serverPath = path.join(
-      config.dir,
-      TORCH_DIR,
-      TORCH_SERVER_DIR
-    )
+    const serverPath = path.join(config.dir, TORCH_DIR, TORCH_SERVER_DIR)
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)
 
@@ -30,17 +26,11 @@ export default function compile(
       statsObj.errors.forEach(console.error)
       statsObj.warnings.forEach(console.warn)
       statsObj.assets?.forEach((asset) => {
-        const assetPath = path.join(
-          serverPath,
-          asset.name
-        )
-        delete require.cache[require.resolve(assetPath)];
+        const assetPath = path.join(serverPath, asset.name)
+        delete require.cache[require.resolve(assetPath)]
       })
 
-      const routesPath = path.join(
-        serverPath,
-        TORCH_ROUTES_FILE_NAME
-      )
+      const routesPath = path.join(serverPath, TORCH_ROUTES_FILE_NAME)
       const newModule = require(routesPath)
       if (newModule) {
         const routes = newModule.default || newModule

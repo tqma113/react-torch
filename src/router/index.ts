@@ -15,9 +15,7 @@ export type Render = (
 
 export type Router = (render: Render, path: string) => Promise<void>
 
-export default function createRender(
-  draftRoutes: DraftRoute[]
-): Router {
+export default function createRender(draftRoutes: DraftRoute[]): Router {
   const matcher = createMatcher(draftRoutes)
 
   async function getPageCreatorLoader(path: string) {

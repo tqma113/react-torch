@@ -27,27 +27,38 @@ export type Result = {
 export default function dev(draftConfig: TorchConfig) {
   process.env.NODE_ENV = Env.Development
   const config = mergeConfig(draftConfig)
-  const tinyContext: TinyContext = {
-    ssr: config.ssr,
-    env: process.env.NODE_ENV,
-  }
-  const clientContext: PackContext = {
-    ...tinyContext,
-    packSide: Side.Client,
-  }
-  const serverContext: PackContext = {
-    ...tinyContext,
-    packSide: Side.Server,
-  }
 
-  // remove before
-  rmTorchProjectFiles(config.dir)
+  return new Promise<Result>(async (resolve, reject) => {
+    const port = await choosePort(config.host, config.port)
+    if (port === null) {
+      // We have not found a port.
+      process.exit(1)
+    } else {
+      config.port = port
+    }
+    
+    const tinyContext: TinyContext = {
+      ssr: config.ssr,
+      env: process.env.NODE_ENV,
+    }
+    const clientContext: PackContext = {
+      ...tinyContext,
+      packSide: Side.Client,
+    }
+    const serverContext: PackContext = {
+      ...tinyContext,
+      packSide: Side.Server,
+    }
+  
+    // remove before
+    rmTorchProjectFiles(config.dir)
+  
+    // start
+    const app = createServer(config.dir)
+    const server = http.createServer(app)
 
-  // start
-  const app = createServer(config.dir)
-  const server = http.createServer(app)
+    const render = await createRender(config, serverContext)
 
-  createRender(config, serverContext).then(async (render) => {
     // custome middlewares
     attachMiddleware(app, server, config)
 
@@ -101,16 +112,6 @@ export default function dev(draftConfig: TorchConfig) {
       res.json(err.message)
     }
     app.use(errorHandler)
-  })
-
-  return new Promise<Result>(async (resolve, reject) => {
-    const port = await choosePort(config.host, config.port)
-    if (port === null) {
-      // We have not found a port.
-      process.exit(1)
-    } else {
-      config.port = port
-    }
 
     /**
      * Event listener for HTTP server "listening" event.

@@ -39,3 +39,8 @@ declare module 'pnp-webpack-plugin' {
     function apply(compiler: any): void
   }
 }
+declare module 'detect-port-alt' {
+  declare function detect(defaultPort: number, host: string): Promise<number>
+
+  export = detect
+}

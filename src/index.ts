@@ -38,7 +38,8 @@ import type { Request, Response, Application } from 'express'
 import type { Configuration } from 'webpack'
 
 export type TorchConfig = {
-  port?: string
+  host?: string
+  port?: number
   dir?: string
   src?: string
   middlewares?: string | false

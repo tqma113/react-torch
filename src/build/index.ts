@@ -4,7 +4,7 @@ import compile from './compile'
 import renderCompile from './renderCompile'
 import copyPublic from './copyPublic'
 import { mergeConfig } from '../config'
-import { rmTorchProjectFiles } from '../utils'
+import { rmTorchProjectFiles, info, error } from '../utils'
 import { Side } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
@@ -29,10 +29,10 @@ export default function build(draftConfig: TorchConfig) {
   renderCompile(config, serverContext)
     .then(() => compile(config, clientContext))
     .then(() => copyPublic(config.dir))
-    .then(() => console.info('Compile finish!'))
+    .then(() => info('Compile finish!'))
     .then(() => process.exit())
     .catch((err) => {
-      console.log(err)
+      error(err)
       throw err
     })
 }

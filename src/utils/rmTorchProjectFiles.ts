@@ -1,11 +1,12 @@
 import path from 'path'
-import rimraf from 'rimraf'
+import fs from 'fs-extra'
+import { step } from './index'
 import { TORCH_DIR } from '../index'
 
 export default function rmTorchProjectFiles(dir: string) {
   const torchProjectDir = path.resolve(dir, TORCH_DIR)
 
-  console.info(`Removing ${torchProjectDir}...\n`)
+  step(`\nClearing ${torchProjectDir}...\n`)
 
-  rimraf.sync(torchProjectDir)
+  fs.emptyDirSync(torchProjectDir)
 }

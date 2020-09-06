@@ -2,7 +2,14 @@ import type { TransformOptions } from '@babel/core'
 
 const config: TransformOptions = {
   presets: [
-    '@babel/preset-env',
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          esmodules: true,
+        }
+      }
+    ],
     '@babel/preset-react',
     // typescript
     [

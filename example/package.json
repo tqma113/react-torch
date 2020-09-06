@@ -1,0 +1,5 @@
+{
+  "name": "react-torch-example",
+  "private": true,
+  "description": "A lib to server-side render with react."
+}

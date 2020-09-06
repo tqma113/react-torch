@@ -1,6 +1,7 @@
 import path from 'path'
 import webpack from 'webpack'
 import getWebpackConfig from './webpackConfig'
+import { error, warn } from '../../utils'
 import {
   TORCH_DIR,
   TORCH_SERVER_DIR,
@@ -23,8 +24,8 @@ export default function compile(
       if (err) reject(err)
 
       const statsObj = stats.toJson()
-      statsObj.errors.forEach(console.error)
-      statsObj.warnings.forEach(console.warn)
+      statsObj.errors.forEach(error)
+      statsObj.warnings.forEach(warn)
       statsObj.assets?.forEach((asset) => {
         const assetPath = path.join(serverPath, asset.name)
         delete require.cache[require.resolve(assetPath)]

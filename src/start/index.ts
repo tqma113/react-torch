@@ -6,8 +6,9 @@ import debug from 'debug'
 import express from 'express'
 import createServer from './server'
 import createRender from './render'
-import {attachMiddleware, attachAssetsMiddleware} from '../middleware'
+import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
 import { mergeConfig } from '../config'
+import { info, error as errorlog, choosePort } from '../utils'
 import {
   Env,
   TORCH_DIR,
@@ -75,7 +76,15 @@ export default function start(draftConfig: TorchConfig) {
   }
   app.use(errorHandler)
 
-  return new Promise<Result>((resolve, reject) => {
+  return new Promise<Result>(async (resolve, reject) => {
+    const port = await choosePort(config.host, config.port)
+    if (port === null) {
+      // We have not found a port.
+      process.exit(1)
+    } else {
+      config.port = port
+    }
+
     /**
      * Event listener for HTTP server "listening" event.
      */
@@ -84,7 +93,7 @@ export default function start(draftConfig: TorchConfig) {
       let bind =
         typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
       debug('Listening on ' + bind)
-      console.log('Listening on ' + bind)
+      info('Listening on ' + bind)
     }
 
     /**
@@ -98,11 +107,11 @@ export default function start(draftConfig: TorchConfig) {
       // handle specific listen errors with friendly messages
       switch (error.code) {
         case 'EACCES':
-          console.error(config.port + ' requires elevated privileges')
+          errorlog(config.port + ' requires elevated privileges')
           process.exit(1)
           break
         case 'EADDRINUSE':
-          console.error(config.port + ' is already in use')
+          errorlog(config.port + ' is already in use')
           process.exit(1)
           break
         default:

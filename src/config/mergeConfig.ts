@@ -5,8 +5,10 @@ import type { Configuration } from 'webpack'
 import type { TorchConfig, IntegralTorchConfig, PackContext } from '../index'
 
 const TITLE = 'React Torch'
-const DEVELOPMENT_PORT = '3000'
-const PRODUCTION_PORT = '80'
+// Tools like Cloud9 rely on this.
+const HOST = process.env.HOST || '0.0.0.0'
+const DEVELOPMENT_PORT = 3000
+const PRODUCTION_PORT = 80
 const SRC = 'src'
 const MDLW = 'middleware'
 const noop = (a: any) => a
@@ -16,6 +18,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
   const dir = config.dir
     ? path.resolve(process.cwd(), config.dir)
     : process.cwd()
+  const host = config.host || HOST
   const port =
     config.port ||
     (process.env.NODE_ENV === 'development'
@@ -41,6 +44,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
   return {
     title,
     dir,
+    host,
     port,
     src,
     middlewares: middleware,

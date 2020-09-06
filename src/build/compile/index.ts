@@ -1,5 +1,6 @@
 import getWebpackConfig from './webpackConfig'
 import webpack from 'webpack'
+import { step, info } from '../../utils'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compileClient(
@@ -8,7 +9,7 @@ export default function compileClient(
 ) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
 
-  console.info(`Compiling client...`)
+  step(`\nCompiling client...`)
 
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
@@ -21,7 +22,7 @@ export default function compileClient(
             colors: true,
           })
         )
-        console.info(`Compile client finish!\n`)
+        info(`\nCompile client finish!\n`)
 
         resolve()
       }

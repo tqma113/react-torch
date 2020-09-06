@@ -1,13 +1,19 @@
+import fs from 'fs'
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { babelConfig } from '../../config'
 import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
-import type { Configuration } from 'webpack'
+import type { Configuration, Plugin } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
 function getConfig(config: IntegralTorchConfig): Configuration {
+  // Check if TypeScript is setup
+  const appTsConfigPath = path.resolve(config.dir, 'tsconfig.json')
+  const useTypeScript = fs.existsSync(appTsConfigPath)
+
   const manifestPluginOption: ManifestPlugin.Options = {
     fileName: './assets.json',
     map(file: ManifestPlugin.FileDescriptor): ManifestPlugin.FileDescriptor {
@@ -19,8 +25,20 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     },
   }
 
+  const plugins: Plugin[] = [
+    new ManifestPlugin(manifestPluginOption),
+    new IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new HotModuleReplacementPlugin(),
+  ]
+  // TypeScript type checking
+
+  if (useTypeScript) {
+    plugins.push(new ForkTsCheckerWebpackPlugin({}))
+  }
+
   return {
     mode: 'development',
+    bail: false,
     target: 'web',
     context: config.dir,
     entry: {
@@ -74,11 +92,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
       plugins: [PnpWebpackPlugin.moduleLoader],
     },
-    plugins: [
-      new ManifestPlugin(manifestPluginOption),
-      new IgnorePlugin(/^\.\/locale$/, /moment$/),
-      new HotModuleReplacementPlugin(),
-    ],
+    plugins,
   }
 }
 

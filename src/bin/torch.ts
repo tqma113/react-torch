@@ -21,7 +21,7 @@ program
       }
 
       if (typeof port === 'string') {
-        draftConfig.port = port
+        draftConfig.port = Number(port)
       }
 
       dev(draftConfig)
@@ -45,7 +45,7 @@ program
       }
 
       if (typeof port === 'string') {
-        draftConfig.port = port
+        draftConfig.port = Number(port)
       }
 
       build(draftConfig)
@@ -69,7 +69,7 @@ program
       }
 
       if (typeof port === 'string') {
-        draftConfig.port = port
+        draftConfig.port = Number(port)
       }
 
       start(draftConfig)

@@ -9,7 +9,7 @@ import compile from './compile'
 import createRender from './render'
 import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
 import { mergeConfig } from '../config'
-import { rmTorchProjectFiles } from '../utils'
+import { rmTorchProjectFiles, error as errorlog, choosePort } from '../utils'
 import {
   Env,
   Side,
@@ -23,8 +23,6 @@ export type Result = {
   server: http.Server
   app: express.Express
 }
-
-const PORT = '3000'
 
 export default function dev(draftConfig: TorchConfig) {
   process.env.NODE_ENV = Env.Development
@@ -49,12 +47,12 @@ export default function dev(draftConfig: TorchConfig) {
   const app = createServer(config.dir)
   const server = http.createServer(app)
 
-  createRender(config, serverContext).then((render) => {
+  createRender(config, serverContext).then(async (render) => {
     // custome middlewares
     attachMiddleware(app, server, config)
 
     // client compile
-    const [compiler, middleware] = compile(config, clientContext)
+    const [compiler, middleware] = await compile(config, clientContext)
     app.use(middleware)
 
     // client compiled static file route
@@ -105,7 +103,15 @@ export default function dev(draftConfig: TorchConfig) {
     app.use(errorHandler)
   })
 
-  return new Promise<Result>((resolve, reject) => {
+  return new Promise<Result>(async (resolve, reject) => {
+    const port = await choosePort(config.host, config.port)
+    if (port === null) {
+      // We have not found a port.
+      process.exit(1)
+    } else {
+      config.port = port
+    }
+
     /**
      * Event listener for HTTP server "listening" event.
      */
@@ -114,8 +120,7 @@ export default function dev(draftConfig: TorchConfig) {
       let addr = server.address()
       let bind =
         typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
-      debug('Listening on ' + bind)
-      console.log('Listening on ' + bind)
+      debug(`Listening on ${bind}`)
     }
 
     /**
@@ -130,11 +135,11 @@ export default function dev(draftConfig: TorchConfig) {
       // handle specific listen errors with friendly messages
       switch (error.code) {
         case 'EACCES':
-          console.error(PORT + ' requires elevated privileges')
+          errorlog(config.port + ' requires elevated privileges')
           process.exit(1)
           break
         case 'EADDRINUSE':
-          console.error(PORT + ' is already in use')
+          errorlog(config.port + ' is already in use')
           process.exit(1)
           break
         default:

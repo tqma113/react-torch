@@ -1,15 +1,32 @@
+import fs from 'fs'
+import path from 'path'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import getWebpackConfig from './webpackConfig'
-import reporter from './reporter'
+import prepareUrls from './prepareUrls'
+import createCompiler from './createCompiler'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
-export default function compile(
+export default async function compile(
   config: IntegralTorchConfig,
-  packContext: PackContext
+  packContext: PackContext,
 ) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
-  const compiler = webpack(webpackConfig)
+
+  const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
+  const pkgPath = path.resolve(config.dir, 'package.json')
+  const appName = require(pkgPath).name
+  const yarnLockFilePath = path.resolve(config.dir, 'yarn.lock')
+  const useYarn = fs.existsSync(yarnLockFilePath)
+  const urls = prepareUrls(protocol, config.host, config.port)
+  // Create a webpack compiler that is configured with custom messages.
+  const compiler = createCompiler({
+    appName,
+    config: webpackConfig,
+    urls,
+    useYarn,
+    webpack,
+  })
   const middleware = webpackDevMiddleware(compiler, {
     publicPath: 'static',
     stats: {
@@ -18,7 +35,6 @@ export default function compile(
     },
     writeToDisk: true,
     serverSideRender: true,
-    reporter,
   })
   return [compiler, middleware] as const
 }

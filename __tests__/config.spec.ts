@@ -6,22 +6,20 @@ describe('config', () => {
     expect(mergeConfig({})).toMatchObject({
       title: 'React Torch',
       dir: process.cwd(),
-      port: '80',
+      port: 80,
       src: path.resolve(process.cwd(), 'src'),
-      mdlw: path.resolve(process.cwd(), 'mdlw'),
       ssr: true,
     })
 
     expect(
       mergeConfig({
-        port: '3000',
+        port: 3000,
       })
     ).toMatchObject({
       title: 'React Torch',
       dir: process.cwd(),
-      port: '3000',
+      port: 3000,
       src: path.resolve(process.cwd(), 'src'),
-      mdlw: path.resolve(process.cwd(), 'mdlw'),
       ssr: true,
     })
   })

@@ -7,7 +7,7 @@ import { createErrorElement } from '../../error'
 import { connect } from '../../context'
 import { isPromise } from '../../utils'
 import { Side } from '../../index'
-import type { DraftRoute } from '../../router'
+import type { Route } from '../../router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../document'
 import type { PageCreatorLoader, PageCreator } from '../../page'
@@ -19,7 +19,7 @@ import type {
 } from '../../index'
 
 export default function createRender(config: IntegralTorchConfig) {
-  let routes: DraftRoute[] = getRoutes(config)
+  let routes: Route[] = getRoutes(config)
 
   if (!routes) {
     throw new Error('You need run `npm run build` before `npm start`!')
@@ -92,7 +92,7 @@ export default function createRender(config: IntegralTorchConfig) {
         stream.pipe(res)
       }
     }
-    
+
     try {
       router(render, location.pathname)
     } catch (err) {

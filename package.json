@@ -120,6 +120,7 @@
     "terser-webpack-plugin": "^3.0.6",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
+    "torch-router": "^1.0.0",
     "url": "^0.11.0",
     "webpack": "^4.41.0",
     "webpack-bundle-analyzer": "^3.5.2",

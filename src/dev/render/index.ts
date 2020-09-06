@@ -11,7 +11,7 @@ import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../document'
 import type { PageCreatorLoader, PageCreator } from '../../page'
 import type { GlobalContextType } from '../../context'
-import type { DraftRoute, Router, Render } from '../../router'
+import type { Route, Router, Render } from '../../router'
 import type {
   IntegralTorchConfig,
   ServerContext,
@@ -23,7 +23,7 @@ export default async function createRender(
   config: IntegralTorchConfig,
   packContext: PackContext
 ) {
-  const update = (routes: DraftRoute[]) => {
+  const update = (routes: Route[]) => {
     router = createRouter(routes)
   }
   await compile(config, packContext, update)
@@ -97,7 +97,7 @@ export default async function createRender(
         stream.pipe(res)
       }
     }
-    
+
     try {
       applyRouter(render, location.pathname)
     } catch (err) {

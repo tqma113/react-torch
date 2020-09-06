@@ -7,13 +7,13 @@ import {
   TORCH_SERVER_DIR,
   TORCH_ROUTES_FILE_NAME,
 } from '../../index'
-import type { DraftRoute } from '../../router'
+import type { Route } from '../../router'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compile(
   config: IntegralTorchConfig,
   packContext: PackContext,
-  update: (routes: DraftRoute[]) => void
+  update: (routes: Route[]) => void
 ) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
   const compiler = webpack(webpackConfig)

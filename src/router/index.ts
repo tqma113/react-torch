@@ -1,35 +1,22 @@
-import createMatcher from './createMatcher'
-import type { Key } from 'path-to-regexp'
+import { createRouter } from 'torch-router'
+import type { DraftRoute } from 'torch-router'
 import type { PageCreatorLoader } from '../page/index'
-
-export type DraftRoute = {
-  keys?: Key[]
-  regexp?: RegExp
-  path: string
-  page: PageCreatorLoader<any, any>
-}
 
 export type Render = (
   pageCreatorLoader: PageCreatorLoader<any, any> | null
 ) => void
 
+export type Module = PageCreatorLoader<any, any> | Promise<PageCreatorLoader<any, any>>
+
+export type Route = DraftRoute<Module>
+
 export type Router = (render: Render, path: string) => Promise<void>
 
-export default function createRender(draftRoutes: DraftRoute[]): Router {
-  const matcher = createMatcher(draftRoutes)
-
-  async function getPageCreatorLoader(path: string) {
-    const matches = matcher(path || '/')
-
-    if (matches === null) {
-      return null
-    } else {
-      return matches.page
-    }
-  }
+export default function (routes: Route[]): Router {
+  const router = createRouter(routes)
 
   return async (render, path) => {
-    const pageCreatorLoader = await getPageCreatorLoader(path)
+    const pageCreatorLoader = await router(path)
     render(pageCreatorLoader)
   }
 }

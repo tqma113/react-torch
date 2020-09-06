@@ -1,3 +1,12 @@
+## [1.8.2](https://github.com/tqma113/react-torch/compare/v1.8.1...v1.8.2) (2020-09-06)
+
+
+### Bug Fixes
+
+* **all:** handle render error ([fa96d9d](https://github.com/tqma113/react-torch/commit/fa96d9d0a5c68f8480e32098eaf63fb502b36bd7))
+
+
+
 ## [1.8.1](https://github.com/tqma113/react-torch/compare/v1.8.0...v1.8.1) (2020-09-06)
 
 

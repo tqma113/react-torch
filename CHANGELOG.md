@@ -1,3 +1,17 @@
+# [1.8.0-alpha.0](https://github.com/tqma113/react-torch/compare/v1.7.11...v1.8.0-alpha.0) (2020-09-06)
+
+
+### Features
+
+* **middleware:** support ([9f56003](https://github.com/tqma113/react-torch/commit/9f56003438ffbe542c16053e0640e8ce466d67de))
+
+
+### Performance Improvements
+
+* **all:** development experience ([5d900cc](https://github.com/tqma113/react-torch/commit/5d900cc1b3360e7c980508877101a377efc64fe9))
+
+
+
 ## [1.7.11](https://github.com/tqma113/react-torch/compare/v1.7.10...v1.7.11) (2020-09-05)
 
 

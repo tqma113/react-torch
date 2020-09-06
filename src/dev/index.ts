@@ -9,7 +9,7 @@ import compile from './compile'
 import createRender from './render'
 import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
 import { mergeConfig } from '../config'
-import { rmTorchProjectFiles, error as errorlog, choosePort } from '../utils'
+import { rmTorchProjectFiles, error as errorlog, choosePort, prepareUrls, openBrowser } from '../utils'
 import {
   Env,
   Side,
@@ -63,7 +63,10 @@ export default function dev(draftConfig: TorchConfig) {
     attachMiddleware(app, server, config)
 
     // client compile
-    const [compiler, middleware] = await compile(config, clientContext)
+
+    const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
+    const urls = prepareUrls(protocol, config.host, config.port)
+    const [compiler, middleware] = await compile(config, clientContext, urls)
     app.use(middleware)
 
     // client compiled static file route
@@ -122,6 +125,7 @@ export default function dev(draftConfig: TorchConfig) {
       let bind =
         typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
       debug(`Listening on ${bind}`)
+      openBrowser(urls.localUrlForBrowser)
     }
 
     /**

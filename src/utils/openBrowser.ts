@@ -132,7 +132,7 @@ function startBrowserProcess(
  * Reads the BROWSER environment variable and decides what to do with it. Returns
  * true if it opened a browser or ran a node.js script, otherwise false.
  */
-function openBrowser(url: string) {
+export function openBrowser(url: string) {
   const { action, value, args } = getBrowserEnv()
   switch (action) {
     case Actions.NONE:
@@ -146,5 +146,3 @@ function openBrowser(url: string) {
       throw new Error('Not implemented.')
   }
 }
-
-export default openBrowser

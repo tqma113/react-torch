@@ -9,7 +9,7 @@ export type Urls = {
   localUrlForBrowser: string
 }
 
-export default function prepareUrls(
+export function prepareUrls(
   protocol: string,
   host: string,
   port: number,

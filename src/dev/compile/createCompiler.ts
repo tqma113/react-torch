@@ -1,9 +1,8 @@
 import chalk from 'chalk'
 import { clear } from '../../utils'
 import formatWebpackMessages from './formatWebpackMessages'
-import openBrowser from './openBrowser'
 import type Webpack from 'webpack'
-import type { Urls } from './prepareUrls'
+import type { Urls } from '../../utils/prepareUrls'
 import type { Configuration } from 'webpack'
 
 export type DevSocket = {
@@ -79,7 +78,6 @@ export default function createCompiler({
     }
     if (isSuccessful && (isInteractive || isFirstCompile)) {
       printInstructions(appName, urls, useYarn)
-      openBrowser(urls.localUrlForBrowser)
     }
     isFirstCompile = false
 

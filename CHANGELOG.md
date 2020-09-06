@@ -1,3 +1,12 @@
+## [1.8.1](https://github.com/tqma113/react-torch/compare/v1.8.0...v1.8.1) (2020-09-06)
+
+
+### Bug Fixes
+
+* **all:** adjust workflow ([a6ed6cb](https://github.com/tqma113/react-torch/commit/a6ed6cb2594c3b7b7592582d7d18a6f1bd23e7d8))
+
+
+
 # [1.8.0](https://github.com/tqma113/react-torch/compare/v1.8.0-alpha.0...v1.8.0) (2020-09-06)
 
 

@@ -1,3 +1,12 @@
+## [1.8.3](https://github.com/tqma113/react-torch/compare/v1.8.2...v1.8.3) (2020-09-06)
+
+
+### Bug Fixes
+
+* **dev:** openBrowser ([33df0bb](https://github.com/tqma113/react-torch/commit/33df0bb30ec954e889e6df6827039d23a69f8d33))
+
+
+
 ## [1.8.2](https://github.com/tqma113/react-torch/compare/v1.8.1...v1.8.2) (2020-09-06)
 
 

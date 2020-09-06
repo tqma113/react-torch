@@ -92,7 +92,13 @@ export default function createRender(config: IntegralTorchConfig) {
         stream.pipe(res)
       }
     }
-    router(render, location.pathname)
+    
+    try {
+      router(render, location.pathname)
+    } catch (err) {
+      res.status(502)
+      res.send(err)
+    }
   }
 }
 

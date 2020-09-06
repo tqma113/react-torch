@@ -97,7 +97,13 @@ export default async function createRender(
         stream.pipe(res)
       }
     }
-    applyRouter(render, location.pathname)
+    
+    try {
+      applyRouter(render, location.pathname)
+    } catch (err) {
+      res.status(502)
+      res.send(err)
+    }
   }
 }
 

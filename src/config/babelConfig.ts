@@ -7,8 +7,8 @@ const config: TransformOptions = {
       {
         targets: {
           esmodules: true,
-        }
-      }
+        },
+      },
     ],
     '@babel/preset-react',
     // typescript

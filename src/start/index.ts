@@ -27,7 +27,6 @@ export default function start(draftConfig: TorchConfig) {
   process.env.NODE_ENV = Env.Production
   const config = mergeConfig(draftConfig)
 
-  
   return new Promise<Result>(async (resolve, reject) => {
     const port = await choosePort(config.host, config.port)
     if (port === null) {
@@ -36,26 +35,26 @@ export default function start(draftConfig: TorchConfig) {
     } else {
       config.port = port
     }
-    
+
     const app = createServer(config.dir)
     const server = http.createServer(app)
     const render = createRender(config)
-  
+
     // custome middlewares
     attachMiddleware(app, server, config)
-  
+
     // static file route
     app.use(
       '/__torch',
       express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
     )
-  
+
     // static file route
     app.use(
       '/static',
       express.static(path.resolve(config.dir, TORCH_DIR, TORCH_PUBLIC_DIR))
     )
-  
+
     // static assets
     app.use((req, res, next) => {
       const assertPath = path.resolve(
@@ -67,13 +66,13 @@ export default function start(draftConfig: TorchConfig) {
       res.locals.assets = getAssets(require(assertPath))
       next()
     })
-  
+
     // custome assets middlewares
     attachAssetsMiddleware(app, server, config)
-  
+
     // page router
     app.use(render)
-  
+
     // error handler
     const errorHandler: express.ErrorRequestHandler = (
       err: any,
@@ -85,7 +84,6 @@ export default function start(draftConfig: TorchConfig) {
       res.json(err.message)
     }
     app.use(errorHandler)
-  
 
     /**
      * Event listener for HTTP server "listening" event.

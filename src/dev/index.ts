@@ -36,7 +36,7 @@ export default function dev(draftConfig: TorchConfig) {
     } else {
       config.port = port
     }
-    
+
     const tinyContext: TinyContext = {
       ssr: config.ssr,
       env: process.env.NODE_ENV,
@@ -49,10 +49,10 @@ export default function dev(draftConfig: TorchConfig) {
       ...tinyContext,
       packSide: Side.Server,
     }
-  
+
     // remove before
     rmTorchProjectFiles(config.dir)
-  
+
     // start
     const app = createServer(config.dir)
     const server = http.createServer(app)

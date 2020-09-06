@@ -9,7 +9,7 @@ import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default async function compile(
   config: IntegralTorchConfig,
-  packContext: PackContext,
+  packContext: PackContext
 ) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
 

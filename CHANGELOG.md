@@ -1,3 +1,12 @@
+## [1.8.5](https://github.com/tqma113/react-torch/compare/v1.8.4...v1.8.5) (2020-09-08)
+
+
+### Bug Fixes
+
+* **all:** static path ([383c0ef](https://github.com/tqma113/react-torch/commit/383c0efdc8ee5207b0f200df3f0e1f60f2e30aad))
+
+
+
 ## [1.8.4](https://github.com/tqma113/react-torch/compare/v1.8.3...v1.8.4) (2020-09-08)
 
 

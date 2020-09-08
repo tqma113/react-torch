@@ -1,3 +1,12 @@
+## [1.8.8](https://github.com/tqma113/react-torch/compare/v1.8.7...v1.8.8) (2020-09-08)
+
+
+### Features
+
+* **page:** import ([164b508](https://github.com/tqma113/react-torch/commit/164b5088dba63d4cf677a3acf7989c19f533250a))
+
+
+
 ## [1.8.7](https://github.com/tqma113/react-torch/compare/v1.8.6...v1.8.7) (2020-09-08)
 
 

@@ -1,3 +1,12 @@
+## [1.8.7](https://github.com/tqma113/react-torch/compare/v1.8.6...v1.8.7) (2020-09-08)
+
+
+### Bug Fixes
+
+* **page:** type ([a7eeb10](https://github.com/tqma113/react-torch/commit/a7eeb105e2c25abc04947bf031579a33fa1d796f))
+
+
+
 ## [1.8.6](https://github.com/tqma113/react-torch/compare/v1.8.5...v1.8.6) (2020-09-08)
 
 

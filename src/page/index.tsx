@@ -12,16 +12,12 @@ export type PageCreatorLoader<S extends object, AS extends Actions<S>> = () =>
 export type PageCreator<S extends object, AS extends Actions<S>> = (
   history: History,
   context: Context
-) =>
-  | [React.ComponentType, Store<S, AS>, LifeCircle]
-  | Promise<[React.ComponentType, Store<S, AS>, LifeCircle]>
+) => readonly [() => JSX.Element, Store<S, AS>, LifeCircle]
 
 export type Creater<S extends object, AS extends Actions<S>> = (
   history: History,
   context: Context
-) =>
-  | [React.ComponentType, Store<S, AS>]
-  | Promise<[React.ComponentType, Store<S, AS>]>
+) => [() => JSX.Element, Store<S, AS>]
 
 export type Page<S extends object = {}, AS extends Actions<S> = {}> = () => [
   React.ComponentType,

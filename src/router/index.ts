@@ -6,7 +6,7 @@ export type Render = (
   pageCreatorLoader: PageCreatorLoader<any, any> | null
 ) => void
 
-export type Module = PageCreatorLoader<any, any> | Promise<PageCreatorLoader<any, any>>
+export type Module = PageCreatorLoader<any, any>
 
 export type Route = DraftRoute<Module>
 

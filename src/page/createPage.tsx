@@ -17,12 +17,12 @@ function createPage<
   S extends Object = StateFromPageCreator<C>,
   AS extends Actions<S> = ActionsFromPageCreator<C>
 >(creator: C): PageCreator<S, AS> {
-  return async (history: History, context: Context) => {
+  return (history: History, context: Context) => {
     const symbol = setPageLifeCircle()
-    const [View, store] = await creator(history, context)
+    const [View, store] = creator(history, context)
     const lifecircle = getLifeCircle(symbol)
 
-    return [() => <View />, store, lifecircle]
+    return [() => <View />, store, lifecircle] as const
   }
 }
 

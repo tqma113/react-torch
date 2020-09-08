@@ -106,8 +106,7 @@ async function loadPageCreator(
   draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
 ): Promise<PageCreator<any, any>> {
   if (isPromise(draftPageCreator)) {
-    // @ts-ignore
-    return (await draftPageCreator).default
+    return await draftPageCreator
   } else {
     return draftPageCreator
   }

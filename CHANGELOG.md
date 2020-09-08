@@ -1,3 +1,17 @@
+## [1.8.4](https://github.com/tqma113/react-torch/compare/v1.8.3...v1.8.4) (2020-09-08)
+
+
+### Bug Fixes
+
+* **all:** static path ([0bb4e4d](https://github.com/tqma113/react-torch/commit/0bb4e4ddd9f6505b577fcce6e06364e814682f1e))
+
+
+### Performance Improvements
+
+* **router:** torch-router ([d050da4](https://github.com/tqma113/react-torch/commit/d050da4d5613103d2bc439abec847b493536d81b))
+
+
+
 ## [1.8.3](https://github.com/tqma113/react-torch/compare/v1.8.2...v1.8.3) (2020-09-06)
 
 

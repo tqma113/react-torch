@@ -1,3 +1,12 @@
+## [1.8.6](https://github.com/tqma113/react-torch/compare/v1.8.5...v1.8.6) (2020-09-08)
+
+
+### Features
+
+* **router:** export ([2dc57f1](https://github.com/tqma113/react-torch/commit/2dc57f17257aa5519a0ca3d8983d99362c4ff849))
+
+
+
 ## [1.8.5](https://github.com/tqma113/react-torch/compare/v1.8.4...v1.8.5) (2020-09-08)
 
 

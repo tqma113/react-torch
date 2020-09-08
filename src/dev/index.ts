@@ -9,7 +9,13 @@ import compile from './compile'
 import createRender from './render'
 import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
 import { mergeConfig } from '../config'
-import { rmTorchProjectFiles, error as errorlog, choosePort, prepareUrls, openBrowser } from '../utils'
+import {
+  rmTorchProjectFiles,
+  error as errorlog,
+  choosePort,
+  prepareUrls,
+  openBrowser,
+} from '../utils'
 import {
   Env,
   Side,

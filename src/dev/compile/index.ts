@@ -13,7 +13,7 @@ export default async function compile(
   urls: Urls
 ) {
   const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
-  
+
   const pkgPath = path.resolve(config.dir, 'package.json')
   const appName = require(pkgPath).name
   const yarnLockFilePath = path.resolve(config.dir, 'yarn.lock')

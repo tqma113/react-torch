@@ -49,5 +49,5 @@ export type DynamicImportPageCreater = Promise<{
 export async function dynamic(
   dynamicImportPageCreator: DynamicImportPageCreater
 ): Promise<PageCreator<any, any>> {
-    return (await dynamicImportPageCreator).default
+  return (await dynamicImportPageCreator).default
 }

@@ -42,12 +42,12 @@ export function createPage<
   }
 }
 
-export type DynamicImportPageCreater = Promise<{
-  default: PageCreator<any, any>
+export type DynamicImportModule<Module> = Promise<{
+  default: Module
 }>
 
-export async function dynamic(
-  dynamicImportPageCreator: DynamicImportPageCreater
-): Promise<PageCreator<any, any>> {
-  return (await dynamicImportPageCreator).default
+export async function dynamic<Module>(
+  dynamicImportModule: DynamicImportModule<Module>
+): Promise<Module> {
+  return (await dynamicImportModule).default
 }

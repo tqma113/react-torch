@@ -44,3 +44,7 @@ declare module 'detect-port-alt' {
 
   export = detect
 }
+declare module '@routes' {
+  declare const routes: import('./index').Route[]
+  export = routes
+}

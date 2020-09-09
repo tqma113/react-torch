@@ -4,7 +4,6 @@ import createRouter from '../router'
 import createHistory from '../history/browser'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
-// @ts-ignore
 import $routes from '@routes'
 import type { Listener } from '../history'
 import type { TORCH_DATA } from '../index'

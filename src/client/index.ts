@@ -144,7 +144,7 @@ if (dataScript) {
 
               await lifecircle.willMount()
 
-              if (context.ssr && context.env === 'production') {
+              if (context.ssr) {
                 ReactDOM.hydrate(element, containerElement)
               } else {
                 ReactDOM.render(element, containerElement)

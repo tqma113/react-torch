@@ -68,7 +68,7 @@ export type ServerContext = TinyContext & {
   side: Side.Server
 }
 
-export type TORCH_DATA = {
+export type TorchData = {
   context: Context
   container: string
   state: object

@@ -6,13 +6,13 @@ import { connect } from '../context'
 import { createErrorElement } from '../error'
 import $routes from '@routes'
 import type { Listener } from '../history'
-import type { TORCH_DATA } from '../index'
+import type { TorchData } from '../index'
 import type { GlobalContextType } from '../context'
 import type { PageCreator, PageCreatorLoader } from '../page/index'
 
 declare global {
   interface Window {
-    __TORCH_DATA__: TORCH_DATA
+    __TORCH_DATA__: TorchData
     __DEV__: boolean
   }
 }
@@ -27,7 +27,7 @@ if (dataScript) {
     const location = history.location
 
     try {
-      const data: TORCH_DATA = JSON.parse(jsonStr)
+      const data: TorchData = JSON.parse(jsonStr)
       const { context, container, state } = data
 
       window.__TORCH_DATA__ = data

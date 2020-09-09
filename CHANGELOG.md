@@ -1,3 +1,12 @@
+## [1.8.9](https://github.com/tqma113/react-torch/compare/v1.8.8...v1.8.9) (2020-09-09)
+
+
+### Bug Fixes
+
+* **client:** loadPage ([52b1a22](https://github.com/tqma113/react-torch/commit/52b1a22bd371d8919d2841c0af558390ac3ecb2e))
+
+
+
 ## [1.8.8](https://github.com/tqma113/react-torch/compare/v1.8.7...v1.8.8) (2020-09-08)
 
 

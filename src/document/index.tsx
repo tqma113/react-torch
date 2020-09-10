@@ -1,7 +1,7 @@
 import React from 'react'
 import type {
   Context,
-  TORCH_DATA,
+  TorchData,
   PreloadType,
   ScriptPreload,
   StylePreload,
@@ -38,7 +38,7 @@ export default function createDocument({
   styles = [],
   scripts = [],
 }: DocumentProps) {
-  const data: TORCH_DATA = {
+  const data: TorchData = {
     context,
     container,
     state,

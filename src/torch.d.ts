@@ -2,15 +2,9 @@
 /// <reference types="react" />
 /// <reference types="react-dom" />
 
-enum Env {
-  Development = 'development',
-  Production = 'production',
-  Test = 'test',
-}
-
 declare namespace NodeJS {
   interface ProcessEnv {
-    NODE_ENV: Env
+    NODE_ENV: import('./index').Env
   }
 
   interface Global {

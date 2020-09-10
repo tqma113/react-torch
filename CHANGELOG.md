@@ -1,3 +1,13 @@
+## [1.8.10](https://github.com/tqma113/react-torch/compare/v1.8.9...v1.8.10) (2020-09-10)
+
+
+### Bug Fixes
+
+* **client:** [@routes](https://github.com/routes) type ([8815a4c](https://github.com/tqma113/react-torch/commit/8815a4c610922b78e1d94d901b305730809ef92c))
+* **client:** do not hydrate when dev ([a23139f](https://github.com/tqma113/react-torch/commit/a23139f40d33ad44935e1f2dbf708c2de6398d66))
+
+
+
 ## [1.8.9](https://github.com/tqma113/react-torch/compare/v1.8.8...v1.8.9) (2020-09-09)
 
 

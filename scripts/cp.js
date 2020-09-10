@@ -6,4 +6,4 @@ const resolve = (file) => [
   path.resolve(__dirname, '../dist', file),
 ]
 
-fs.copySync(...resolve('torch.d.ts'))
+fs.copySync(...resolve('global.d.ts'))

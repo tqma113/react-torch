@@ -1,4 +1,4 @@
-/// <reference path="../torch.d.ts" />
+/// <reference path="../global.d.ts" />
 
 import path from 'path'
 import http from 'http'

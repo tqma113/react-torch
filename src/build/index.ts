@@ -1,4 +1,4 @@
-/// <reference path="../torch.d.ts" />
+/// <reference path="../global.d.ts" />
 
 import compile from './compile'
 import renderCompile from './renderCompile'

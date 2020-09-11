@@ -65,7 +65,7 @@ if (dataScript) {
                 location,
                 history,
                 store,
-                context,
+                context: ctx,
               }
               const element = connect(view)(globalContext)
               const containerElement = document.querySelector(`#${container}`)
@@ -86,7 +86,7 @@ if (dataScript) {
                   location,
                   history,
                   store,
-                  context,
+                  context: ctx,
                 }
                 const element = connect(view)(globalContext)
                 ReactDOM.render(element, containerElement)

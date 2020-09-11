@@ -16,8 +16,7 @@
     "dev.d.ts",
     "start.js",
     "start.d.ts",
-    "AUTHORS",
-    "tsconfig.json"
+    "AUTHORS"
   ],
   "scripts": {
     "start": "nodemon",

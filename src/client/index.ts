@@ -57,7 +57,7 @@ if (dataScript) {
                 ...context,
                 ssr: false,
               }
-              const [view, store, lifecircle] = await pageCreator(history, ctx)
+              const [view, store, lifecircle] = pageCreator(history, ctx)
 
               await lifecircle.willCreate()
 
@@ -115,10 +115,7 @@ if (dataScript) {
         } else {
           loadPageCreator(pageCreatorLoader())
             .then(async (pageCreator) => {
-              const [view, store, lifecircle] = await pageCreator(
-                history,
-                context
-              )
+              const [view, store, lifecircle] = pageCreator(history, context)
 
               if (context.ssr) {
                 store.UNSAFE_setState(state)

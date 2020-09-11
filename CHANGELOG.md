@@ -1,3 +1,12 @@
+## [1.8.11](https://github.com/tqma113/react-torch/compare/v1.8.10...v1.8.11) (2020-09-11)
+
+
+### Bug Fixes
+
+* **client:** client render ctx ([5f3b6fc](https://github.com/tqma113/react-torch/commit/5f3b6fc40feb04dbb32543425306ea82153daacd))
+
+
+
 ## [1.8.10](https://github.com/tqma113/react-torch/compare/v1.8.9...v1.8.10) (2020-09-10)
 
 

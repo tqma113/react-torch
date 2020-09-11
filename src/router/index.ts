@@ -16,7 +16,7 @@ export default function (routes: Route[]): Router {
   const router = createRouter(routes)
 
   return async (render, path) => {
-    const pageCreatorLoader = await router(path)
+    const pageCreatorLoader = router(path)
     render(pageCreatorLoader)
   }
 }

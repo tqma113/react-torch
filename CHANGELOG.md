@@ -1,3 +1,12 @@
+## [1.8.13](https://github.com/tqma113/react-torch/compare/v1.8.12...v1.8.13) (2020-09-11)
+
+
+### Bug Fixes
+
+* **build:** fix webpack output path ([115fb79](https://github.com/tqma113/react-torch/commit/115fb79d7807c7d9a04c99d7480cd2cad17b554e))
+
+
+
 ## [1.8.12](https://github.com/tqma113/react-torch/compare/v1.8.11...v1.8.12) (2020-09-11)
 
 

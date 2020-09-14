@@ -126,8 +126,7 @@
     "webpack-manifest-plugin": "^2.2.0"
   },
   "devDependencies": {
-    "@types/babel-core": "^6.25.6",
-    "@types/babel__code-frame": "^7.0.1",
+    "@types/babel__core": "^7.1.9",
     "@types/body-parser": "^1.19.0",
     "@types/browserslist": "^4.8.0",
     "@types/chalk": "^2.2.0",

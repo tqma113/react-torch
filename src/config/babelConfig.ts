@@ -37,6 +37,11 @@ const config: TransformOptions = {
 
     // Stage 3
     '@babel/plugin-syntax-import-meta',
+    ['@babel/plugin-proposal-class-properties', { loose: false }],
+    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
+
+    // Stage 4
+    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
   ],
 }
 

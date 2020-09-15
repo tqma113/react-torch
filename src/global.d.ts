@@ -18,8 +18,6 @@ interface Window {
 
 declare var __DEV__: boolean
 
-declare module 'core-js/stable' {}
-declare module 'regenerator-runtime/runtime' {}
 declare module 'pnp-webpack-plugin' {
   function apply(compiler: any): void
   function makePlugin(locator: any, filter: any): any
@@ -33,10 +31,12 @@ declare module 'pnp-webpack-plugin' {
     function apply(compiler: any): void
   }
 }
+
 declare module 'detect-port-alt' {
   declare function detect(defaultPort: number, host: string): Promise<number>
   export = detect
 }
+
 declare module '@routes' {
   declare const routes: import('./index').Route[]
   export = routes

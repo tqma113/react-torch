@@ -1,3 +1,7 @@
+## [1.8.15](https://github.com/tqma113/react-torch/compare/v1.8.14...v1.8.15) (2020-09-15)
+
+
+
 ## [1.8.14](https://github.com/tqma113/react-torch/compare/v1.8.13...v1.8.14) (2020-09-15)
 
 

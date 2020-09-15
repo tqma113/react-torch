@@ -1,3 +1,17 @@
+## [1.8.14](https://github.com/tqma113/react-torch/compare/v1.8.13...v1.8.14) (2020-09-15)
+
+
+### Bug Fixes
+
+* **dev&build:** fix client path ([b8d6937](https://github.com/tqma113/react-torch/commit/b8d6937331d58578317282ed9df1db6540ea5bc0))
+
+
+### Performance Improvements
+
+* **history:** change history to torch-history ([6818a79](https://github.com/tqma113/react-torch/commit/6818a7983bbacb7f9c533b7c94f04d21cdd03b14))
+
+
+
 ## [1.8.13](https://github.com/tqma113/react-torch/compare/v1.8.12...v1.8.13) (2020-09-11)
 
 

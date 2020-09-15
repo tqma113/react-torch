@@ -3,7 +3,7 @@ import { createPage } from '../../../src'
 import { useWillCreate, useWillMount } from '../../../src'
 import store from './Model'
 import './style.css'
-import type { History } from '../../../src/history'
+import type { History } from 'torch-history'
 import type { Context } from '../../../src/index'
 
 // const ignorePropsChanged = View => {

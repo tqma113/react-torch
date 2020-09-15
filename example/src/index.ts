@@ -1,18 +1,19 @@
-// import Home from './Home'
-// import About from './About'
-// import Test from './Test'
+import { dynamic } from '../../src'
+import type { Route } from '../../src'
 
-export default [
+const routes: Route[] = [
   {
     path: '/',
-    page: () => import('./Home'),
+    module: () => dynamic(import('./Home')),
   },
   {
     path: '/about',
-    page: () => import('./About'),
+    module: () => dynamic(import('./About')),
   },
   {
     path: '/test',
-    page: () => import('./Test'),
+    module: () => dynamic(import('./Test')),
   },
 ]
+
+export default routes

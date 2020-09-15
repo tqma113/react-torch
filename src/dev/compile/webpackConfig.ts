@@ -44,7 +44,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     entry: {
       index: [
         'webpack-hot-middleware/client',
-        path.resolve(__dirname, '../../client/index'),
+        path.resolve(__dirname, '../../lib/client/index'),
       ],
     },
     devtool: 'cheap-module-eval-source-map',

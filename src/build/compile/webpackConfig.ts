@@ -25,7 +25,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     target: 'web',
     context: config.src,
     entry: {
-      index: [path.resolve(__dirname, '../../client/index')],
+      index: [path.resolve(__dirname, '../../lib/client/index')],
     },
     devtool: 'source-map',
     output: {

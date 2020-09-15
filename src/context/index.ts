@@ -1,5 +1,5 @@
 import React from 'react'
-import type { History, Location } from '../history'
+import type { History, Location } from 'torch-history'
 import type { Store } from '../store'
 import type { Context } from '..'
 

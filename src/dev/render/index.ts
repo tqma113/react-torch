@@ -2,7 +2,7 @@ import ReactDOMServer from 'react-dom/server'
 import createRouter from '../../router/index'
 import compile from './compile'
 import createHtml from '../../document'
-import createHistory from '../../history/memory'
+import { createMemoryHistory } from 'torch-history'
 import { createErrorElement } from '../../error'
 import { connect } from '../../context'
 import { isPromise } from '../../utils'
@@ -34,7 +34,7 @@ export default async function createRender(
   }
 
   return function (req: Request, res: Response, next: NextFunction) {
-    const history = createHistory()
+    const history = createMemoryHistory()
     history.push(req.url)
     const location = history.location
 

@@ -9912,6 +9912,14 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
+torch-history@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/torch-history/-/torch-history-1.0.0.tgz#4a45447d081e290b81f0b64700c457c224c6c9b9"
+  integrity sha512-Dv1ACk4+XtA1TT3OgemZhRrC7Q2qHe+ORJWMv1rfbwSkkLrfmsBSf8/NYGMApt3tShuIfUGwuLBTOTOKW5WMMQ==
+  dependencies:
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+
 torch-router@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/torch-router/-/torch-router-1.0.0.tgz#88c6a6ed93a611732021ef43c3d0f4a1bb1ca2d0"

@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom'
 import invariant from 'tiny-invariant'
 import createRouter from '../router'
-import createHistory from '../history/browser'
+import { createBrowserHistory } from 'torch-history'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
 import $routes from '@routes'
-import type { Listener } from '../history'
+import type { Listener } from 'torch-history'
 import type { TorchData } from '../index'
 import type { GlobalContextType } from '../context'
 import type { PageCreator, PageCreatorLoader } from '../page/index'
@@ -23,7 +23,7 @@ const dataScript = document.getElementById(
 if (dataScript) {
   const jsonStr = dataScript.textContent
   if (jsonStr) {
-    const history = createHistory({ window })
+    const history = createBrowserHistory({ window })
     const location = history.location
 
     try {

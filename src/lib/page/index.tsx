@@ -1,7 +1,7 @@
 import React from 'react'
 import { setPageLifeCircle, getLifeCircle } from '../lifecircle'
 import type { History } from 'torch-history'
-import type { Context } from '../index'
+import type { Context } from '../../index'
 import type { Store, Actions } from '../store/index'
 import type { LifeCircle } from '../lifecircle'
 

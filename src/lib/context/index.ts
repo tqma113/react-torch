@@ -1,7 +1,7 @@
 import React from 'react'
 import type { History, Location } from 'torch-history'
 import type { Store } from '../store'
-import type { Context } from '..'
+import type { Context } from '../..'
 
 export type GlobalContextType = {
   location: Location

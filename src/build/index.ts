@@ -3,8 +3,8 @@
 import compile from './compile'
 import renderCompile from './renderCompile'
 import copyPublic from './copyPublic'
-import { mergeConfig } from '../config'
-import { rmTorchProjectFiles, info, error } from '../utils'
+import { mergeConfig } from '../lib/config'
+import { rmTorchProjectFiles, info, error } from '../lib/utils'
 import { Side } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 

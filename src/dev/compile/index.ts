@@ -4,7 +4,7 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import getWebpackConfig from './webpackConfig'
 import createCompiler from './createCompiler'
-import type { Urls } from '../../utils'
+import type { Urls } from '../../lib/utils'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default async function compile(

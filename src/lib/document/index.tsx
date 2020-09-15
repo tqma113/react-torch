@@ -5,7 +5,7 @@ import type {
   PreloadType,
   ScriptPreload,
   StylePreload,
-} from '../index'
+} from '../../index'
 import type { ReactElement } from 'react'
 
 export type DocumentProps = {

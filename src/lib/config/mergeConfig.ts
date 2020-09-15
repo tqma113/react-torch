@@ -1,8 +1,8 @@
 import path from 'path'
-import { PreloadType } from '../index'
+import { PreloadType } from '../../index'
 import { fixWebpackConfig } from './fixWebpackConfig'
 import type { Configuration } from 'webpack'
-import type { TorchConfig, IntegralTorchConfig, PackContext } from '../index'
+import type { TorchConfig, IntegralTorchConfig, PackContext } from '../../index'
 
 const TITLE = 'React Torch'
 // Tools like Cloud9 rely on this.

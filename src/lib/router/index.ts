@@ -1,6 +1,6 @@
 import { createRouter } from 'torch-router'
 import type { DraftRoute } from 'torch-router'
-import type { PageCreatorLoader } from '../page/index'
+import type { PageCreatorLoader } from '../page'
 
 export type Render = (
   pageCreatorLoader: PageCreatorLoader<any, any> | null

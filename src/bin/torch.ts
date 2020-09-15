@@ -2,7 +2,7 @@ import program from 'commander'
 import dev from '../dev'
 import build from '../build'
 import start from '../start'
-import { requireConfig } from '../config'
+import { requireConfig } from '../lib/config'
 
 program.version('1.0.12').name('torch')
 

@@ -1,6 +1,6 @@
 import path from 'path'
-import { babelConfig } from '../../config'
-import { getExternals } from '../../utils'
+import { babelConfig } from '../../lib/config'
+import { getExternals } from '../../lib/utils'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
 import type { Configuration } from 'webpack'

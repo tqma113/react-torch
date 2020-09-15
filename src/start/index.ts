@@ -6,9 +6,9 @@ import debug from 'debug'
 import express from 'express'
 import createServer from './server'
 import createRender from './render'
-import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
-import { mergeConfig } from '../config'
-import { info, error as errorlog, choosePort } from '../utils'
+import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
+import { mergeConfig } from '../lib/config'
+import { info, error as errorlog, choosePort } from '../lib/utils'
 import {
   Env,
   TORCH_DIR,

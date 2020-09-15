@@ -7,15 +7,15 @@ import express from 'express'
 import createServer from './server'
 import compile from './compile'
 import createRender from './render'
-import { attachMiddleware, attachAssetsMiddleware } from '../middleware'
-import { mergeConfig } from '../config'
+import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
+import { mergeConfig } from '../lib/config'
 import {
   rmTorchProjectFiles,
   error as errorlog,
   choosePort,
   prepareUrls,
   openBrowser,
-} from '../utils'
+} from '../lib/utils'
 import {
   Env,
   Side,

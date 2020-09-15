@@ -3,7 +3,7 @@ import vm from 'vm'
 import path from 'path'
 import { transformFileSync } from '@babel/core'
 import babelConfig from './babelConfig'
-import type { IntegralTorchConfig } from '../index'
+import type { IntegralTorchConfig } from '../../index'
 
 enum Extension {
   JS = 'js',

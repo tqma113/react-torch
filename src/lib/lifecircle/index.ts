@@ -1,5 +1,5 @@
 import context from './context'
-import type { TorchConfig } from '../index'
+import type { TorchConfig } from '../../index'
 
 export type ConfigHook =
   | ((config: TorchConfig) => TorchConfig)

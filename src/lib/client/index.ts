@@ -1,14 +1,14 @@
 import ReactDOM from 'react-dom'
 import invariant from 'tiny-invariant'
-import createRouter from '../router'
 import { createBrowserHistory } from 'torch-history'
+import createRouter from '../router'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
 import $routes from '@routes'
 import type { Listener } from 'torch-history'
-import type { TorchData } from '../index'
+import type { TorchData } from '../../index'
 import type { GlobalContextType } from '../context'
-import type { PageCreator, PageCreatorLoader } from '../page/index'
+import type { PageCreator, PageCreatorLoader } from '../page'
 
 declare global {
   interface Window {

@@ -10,12 +10,12 @@ export type Module = PageCreatorLoader<any, any>
 
 export type Route = DraftRoute<Module>
 
-export type Router = (render: Render, path: string) => Promise<void>
+export type Router = (path: string, render: Render) => void
 
 export default function (routes: Route[]): Router {
   const router = createRouter(routes)
 
-  return async (render, path) => {
+  return (path, render) => {
     const pageCreatorLoader = router(path)
     render(pageCreatorLoader)
   }

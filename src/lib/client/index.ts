@@ -95,7 +95,7 @@ if (dataScript) {
           }
         }
 
-        router(render, location.pathname)
+        router(location.pathname, render)
       }
 
       const init = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
@@ -166,7 +166,7 @@ if (dataScript) {
         }
       }
 
-      router(init, location.pathname)
+      router(location.pathname, init)
     } catch (err) {
       console.error(err)
     }

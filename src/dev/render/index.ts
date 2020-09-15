@@ -30,7 +30,7 @@ export default async function createRender(
 
   let router: Router
   const applyRouter = (render: Render, path: string) => {
-    return router(render, path)
+    return router(path, render)
   }
 
   return function (req: Request, res: Response, next: NextFunction) {

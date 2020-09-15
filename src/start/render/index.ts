@@ -94,7 +94,7 @@ export default function createRender(config: IntegralTorchConfig) {
     }
 
     try {
-      router(render, location.pathname)
+      router(location.pathname, render)
     } catch (err) {
       res.status(502)
       res.send(err)

@@ -49,8 +49,8 @@ export default function createDocument({
   const scriptElements = scripts.map(getScript)
 
   const assetsScriptElement = [
-    getSrcScript(`${publicPath}/${assets.vendor}`, 'vendor'),
-    getSrcScript(`${publicPath}/${assets.index}`, 'index'),
+    getSrcScript(`${publicPath}${assets.vendor}`, 'vendor'),
+    getSrcScript(`${publicPath}${assets.index}`, 'index'),
   ]
 
   return (

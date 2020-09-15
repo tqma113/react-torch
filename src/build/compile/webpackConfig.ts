@@ -32,7 +32,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,
-      publicPath: '__torch/',
+      publicPath: '/__torch/',
     },
     optimization: {
       splitChunks: {

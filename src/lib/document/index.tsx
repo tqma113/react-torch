@@ -98,10 +98,7 @@ export default function createDocument({
 
 function getStyle(style: StylePreload, index?: number) {
   return style.type === 'link'
-    ? [
-        getPreloadStyleLink(style.href, index + 'preload'),
-        getStyleLink(style.href, index),
-      ]
+    ? getStyleLink(style.href, index)
     : getInnerStyle(style.content, index)
 }
 
@@ -113,15 +110,6 @@ function getInnerStyle(content: string, key?: string | number) {
       dangerouslySetInnerHTML={{ __html: content }}
     />
   )
-}
-
-function getPreloadStyleLink(href: string, key?: string | number) {
-  return React.createElement('link', {
-    key: key,
-    href: href,
-    rel: 'preload',
-    as: 'style',
-  })
 }
 
 function getStyleLink(href: string, key?: string | number) {

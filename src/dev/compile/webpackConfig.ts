@@ -18,8 +18,13 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     fileName: './assets.json',
     map(file: ManifestPlugin.FileDescriptor): ManifestPlugin.FileDescriptor {
       // 删除 .js 后缀，方便直接使用 obj.name 来访问
-      if (file.name && /\.js$/.test(file.name)) {
-        file.name = file.name.slice(0, -3)
+      if (file.name) {
+        if (/\.js$/.test(file.name)) {
+          file.name = file.name.slice(0, -3)
+        }
+        if (/\.css$/.test(file.name)) {
+          file.name = file.name.slice(0, -4)
+        }
       }
       return file
     },

@@ -36,9 +36,13 @@ Add follow code in `package.json`
 ```json
 {
     "scripts": {
-        "start": "react-imvc start",
-        "build": "react-imvc build",
-        "test": "react-imvc test"
+        "dev": "torch dev",
+        "build": "torch build",
+        "start": "yarn dev",
+        "debug": "node --inspect-brk node_modules/.bin/torch dev",
+        "serve": "torch start",
+        "help": "torch --help",
+        "version": "torch --version",
     }
 }
 ```

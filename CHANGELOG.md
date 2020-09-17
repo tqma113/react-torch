@@ -1,3 +1,12 @@
+## [1.8.17](https://github.com/tqma113/react-torch/compare/v1.8.16...v1.8.17) (2020-09-17)
+
+
+### Bug Fixes
+
+* **config:** fixPlugin ([caaebd3](https://github.com/tqma113/react-torch/commit/caaebd3ad468dbfcd06f0b35a3e83077cf177131))
+
+
+
 ## [1.8.16](https://github.com/tqma113/react-torch/compare/v1.8.14...v1.8.16) (2020-09-17)
 
 

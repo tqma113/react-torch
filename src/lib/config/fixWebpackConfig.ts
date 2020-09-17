@@ -39,9 +39,10 @@ export function fixRuleSetCondition(test: RuleSetCondition): RuleSetCondition {
 }
 
 export function fixPlugin(plugin: Plugin) {
-  plugin.apply = (compiler: Compiler) => {
+  const apply = (compiler: Compiler) => {
     plugin.apply(compiler)
   }
+  plugin.apply = apply
   return plugin
 }
 

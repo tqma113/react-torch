@@ -1,4 +1,4 @@
-import type { Configuration, RuleSetCondition } from 'webpack'
+import type { Configuration, RuleSetCondition, Plugin, Compiler } from 'webpack'
 
 export function fixRuleSetCondition(test: RuleSetCondition): RuleSetCondition {
   if (isRegExp(test)) {
@@ -38,6 +38,13 @@ export function fixRuleSetCondition(test: RuleSetCondition): RuleSetCondition {
   }
 }
 
+export function fixPlugin(plugin: Plugin) {
+  plugin.apply = (compiler: Compiler) => {
+    plugin.apply(compiler)
+  }
+  return plugin
+}
+
 export function fixWebpackConfig(config: Configuration) {
   if (config.module) {
     config.module.rules = config.module.rules.map((rule) => {
@@ -64,6 +71,10 @@ export function fixWebpackConfig(config: Configuration) {
       }
       return rule
     })
+  }
+
+  if (config.plugins) {
+    config.plugins = config.plugins.map(fixPlugin)
   }
   return config
 }

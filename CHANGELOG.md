@@ -1,3 +1,12 @@
+## [1.8.19](https://github.com/tqma113/react-torch/compare/v1.8.18...v1.8.19) (2020-09-17)
+
+
+### Bug Fixes
+
+* **lib/config:** requireConfgi -> requireFile ([edf0c96](https://github.com/tqma113/react-torch/commit/edf0c969b6236369991cfcd7b9c7d55f6d283e99))
+
+
+
 ## [1.8.18](https://github.com/tqma113/react-torch/compare/v1.8.17...v1.8.18) (2020-09-17)
 
 

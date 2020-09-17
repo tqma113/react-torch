@@ -1,3 +1,5 @@
+import module from './module'
+
 export default {
-  ssr: false,
+  ssr: module.ssr,
 }

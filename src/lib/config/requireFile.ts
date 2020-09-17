@@ -3,7 +3,6 @@ import vm from 'vm'
 import path from 'path'
 import { transformFileSync } from '@babel/core'
 import babelConfig from './babelConfig'
-import type { IntegralTorchConfig } from '../../index'
 
 enum Extension {
   JS = 'js',
@@ -14,7 +13,7 @@ enum Extension {
   INVALID = 'invalid',
 }
 
-export default function requireConfig(filePath: string): IntegralTorchConfig {
+export default function requireFile(filePath: string): any {
   const clearFilePath = getClearFilePath(filePath)
   const [finalFilePath, ets] = getFileInfo(clearFilePath)
   if (ets === Extension.INVALID) {
@@ -43,7 +42,7 @@ function createContext(filepath: string): vm.Context {
   const module = { exports: {} }
   const virtualRequire = (filePath: string) => {
     if (!isAbsolutePath(filePath)) {
-      return requireConfig(path.resolve(dir, filePath))
+      return requireFile(path.resolve(dir, filePath))
     } else {
       return require(filePath)
     }
@@ -80,11 +79,22 @@ function getFileInfo(filePath: string): [string, Extension] {
   return [finalFilePath, extension]
 }
 
-function runCode(sourceCode: string, context?: vm.Context) {
-  if (context) {
-    return vm.runInContext(sourceCode, context)
-  }
-  return vm.runInThisContext(sourceCode)(require)
+function runCode(sourceCode: string, context: vm.Context) {
+  sourceCode = sourceCode.replace('"use strict";', '')
+  return Function(`
+    "use strict";
+    return(function({
+      process,
+      __filename,
+      __dirname,
+      exports,
+      require,
+      module
+    }){
+      ${sourceCode}
+      return exports.default
+    })
+  `)()(context)
 }
 
 function getClearFilePath(

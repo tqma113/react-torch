@@ -1,3 +1,17 @@
+## [1.8.16](https://github.com/tqma113/react-torch/compare/v1.8.14...v1.8.16) (2020-09-17)
+
+
+### Bug Fixes
+
+* **document:** remove useless ([29b1ca2](https://github.com/tqma113/react-torch/commit/29b1ca243801e03e20f96c2db1f5b0cbad81cc91))
+
+
+### Features
+
+* **config:** fix webpack plugin ([a0ab25b](https://github.com/tqma113/react-torch/commit/a0ab25b14d2e562e73ea1ff323be2558a5103007))
+
+
+
 ## [1.8.15](https://github.com/tqma113/react-torch/compare/v1.8.14...v1.8.15) (2020-09-15)
 
 

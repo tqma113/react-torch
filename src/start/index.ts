@@ -36,7 +36,7 @@ export default function start(draftConfig: TorchConfig) {
       config.port = port
     }
 
-    const app = createServer(config.dir)
+    const app = createServer(config)
     const server = http.createServer(app)
     const render = createRender(config)
 

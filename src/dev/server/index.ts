@@ -1,4 +1,3 @@
-import path from 'path'
 import express from 'express'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
@@ -6,8 +5,9 @@ import compression from 'compression'
 import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
+import type { IntegralTorchConfig } from '../../index'
 
-export default function createServer(dir: string) {
+export default function createServer(config: IntegralTorchConfig) {
   const app = express()
 
   // helmet
@@ -17,8 +17,9 @@ export default function createServer(dir: string) {
   app.use(compression())
 
   // favicon
-  const favPath = path.resolve(dir, 'public', 'favicon.ico')
-  app.use(favicon(favPath))
+  if (config.favicon) {
+    app.use(favicon(config.favicon))
+  }
 
   // logger
   app.use(logger('dev'))

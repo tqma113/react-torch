@@ -18,10 +18,10 @@ export type ServerEntry =
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   let entry: ServerEntry
 
-  if (config.middlewares) {
+  if (config.middleware) {
     entry = {
       routes: config.src,
-      middleware: config.middlewares,
+      middleware: config.middleware,
     }
   } else {
     entry = {

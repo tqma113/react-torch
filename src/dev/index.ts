@@ -60,7 +60,7 @@ export default function dev(draftConfig: TorchConfig) {
     rmTorchProjectFiles(config.dir)
 
     // start
-    const app = createServer(config.dir)
+    const app = createServer(config)
     const server = http.createServer(app)
 
     const render = await createRender(config, serverContext)

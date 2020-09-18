@@ -11,9 +11,12 @@ export const TORCH_DIR = '.torch'
 export const TORCH_CLIENT_DIR = 'client'
 export const TORCH_SERVER_DIR = 'server'
 export const TORCH_PUBLIC_DIR = 'public'
+export const TORCH_SRC_DIR = 'src'
+export const TORCH_MIDDLEWARE_DIR = 'middleware'
 export const TORCH_MDLW_FILE_NAME = 'middleware.js'
 export const TORCH_ROUTES_FILE_NAME = 'routes.js'
 export const TORCH_ASSETS_FILE_NAME = 'assets.json'
+export const TORCH_FAVICON_FILE_NAME = 'favicon.ico'
 
 export enum Env {
   Development = 'development',
@@ -48,14 +51,28 @@ export type TorchConfig = {
   port?: number
   dir?: string
   src?: string
-  middlewares?: string | false
+  public?: string
+  middleware?: string | false
   ssr?: boolean
   title?: string
+  favicon?: string | boolean
   styleMode?: PreloadType
   webpack?: (config: Configuration, packContext: PackContext) => Configuration
 }
 
-export type IntegralTorchConfig = Required<TorchConfig>
+export type IntegralTorchConfig = {
+  host: string
+  port: number
+  dir: string
+  src: string
+  public: string
+  middleware: string | false
+  ssr: boolean
+  title: string
+  favicon: string | false
+  styleMode: PreloadType
+  webpack: (config: Configuration, packContext: PackContext) => Configuration
+}
 
 export type TinyContext = {
   ssr: boolean

@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import { Stats } from 'webpack'
+
 const friendlySyntaxErrorLabel = 'Syntax error:'
 
 function isLikelyASyntaxError(message: string) {

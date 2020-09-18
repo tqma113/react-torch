@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import { clear } from '../../lib/utils'
 import formatWebpackMessages from './formatWebpackMessages'
 import type Webpack from 'webpack'
+import type { Compiler }  from 'webpack'
 import type { Urls } from '../../lib/utils/prepareUrls'
 import type { Configuration } from 'webpack'
 
@@ -29,7 +30,7 @@ export default function createCompiler({
 }: CreateCompilerProps) {
   // "Compiler" is a low-level interface to webpack.
   // It lets us listen to some events and provide our own custom messages.
-  let compiler
+  let compiler: Compiler
   try {
     compiler = webpack(config)
   } catch (err) {

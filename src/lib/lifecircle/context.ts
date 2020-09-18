@@ -11,7 +11,7 @@ function createHookContext() {
   let _symbol: symbol | null = null
   let dict: Record<symbol, LifeCircle> = {}
 
-  function setPageLifeCircle() {
+  function setLifeCircle() {
     _symbol = Symbol('TORCH_PAGE')
     dict = {
       ...dict,
@@ -42,7 +42,7 @@ function createHookContext() {
   }
 
   return {
-    setPageLifeCircle,
+    setLifeCircle,
     getLifeCircle,
     setHook,
   }

@@ -24,8 +24,8 @@ export type LifeCircle = {
 
 export type Value<T, Key extends keyof T> = T[Key]
 
-export function setPageLifeCircle() {
-  return context.setPageLifeCircle()
+export function setLifeCircle() {
+  return context.setLifeCircle()
 }
 
 export function getLifeCircle(symbol: symbol): LifeCircle {

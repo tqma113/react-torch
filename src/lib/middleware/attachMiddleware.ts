@@ -9,7 +9,7 @@ export const attachMiddleware = (
   server: Server,
   config: IntegralTorchConfig
 ) => {
-  if (config.middlewares) {
+  if (config.middleware) {
     const middlewares = requireMiddleware(config)
 
     if (middlewares) {
@@ -26,7 +26,7 @@ export const attachMiddleware = (
         }
       })
     } else {
-      warn(`The middelwares module: ${config.middlewares} is invalid`)
+      warn(`The middelwares module: ${config.middleware} is invalid`)
     }
   }
 }

@@ -156,9 +156,6 @@ async function publishPackage(version, runIfNotDry) {
   const pkgName = pkg.name
   const releaseTag = pkgName === 'gtl' ? 'next' : null
 
-  // TODO use inferred release channel after official 3.0 release
-  // const releaseTag = semver.prerelease(version)[0] || null
-
   step(`\nPublishing ${pkgName}...`)
   try {
     await runIfNotDry(

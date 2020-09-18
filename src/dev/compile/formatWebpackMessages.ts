@@ -15,7 +15,6 @@ function formatMessage(message: string, isError: boolean) {
   lines = lines.filter((line) => !/Module [A-z ]+\(from/.test(line))
 
   // Transform parsing error into syntax error
-  // TODO: move this to our ESLint formatter?
   lines = lines.map((line) => {
     const parsingError = /Line (\d+):(?:(\d+):)?\s*Parsing error: (.+)$/.exec(
       line

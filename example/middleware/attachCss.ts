@@ -8,7 +8,7 @@ export const attachCss: Middleware = (app, server) => {
           type: 'link',
           href: '/static/css/test.css',
           preload: true,
-        }
+        },
       ],
     }
     next()

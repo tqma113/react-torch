@@ -36,7 +36,7 @@ export enum PreloadType {
 
 export enum HistoryType {
   Browser = 'browser',
-  Hash = 'hash'
+  Hash = 'hash',
 }
 
 ///////////////////////////////////////////////////////////////////////////////

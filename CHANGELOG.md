@@ -1,3 +1,18 @@
+## [1.8.20](https://github.com/tqma113/react-torch/compare/v1.8.19...v1.8.20) (2020-09-18)
+
+
+### Bug Fixes
+
+* **config:** remove useless ([c239fb0](https://github.com/tqma113/react-torch/commit/c239fb0a15a9bb1b9172bcc81857c463aaee5afd))
+* **dev:** openBrowser ([3eb6908](https://github.com/tqma113/react-torch/commit/3eb6908662def7470317d5632ee9e7a3c5d32232))
+
+
+### Features
+
+* **config:** add favicon ([d21544c](https://github.com/tqma113/react-torch/commit/d21544c082c2a0e4f53e4aeeea88b8d5d4275b9e))
+
+
+
 ## [1.8.19](https://github.com/tqma113/react-torch/compare/v1.8.18...v1.8.19) (2020-09-17)
 
 

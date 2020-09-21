@@ -67,7 +67,7 @@ export default function createDocument({
       <body>
         <noscript>
           <strong>
-            We're sorry but ${title} doesn't work properly without JavaScript
+            We're sorry but {title} doesn't work properly without JavaScript
             enabled.You need to enable JavaScript to run this app.
           </strong>
         </noscript>

@@ -1,3 +1,4 @@
-export function isPromise(obj: any): obj is Promise<any> {
+export function isPromise<T, S>(obj: PromiseLike<T> | S): obj is PromiseLike<T> {
+  // @ts-ignore
   return obj && obj.then && typeof obj.then === 'function'
 }

@@ -6,27 +6,14 @@ import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
-export type ServerEntry =
-  | {
-      routes: string
-      middleware: string
-    }
-  | {
-      routes: string
-    }
-
 export default function getConfig(config: IntegralTorchConfig): Configuration {
-  let entry: ServerEntry
+  let entry: Record<string, string> = {
+    routes: config.src,
+    document: config.document
+  }
 
   if (config.middleware) {
-    entry = {
-      routes: config.src,
-      middleware: config.middleware,
-    }
-  } else {
-    entry = {
-      routes: config.src,
-    }
+    entry.middleware = config.middleware
   }
 
   return {

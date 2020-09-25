@@ -175,6 +175,7 @@ if (dataScript) {
   console.error("SSR failed. Can' find __TORCH_DATA__ script element!")
 }
 
-function isPromise(obj: any): obj is Promise<any> {
+function isPromise<T, S>(obj: PromiseLike<T> | S): obj is PromiseLike<T> {
+  // @ts-ignore
   return obj && obj.then && typeof obj.then === 'function'
 }

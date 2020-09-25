@@ -1,18 +1,17 @@
-import { dynamic } from '../../src'
 import type { Route } from '../../src'
 
 const routes: Route[] = [
   {
     path: '/',
-    module: () => dynamic(import('./Home')),
+    module: () => import('./Home'),
   },
   {
     path: '/about',
-    module: () => dynamic(import('./About')),
+    module: () => import('./About'),
   },
   {
     path: '/test',
-    module: () => dynamic(import('./Test')),
+    module: () => import('./Test'),
   },
 ]
 

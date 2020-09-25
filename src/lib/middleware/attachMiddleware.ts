@@ -1,4 +1,4 @@
-import { requireMiddleware } from './index'
+import { requireMiddleware } from '../utils'
 import { warn } from '../utils'
 import type { Server } from 'http'
 import type { Application } from 'express'

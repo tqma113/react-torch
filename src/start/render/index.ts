@@ -2,10 +2,10 @@ import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
 import createRouter from '../../lib/router'
 import getRoutes from './getRoutes'
-import createHtml from '../../lib/document'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
 import { Side } from '../../index'
+import { requireDocument, isPromise } from '../../lib/utils'
 import type { Route, Render } from '../../lib/router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
@@ -30,10 +30,11 @@ export default function createRender(config: IntegralTorchConfig) {
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pageCreator) => {
-      if (pageCreator === null) {
+    const render: Render = async (pct) => {
+      if (pct === null) {
         next()
       } else {
+        const pageCreator = isPromise(pct) ? await pct : pct
         const serverContext: ServerContext = {
           req,
           res,
@@ -68,6 +69,7 @@ export default function createRender(config: IntegralTorchConfig) {
           }
         }
 
+        const createHtml = requireDocument(config)
         const [element, state] = await getElementAndState()
         const data: DocumentProps = {
           dir: config.dir,
@@ -78,6 +80,7 @@ export default function createRender(config: IntegralTorchConfig) {
           container: 'root',
           state,
           mode: config.styleMode,
+          ...res.locals,
           assets: res.locals.assets,
           styles: res.locals.styles,
           scripts: res.locals.scripts,

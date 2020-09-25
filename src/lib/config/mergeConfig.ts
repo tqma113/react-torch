@@ -2,8 +2,8 @@ import path from 'path'
 import {
   PreloadType,
   TORCH_SRC_DIR,
-  TORCH_MIDDLEWARE_DIR,
   TORCH_PUBLIC_DIR,
+  TORCH_MIDDLEWARE_DIR,
   TORCH_FAVICON_FILE_NAME,
 } from '../../index'
 import type { TorchConfig, IntegralTorchConfig } from '../../index'
@@ -11,6 +11,7 @@ import type { TorchConfig, IntegralTorchConfig } from '../../index'
 const TITLE = 'React Torch'
 // Tools like Cloud9 rely on this.
 const HOST = process.env.HOST || '0.0.0.0'
+const DEFAULT_DOCUMENT_PATH = path.resolve(__dirname, '../document')
 const DEVELOPMENT_PORT = 3000
 const PRODUCTION_PORT = 80
 const noop = (a: any) => a
@@ -45,6 +46,8 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
       ? path.resolve(dir, config.middleware)
       : path.resolve(dir, TORCH_MIDDLEWARE_DIR)
 
+  const document = config.document ? path.resolve(dir, config.document) : DEFAULT_DOCUMENT_PATH
+
   const favicon = config.favicon
     ? config.favicon === true
       ? path.resolve(publicDir, TORCH_FAVICON_FILE_NAME)
@@ -63,8 +66,9 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     host,
     port,
     src: srcDir,
-    middleware,
     public: publicDir,
+    middleware,
+    document,
     favicon,
     ssr,
     styleMode,

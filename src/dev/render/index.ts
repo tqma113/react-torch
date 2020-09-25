@@ -2,10 +2,10 @@ import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
 import createRouter from '../../lib/router'
 import compile from './compile'
-import createHtml from '../../lib/document'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
 import { Side } from '../../index'
+import { requireDocument, isPromise } from '../../lib/utils'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
 import type { GlobalContextType } from '../../lib/context'
@@ -36,10 +36,11 @@ export default async function createRender(
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pageCreator) => {
-      if (pageCreator === null) {
+    const render: Render = async (pct) => {
+      if (pct === null) {
         next()
       } else {
+        const pageCreator = isPromise(pct) ? await pct : pct
         const serverContext: ServerContext = {
           ...packContext,
           req,
@@ -72,7 +73,7 @@ export default async function createRender(
             return [createErrorElement(JSON.stringify(err)), {}] as const
           }
         }
-
+        const createHtml = requireDocument(config)
         const [element, state] = await getElementAndState()
         const data: DocumentProps = {
           dir: config.dir,
@@ -83,6 +84,7 @@ export default async function createRender(
           container: 'root',
           state,
           mode: config.styleMode,
+          ...res.locals,
           assets: res.locals.assets,
           styles: res.locals.styles,
           scripts: res.locals.scripts,

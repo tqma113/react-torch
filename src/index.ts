@@ -14,6 +14,7 @@ export const TORCH_PUBLIC_DIR = 'public'
 export const TORCH_SRC_DIR = 'src'
 export const TORCH_MIDDLEWARE_DIR = 'middleware'
 export const TORCH_MDLW_FILE_NAME = 'middleware.js'
+export const TORCH_DOCUMENT_FILE_NAME = 'document.js'
 export const TORCH_ROUTES_FILE_NAME = 'routes.js'
 export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 export const TORCH_FAVICON_FILE_NAME = 'favicon.ico'
@@ -53,6 +54,7 @@ export type TorchConfig = {
   src?: string
   public?: string
   middleware?: string | false
+  document?: string | false
   ssr?: boolean
   title?: string
   favicon?: string | boolean
@@ -67,6 +69,7 @@ export type IntegralTorchConfig = {
   src: string
   public: string
   middleware: string | false
+  document: string
   ssr: boolean
   title: string
   favicon: string | false

@@ -46,7 +46,9 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
       ? path.resolve(dir, config.middleware)
       : path.resolve(dir, TORCH_MIDDLEWARE_DIR)
 
-  const document = config.document ? path.resolve(dir, config.document) : DEFAULT_DOCUMENT_PATH
+  const document = config.document
+    ? path.resolve(dir, config.document)
+    : DEFAULT_DOCUMENT_PATH
 
   const favicon = config.favicon
     ? config.favicon === true

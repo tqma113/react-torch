@@ -9,7 +9,7 @@ import type { IntegralTorchConfig } from '../../index'
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   let entry: Record<string, string> = {
     routes: config.src,
-    document: config.document
+    document: config.document,
   }
 
   if (config.middleware) {

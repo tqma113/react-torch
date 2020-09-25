@@ -5,14 +5,14 @@ import type { Context } from '../../index'
 import type { Store, Actions } from '../store/index'
 import type { LifeCircle } from '../lifecircle'
 
-export type PageCreatorLoader<S extends object, AS extends Actions<S>> = () =>
-  | PageCreator<S, AS>
-  | Promise<PageCreator<S, AS>>
-
-export type PageCreator<S extends object, AS extends Actions<S>> = (
+export type PageCreator<S extends object, AS extends Actions<S>> = ((
   history: History,
   context: Context
-) => readonly [() => JSX.Element, Store<S, AS>, LifeCircle]
+) => readonly [() => JSX.Element, Store<S, AS>, LifeCircle]) & {
+  symbol: Symbol
+}
+
+const TORCH_PAGE_SYMBOL = Symbol('TORCH_PAGE')
 
 export type Creater<S extends object, AS extends Actions<S>> = (
   history: History,
@@ -33,21 +33,20 @@ export function createPage<
   S extends Object = StateFromPageCreator<C>,
   AS extends Actions<S> = ActionsFromPageCreator<C>
 >(creator: C): PageCreator<S, AS> {
-  return (history: History, context: Context) => {
-    const symbol = setLifeCircle()
-    const [View, store] = creator(history, context)
-    const lifecircle = getLifeCircle(symbol)
+  return Object.assign(
+    (history: History, context: Context) => {
+      const symbol = setLifeCircle()
+      const [View, store] = creator(history, context)
+      const lifecircle = getLifeCircle(symbol)
 
-    return [() => <View />, store, lifecircle] as const
-  }
+      return [() => <View />, store, lifecircle] as const
+    },
+    {
+      symbol: TORCH_PAGE_SYMBOL,
+    }
+  )
 }
 
-export type DynamicImportModule<Module> = Promise<{
-  default: Module
-}>
-
-export async function dynamic<Module>(
-  dynamicImportModule: DynamicImportModule<Module>
-): Promise<Module> {
-  return (await dynamicImportModule).default
+export const isTorchPage = (input: any): input is PageCreator<any, any> => {
+  return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
 }

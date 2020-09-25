@@ -5,12 +5,10 @@ import getRoutes from './getRoutes'
 import createHtml from '../../lib/document'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
-import { isPromise } from '../../lib/utils'
 import { Side } from '../../index'
-import type { Route } from '../../lib/router'
+import type { Route, Render } from '../../lib/router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
-import type { PageCreatorLoader, PageCreator } from '../../lib/page'
 import type { GlobalContextType } from '../../lib/context'
 import type {
   IntegralTorchConfig,
@@ -32,10 +30,8 @@ export default function createRender(config: IntegralTorchConfig) {
     history.push(req.url)
     const location = history.location
 
-    const render = async (
-      pageCreatorLoader: PageCreatorLoader<any, any> | null
-    ) => {
-      if (pageCreatorLoader === null) {
+    const render: Render = async (pageCreator) => {
+      if (pageCreator === null) {
         next()
       } else {
         const serverContext: ServerContext = {
@@ -52,8 +48,10 @@ export default function createRender(config: IntegralTorchConfig) {
         }
         const getElementAndState = async () => {
           try {
-            const page = await loadPageCreator(pageCreatorLoader())
-            const [view, store, lifecircle] = await page(history, serverContext)
+            const [view, store, lifecircle] = (await pageCreator)(
+              history,
+              serverContext
+            )
 
             await lifecircle.willCreate()
 
@@ -99,15 +97,5 @@ export default function createRender(config: IntegralTorchConfig) {
       res.status(502)
       res.send(err)
     }
-  }
-}
-
-async function loadPageCreator(
-  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
-): Promise<PageCreator<any, any>> {
-  if (isPromise(draftPageCreator)) {
-    return await draftPageCreator
-  } else {
-    return draftPageCreator
   }
 }

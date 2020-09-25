@@ -5,11 +5,9 @@ import compile from './compile'
 import createHtml from '../../lib/document'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
-import { isPromise } from '../../lib/utils'
 import { Side } from '../../index'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
-import type { PageCreatorLoader, PageCreator } from '../../lib/page'
 import type { GlobalContextType } from '../../lib/context'
 import type { Route, Router, Render } from '../../lib/router'
 import type {
@@ -29,7 +27,7 @@ export default async function createRender(
   await compile(config, packContext, update)
 
   let router: Router
-  const applyRouter = (render: Render, path: string) => {
+  const applyRouter = (path: string, render: Render) => {
     return router(path, render)
   }
 
@@ -38,10 +36,8 @@ export default async function createRender(
     history.push(req.url)
     const location = history.location
 
-    const render = async (
-      pageCreatorLoader: PageCreatorLoader<any, any> | null
-    ) => {
-      if (pageCreatorLoader === null) {
+    const render: Render = async (pageCreator) => {
+      if (pageCreator === null) {
         next()
       } else {
         const serverContext: ServerContext = {
@@ -57,8 +53,10 @@ export default async function createRender(
 
         const getElementAndState = async () => {
           try {
-            const page = await loadPageCreator(pageCreatorLoader())
-            const [view, store, lifecircle] = await page(history, serverContext)
+            const [view, store, lifecircle] = (await pageCreator)(
+              history,
+              serverContext
+            )
 
             await lifecircle.willCreate()
 
@@ -99,20 +97,10 @@ export default async function createRender(
     }
 
     try {
-      applyRouter(render, location.pathname)
+      applyRouter(location.pathname, render)
     } catch (err) {
       res.status(502)
       res.send(err)
     }
-  }
-}
-
-async function loadPageCreator(
-  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
-): Promise<PageCreator<any, any>> {
-  if (isPromise(draftPageCreator)) {
-    return await draftPageCreator
-  } else {
-    return draftPageCreator
   }
 }

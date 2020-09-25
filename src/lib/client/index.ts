@@ -8,7 +8,7 @@ import $routes from '@routes'
 import type { Listener } from 'torch-history'
 import type { TorchData } from '../../index'
 import type { GlobalContextType } from '../context'
-import type { PageCreator, PageCreatorLoader } from '../page'
+import type { Render } from '../router'
 
 declare global {
   interface Window {
@@ -35,10 +35,8 @@ if (dataScript) {
       const router = createRouter($routes)
 
       const listener: Listener = async ({ location }) => {
-        const render = (
-          pageCreatorLoader: PageCreatorLoader<any, any> | null
-        ) => {
-          if (pageCreatorLoader === null) {
+        const render: Render = async (pageCreator) => {
+          if (pageCreator === null) {
             const globalContext = {
               location,
               history,
@@ -52,15 +50,38 @@ if (dataScript) {
             const containerElement = document.querySelector(`#${container}`)
             ReactDOM.render(element, containerElement)
           } else {
-            loadPageCreator(pageCreatorLoader()).then(async (pageCreator) => {
-              const ctx = {
-                ...context,
-                ssr: false,
-              }
-              const [view, store, lifecircle] = pageCreator(history, ctx)
+            if (isPromise(pageCreator)) {
+              pageCreator = await pageCreator
+            }
+            const ctx = {
+              ...context,
+              ssr: false,
+            }
+            const [view, store, lifecircle] = pageCreator(history, ctx)
 
-              await lifecircle.willCreate()
+            await lifecircle.willCreate()
 
+            const globalContext: GlobalContextType = {
+              location,
+              history,
+              store,
+              context: ctx,
+            }
+            const element = connect(view)(globalContext)
+            const containerElement = document.querySelector(`#${container}`)
+
+            invariant(
+              containerElement !== null,
+              `The container: ${container} is not exist`
+            )
+
+            await lifecircle.willMount()
+
+            ReactDOM.render(element, containerElement)
+
+            await lifecircle.didMount()
+
+            store.listen(() => {
               const globalContext: GlobalContextType = {
                 location,
                 history,
@@ -68,29 +89,7 @@ if (dataScript) {
                 context: ctx,
               }
               const element = connect(view)(globalContext)
-              const containerElement = document.querySelector(`#${container}`)
-
-              invariant(
-                containerElement !== null,
-                `The container: ${container} is not exist`
-              )
-
-              await lifecircle.willMount()
-
               ReactDOM.render(element, containerElement)
-
-              await lifecircle.didMount()
-
-              store.listen(() => {
-                const globalContext: GlobalContextType = {
-                  location,
-                  history,
-                  store,
-                  context: ctx,
-                }
-                const element = connect(view)(globalContext)
-                ReactDOM.render(element, containerElement)
-              })
             })
           }
         }
@@ -98,8 +97,8 @@ if (dataScript) {
         router(location.pathname, render)
       }
 
-      const init = (pageCreatorLoader: PageCreatorLoader<any, any> | null) => {
-        if (pageCreatorLoader === null) {
+      const init: Render = async (pageCreator) => {
+        if (pageCreator === null) {
           const globalContext = {
             location,
             history,
@@ -113,56 +112,55 @@ if (dataScript) {
           const containerElement = document.querySelector(`#${container}`)
           ReactDOM.render(element, containerElement)
         } else {
-          loadPageCreator(pageCreatorLoader())
-            .then(async (pageCreator) => {
-              const [view, store, lifecircle] = pageCreator(history, context)
+          if (isPromise(pageCreator)) {
+            pageCreator = await pageCreator
+          }
+          const [view, store, lifecircle] = pageCreator(history, context)
 
-              if (context.ssr) {
-                store.UNSAFE_setState(state)
-              }
+          if (context.ssr) {
+            store.UNSAFE_setState(state)
+          }
 
-              if (!context.ssr) {
-                await lifecircle.willCreate()
-              }
+          if (!context.ssr) {
+            await lifecircle.willCreate()
+          }
 
-              const globalContext: GlobalContextType = {
-                location,
-                history,
-                store,
-                context,
-              }
-              const element = connect(view)(globalContext)
-              const containerElement = document.querySelector(`#${container}`)
+          const globalContext: GlobalContextType = {
+            location,
+            history,
+            store,
+            context,
+          }
+          const element = connect(view)(globalContext)
+          const containerElement = document.querySelector(`#${container}`)
 
-              invariant(
-                containerElement !== null,
-                `The container: ${container} is not exist`
-              )
+          invariant(
+            containerElement !== null,
+            `The container: ${container} is not exist`
+          )
 
-              await lifecircle.willMount()
+          await lifecircle.willMount()
 
-              if (context.ssr) {
-                ReactDOM.hydrate(element, containerElement)
-              } else {
-                ReactDOM.render(element, containerElement)
-              }
+          if (context.ssr) {
+            ReactDOM.hydrate(element, containerElement)
+          } else {
+            ReactDOM.render(element, containerElement)
+          }
 
-              await lifecircle.didMount()
+          await lifecircle.didMount()
 
-              store.listen((data) => {
-                const globalContext: GlobalContextType = {
-                  location,
-                  history,
-                  store,
-                  context,
-                }
-                const element = connect(view)(globalContext)
-                ReactDOM.render(element, containerElement)
-              })
-            })
-            .then(() => {
-              history.listen(listener)
-            })
+          store.listen((data) => {
+            const globalContext: GlobalContextType = {
+              location,
+              history,
+              store,
+              context,
+            }
+            const element = connect(view)(globalContext)
+            ReactDOM.render(element, containerElement)
+          })
+
+          history.listen(listener)
         }
       }
 
@@ -171,21 +169,12 @@ if (dataScript) {
       console.error(err)
     }
   } else {
+    console.error('SSR failed.')
   }
 } else {
-  console.error("Render failed. Can' find __TORCH_DATA__ script element!")
+  console.error("SSR failed. Can' find __TORCH_DATA__ script element!")
 }
 
-async function loadPageCreator(
-  draftPageCreator: PageCreator<any, any> | Promise<PageCreator<any, any>>
-): Promise<PageCreator<any, any>> {
-  if (isPromise(draftPageCreator)) {
-    return await draftPageCreator
-  } else {
-    return draftPageCreator
-  }
-}
-
-export function isPromise(obj: any): obj is Promise<any> {
+function isPromise(obj: any): obj is Promise<any> {
   return obj && obj.then && typeof obj.then === 'function'
 }

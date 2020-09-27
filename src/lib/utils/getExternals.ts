@@ -1,12 +1,9 @@
 import path from 'path'
 
 const TORCH_EXTERNALS = [
-  'react-torch/page',
-  'react-torch/store',
   'react-torch/dev',
   'react-torch/start',
   'react-torch/build',
-  'react-torch/hook',
 ]
 
 export default function getExternals(dir: string): string[] {
@@ -37,7 +34,7 @@ export default function getExternals(dir: string): string[] {
     }
   }
 
-  let map: Record<string, boolean> = {}
+  const map: Record<string, boolean> = {}
   dependencies = dependencies.filter((name) => {
     if (map[name]) {
       return false

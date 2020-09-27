@@ -13,22 +13,23 @@ declare namespace NodeJS {
 }
 
 interface Window {
+  __TORCH_DATA__: import('./index').TorchData
   __DEV__: boolean
 }
 
 declare var __DEV__: boolean
 
 declare module 'pnp-webpack-plugin' {
-  function apply(compiler: any): void
+  function apply(compiler: import('webpack').Compiler): void
   function makePlugin(locator: any, filter: any): any
   function moduleLoader(module: NodeModule): any
   function tsLoaderOptions(options: any): any
   function forkTsCheckerOptions(options: any): any
   module topLevelLoader {
-    function apply(compiler: any): void
+    function apply(compiler: import('webpack').Compiler): void
   }
   module bind {
-    function apply(compiler: any): void
+    function apply(compiler: import('webpack').Compiler): void
   }
 }
 

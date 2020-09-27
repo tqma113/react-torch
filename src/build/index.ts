@@ -4,7 +4,7 @@ import compile from './compile'
 import renderCompile from './renderCompile'
 import copyPublic from './copyPublic'
 import { mergeConfig } from '../lib/config'
-import { rmTorchProjectFiles, info, error } from '../lib/utils'
+import { clearTorchProjectFiles, info, error } from '../lib/utils'
 import { Side } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
@@ -24,7 +24,7 @@ export default function build(draftConfig: TorchConfig) {
   }
 
   // remove before
-  rmTorchProjectFiles(config.dir)
+  clearTorchProjectFiles(config.dir)
 
   renderCompile(config, serverContext)
     .then(() => compile(config, clientContext))

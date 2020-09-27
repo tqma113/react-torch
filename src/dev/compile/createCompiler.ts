@@ -6,11 +6,6 @@ import type { Compiler } from 'webpack'
 import type { Urls } from '../../lib/utils/prepareUrls'
 import type { Configuration } from 'webpack'
 
-export type DevSocket = {
-  warnings: (warnings: any) => void
-  errors: (errors: any) => void
-}
-
 const isInteractive = process.stdout.isTTY
 
 export type CreateCompilerProps = {

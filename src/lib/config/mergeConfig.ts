@@ -14,7 +14,7 @@ const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_DOCUMENT_PATH = path.resolve(__dirname, '../document')
 const DEVELOPMENT_PORT = 3000
 const PRODUCTION_PORT = 80
-const noop = (a: any) => a
+const identity = <T>(a: T) => a
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
   const title = config.title || TITLE
@@ -60,7 +60,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const styleMode = config.styleMode || PreloadType.Inner
 
-  const webpack = config.webpack ? config.webpack : noop
+  const webpack = config.webpack ? config.webpack : identity
 
   return {
     title,

@@ -10,7 +10,7 @@ import createRender from './render'
 import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
 import { mergeConfig } from '../lib/config'
 import {
-  rmTorchProjectFiles,
+  clearTorchProjectFiles,
   error as errorlog,
   choosePort,
   prepareUrls,
@@ -57,7 +57,7 @@ export default function dev(draftConfig: TorchConfig) {
     }
 
     // remove before
-    rmTorchProjectFiles(config.dir)
+    clearTorchProjectFiles(config.dir)
 
     // start
     const app = createServer(config)
@@ -111,12 +111,7 @@ export default function dev(draftConfig: TorchConfig) {
     app.use(render)
 
     // error handler
-    const errorHandler: express.ErrorRequestHandler = (
-      err: any,
-      req,
-      res,
-      next
-    ) => {
+    const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
       res.status(err.status || 500)
       res.json(err.message)
     }
@@ -127,8 +122,8 @@ export default function dev(draftConfig: TorchConfig) {
      */
 
     const onListening = () => {
-      let addr = server.address()
-      let bind =
+      const addr = server.address()
+      const bind =
         typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
       debug(`Listening on ${bind}`)
       openBrowser(urls.localUrlForBrowser)

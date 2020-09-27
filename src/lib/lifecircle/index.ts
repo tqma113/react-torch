@@ -28,33 +28,46 @@ export function setLifeCircle() {
   return context.setLifeCircle()
 }
 
+type Arg<H> = H extends (arg: infer Arg) => any ? Arg : never
+
+async function walkHooksWithArg<H extends (arg: any) => any>(
+  hooks: Array<H>,
+  arg: Arg<H>
+): Promise<Arg<H>> {
+  if (hooks.length === 0) {
+    return arg
+  }
+
+  const nextArg = await hooks[0](arg)
+  return await walkHooksWithArg(hooks.slice(1), nextArg)
+}
+
+async function walkHooks<H extends () => any>(hooks: Array<H>): Promise<void> {
+  if (hooks.length === 0) {
+    return
+  }
+
+  await hooks[0]()
+  await walkHooks(hooks.slice(1))
+}
+
 export function getLifeCircle(symbol: symbol): LifeCircle {
   const cache = context.getLifeCircle(symbol)
 
   const config: ConfigHook = async (config) => {
-    cache.config.forEach(async (hook) => {
-      config = await hook(config)
-    })
-
-    return config
+    return walkHooksWithArg(cache.config, config)
   }
 
   const willCreate: Hook = async () => {
-    cache.willCreate.forEach(async (hook) => {
-      await hook()
-    })
+    return walkHooks(cache.willCreate)
   }
 
   const willMount: Hook = async () => {
-    cache.willMount.forEach(async (hook) => {
-      await hook()
-    })
+    return walkHooks(cache.willMount)
   }
 
   const didMount: Hook = async () => {
-    cache.didMount.forEach(async (hook) => {
-      await hook()
-    })
+    return walkHooks(cache.didMount)
   }
 
   return {

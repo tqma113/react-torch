@@ -2,7 +2,7 @@ export type Action<S extends {}, P = any> = (state: S, payload: P) => S
 
 export type Actions<S extends {}> = Record<string, Action<S>>
 
-export type Args<S extends object, A extends Action<S>> = A extends (
+type Args<S extends object, A extends Action<S>> = A extends (
   state: S,
   ...args: infer Args
 ) => S

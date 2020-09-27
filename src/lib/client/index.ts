@@ -10,13 +10,6 @@ import type { TorchData } from '../../index'
 import type { GlobalContextType } from '../context'
 import type { Render } from '../router'
 
-declare global {
-  interface Window {
-    __TORCH_DATA__: TorchData
-    __DEV__: boolean
-  }
-}
-
 const dataScript = document.getElementById(
   '__TORCH_DATA__'
 ) as HTMLScriptElement | null
@@ -45,7 +38,7 @@ if (dataScript) {
             const error = new Error(`Unknow path: ${location.pathname}`)
             const msg = JSON.stringify(error)
             const element = connect(() => createErrorElement(msg))(
-              globalContext as any
+              (globalContext as unknown) as GlobalContextType
             )
             const containerElement = document.querySelector(`#${container}`)
             ReactDOM.render(element, containerElement)
@@ -107,7 +100,7 @@ if (dataScript) {
           const error = new Error(`Unknow path: ${location.pathname}`)
           const msg = JSON.stringify(error)
           const element = connect(() => createErrorElement(msg))(
-            globalContext as any
+            (globalContext as unknown) as GlobalContextType
           )
           const containerElement = document.querySelector(`#${container}`)
           ReactDOM.render(element, containerElement)

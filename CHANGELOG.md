@@ -1,3 +1,18 @@
+## [1.8.21](https://github.com/tqma113/react-torch/compare/v1.8.20...v1.8.21) (2020-09-25)
+
+
+### Bug Fixes
+
+* **document:** remove useless ([d879950](https://github.com/tqma113/react-torch/commit/d879950cd9071d9ebb8b72344ffe878292a2d704))
+
+
+### Features
+
+* **all:** support custom document ([0bcd6ff](https://github.com/tqma113/react-torch/commit/0bcd6ff896e12ecc87b9e43aa669d80b62c15124))
+* **router:** dynamic import ([59bcc54](https://github.com/tqma113/react-torch/commit/59bcc54bddeee72ff633a81a1c81c8a00bbcd7f7))
+
+
+
 ## [1.8.20](https://github.com/tqma113/react-torch/compare/v1.8.19...v1.8.20) (2020-09-18)
 
 

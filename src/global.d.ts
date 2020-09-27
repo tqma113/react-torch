@@ -20,16 +20,16 @@ interface Window {
 declare var __DEV__: boolean
 
 declare module 'pnp-webpack-plugin' {
-  function apply(compiler: import('webpack').Compiler): void
-  function makePlugin(locator: any, filter: any): any
-  function moduleLoader(module: NodeModule): any
-  function tsLoaderOptions(options: any): any
-  function forkTsCheckerOptions(options: any): any
+  declare function apply(compiler: import('webpack').Compiler): void
+  declare function makePlugin(locator: any, filter: any): any
+  declare function moduleLoader(module: NodeModule): any
+  declare function tsLoaderOptions(options: any): any
+  declare function forkTsCheckerOptions(options: any): any
   module topLevelLoader {
-    function apply(compiler: import('webpack').Compiler): void
+    declare function apply(compiler: import('webpack').Compiler): void
   }
   module bind {
-    function apply(compiler: import('webpack').Compiler): void
+    declare function apply(compiler: import('webpack').Compiler): void
   }
 }
 

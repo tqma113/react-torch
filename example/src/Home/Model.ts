@@ -11,19 +11,19 @@ const initialState: State = {
 }
 
 const actions = {
-  UPDATE_COUNT(state: State, nextCount: number) {
+  UPDATE_COUNT(state: State, nextCount: number): State {
     return {
       ...state,
       count: nextCount,
     }
   },
-  INCREASE(state: State) {
+  INCREASE(state: State): State {
     return {
       ...state,
       count: state.count + 1,
     }
   },
-  DECREASE(state: State) {
+  DECREASE(state: State): State {
     return {
       ...state,
       count: state.count - 1,

@@ -50,7 +50,7 @@ function getKeys<T extends {}>(o: T): Array<keyof T> {
 export function createStore<S extends object, AS extends Actions<S>>(
   state: S,
   actions: AS
-) {
+): Store<S, AS> {
   const curryActions = getKeys(actions).reduce((obj, actionType) => {
     if (typeof actions[actionType] === 'function') {
       obj[actionType] = ((...args: Args<S, AS[typeof actionType]>) =>

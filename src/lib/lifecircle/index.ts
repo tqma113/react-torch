@@ -1,10 +1,8 @@
 import context from './context'
 import type { TorchConfig } from '../../index'
 
-export type ConfigHook =
-  | ((config: TorchConfig) => TorchConfig)
-  | ((config: TorchConfig) => Promise<TorchConfig>)
-export type Hook = (() => void) | (() => Promise<void>)
+export type ConfigHook = (config: TorchConfig) => (TorchConfig | Promise<TorchConfig>)
+export type Hook = () => (void | Promise<void>)
 
 export type LifeCircleCache = {
   config: ConfigHook[]
@@ -54,21 +52,11 @@ async function walkHooks<H extends () => any>(hooks: Array<H>): Promise<void> {
 export function getLifeCircle(symbol: symbol): LifeCircle {
   const cache = context.getLifeCircle(symbol)
 
-  const config: ConfigHook = async (config) => {
-    return walkHooksWithArg(cache.config, config)
-  }
-
-  const willCreate: Hook = async () => {
-    return walkHooks(cache.willCreate)
-  }
-
-  const willMount: Hook = async () => {
-    return walkHooks(cache.willMount)
-  }
-
-  const didMount: Hook = async () => {
-    return walkHooks(cache.didMount)
-  }
+  const config: ConfigHook = async (config) =>
+    walkHooksWithArg(cache.config, config)
+  const willCreate: Hook = async () => walkHooks(cache.willCreate)
+  const willMount: Hook = async () => walkHooks(cache.willMount)
+  const didMount: Hook = async () => walkHooks(cache.didMount)
 
   return {
     config,

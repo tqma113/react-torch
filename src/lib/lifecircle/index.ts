@@ -1,8 +1,10 @@
 import context from './context'
 import type { TorchConfig } from '../../index'
 
-export type ConfigHook = (config: TorchConfig) => (TorchConfig | Promise<TorchConfig>)
-export type Hook = () => (void | Promise<void>)
+export type ConfigHook = (
+  config: TorchConfig
+) => TorchConfig | Promise<TorchConfig>
+export type Hook = () => void | Promise<void>
 
 export type LifeCircleCache = {
   config: ConfigHook[]

@@ -1,5 +1,6 @@
 /// <reference path="../global.d.ts" />
 
+import fs from 'fs-extra'
 import path from 'path'
 import http from 'http'
 import debug from 'debug'
@@ -10,7 +11,7 @@ import createRender from './render'
 import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
 import { mergeConfig } from '../lib/config'
 import {
-  clearTorchProjectFiles,
+  step,
   error as errorlog,
   choosePort,
   prepareUrls,
@@ -57,7 +58,8 @@ export default function dev(draftConfig: TorchConfig) {
     }
 
     // remove before
-    clearTorchProjectFiles(config.dir)
+    step(`Clearing ${TORCH_DIR}...\n`)
+    fs.emptyDirSync(path.resolve(config.dir, TORCH_DIR))
 
     // start
     const app = createServer(config)
@@ -69,7 +71,6 @@ export default function dev(draftConfig: TorchConfig) {
     attachMiddleware(app, server, config)
 
     // client compile
-
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
     const urls = prepareUrls(protocol, config.host, config.port)
     const [compiler, middleware] = await compile(config, clientContext, urls)
@@ -82,10 +83,7 @@ export default function dev(draftConfig: TorchConfig) {
     )
 
     // static file route
-    app.use(
-      '/static',
-      express.static(path.resolve(config.dir, TORCH_PUBLIC_DIR))
-    )
+    app.use('/', express.static(path.resolve(config.dir, TORCH_PUBLIC_DIR)))
 
     // webpack-hot-middleware
     app.use(
@@ -117,10 +115,7 @@ export default function dev(draftConfig: TorchConfig) {
     }
     app.use(errorHandler)
 
-    /**
-     * Event listener for HTTP server "listening" event.
-     */
-
+    // Event listener for HTTP server "listening" event.
     const onListening = () => {
       const addr = server.address()
       const bind =
@@ -129,10 +124,7 @@ export default function dev(draftConfig: TorchConfig) {
       openBrowser(urls.localUrlForBrowser)
     }
 
-    /**
-     * Event listener for HTTP server "error" event.
-     */
-
+    // Event listener for HTTP server "error" event.
     const onError = (error: any) => {
       if (error.syscall !== 'listen') {
         throw error

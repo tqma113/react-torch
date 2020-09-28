@@ -19,6 +19,11 @@ interface Window {
 
 declare var __DEV__: boolean
 
+declare module 'gulp-clean-css' {
+  declare function clean(): NodeJS.ReadWriteStream
+  export = clean
+}
+
 declare module 'pnp-webpack-plugin' {
   declare function apply(compiler: import('webpack').Compiler): void
   declare function makePlugin(locator: any, filter: any): any

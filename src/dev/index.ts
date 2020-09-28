@@ -145,9 +145,7 @@ export default function dev(draftConfig: TorchConfig) {
       }
     }
 
-    /**
-     * Listen on provided port, on all network interfaces.
-     */
+    // Listen on provided port, on all network interfaces.
     server.listen(config.port)
     server.on('error', onError)
     server.on('listening', onListening)

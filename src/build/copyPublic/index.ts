@@ -2,7 +2,6 @@ import path from 'path'
 import gulp from 'gulp'
 import uglify from 'gulp-uglify'
 import plumber from 'gulp-plumber'
-// @ts-ignore
 import cleanCSS from 'gulp-clean-css'
 import { TORCH_DIR, TORCH_PUBLIC_DIR } from '../../index'
 

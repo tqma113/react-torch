@@ -3,7 +3,7 @@ export {
   useWillCreate,
   useDidMount,
   useWillMount,
-} from './lifecircle'
+} from './lifecycle'
 
 export {
   useLocation,

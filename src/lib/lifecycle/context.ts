@@ -36,7 +36,7 @@ function createHookContext() {
     Hook extends Value<LifeCircle, Keys>
   >(name: Keys, hook: Hook) {
     if (__symbol__ == null) {
-      console.trace("You can't call lifecircle hook at here.")
+      console.trace("You can't call lifecycle hook at here.")
     } else {
       // @ts-ignore
       dict[__symbol__][name].push(hook)

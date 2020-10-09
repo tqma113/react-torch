@@ -1,5 +1,5 @@
-import { setHook } from '../lifecircle'
-import type { ConfigHook, Hook } from '../lifecircle'
+import { setHook } from '../lifecycle'
+import type { ConfigHook, Hook } from '../lifecycle'
 
 export function useConfig(hook: ConfigHook) {
   setHook('config', hook)

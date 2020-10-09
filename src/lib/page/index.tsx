@@ -1,9 +1,9 @@
 import React from 'react'
-import { setLifeCircle, getLifeCircle } from '../lifecircle'
+import { setLifeCircle, getLifeCircle } from '../lifecycle'
 import type { History } from 'torch-history'
 import type { Context } from '../../index'
 import type { Store, Actions } from '../store/index'
-import type { LifeCircle } from '../lifecircle'
+import type { LifeCircle } from '../lifecycle'
 
 export type PageCreator<S extends object, AS extends Actions<S>> = ((
   history: History,
@@ -37,9 +37,9 @@ export function createPage<
     (history: History, context: Context) => {
       const symbol = setLifeCircle()
       const [View, store] = creator(history, context)
-      const lifecircle = getLifeCircle(symbol)
+      const lifecycle = getLifeCircle(symbol)
 
-      return [() => <View />, store, lifecircle] as const
+      return [() => <View />, store, lifecycle] as const
     },
     {
       symbol: TORCH_PAGE_SYMBOL,

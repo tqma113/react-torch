@@ -49,7 +49,7 @@ export default function createRender(config: IntegralTorchConfig) {
         }
         const getElementAndState = async () => {
           try {
-            const [view, store, lifecycle] = (await pageCreator)(
+            const [view, store, lifecycle] = pageCreator(
               history,
               serverContext
             )

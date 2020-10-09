@@ -155,9 +155,12 @@ export default function dev(draftConfig: TorchConfig) {
 }
 
 function getAssets(stats: Record<string, string | string[]>) {
-  return Object.keys(stats).reduce((result: Record<string, string>, assetName) => {
-    const value = stats[assetName]
-    result[assetName] = Array.isArray(value) ? value[0] : value
-    return result
-  }, {})
+  return Object.keys(stats).reduce(
+    (result: Record<string, string>, assetName) => {
+      const value = stats[assetName]
+      result[assetName] = Array.isArray(value) ? value[0] : value
+      return result
+    },
+    {}
+  )
 }

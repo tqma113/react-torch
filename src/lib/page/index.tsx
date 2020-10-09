@@ -28,10 +28,9 @@ export type ActionsFromPageCreator<
   PC extends Creater<any, any>
 > = PC extends Creater<any, infer AS> ? AS : never
 
-export function createPage<
-  S extends Object ,
-  AS extends Actions<S>,
->(creator: Creater<S, AS>): PageCreator<S, AS> {
+export function createPage<S extends Object, AS extends Actions<S>>(
+  creator: Creater<S, AS>
+): PageCreator<S, AS> {
   return Object.assign(creator, {
     symbol: TORCH_PAGE_SYMBOL,
   })

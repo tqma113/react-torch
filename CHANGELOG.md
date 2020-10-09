@@ -1,3 +1,12 @@
+## [1.9.1](https://github.com/tqma113/react-torch/compare/v1.9.0...v1.9.1) (2020-10-09)
+
+
+### Bug Fixes
+
+* **start:** static ([43e4e23](https://github.com/tqma113/react-torch/commit/43e4e239041534447d313691230ca6c318ee47e3))
+
+
+
 # [1.9.0](https://github.com/tqma113/react-torch/compare/v1.8.21...v1.9.0) (2020-10-09)
 
 

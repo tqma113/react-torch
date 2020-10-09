@@ -131,9 +131,9 @@ export default function start(draftConfig: TorchConfig) {
 }
 
 function getAssets(stats: Record<string, string | string[]>) {
-  return Object.keys(stats).reduce((result, assetName) => {
+  return Object.keys(stats).reduce((result: Record<string, string>, assetName) => {
     const value = stats[assetName]
     result[assetName] = Array.isArray(value) ? value[0] : value
     return result
-  }, {} as Record<string, string>)
+  }, {})
 }

@@ -54,12 +54,10 @@ export default async function createRender(
 
         const getElementAndState = async () => {
           try {
-            const [view, store, lifecycle] = pageCreator(
+            const [view, store] = await pageCreator(
               history,
               serverContext
             )
-
-            await lifecycle.willCreate()
 
             const globalContext: GlobalContextType = {
               location,

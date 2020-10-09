@@ -50,9 +50,7 @@ if (dataScript) {
               ...context,
               ssr: false,
             }
-            const [view, store, lifecycle] = pageCreator(history, ctx)
-
-            await lifecycle.willCreate()
+            const [view, store] = await pageCreator(history, ctx)
 
             const globalContext: GlobalContextType = {
               location,
@@ -68,11 +66,7 @@ if (dataScript) {
               `The container: ${container} is not exist`
             )
 
-            await lifecycle.willMount()
-
             ReactDOM.render(element, containerElement)
-
-            await lifecycle.didMount()
 
             store.listen(() => {
               const globalContext: GlobalContextType = {
@@ -108,14 +102,10 @@ if (dataScript) {
           if (isPromise(pageCreator)) {
             pageCreator = await pageCreator
           }
-          const [view, store, lifecycle] = pageCreator(history, context)
+          const [view, store] = await pageCreator(history, context)
 
           if (context.ssr) {
             store.UNSAFE_setState(state)
-          }
-
-          if (!context.ssr) {
-            await lifecycle.willCreate()
           }
 
           const globalContext: GlobalContextType = {
@@ -132,15 +122,11 @@ if (dataScript) {
             `The container: ${container} is not exist`
           )
 
-          await lifecycle.willMount()
-
           if (context.ssr) {
             ReactDOM.hydrate(element, containerElement)
           } else {
             ReactDOM.render(element, containerElement)
           }
-
-          await lifecycle.didMount()
 
           store.listen((data) => {
             const globalContext: GlobalContextType = {

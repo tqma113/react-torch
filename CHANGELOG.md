@@ -1,3 +1,18 @@
+# [1.9.0](https://github.com/tqma113/react-torch/compare/v1.8.21...v1.9.0) (2020-10-09)
+
+
+### Bug Fixes
+
+* **lifecycle:** name ([55737ea](https://github.com/tqma113/react-torch/commit/55737ea648495254372cf0f2a0e9fa578cec8eca))
+* **store:** listen type ([6b123f4](https://github.com/tqma113/react-torch/commit/6b123f49dfc80b3cbb6cb8da9b8b7f4001752a1d))
+
+
+### Features
+
+* **lifecycle:** remove ([5aa87d6](https://github.com/tqma113/react-torch/commit/5aa87d6a462eb7d685dea01abbc1654fb04eeda5))
+
+
+
 ## [1.8.21](https://github.com/tqma113/react-torch/compare/v1.8.20...v1.8.21) (2020-09-25)
 
 

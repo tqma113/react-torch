@@ -1,6 +1,5 @@
 import React from 'react'
 import { createPage } from '../../../src'
-import { useWillCreate, useWillMount } from '../../../src'
 import store from './Model'
 import './style.css'
 import type { History } from 'torch-history'
@@ -40,14 +39,7 @@ const getView = (history: History, context: Context) => () => {
   )
 }
 
-const Home = createPage((history, context) => {
-  useWillCreate(() => {
-    console.log('willCreate')
-  })
-
-  useWillMount(() => {
-    console.log('willMount')
-  })
+const Home = createPage(async (history, context) => {
 
   return [getView(history, context), store]
 })

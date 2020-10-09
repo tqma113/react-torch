@@ -31,8 +31,7 @@ export type ActionsFromPageCreator<
 export function createPage<
   S extends Object ,
   AS extends Actions<S>,
-  C extends Creater<S, AS>,
->(creator: C): PageCreator<S, AS> {
+>(creator: Creater<S, AS>): PageCreator<S, AS> {
   return Object.assign(creator, {
     symbol: TORCH_PAGE_SYMBOL,
   })

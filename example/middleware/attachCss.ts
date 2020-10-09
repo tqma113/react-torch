@@ -6,7 +6,7 @@ export const attachCss: Middleware = (app, server) => {
       styles: [
         {
           type: 'link',
-          href: '/static/css/test.css',
+          href: '/css/test.css',
           preload: true,
         },
       ],

@@ -37,7 +37,7 @@ export type Listener<S extends object, AS extends Actions<S>> = (
 ) => void
 
 export type Store<S extends object, AS extends Actions<S>> = {
-  listen: (listener: Listener<S, AS>) => void
+  listen: (listener: Listener<S, AS>) => () => void
   readonly state: S
   readonly actions: Currings<S, AS>
   readonly UNSAFE_setState: (s: S) => void

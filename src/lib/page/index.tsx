@@ -12,7 +12,7 @@ export type Creater<S extends object, AS extends Actions<S>> = (
   context: Context
 ) => Page<S, AS> | Promise<Page<S, AS>>
 
-export type PageCreator<S extends object, AS extends Actions<S>> = Creater<
+export type PageCreater<S extends object, AS extends Actions<S>> = Creater<
   S,
   AS
 > & {
@@ -29,13 +29,13 @@ export type ActionsFromPageCreator<
 > = PC extends Creater<any, infer AS> ? AS : never
 
 export function createPage<S extends Object, AS extends Actions<S>>(
-  creator: Creater<S, AS>
-): PageCreator<S, AS> {
-  return Object.assign(creator, {
+  creater: Creater<S, AS>
+): PageCreater<S, AS> {
+  return Object.assign(creater, {
     symbol: TORCH_PAGE_SYMBOL,
   })
 }
 
-export const isTorchPage = (input: any): input is PageCreator<any, any> => {
+export const isTorchPage = (input: any): input is PageCreater<any, any> => {
   return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
 }

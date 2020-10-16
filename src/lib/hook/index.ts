@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import Cookie from 'js-cookie'
 import GlobalContext from '../context'
 import type { CookieAttributes } from 'js-cookie'
-import type { Store, Actions, Currings } from '../store'
 
 export const useLocation = () => {
   const { location } = useContext(GlobalContext)
@@ -12,21 +11,6 @@ export const useLocation = () => {
 export const useHistory = () => {
   const { history } = useContext(GlobalContext)
   return history
-}
-
-export const useStore = <S extends object, AS extends Actions<S>>() => {
-  const { store } = useContext(GlobalContext)
-  return store as Store<S, AS>
-}
-
-export const useState = <S extends object>() => {
-  const { store } = useContext(GlobalContext)
-  return store.state as S
-}
-
-export const useActions = <S extends object, AS extends Actions<S>>() => {
-  const { store } = useContext(GlobalContext)
-  return store.actions as Currings<S, AS>
 }
 
 export const useTorchContext = () => {

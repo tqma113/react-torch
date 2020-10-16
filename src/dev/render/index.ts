@@ -59,7 +59,6 @@ export default async function createRender(
             const globalContext: GlobalContextType = {
               location,
               history,
-              store,
               context: serverContext,
             }
             const element = connect(view)(globalContext)

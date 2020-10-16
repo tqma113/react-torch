@@ -54,7 +54,6 @@ export default function createRender(config: IntegralTorchConfig) {
             const globalContext: GlobalContextType = {
               location,
               history,
-              store,
               context: serverContext,
             }
             const element = connect(view)(globalContext)

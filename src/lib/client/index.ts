@@ -55,7 +55,6 @@ if (dataScript) {
             const globalContext: GlobalContextType = {
               location,
               history,
-              store,
               context: ctx,
             }
             const element = connect(view)(globalContext)
@@ -72,7 +71,6 @@ if (dataScript) {
               const globalContext: GlobalContextType = {
                 location,
                 history,
-                store,
                 context: ctx,
               }
               const element = connect(view)(globalContext)
@@ -111,7 +109,6 @@ if (dataScript) {
           const globalContext: GlobalContextType = {
             location,
             history,
-            store,
             context,
           }
           const element = connect(view)(globalContext)
@@ -132,7 +129,6 @@ if (dataScript) {
             const globalContext: GlobalContextType = {
               location,
               history,
-              store,
               context,
             }
             const element = connect(view)(globalContext)

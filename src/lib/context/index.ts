@@ -12,8 +12,18 @@ function createContext() {
   return React.createContext<GlobalContextType>({} as any)
 }
 
-const GlobalContext = createContext()
+export const GlobalContext = createContext()
 
 export default GlobalContext
 
-export { connect } from './connect'
+export const connect = (component: React.ComponentType) => {
+  return ({ location, history, context }: GlobalContextType) =>
+    React.createElement(GlobalContext.Provider, {
+      value: {
+        location,
+        history,
+        context,
+      },
+      children: React.createElement(component),
+    })
+}

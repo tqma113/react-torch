@@ -1,37 +1,38 @@
 import type { History } from 'torch-history'
 import type { Context } from '../../index'
-import type { StoreLike } from '../store/index'
+import type { StoreLike } from '../store'
+import { createNoopStore } from '../store'
+import { isArray } from '../utils'
 
-export type Page<S extends object> = readonly [
+export type Page = ([
   () => JSX.Element,
-  StoreLike<S>
-]
+  StoreLike<any>
+]) | (() => JSX.Element)
 
-export type Creater<S extends object> = (
+export type Creater = (
   history: History,
   context: Context
-) => Page<S> | Promise<Page<S>>
+) => Page | Promise<Page>
 
-export type PageCreater<S extends object> = Creater<
-  S
-> & {
+export type PageCreater = Creater & {
   symbol: Symbol
 }
 
 const TORCH_PAGE_SYMBOL = Symbol('TORCH_PAGE')
 
-export type StateFromPageCreator<
-  PC extends Creater<any>
-> = PC extends Creater<infer S> ? S : never
-
-export function createPage<S extends Object>(
-  creater: Creater<S>
-): PageCreater<S> {
+export function createPage(
+  creater: Creater
+): PageCreater {
   return Object.assign(creater, {
     symbol: TORCH_PAGE_SYMBOL,
   })
 }
 
-export const isTorchPage = (input: any): input is PageCreater<any> => {
+export const isTorchPage = (input: any): input is PageCreater => {
   return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
+}
+
+
+export const getViewAndStoreFromPage = (page: Page) => {
+  return isArray(page) ? page : [page, createNoopStore()] as const
 }

@@ -1,6 +1,5 @@
 export * from './lib/context'
 export * from './lib/hook'
-export * from './lib/store'
 export * from './lib/page'
 export * from './lib/router'
 

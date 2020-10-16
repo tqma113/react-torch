@@ -4,6 +4,7 @@ import { createBrowserHistory } from 'torch-history'
 import createRouter from '../router'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
+import { getViewAndStoreFromPage } from '../../lib/page'
 import $routes from '@routes'
 import type { Listener } from 'torch-history'
 import type { TorchData } from '../../index'
@@ -50,7 +51,8 @@ if (dataScript) {
               ...context,
               ssr: false,
             }
-            const [view, store] = await pageCreator(history, ctx)
+            const page = await pageCreator(history, ctx)
+            const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
               location,
@@ -100,7 +102,8 @@ if (dataScript) {
           if (isPromise(pageCreator)) {
             pageCreator = await pageCreator
           }
-          const [view, store] = await pageCreator(history, context)
+          const page = await pageCreator(history, context)
+          const [view, store] = getViewAndStoreFromPage(page)
 
           if (context.ssr) {
             store.__UNSAFE_SET_STATE__(state)

@@ -5,10 +5,10 @@ import type { PageCreater } from '../page'
 import type { DraftRoute } from 'torch-router'
 
 export type Render = (
-  pageCreater: PageCreater<any> | Promise<PageCreater<any>> | null
+  pageCreater: PageCreater | Promise<PageCreater> | null
 ) => Promise<void>
 
-export type RouteModule = PageCreater<any> | Lazy<PageCreater<any>>
+export type RouteModule = PageCreater | Lazy<PageCreater>
 
 export type Route = DraftRoute<RouteModule>
 

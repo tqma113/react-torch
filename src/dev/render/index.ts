@@ -5,6 +5,7 @@ import compile from './compile'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
 import { Side } from '../../index'
+import { getViewAndStoreFromPage } from '../../lib/page'
 import { requireDocument, isPromise } from '../../lib/utils'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
@@ -54,7 +55,8 @@ export default async function createRender(
 
         const getElementAndState = async () => {
           try {
-            const [view, store] = await pageCreator(history, serverContext)
+            const page = await pageCreator(history, serverContext)
+            const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
               location,

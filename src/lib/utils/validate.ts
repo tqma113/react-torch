@@ -1,6 +1,10 @@
 export function isPromise<T, S>(
-  obj: PromiseLike<T> | S
-): obj is PromiseLike<T> {
+  input: PromiseLike<T> | S
+): input is PromiseLike<T> {
   // @ts-ignore
-  return obj && obj.then && typeof obj.then === 'function'
+  return input && input.then && typeof input.then === 'function'
+}
+
+export function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
+  return Array.isArray(input)
 }

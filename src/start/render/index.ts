@@ -5,6 +5,7 @@ import getRoutes from './getRoutes'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
 import { Side } from '../../index'
+import { getViewAndStoreFromPage } from '../../lib/page'
 import { requireDocument, isPromise } from '../../lib/utils'
 import type { Route, Render } from '../../lib/router'
 import type { Request, Response, NextFunction } from 'express'
@@ -49,7 +50,8 @@ export default function createRender(config: IntegralTorchConfig) {
         }
         const getElementAndState = async () => {
           try {
-            const [view, store] = await pageCreator(history, serverContext)
+            const page = await pageCreator(history, serverContext)
+            const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
               location,

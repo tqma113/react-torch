@@ -1,3 +1,14 @@
+# [1.10.0](https://github.com/tqma113/react-torch/compare/v1.9.1...v1.10.0) (2020-10-16)
+
+
+### Features
+
+* **context:** remove store ([e7ec745](https://github.com/tqma113/react-torch/commit/e7ec745a5b75c0e151f424005623e5cff32e51fd))
+* **store:** remove built-in store ([9d2a5aa](https://github.com/tqma113/react-torch/commit/9d2a5aaea4472e4c6f1c8b2c28a7eecf8c9c1769))
+* **store:** support all state management tool ([888dbb7](https://github.com/tqma113/react-torch/commit/888dbb733ddd41c6aecb23880175cdea30d7c21c))
+
+
+
 ## [1.9.1](https://github.com/tqma113/react-torch/compare/v1.9.0...v1.9.1) (2020-10-09)
 
 

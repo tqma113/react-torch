@@ -4,11 +4,12 @@ import { createBrowserHistory } from 'torch-history'
 import createRouter from '../router'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
-import { getViewAndStoreFromPage } from '../../lib/page'
 import $routes from '@routes'
 import type { Listener } from 'torch-history'
 import type { TorchData } from '../../index'
 import type { GlobalContextType } from '../context'
+import type { StoreLike } from '../store'
+import type { Page } from '../page'
 import type { Render } from '../router'
 
 const dataScript = document.getElementById(
@@ -156,4 +157,24 @@ if (dataScript) {
 function isPromise<T, S>(obj: PromiseLike<T> | S): obj is PromiseLike<T> {
   // @ts-ignore
   return obj && obj.then && typeof obj.then === 'function'
+}
+
+function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
+  return Array.isArray(input)
+}
+
+function createNoopStore(): StoreLike<any> {
+  return {
+    subscribe: (_) => {
+      return () => {}
+    },
+    getState: () => {
+      return {}
+    },
+    __UNSAFE_SET_STATE__: (_) => {},
+  }
+}
+
+function getViewAndStoreFromPage (page: Page) {
+  return isArray(page) ? page : ([page, createNoopStore()] as const)
 }

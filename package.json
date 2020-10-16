@@ -162,10 +162,10 @@
     "mini-css-extract-plugin": "^0.11.0",
     "nodemon": "^1.19.3",
     "prettier": "^2.1.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "ts-jest": "^26.1.1",
     "ts-node": "^8.4.1",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.3"
   }
 }

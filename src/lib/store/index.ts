@@ -1,3 +1,13 @@
+export interface Unsubscribe {
+  (): void
+}
+
+export type StoreLike<S extends object> = {
+  subscribe(listener: () => void): Unsubscribe
+  getState(): S
+  __UNSAFE_SET_STATE__(state: S): void
+}
+
 export type Action<S extends {}, P = any> = (state: S, payload: P) => S
 
 export type Actions<S extends {}> = Record<string, Action<S>>
@@ -36,11 +46,9 @@ export type Listener<S extends object, AS extends Actions<S>> = (
   data: Data<S, AS>
 ) => void
 
-export type Store<S extends object, AS extends Actions<S>> = {
-  listen: (listener: Listener<S, AS>) => () => void
-  readonly state: S
+export interface Store<S extends object, AS extends Actions<S>> extends StoreLike<S> {
+  subscribe: (listener: Listener<S, AS>) => () => void
   readonly actions: Currings<S, AS>
-  readonly UNSAFE_setState: (s: S) => void
 }
 
 function getKeys<T extends {}>(o: T): Array<keyof T> {
@@ -126,7 +134,7 @@ export function createStore<S extends object, AS extends Actions<S>>(
   }
 
   let listeners: Listener<S, AS>[] = []
-  function listen(listener: Listener<S, AS>) {
+  function subscribe(listener: Listener<S, AS>) {
     listeners.push(listener)
 
     return () => {
@@ -142,14 +150,14 @@ export function createStore<S extends object, AS extends Actions<S>>(
   }
 
   return {
-    listen,
-    get state(): S {
+    subscribe,
+    getState(): S {
       return state
     },
     get actions(): Currings<S, AS> {
       return curryActions
     },
-    UNSAFE_setState(s: S) {
+    __UNSAFE_SET_STATE__(s: S) {
       updateState(s, state, [], new Date().getTime(), new Date().getTime())
     },
   }

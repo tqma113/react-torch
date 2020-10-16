@@ -68,7 +68,7 @@ if (dataScript) {
 
             ReactDOM.render(element, containerElement)
 
-            store.listen(() => {
+            store.subscribe(() => {
               const globalContext: GlobalContextType = {
                 location,
                 history,
@@ -105,7 +105,7 @@ if (dataScript) {
           const [view, store] = await pageCreator(history, context)
 
           if (context.ssr) {
-            store.UNSAFE_setState(state)
+            store.__UNSAFE_SET_STATE__(state)
           }
 
           const globalContext: GlobalContextType = {
@@ -128,7 +128,7 @@ if (dataScript) {
             ReactDOM.render(element, containerElement)
           }
 
-          store.listen((data) => {
+          store.subscribe(() => {
             const globalContext: GlobalContextType = {
               location,
               history,

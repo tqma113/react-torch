@@ -63,7 +63,7 @@ export default async function createRender(
               context: serverContext,
             }
             const element = connect(view)(globalContext)
-            return [element, store.state] as const
+            return [element, store.getState()] as const
           } catch (err) {
             return [createErrorElement(JSON.stringify(err)), {}] as const
           }

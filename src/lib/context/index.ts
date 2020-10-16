@@ -1,13 +1,13 @@
 import React from 'react'
 import type { History, Location } from 'torch-history'
-import type { Store } from '../store'
+import type { StoreLike } from '../store'
 import type { Context } from '../..'
 
 export type GlobalContextType = {
   location: Location
   history: History
   context: Context
-  store: Store<any, any>
+  store: StoreLike<any>
 }
 
 function createContext() {

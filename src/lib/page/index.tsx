@@ -1,20 +1,19 @@
 import type { History } from 'torch-history'
 import type { Context } from '../../index'
-import type { Store, Actions } from '../store/index'
+import type { StoreLike } from '../store/index'
 
-export type Page<S extends object, AS extends Actions<S>> = readonly [
+export type Page<S extends object> = readonly [
   () => JSX.Element,
-  Store<S, AS>
+  StoreLike<S>
 ]
 
-export type Creater<S extends object, AS extends Actions<S>> = (
+export type Creater<S extends object> = (
   history: History,
   context: Context
-) => Page<S, AS> | Promise<Page<S, AS>>
+) => Page<S> | Promise<Page<S>>
 
-export type PageCreater<S extends object, AS extends Actions<S>> = Creater<
-  S,
-  AS
+export type PageCreater<S extends object> = Creater<
+  S
 > & {
   symbol: Symbol
 }
@@ -22,20 +21,17 @@ export type PageCreater<S extends object, AS extends Actions<S>> = Creater<
 const TORCH_PAGE_SYMBOL = Symbol('TORCH_PAGE')
 
 export type StateFromPageCreator<
-  PC extends Creater<any, any>
-> = PC extends Creater<infer S, any> ? S : never
-export type ActionsFromPageCreator<
-  PC extends Creater<any, any>
-> = PC extends Creater<any, infer AS> ? AS : never
+  PC extends Creater<any>
+> = PC extends Creater<infer S> ? S : never
 
-export function createPage<S extends Object, AS extends Actions<S>>(
-  creater: Creater<S, AS>
-): PageCreater<S, AS> {
+export function createPage<S extends Object>(
+  creater: Creater<S>
+): PageCreater<S> {
   return Object.assign(creater, {
     symbol: TORCH_PAGE_SYMBOL,
   })
 }
 
-export const isTorchPage = (input: any): input is PageCreater<any, any> => {
+export const isTorchPage = (input: any): input is PageCreater<any> => {
   return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
 }

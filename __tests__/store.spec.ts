@@ -3,7 +3,7 @@ import { createStore } from '../src/lib/store'
 describe('store', () => {
   it('should get current state by store.state', () => {
     const store = createStore({ count: 0 }, {})
-    expect(store.state).toEqual({ count: 0 })
+    expect(store.getState()).toEqual({ count: 0 })
   })
 
   it('should change state by calling actions', () => {
@@ -25,13 +25,13 @@ describe('store', () => {
       }
     )
 
-    expect(store.state).toEqual({ count: 0 })
+    expect(store.getState()).toEqual({ count: 0 })
 
     store.actions.INCREMENT()
-    expect(store.state).toEqual({ count: 1 })
+    expect(store.getState()).toEqual({ count: 1 })
 
     store.actions.DECREMENT()
-    expect(store.state).toEqual({ count: 0 })
+    expect(store.getState()).toEqual({ count: 0 })
   })
 
   it('should trigger listeners after state changed', () => {
@@ -48,8 +48,8 @@ describe('store', () => {
     )
 
     const listener = jest.fn()
-    store.listen(listener)
-    store.listen((data) => {
+    store.subscribe(listener)
+    store.subscribe((data) => {
       expect(data.currentState).toStrictEqual({ count: 1 })
       expect(data.previousState).toStrictEqual({ count: 0 })
     })
@@ -69,7 +69,7 @@ describe('store', () => {
     )
 
     const listener = jest.fn()
-    store.listen(listener)
+    store.subscribe(listener)
 
     store.actions.IDENTITY()
     expect(listener).toBeCalledTimes(0)
@@ -89,7 +89,7 @@ describe('store', () => {
     )
 
     const listener = jest.fn()
-    const unlisten = store.listen(listener)
+    const unlisten = store.subscribe(listener)
 
     store.actions.INCREMENT()
     expect(listener).toBeCalledTimes(1)
@@ -105,7 +105,7 @@ describe('store', () => {
 
     jest.spyOn(console, 'warn')
 
-    const unlisten = store.listen(listener)
+    const unlisten = store.subscribe(listener)
 
     unlisten()
     unlisten()

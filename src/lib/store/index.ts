@@ -8,7 +8,7 @@ export type StoreLike<S extends object> = {
   __UNSAFE_SET_STATE__(state: S): void
 }
 
-export const createNoopStore = (): StoreLike<any>  => {
+export const createNoopStore = (): StoreLike<any> => {
   return {
     subscribe: () => {
       return () => {}
@@ -16,8 +16,6 @@ export const createNoopStore = (): StoreLike<any>  => {
     getState: () => {
       return {}
     },
-    __UNSAFE_SET_STATE__: (state) => {
-
-    }
+    __UNSAFE_SET_STATE__: (state) => {},
   }
 }

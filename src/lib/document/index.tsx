@@ -77,7 +77,9 @@ export default function createDocument({
         <script
           id="__TORCH_DATA__"
           type="application/json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(data).replace(/</g, '\\u003c'),
+          }}
         />
         <script
           type="application/javascript"

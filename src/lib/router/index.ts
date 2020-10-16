@@ -29,9 +29,11 @@ export default function (routes: Route[]): Router {
   }
 }
 
-export type Lazy<T> = () => T | Promise<{
-  default: T
-}>
+export type Lazy<T> = () =>
+  | T
+  | Promise<{
+      default: T
+    }>
 
 async function dynamic<T>(loader: Lazy<T>): Promise<T> {
   const module = loader()

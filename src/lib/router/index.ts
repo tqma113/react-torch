@@ -1,6 +1,5 @@
 import { createRouter } from 'torch-router'
 import { isTorchPage } from '../page'
-import { isPromise } from '../utils'
 import type { PageCreater } from '../page'
 import type { DraftRoute } from 'torch-router'
 
@@ -42,4 +41,11 @@ async function dynamic<T>(loader: Lazy<T>): Promise<T> {
   } else {
     return module
   }
+}
+
+function isPromise<T, S>(
+  input: PromiseLike<T> | S
+): input is PromiseLike<T> {
+  // @ts-ignore
+  return input && input.then && typeof input.then === 'function'
 }

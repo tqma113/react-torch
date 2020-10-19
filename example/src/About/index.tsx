@@ -1,19 +1,12 @@
 import React from 'react'
 import { createPage } from '../../../src'
-import { createStore } from '../../../src'
+import store from './store'
 import './about.css'
 
-const store = createStore(
-  {
-    a: 1,
-  },
-  {}
-)
-
 const View = () => {
-  const state = store.state
+  const state = store.getState()
   console.log('about update')
-  return <div>about {state.a}</div>
+  return <div>about</div>
 }
 
 const About = createPage(() => {

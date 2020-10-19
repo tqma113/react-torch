@@ -1,6 +1,6 @@
 import React from 'react'
 import { createPage } from '../../../src'
-import store from './Model'
+import store from './store'
 import './style.css'
 import type { History } from 'torch-history'
 import type { Context } from '../../../src/index'
@@ -17,8 +17,12 @@ import type { Context } from '../../../src/index'
 
 const getView = (history: History, context: Context) => () => {
   console.log('update')
-  const state = store.state
-  const actions = store.actions
+  const state = store.getState()
+
+  const INCREASE = () => {
+    store.dispatch({ type: 'INCREMENT' })
+  }
+
   const handleClick = () => {
     history.push('/test')
   }
@@ -26,7 +30,7 @@ const getView = (history: History, context: Context) => () => {
   return (
     <div>
       Home {state.count}{' '}
-      <button onClick={() => actions.INCREASE()}>Increate</button>
+      <button onClick={() => INCREASE()}>Increate</button>
       <hr />
       <a href="/about">about</a>
       <hr />

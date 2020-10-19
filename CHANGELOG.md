@@ -1,3 +1,12 @@
+## [1.10.3](https://github.com/tqma113/react-torch/compare/v1.10.2...v1.10.3) (2020-10-19)
+
+
+### Bug Fixes
+
+* **router:** handle error ([161fadd](https://github.com/tqma113/react-torch/commit/161fadd6071cded80f8498a40a90c77f76b7d9be))
+
+
+
 ## [1.10.2](https://github.com/tqma113/react-torch/compare/v1.10.1...v1.10.2) (2020-10-19)
 
 

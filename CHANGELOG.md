@@ -1,3 +1,12 @@
+## [1.10.4](https://github.com/tqma113/react-torch/compare/v1.10.3...v1.10.4) (2020-10-19)
+
+
+### Bug Fixes
+
+* **router:** UnhandledPromiseRejectionWarning ([09ff756](https://github.com/tqma113/react-torch/commit/09ff7568fdb64c187698d0ac725638cfc9d14312))
+
+
+
 ## [1.10.3](https://github.com/tqma113/react-torch/compare/v1.10.2...v1.10.3) (2020-10-19)
 
 

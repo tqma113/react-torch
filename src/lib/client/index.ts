@@ -175,6 +175,6 @@ function createNoopStore(): StoreLike<any> {
   }
 }
 
-function getViewAndStoreFromPage (page: Page) {
+function getViewAndStoreFromPage(page: Page) {
   return isArray(page) ? page : ([page, createNoopStore()] as const)
 }

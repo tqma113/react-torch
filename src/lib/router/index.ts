@@ -1,5 +1,6 @@
 import { createRouter } from 'torch-router'
-import { isTorchPage } from '../page'
+import { isTorchPage, createPage } from '../page'
+import { createErrorElement } from '../error'
 import type { PageCreater } from '../page'
 import type { DraftRoute } from 'torch-router'
 
@@ -17,13 +18,17 @@ export default function (routes: Route[]): Router {
   const router = createRouter(routes)
 
   return (path, render) => {
-    const pageCreater = router(path)
-    if (pageCreater === null) {
-      render(null)
-    } else if (isTorchPage(pageCreater)) {
-      render(pageCreater)
-    } else {
-      render(dynamic(pageCreater))
+    try {
+      const pageCreater = router(path)
+      if (pageCreater === null) {
+        render(null)
+      } else if (isTorchPage(pageCreater)) {
+        render(pageCreater)
+      } else {
+        render(dynamic(pageCreater))
+      }
+    } catch (err) {
+      render(createPage(() => () => createErrorElement(err)))
     }
   }
 }
@@ -43,9 +48,7 @@ async function dynamic<T>(loader: Lazy<T>): Promise<T> {
   }
 }
 
-function isPromise<T, S>(
-  input: PromiseLike<T> | S
-): input is PromiseLike<T> {
+function isPromise<T, S>(input: PromiseLike<T> | S): input is PromiseLike<T> {
   // @ts-ignore
   return input && input.then && typeof input.then === 'function'
 }

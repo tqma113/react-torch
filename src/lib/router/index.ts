@@ -39,12 +39,16 @@ export type Lazy<T> = () =>
       default: T
     }>
 
-async function dynamic<T>(loader: Lazy<T>): Promise<T> {
-  const module = loader()
-  if (isPromise(module)) {
-    return (await module).default
-  } else {
-    return module
+async function dynamic(loader: Lazy<PageCreater>): Promise<PageCreater> {
+  try {
+    const module = loader()
+    if (isPromise(module)) {
+      return (await module).default
+    } else {
+      return module
+    }
+  } catch (err) {
+    return createPage(() => () => createErrorElement(err))
   }
 }
 

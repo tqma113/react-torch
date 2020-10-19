@@ -1,8 +1,7 @@
+import { createNoopStore } from '../store'
 import type { History } from 'torch-history'
 import type { Context } from '../../index'
 import type { StoreLike } from '../store'
-import { createNoopStore } from '../store'
-import { isArray } from '../utils'
 
 export type Page = [() => JSX.Element, StoreLike<any>] | (() => JSX.Element)
 
@@ -29,4 +28,8 @@ export const isTorchPage = (input: any): input is PageCreater => {
 
 export const getViewAndStoreFromPage = (page: Page) => {
   return isArray(page) ? page : ([page, createNoopStore()] as const)
+}
+
+function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
+  return Array.isArray(input)
 }

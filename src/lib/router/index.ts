@@ -28,7 +28,7 @@ export default function (routes: Route[]): Router {
         render(dynamic(pageCreater))
       }
     } catch (err) {
-      render(createPage(() => () => createErrorElement(err)))
+      render(createPage(() => () => createErrorElement(JSON.stringify(err))))
     }
   }
 }
@@ -48,7 +48,7 @@ async function dynamic(loader: Lazy<PageCreater>): Promise<PageCreater> {
       return module
     }
   } catch (err) {
-    return createPage(() => () => createErrorElement(err))
+    return createPage(() => () => createErrorElement(JSON.stringify(err)))
   }
 }
 

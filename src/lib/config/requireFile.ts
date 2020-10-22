@@ -92,7 +92,7 @@ function runCode(sourceCode: string, context: vm.Context) {
       module
     }){
       ${sourceCode}
-      return exports.default
+      return module.exports
     })
   `)()(context)
 }

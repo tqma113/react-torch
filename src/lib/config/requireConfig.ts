@@ -3,6 +3,7 @@ import vm from 'vm'
 import path from 'path'
 import { transformFileSync } from '@babel/core'
 import babelConfig from './babelConfig'
+import type { TorchConfig } from '../../index'
 
 enum Extension {
   JS = 'js',
@@ -13,7 +14,15 @@ enum Extension {
   INVALID = 'invalid',
 }
 
-export default function requireFile(filePath: string): any {
+export default function requireConfig(filePath: string): TorchConfig {
+  return _interopRequireDefault(requireFile(filePath)).default
+}
+
+function _interopRequireDefault(obj: any) {
+  return obj && obj.__esModule ? obj : { default: obj }
+}
+
+function requireFile(filePath: string): any {
   const clearFilePath = getClearFilePath(filePath)
   const [finalFilePath, ets] = getFileInfo(clearFilePath)
   if (ets === Extension.INVALID) {

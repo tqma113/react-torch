@@ -1,5 +1,5 @@
 import mergeConfig from './mergeConfig'
-import requireFile from './requireFile'
+import requireConfig from './requireConfig'
 import babelConfig from './babelConfig'
 
-export { mergeConfig, requireFile, babelConfig }
+export { mergeConfig, requireConfig, babelConfig }

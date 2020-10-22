@@ -1,5 +1,5 @@
 import path from 'path'
-import { mergeConfig, requireFile } from '../src/lib/config'
+import { mergeConfig, requireConfig } from '../src/lib/config'
 
 describe('config', () => {
   it('mergeCofnig', () => {
@@ -24,13 +24,13 @@ describe('config', () => {
     })
   })
 
-  it('requireConfig', () => {
-    const config = requireFile(
+  it('requireFile', () => {
+    const config = requireConfig(
       path.resolve(__dirname, './config/torch.config.ts')
     )
 
     expect(config).toMatchObject({
-      ssr: false,
+      "ssr": false,
     })
   })
 })

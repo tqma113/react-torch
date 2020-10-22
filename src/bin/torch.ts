@@ -2,7 +2,7 @@ import program from 'commander'
 import dev from '../dev'
 import build from '../build'
 import start from '../start'
-import { requireFile } from '../lib/config'
+import { requireConfig } from '../lib/config'
 
 program.version('1.0.12').name('torch')
 
@@ -13,7 +13,7 @@ program
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
-    let draftConfig = requireFile(config)
+    let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {
       if (typeof dir === 'string') {
@@ -37,7 +37,7 @@ program
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
-    let draftConfig = requireFile(config)
+    let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {
       if (typeof dir === 'string') {
@@ -61,7 +61,7 @@ program
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
-    let draftConfig = requireFile(config)
+    let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {
       if (typeof dir === 'string') {

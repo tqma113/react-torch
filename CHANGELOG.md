@@ -1,3 +1,13 @@
+## [1.10.6](https://github.com/tqma113/react-torch/compare/v1.10.5...v1.10.6) (2020-10-22)
+
+
+### Bug Fixes
+
+* **config:** cannot import esmodule file ([ef1705e](https://github.com/tqma113/react-torch/commit/ef1705e53b00b5139f0fd52d3e09e675f605f0b6))
+* **config:** cannot require commonjs module file ([d9cf11b](https://github.com/tqma113/react-torch/commit/d9cf11ba5bc5c744d4959558951452e8be8b7953))
+
+
+
 ## [1.10.5](https://github.com/tqma113/react-torch/compare/v1.10.4...v1.10.5) (2020-10-19)
 
 

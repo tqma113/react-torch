@@ -377,7 +377,7 @@
 
 * fix: lifecircle
 
-## 1.7.0 (2020-07-28)
+# 1.7.0 (2020-07-28)
 
 * refactor: lifecircle
 * feat: support mutiple lifecircle
@@ -410,7 +410,7 @@
 
 * fix: render html
 
-## 1.6.0 (2020-07-22)
+# 1.6.0 (2020-07-22)
 
 * refactor: render
 
@@ -472,11 +472,11 @@
 
 * feat: support async life circle hook
 
-## 1.5.0 (2020-06-30)
+# 1.5.0 (2020-06-30)
 
 * feat: support life circle hook
 
-## 1.4.0 (2020-06-29)
+# 1.4.0 (2020-06-29)
 
 * feat: support dynamic import&code splitting
 * feat: support import css
@@ -485,14 +485,14 @@
 
 * fix: body parser
 
-## 1.3.0 (2020-06-28)
+# 1.3.0 (2020-06-28)
 
 * feat: add config json schema
 * feat: support `Mdlw`
 * refactor: view to document
 * feat: support static path: `public`
 
-## 1.2.0 (2020-06-24)
+# 1.2.0 (2020-06-24)
 
 * feat: add `createPage`
 * feat: add context
@@ -501,7 +501,7 @@
 
 * fix: bin path
 
-## 1.1.0 (2020-06-16)
+# 1.1.0 (2020-06-16)
 
 * feat: state sync to client from server
 * refactor: all
@@ -510,7 +510,7 @@
 * fix: update render
 * ci: tsconfig
 
-## 1.1.0-0 (2020-05-20)
+# 1.1.0-0 (2020-05-20)
 
 * fix: createPage type
 * ci: `__tests__` init
@@ -577,7 +577,7 @@
 
 * feat: command
 
-## 1.0.0 (2020-03-02)
+# 1.0.0 (2020-03-02)
 
 * feat: ssr
 * feat: page

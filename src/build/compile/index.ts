@@ -15,7 +15,9 @@ export default function compileClient(
     webpack(webpackConfig, (error, stats) => {
       if (error) {
         reject(error)
-      } else {
+      }
+
+      if (stats) {
         console.log(
           '[webpack:client:build]',
           stats.toString({

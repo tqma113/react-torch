@@ -15,7 +15,9 @@ export default function compileServer(
     webpack(webpackConfig, (error, stats) => {
       if (error) {
         reject(error)
-      } else {
+      }
+
+      if (stats) {
         console.log(
           '[webpack:server:build]',
           stats.toString({

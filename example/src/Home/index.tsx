@@ -29,8 +29,7 @@ const getView = (history: History, context: Context) => () => {
 
   return (
     <div>
-      Home {state.count}{' '}
-      <button onClick={() => INCREASE()}>Increate</button>
+      Home {state.count} <button onClick={() => INCREASE()}>Increate</button>
       <hr />
       <a href="/about">about</a>
       <hr />

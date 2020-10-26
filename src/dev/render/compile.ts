@@ -23,22 +23,24 @@ export default function compile(
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)
 
-      const statsObj = stats.toJson()
-      statsObj.errors.forEach(error)
-      statsObj.warnings.forEach(warn)
-      statsObj.assets?.forEach((asset) => {
-        const assetPath = path.join(serverPath, asset.name)
-        delete require.cache[require.resolve(assetPath)]
-      })
+      if (stats) {
+        const statsObj = stats.toJson()
+        statsObj.errors.forEach(error)
+        statsObj.warnings.forEach(warn)
+        statsObj.assets?.forEach((asset: any) => {
+          const assetPath = path.join(serverPath, asset.name)
+          delete require.cache[require.resolve(assetPath)]
+        })
 
-      const routesPath = path.join(serverPath, TORCH_ROUTES_FILE_NAME)
-      const newModule = require(routesPath)
-      if (newModule) {
-        const routes = newModule.default || newModule
-        update(routes)
-        resolve()
-      } else {
-        reject('cannot find routes')
+        const routesPath = path.join(serverPath, TORCH_ROUTES_FILE_NAME)
+        const newModule = require(routesPath)
+        if (newModule) {
+          const routes = newModule.default || newModule
+          update(routes)
+          resolve()
+        } else {
+          reject('cannot find routes')
+        }
       }
     })
   })

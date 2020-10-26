@@ -1,7 +1,6 @@
 import path from 'path'
 import { babelConfig } from '../../lib/config'
 import { getExternals } from '../../lib/utils'
-import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
@@ -52,11 +51,8 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     resolve: {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.mjs', '.ts', '.tsx'],
-      plugins: [PnpWebpackPlugin],
     },
-    resolveLoader: {
-      plugins: [PnpWebpackPlugin.moduleLoader(module)],
-    },
+    resolveLoader: {},
     externals: getExternals(config.dir),
   }
 }

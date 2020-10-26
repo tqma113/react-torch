@@ -1,12 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
-import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { babelConfig } from '../../lib/config'
 import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
-import type { Configuration, Plugin } from 'webpack'
+import type { Configuration, WebpackPluginInstance } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
 function getConfig(config: IntegralTorchConfig): Configuration {
@@ -30,9 +29,9 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     },
   }
 
-  const plugins: Plugin[] = [
+  const plugins: WebpackPluginInstance[] = [
     new ManifestPlugin(manifestPluginOption),
-    new IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new IgnorePlugin({ resourceRegExp: /(^\.\/locale$|moment$)/ }),
     new HotModuleReplacementPlugin(),
   ]
   // TypeScript type checking
@@ -90,12 +89,10 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-      plugins: [PnpWebpackPlugin],
     },
     resolveLoader: {
       modules: ['node_modules'],
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
-      plugins: [PnpWebpackPlugin.moduleLoader],
     },
     plugins,
   }

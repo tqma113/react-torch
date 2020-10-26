@@ -1,7 +1,6 @@
 import path from 'path'
 import { IgnorePlugin } from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
-import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { babelConfig } from '../../lib/config'
 import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
@@ -30,8 +29,8 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     devtool: 'source-map',
     output: {
       path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
-      filename: `js/[name]-[contenthash:6].js`,
-      chunkFilename: `js/[name]-[contenthash:6].js`,
+      filename: `js/[name]-[contenthash].js`,
+      chunkFilename: `js/[name]-[contenthash].js`,
       publicPath: '/__torch/',
     },
     optimization: {
@@ -112,16 +111,14 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       },
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-      plugins: [PnpWebpackPlugin],
     },
     resolveLoader: {
       modules: ['node_modules'],
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
-      plugins: [PnpWebpackPlugin.moduleLoader(module)],
     },
     plugins: [
       new ManifestPlugin(manifestPluginOption),
-      new IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new IgnorePlugin({ resourceRegExp: /(^\.\/locale$|moment$)/ }),
     ],
   }
 }

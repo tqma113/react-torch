@@ -42,7 +42,7 @@ const getView = (history: History, context: Context) => () => {
   )
 }
 
-const Home = createPage(async (history, context) => {
+const Home = createPage(async ({ history, context }) => {
   return [getView(history, context), store]
 })
 

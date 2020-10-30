@@ -1,3 +1,12 @@
+## [1.11.1](https://github.com/tqma113/react-torch/compare/v1.11.0...v1.11.1) (2020-10-30)
+
+
+### Features
+
+* **page:** add params props ([5f9efc0](https://github.com/tqma113/react-torch/commit/5f9efc0a921307f91b4aa4d42baf9e88a56d6717))
+
+
+
 # [1.11.0](https://github.com/tqma113/react-torch/compare/v1.10.6...v1.11.0) (2020-10-30)
 
 

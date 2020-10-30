@@ -1,3 +1,12 @@
+## [1.11.3](https://github.com/tqma113/react-torch/compare/v1.11.2...v1.11.3) (2020-10-30)
+
+
+### Bug Fixes
+
+* **router:** update dependences ([7836d95](https://github.com/tqma113/react-torch/commit/7836d95277e6fc8717d66d346c5ddf7e8fe321b3))
+
+
+
 ## [1.11.2](https://github.com/tqma113/react-torch/compare/v1.11.1...v1.11.2) (2020-10-30)
 
 

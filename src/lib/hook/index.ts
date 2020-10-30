@@ -18,6 +18,11 @@ export const useTorchContext = () => {
   return context
 }
 
+export const useParams = () => {
+  const { params } = useContext(GlobalContext)
+  return params
+}
+
 export const useCookie = () => {
   const { context } = useContext(GlobalContext)
 

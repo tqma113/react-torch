@@ -1,3 +1,12 @@
+## [1.11.2](https://github.com/tqma113/react-torch/compare/v1.11.1...v1.11.2) (2020-10-30)
+
+
+### Features
+
+* **hook:** add useParams ([764ff9b](https://github.com/tqma113/react-torch/commit/764ff9bd5a0945a3d0f815025e8a5c3276ac8876))
+
+
+
 ## [1.11.1](https://github.com/tqma113/react-torch/compare/v1.11.0...v1.11.1) (2020-10-30)
 
 

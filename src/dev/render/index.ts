@@ -55,7 +55,12 @@ export default async function createRender(
 
         const getElementAndState = async () => {
           try {
-            const page = await pageCreator(history, serverContext)
+            const page = await pageCreator({
+              location,
+              history,
+              context: serverContext,
+              params,
+            })
             const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {

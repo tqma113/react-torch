@@ -52,7 +52,12 @@ if (dataScript) {
               ...context,
               ssr: false,
             }
-            const page = await pageCreator(history, ctx)
+            const page = await pageCreator({
+              location,
+              history,
+              context: ctx,
+              params,
+            })
             const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
@@ -105,7 +110,7 @@ if (dataScript) {
           if (isPromise(pageCreator)) {
             pageCreator = await pageCreator
           }
-          const page = await pageCreator(history, context)
+          const page = await pageCreator({ location, history, context, params })
           const [view, store] = getViewAndStoreFromPage(page)
 
           if (context.ssr) {

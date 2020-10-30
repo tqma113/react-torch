@@ -9838,10 +9838,10 @@ torch-history@^1.0.1:
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
-torch-router@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/torch-router/-/torch-router-1.1.0.tgz#2d1be0d26a1a71ae062b6d4beb97bf268ce020e2"
-  integrity sha512-uQgpCYpXdSGXXipZZXk/ZwuBC+IU8ZFsDjp5XX4FdrYsc9NuxJN7r+JO2CctUQK2wr6wX7hUN/sGUrV2+avQrQ==
+torch-router@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/torch-router/-/torch-router-1.1.1.tgz#1749e5905def62acd1de8ddfc1fe465add8d78d8"
+  integrity sha512-DNhDItO7/TZ4Uth18Woie5c8G6o+pjasJNks3hixzNKfO42lQyPYbtTjzfc6gjhvc3qAUH8p+CXDyaYIEdwD1w==
   dependencies:
     path-to-regexp "^6.2.0"
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createPage } from '../../../src'
 
-const About = createPage((history, context) => {
+const About = createPage(({ history, context }) => {
   const View = () => {
     console.log(history, context)
     console.log('about update')

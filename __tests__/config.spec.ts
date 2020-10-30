@@ -30,7 +30,7 @@ describe('config', () => {
     )
 
     expect(config).toMatchObject({
-      "ssr": false,
+      ssr: false,
     })
   })
 })

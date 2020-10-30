@@ -2,10 +2,11 @@ import { createRouter } from 'torch-router'
 import { isTorchPage, createPage } from '../page'
 import { createErrorElement } from '../error'
 import type { PageCreater } from '../page'
-import type { DraftRoute } from 'torch-router'
+import type { DraftRoute, Params } from 'torch-router'
 
 export type Render = (
-  pageCreater: PageCreater | Promise<PageCreater> | null
+  pageCreater: PageCreater | Promise<PageCreater> | null,
+  params: Params
 ) => Promise<void>
 
 export type RouteModule = PageCreater | Lazy<PageCreater>
@@ -19,16 +20,22 @@ export default function (routes: Route[]): Router {
 
   return (path, render) => {
     try {
-      const pageCreater = router(path)
-      if (pageCreater === null) {
-        render(null)
-      } else if (isTorchPage(pageCreater)) {
-        render(pageCreater)
+      const matches = router(path)
+      if (matches === null) {
+        render(null, {})
       } else {
-        render(dynamic(pageCreater))
+        const { module: pageCreater, params } = matches
+        if (isTorchPage(pageCreater)) {
+          render(pageCreater, params)
+        } else {
+          render(dynamic(pageCreater), params)
+        }
       }
     } catch (err) {
-      render(createPage(() => () => createErrorElement(JSON.stringify(err))))
+      render(
+        createPage(() => () => createErrorElement(JSON.stringify(err))),
+        {}
+      )
     }
   }
 }

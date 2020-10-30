@@ -112,7 +112,7 @@
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "torch-history": "^1.0.1",
-    "torch-router": "^1.0.0",
+    "torch-router": "^1.1.0",
     "url": "^0.11.0",
     "webpack": "^4.41.0",
     "webpack-dev-middleware": "^3.7.2",

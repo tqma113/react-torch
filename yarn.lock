@@ -7944,10 +7944,10 @@ path-to-regexp@^3.1.0:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-3.2.0.tgz#fa7877ecbc495c601907562222453c43cc204a5f"
   integrity sha512-jczvQbCUS7XmS7o+y1aEO9OBVFeZBQ1MDSEqmO7xSoPgOPoowY/SxLpZ6Vh97/8qHZOteiCKb7gkG9gA2ZUxJA==
 
-path-to-regexp@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.1.0.tgz#0b18f88b7a0ce0bfae6a25990c909ab86f512427"
-  integrity sha512-h9DqehX3zZZDCEm+xbfU0ZmwCGFCAAraPJWMXJ4+v32NjZJilVg3k1TcKsRgIb8IQ/izZSaydDc1OhJCZvs2Dw==
+path-to-regexp@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
+  integrity sha512-f66KywYG6+43afgE/8j/GoiNyygk/bnoCbps++3ErRKsIYkGGupyv07R2Ok5m9i67Iqc+T2g1eAUGUPzWhYTyg==
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -9813,12 +9813,12 @@ torch-history@^1.0.1:
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
-torch-router@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/torch-router/-/torch-router-1.0.0.tgz#88c6a6ed93a611732021ef43c3d0f4a1bb1ca2d0"
-  integrity sha512-h+CYkF3LSxmemPym2r5Z4XJKytD2qQ73Pc1TZ1AW36LEnn1TWWVuvUBzJv1Vp4R9U0cbmtxn+LXd4/Nd45s40Q==
+torch-router@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/torch-router/-/torch-router-1.1.0.tgz#2d1be0d26a1a71ae062b6d4beb97bf268ce020e2"
+  integrity sha512-uQgpCYpXdSGXXipZZXk/ZwuBC+IU8ZFsDjp5XX4FdrYsc9NuxJN7r+JO2CctUQK2wr6wX7hUN/sGUrV2+avQrQ==
   dependencies:
-    path-to-regexp "^6.1.0"
+    path-to-regexp "^6.2.0"
 
 touch@^3.1.0:
   version "3.1.0"

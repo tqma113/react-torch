@@ -31,7 +31,7 @@ export default function createRender(config: IntegralTorchConfig) {
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pct) => {
+    const render: Render = async (pct, params) => {
       if (pct === null) {
         next()
       } else {
@@ -57,6 +57,7 @@ export default function createRender(config: IntegralTorchConfig) {
               location,
               history,
               context: serverContext,
+              params,
             }
             const element = connect(view)(globalContext)
             return [element, store.getState()] as const

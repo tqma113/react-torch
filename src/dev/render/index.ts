@@ -37,7 +37,7 @@ export default async function createRender(
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pct) => {
+    const render: Render = async (pct, params) => {
       if (pct === null) {
         next()
       } else {
@@ -62,6 +62,7 @@ export default async function createRender(
               location,
               history,
               context: serverContext,
+              params,
             }
             const element = connect(view)(globalContext)
             return [element, store.getState()] as const

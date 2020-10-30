@@ -32,7 +32,11 @@ interface UpdateCountAction {
   preload: number
 }
 
-type Action = UnsafeSetStateAction | IncrementAction | DecrementAction | UpdateCountAction
+type Action =
+  | UnsafeSetStateAction
+  | IncrementAction
+  | DecrementAction
+  | UpdateCountAction
 
 function counter(state: State, action: Action) {
   switch (action.type) {
@@ -58,7 +62,7 @@ const store = {
   ...reduxStore,
   __UNSAFE_SET_STATE__(state: State) {
     reduxStore.dispatch({ type: 'UNSAFE_SETSTATE', preload: state })
-  }
+  },
 }
 
 export default store

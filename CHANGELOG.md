@@ -1,3 +1,12 @@
+# [1.11.0](https://github.com/tqma113/react-torch/compare/v1.10.6...v1.11.0) (2020-10-30)
+
+
+### Features
+
+* **router:** support params ([2e95bfb](https://github.com/tqma113/react-torch/commit/2e95bfb713cfbe42fcdf1f7371b809937c00e8c1))
+
+
+
 ## [1.10.6](https://github.com/tqma113/react-torch/compare/v1.10.5...v1.10.6) (2020-10-22)
 
 

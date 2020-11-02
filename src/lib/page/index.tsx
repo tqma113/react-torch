@@ -1,14 +1,19 @@
 import { createNoopStore } from '../store'
-import type { History } from 'torch-history'
+import type { History, Location } from 'torch-history'
+import type { Params } from 'torch-router'
 import type { Context } from '../../index'
 import type { StoreLike } from '../store'
 
 export type Page = [() => JSX.Element, StoreLike<any>] | (() => JSX.Element)
 
-export type Creater = (
-  history: History,
+export type CreaterProps = {
+  location: Location
+  history: History
   context: Context
-) => Page | Promise<Page>
+  params: Params
+}
+
+export type Creater = (props: CreaterProps) => Page | Promise<Page>
 
 export type PageCreater = Creater & {
   symbol: Symbol

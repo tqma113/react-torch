@@ -31,7 +31,7 @@ export default function createRender(config: IntegralTorchConfig) {
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pct) => {
+    const render: Render = async (pct, params) => {
       if (pct === null) {
         next()
       } else {
@@ -50,13 +50,19 @@ export default function createRender(config: IntegralTorchConfig) {
         }
         const getElementAndState = async () => {
           try {
-            const page = await pageCreator(history, serverContext)
+            const page = await pageCreator({
+              location,
+              history,
+              context: serverContext,
+              params,
+            })
             const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
               location,
               history,
               context: serverContext,
+              params,
             }
             const element = connect(view)(globalContext)
             return [element, store.getState()] as const

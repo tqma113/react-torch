@@ -30,7 +30,7 @@ if (dataScript) {
       const router = createRouter($routes)
 
       const listener: Listener = async ({ location }) => {
-        const render: Render = async (pageCreator) => {
+        const render: Render = async (pageCreator, params) => {
           if (pageCreator === null) {
             const globalContext = {
               location,
@@ -52,13 +52,19 @@ if (dataScript) {
               ...context,
               ssr: false,
             }
-            const page = await pageCreator(history, ctx)
+            const page = await pageCreator({
+              location,
+              history,
+              context: ctx,
+              params,
+            })
             const [view, store] = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
               location,
               history,
               context: ctx,
+              params,
             }
             const element = connect(view)(globalContext)
             const containerElement = document.querySelector(`#${container}`)
@@ -75,6 +81,7 @@ if (dataScript) {
                 location,
                 history,
                 context: ctx,
+                params,
               }
               const element = connect(view)(globalContext)
               ReactDOM.render(element, containerElement)
@@ -85,7 +92,7 @@ if (dataScript) {
         router(location.pathname, render)
       }
 
-      const init: Render = async (pageCreator) => {
+      const init: Render = async (pageCreator, params) => {
         if (pageCreator === null) {
           const globalContext = {
             location,
@@ -103,7 +110,7 @@ if (dataScript) {
           if (isPromise(pageCreator)) {
             pageCreator = await pageCreator
           }
-          const page = await pageCreator(history, context)
+          const page = await pageCreator({ location, history, context, params })
           const [view, store] = getViewAndStoreFromPage(page)
 
           if (context.ssr) {
@@ -114,6 +121,7 @@ if (dataScript) {
             location,
             history,
             context,
+            params,
           }
           const element = connect(view)(globalContext)
           const containerElement = document.querySelector(`#${container}`)
@@ -134,6 +142,7 @@ if (dataScript) {
               location,
               history,
               context,
+              params,
             }
             const element = connect(view)(globalContext)
             ReactDOM.render(element, containerElement)

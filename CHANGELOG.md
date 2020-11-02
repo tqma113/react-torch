@@ -1,3 +1,43 @@
+## [1.11.4](https://github.com/tqma113/react-torch/compare/v1.11.3...v1.11.4) (2020-10-30)
+
+
+
+## [1.11.3](https://github.com/tqma113/react-torch/compare/v1.11.2...v1.11.3) (2020-10-30)
+
+
+### Bug Fixes
+
+* **router:** update dependences ([7836d95](https://github.com/tqma113/react-torch/commit/7836d95277e6fc8717d66d346c5ddf7e8fe321b3))
+
+
+
+## [1.11.2](https://github.com/tqma113/react-torch/compare/v1.11.1...v1.11.2) (2020-10-30)
+
+
+### Features
+
+* **hook:** add useParams ([764ff9b](https://github.com/tqma113/react-torch/commit/764ff9bd5a0945a3d0f815025e8a5c3276ac8876))
+
+
+
+## [1.11.1](https://github.com/tqma113/react-torch/compare/v1.11.0...v1.11.1) (2020-10-30)
+
+
+### Features
+
+* **page:** add params props ([5f9efc0](https://github.com/tqma113/react-torch/commit/5f9efc0a921307f91b4aa4d42baf9e88a56d6717))
+
+
+
+# [1.11.0](https://github.com/tqma113/react-torch/compare/v1.10.6...v1.11.0) (2020-10-30)
+
+
+### Features
+
+* **router:** support params ([2e95bfb](https://github.com/tqma113/react-torch/commit/2e95bfb713cfbe42fcdf1f7371b809937c00e8c1))
+
+
+
 ## [1.10.6](https://github.com/tqma113/react-torch/compare/v1.10.5...v1.10.6) (2020-10-22)
 
 

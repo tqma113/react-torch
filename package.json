@@ -1,6 +1,6 @@
 {
   "name": "react-torch",
-  "version": "1.10.6",
+  "version": "1.11.4",
   "description": "A lib to server-side render with react.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -65,8 +65,8 @@
     "npm": ">= 6.0.0"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "dependencies": {
     "@babel/core": "^7.12.3",
@@ -110,7 +110,7 @@
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "torch-history": "^1.0.1",
-    "torch-router": "^1.0.0",
+    "torch-router": "^1.1.1",
     "url": "^0.11.0",
     "webpack": "^5.2.0",
     "webpack-dev-middleware": "^3.7.2",
@@ -154,6 +154,7 @@
     "conventional-changelog-cli": "^2.1.0",
     "css-loader": "^5.0.0",
     "jest": "^26.1.0",
+    "less": "^3.12.2",
     "less-loader": "^7.0.1",
     "lint-staged": "^10.2.13",
     "mini-css-extract-plugin": "^1.2.0",

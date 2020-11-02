@@ -44,7 +44,7 @@ export enum HistoryType {
 // TYPES
 ///////////////////////////////////////////////////////////////////////////////
 import type { Server } from 'http'
-import type { Request, Response, Application } from 'express'
+import type { Express, Request, Response, Application } from 'express'
 import type { Configuration } from 'webpack'
 
 export type TorchConfig = {
@@ -60,6 +60,7 @@ export type TorchConfig = {
   favicon?: string | boolean
   styleMode?: PreloadType
   webpack?: (config: Configuration, packContext: PackContext) => Configuration
+  express?: Express
 }
 
 export type IntegralTorchConfig = {
@@ -75,6 +76,7 @@ export type IntegralTorchConfig = {
   favicon: string | false
   styleMode: PreloadType
   webpack: (config: Configuration, packContext: PackContext) => Configuration
+  express: Express | false
 }
 
 export type TinyContext = {

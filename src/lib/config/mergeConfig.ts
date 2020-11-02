@@ -62,6 +62,8 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const webpack = config.webpack ? config.webpack : identity
 
+  const express = config.express || false
+
   return {
     title,
     dir,
@@ -75,5 +77,6 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     ssr,
     styleMode,
     webpack,
+    express
   }
 }

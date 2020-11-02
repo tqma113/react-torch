@@ -1,6 +1,7 @@
 import path from 'path'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { Side, PackContext, Env, TorchConfig } from '../src'
+import express from './server'
 import type { Configuration } from 'webpack'
 
 const getClientWebpackConfig = (
@@ -57,13 +58,14 @@ const getServerWebpackConfig = (config: Configuration): Configuration => {
 const config: TorchConfig = {
   dir: path.resolve(__dirname),
   document: path.resolve(__dirname, './document'),
+  express,
   webpack: (config, packContext) => {
     if (packContext.packSide === Side.Client) {
       return getClientWebpackConfig(config, packContext)
     } else {
       return getServerWebpackConfig(config)
     }
-  },
+  }
 }
 
 export default config

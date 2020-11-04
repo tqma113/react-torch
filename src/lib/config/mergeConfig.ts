@@ -77,6 +77,6 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     ssr,
     styleMode,
     webpack,
-    createServer
+    createServer,
   }
 }

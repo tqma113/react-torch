@@ -65,7 +65,7 @@ const config: TorchConfig = {
     } else {
       return getServerWebpackConfig(config)
     }
-  }
+  },
 }
 
 export default config

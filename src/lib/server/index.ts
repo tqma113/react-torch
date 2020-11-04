@@ -11,7 +11,7 @@ export default function createServer(config: IntegralTorchConfig) {
   const isDev = process.env.NODE_ENV === 'development'
   const loggerFormat = isDev ? 'dev' : 'common'
   const cookieParserSecret = isDev ? 'torch' : '__TORCH__'
-  
+
   const app = express()
 
   // helmet

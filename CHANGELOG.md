@@ -1,3 +1,12 @@
+## [1.11.7](https://github.com/tqma113/react-torch/compare/v1.11.6...v1.11.7) (2020-11-04)
+
+
+### Bug Fixes
+
+* **config:** createServer ([91356f8](https://github.com/tqma113/react-torch/commit/91356f8a57b4804089228a8b8a43321ffa78d47c))
+
+
+
 ## [1.11.6](https://github.com/tqma113/react-torch/compare/v1.11.5...v1.11.6) (2020-11-04)
 
 

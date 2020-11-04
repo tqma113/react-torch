@@ -1,3 +1,12 @@
+## [1.11.6](https://github.com/tqma113/react-torch/compare/v1.11.5...v1.11.6) (2020-11-04)
+
+
+### Features
+
+* **config:** express -> server ([57e5918](https://github.com/tqma113/react-torch/commit/57e59184a5d4a4815693b4d5d724bc1322699796))
+
+
+
 ## [1.11.5](https://github.com/tqma113/react-torch/compare/v1.11.4...v1.11.5) (2020-11-04)
 
 

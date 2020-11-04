@@ -1,3 +1,12 @@
+## [1.11.5](https://github.com/tqma113/react-torch/compare/v1.11.4...v1.11.5) (2020-11-04)
+
+
+### Features
+
+* **config:** support custome server ([4f860ab](https://github.com/tqma113/react-torch/commit/4f860abbfa56b7e75680ceca9d54d2a674d05c28))
+
+
+
 ## [1.11.4](https://github.com/tqma113/react-torch/compare/v1.11.3...v1.11.4) (2020-10-30)
 
 

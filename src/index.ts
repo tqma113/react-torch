@@ -60,7 +60,7 @@ export type TorchConfig = {
   favicon?: string | boolean
   styleMode?: PreloadType
   webpack?: (config: Configuration, packContext: PackContext) => Configuration
-  server?: Express
+  createServer?: ServerCreater
 }
 
 export type IntegralTorchConfig = {
@@ -76,7 +76,7 @@ export type IntegralTorchConfig = {
   favicon: string | false
   styleMode: PreloadType
   webpack: (config: Configuration, packContext: PackContext) => Configuration
-  server: Express | false
+  createServer: ServerCreater | false
 }
 
 export type TinyContext = {
@@ -129,3 +129,5 @@ export type ScriptPreload =
       type: PreloadType.Link
       src: string
     }
+
+export type ServerCreater = (config: IntegralTorchConfig) => Express

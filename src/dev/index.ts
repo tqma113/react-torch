@@ -5,7 +5,7 @@ import path from 'path'
 import http from 'http'
 import debug from 'debug'
 import express from 'express'
-import createServer from './server'
+import createDefaultServer from './server'
 import compile from './compile'
 import createRender from './render'
 import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
@@ -34,6 +34,7 @@ export type Result = {
 export default function dev(draftConfig: TorchConfig) {
   process.env.NODE_ENV = Env.Development
   const config = mergeConfig(draftConfig)
+  const createServer = config.createServer || createDefaultServer
 
   return new Promise<Result>(async (resolve, reject) => {
     const port = await choosePort(config.host, config.port)

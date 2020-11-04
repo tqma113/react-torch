@@ -8,7 +8,7 @@ import bodyParser from 'body-parser'
 import type { IntegralTorchConfig } from '../../index'
 
 export default function createServer(config: IntegralTorchConfig) {
-  const app = config.server || express()
+  const app = express()
 
   // helmet
   app.use(helmet())

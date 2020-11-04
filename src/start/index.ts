@@ -4,11 +4,11 @@ import path from 'path'
 import http from 'http'
 import debug from 'debug'
 import express from 'express'
-import createDefaultServer from '../lib/server'
 import createRender from './render'
-import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
 import { mergeConfig } from '../lib/config'
+import createDefaultServer from '../lib/server'
 import { info, error as errorlog, choosePort } from '../lib/utils'
+import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
 import {
   Env,
   TORCH_DIR,

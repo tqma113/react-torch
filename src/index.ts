@@ -22,7 +22,6 @@ export const TORCH_FAVICON_FILE_NAME = 'favicon.ico'
 export enum Env {
   Development = 'development',
   Production = 'production',
-  Test = 'test',
 }
 
 export enum Side {
@@ -61,6 +60,7 @@ export type TorchConfig = {
   styleMode?: PreloadType
   webpack?: (config: Configuration, packContext: PackContext) => Configuration
   createServer?: ServerCreater
+  polyfillInstaller?: Partial<PolyfillInstaller>
 }
 
 export type IntegralTorchConfig = {
@@ -77,6 +77,7 @@ export type IntegralTorchConfig = {
   styleMode: PreloadType
   webpack: (config: Configuration, packContext: PackContext) => Configuration
   createServer: ServerCreater | false
+  polyfillInstaller: PolyfillInstaller
 }
 
 export type TinyContext = {
@@ -131,3 +132,8 @@ export type ScriptPreload =
     }
 
 export type ServerCreater = (config: IntegralTorchConfig) => Express
+
+export type PolyfillInstaller = {
+  [Env.Development]: (config: IntegralTorchConfig) => void
+  [Env.Production]: (config: IntegralTorchConfig) => void
+}

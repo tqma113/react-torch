@@ -6,7 +6,8 @@ import {
   TORCH_MIDDLEWARE_DIR,
   TORCH_FAVICON_FILE_NAME,
 } from '../../index'
-import type { TorchConfig, IntegralTorchConfig } from '../../index'
+import { Env } from '../../index'
+import type { TorchConfig, IntegralTorchConfig, PolyfillInstaller } from '../../index'
 
 const TITLE = 'React Torch'
 // Tools like Cloud9 rely on this.
@@ -15,6 +16,7 @@ const DEFAULT_DOCUMENT_PATH = path.resolve(__dirname, '../document')
 const DEVELOPMENT_PORT = 3000
 const PRODUCTION_PORT = 80
 const identity = <T>(a: T) => a
+const noop = () => {}
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
   const title = config.title || TITLE
@@ -64,6 +66,11 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const createServer = config.createServer || false
 
+  const polyfillInstaller: PolyfillInstaller = {
+    [Env.Development]: config.polyfillInstaller?.[Env.Development] || noop,
+    [Env.Production]: config.polyfillInstaller?.[Env.Production] || noop,
+  }
+
   return {
     title,
     dir,
@@ -78,5 +85,6 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     styleMode,
     webpack,
     createServer,
+    polyfillInstaller,
   }
 }

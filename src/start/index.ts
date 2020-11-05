@@ -24,8 +24,12 @@ export type Result = {
 }
 
 export default function start(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = Env.Production
+  process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+
   const config = mergeConfig(draftConfig)
+
+  config.polyfillInstaller[process.env.NODE_ENV](config)
+
   const createServer = config.createServer || createDefaultServer
 
   return new Promise<Result>(async (resolve, reject) => {

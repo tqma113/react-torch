@@ -8,10 +8,16 @@ import copyPublic from './copyPublic'
 import { mergeConfig } from '../lib/config'
 import { step, info, error } from '../lib/utils'
 import { Side, TORCH_DIR } from '../index'
+import { Env } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
 export default function build(draftConfig: TorchConfig) {
+  process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+
   const config = mergeConfig(draftConfig)
+
+  config.polyfillInstaller[process.env.NODE_ENV](config)
+
   const tinyContext: TinyContext = {
     ssr: config.ssr,
     env: process.env.NODE_ENV,

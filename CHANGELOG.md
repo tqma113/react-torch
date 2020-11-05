@@ -1,3 +1,17 @@
+## [1.11.8](https://github.com/tqma113/react-torch/compare/v1.11.7...v1.11.8) (2020-11-05)
+
+
+### Bug Fixes
+
+* **all:** error handle ([3d785d6](https://github.com/tqma113/react-torch/commit/3d785d6d752ca22a4142ab9f9598376c3f37f4d8))
+
+
+### Performance Improvements
+
+* **server:** optimze min ([ceccc3d](https://github.com/tqma113/react-torch/commit/ceccc3d3c1f23f27bb932de5a13ccd0144e17bb0))
+
+
+
 ## [1.11.7](https://github.com/tqma113/react-torch/compare/v1.11.6...v1.11.7) (2020-11-04)
 
 

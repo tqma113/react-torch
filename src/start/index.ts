@@ -28,7 +28,7 @@ export default function start(draftConfig: TorchConfig) {
 
   const config = mergeConfig(draftConfig)
 
-  config.polyfillInstaller[process.env.NODE_ENV](config)
+  config.installPolyfill[process.env.NODE_ENV](config)
 
   const createServer = config.createServer || createDefaultServer
 

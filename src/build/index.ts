@@ -16,7 +16,7 @@ export default function build(draftConfig: TorchConfig) {
 
   const config = mergeConfig(draftConfig)
 
-  config.polyfillInstaller[process.env.NODE_ENV](config)
+  config.installPolyfill[process.env.NODE_ENV](config)
 
   const tinyContext: TinyContext = {
     ssr: config.ssr,

@@ -36,7 +36,7 @@ export default function dev(draftConfig: TorchConfig) {
 
   const config = mergeConfig(draftConfig)
 
-  config.polyfillInstaller[Env.Development](config)
+  config.installPolyfill[Env.Development](config)
 
   const createServer = config.createServer || createDefaultServer
 

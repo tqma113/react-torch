@@ -66,9 +66,9 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const createServer = config.createServer || false
 
-  const polyfillInstaller: PolyfillInstaller = {
-    [Env.Development]: config.polyfillInstaller?.[Env.Development] || noop,
-    [Env.Production]: config.polyfillInstaller?.[Env.Production] || noop,
+  const installPolyfill: PolyfillInstaller = {
+    [Env.Development]: config.installPolyfill?.[Env.Development] || noop,
+    [Env.Production]: config.installPolyfill?.[Env.Production] || noop,
   }
 
   return {
@@ -85,6 +85,6 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     styleMode,
     webpack,
     createServer,
-    polyfillInstaller,
+    installPolyfill,
   }
 }

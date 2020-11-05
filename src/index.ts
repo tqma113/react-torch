@@ -60,7 +60,7 @@ export type TorchConfig = {
   styleMode?: PreloadType
   webpack?: WebpackConfigTransform
   createServer?: ServerCreater
-  polyfillInstaller?: Partial<PolyfillInstaller>
+  installPolyfill?: Partial<PolyfillInstaller>
 }
 
 export type IntegralTorchConfig = {
@@ -77,7 +77,7 @@ export type IntegralTorchConfig = {
   styleMode: PreloadType
   webpack: WebpackConfigTransform
   createServer: ServerCreater | false
-  polyfillInstaller: PolyfillInstaller
+  installPolyfill: PolyfillInstaller
 }
 
 export type TinyContext = {

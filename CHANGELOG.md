@@ -1,3 +1,12 @@
+## [1.11.12](https://github.com/tqma113/react-torch/compare/v1.11.11...v1.11.12) (2020-11-05)
+
+
+### Features
+
+* **config/transformWebpackConfig:** add argument IntegralTorchConfig ([072ca00](https://github.com/tqma113/react-torch/commit/072ca0039a526166e4dff8599a34839ba7135e72))
+
+
+
 ## [1.11.11](https://github.com/tqma113/react-torch/compare/v1.11.10...v1.11.11) (2020-11-05)
 
 

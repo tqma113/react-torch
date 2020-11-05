@@ -38,7 +38,7 @@ if (dataScript) {
               context,
             }
             const error = new Error(`Unknow path: ${location.pathname}`)
-            const msg = JSON.stringify(error)
+            const msg = error.stack || error.message
             const element = connect(() => createErrorElement(msg))(
               (globalContext as unknown) as GlobalContextType
             )
@@ -100,7 +100,7 @@ if (dataScript) {
             context,
           }
           const error = new Error(`Unknow path: ${location.pathname}`)
-          const msg = JSON.stringify(error)
+          const msg = error.stack || error.message
           const element = connect(() => createErrorElement(msg))(
             (globalContext as unknown) as GlobalContextType
           )

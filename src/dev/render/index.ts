@@ -72,7 +72,7 @@ export default async function createRender(
             const element = connect(view)(globalContext)
             return [element, store.getState()] as const
           } catch (err) {
-            return [createErrorElement(JSON.stringify(err)), {}] as const
+            return [createErrorElement(err.stack), {}] as const
           }
         }
         const createHtml = requireDocument(config)
@@ -104,7 +104,7 @@ export default async function createRender(
       applyRouter(location.pathname, render)
     } catch (err) {
       res.status(502)
-      res.send(err)
+      res.send(err.stack)
     }
   }
 }

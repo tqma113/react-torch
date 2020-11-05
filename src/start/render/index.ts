@@ -67,7 +67,7 @@ export default function createRender(config: IntegralTorchConfig) {
             const element = connect(view)(globalContext)
             return [element, store.getState()] as const
           } catch (err) {
-            return [createErrorElement(JSON.stringify(err)), {}] as const
+            return [createErrorElement(err.stack || err.message), {}] as const
           }
         }
 

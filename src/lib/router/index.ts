@@ -33,7 +33,7 @@ export default function (routes: Route[]): Router {
       }
     } catch (err) {
       render(
-        createPage(() => () => createErrorElement(JSON.stringify(err))),
+        createPage(() => () => createErrorElement(err.stack || err.message)),
         {}
       )
     }
@@ -55,7 +55,7 @@ async function dynamic(loader: Lazy<PageCreater>): Promise<PageCreater> {
       return module
     }
   } catch (err) {
-    return createPage(() => () => createErrorElement(JSON.stringify(err)))
+    return createPage(() => () => createErrorElement(err.stack || err.message))
   }
 }
 

@@ -15,7 +15,10 @@ export default function compile(
   packContext: PackContext,
   update: (routes: Route[]) => void
 ) {
-  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
+  const webpackConfig = config.transformWebpackConfig(
+    getWebpackConfig(config),
+    packContext
+  )
   const compiler = webpack(webpackConfig)
 
   return new Promise<void>((resolve, reject) => {

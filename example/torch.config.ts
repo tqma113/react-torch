@@ -59,7 +59,7 @@ const config: TorchConfig = {
   dir: path.resolve(__dirname),
   document: path.resolve(__dirname, './document'),
   createServer: () => server,
-  webpack: (config, packContext) => {
+  transformWebpackConfig: (config, packContext) => {
     if (packContext.packSide === Side.Client) {
       return getClientWebpackConfig(config, packContext)
     } else {

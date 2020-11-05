@@ -7,7 +7,11 @@ import {
   TORCH_FAVICON_FILE_NAME,
 } from '../../index'
 import { Env } from '../../index'
-import type { TorchConfig, IntegralTorchConfig, PolyfillInstaller } from '../../index'
+import type {
+  TorchConfig,
+  IntegralTorchConfig,
+  PolyfillInstaller,
+} from '../../index'
 
 const TITLE = 'React Torch'
 // Tools like Cloud9 rely on this.
@@ -62,7 +66,9 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const styleMode = config.styleMode || PreloadType.Inner
 
-  const webpack = config.webpack ? config.webpack : identity
+  const transformWebpackConfig = config.transformWebpackConfig
+    ? config.transformWebpackConfig
+    : identity
 
   const createServer = config.createServer || false
 
@@ -83,7 +89,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     favicon,
     ssr,
     styleMode,
-    webpack,
+    transformWebpackConfig,
     createServer,
     installPolyfill,
   }

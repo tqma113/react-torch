@@ -58,7 +58,7 @@ export type TorchConfig = {
   title?: string
   favicon?: string | boolean
   styleMode?: PreloadType
-  webpack?: WebpackConfigTransform
+  transformWebpackConfig?: WebpackConfigTransform
   createServer?: ServerCreater
   installPolyfill?: Partial<PolyfillInstaller>
 }
@@ -75,7 +75,7 @@ export type IntegralTorchConfig = {
   title: string
   favicon: string | false
   styleMode: PreloadType
-  webpack: WebpackConfigTransform
+  transformWebpackConfig: WebpackConfigTransform
   createServer: ServerCreater | false
   installPolyfill: PolyfillInstaller
 }
@@ -138,4 +138,7 @@ export type PolyfillInstaller = {
   [Env.Production]: (config: IntegralTorchConfig) => void
 }
 
-export type WebpackConfigTransform = (config: Configuration, packContext: PackContext) => Configuration
+export type WebpackConfigTransform = (
+  config: Configuration,
+  packContext: PackContext
+) => Configuration

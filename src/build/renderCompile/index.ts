@@ -7,7 +7,10 @@ export default function compileServer(
   config: IntegralTorchConfig,
   packContext: PackContext
 ) {
-  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
+  const webpackConfig = config.transformWebpackConfig(
+    getWebpackConfig(config),
+    packContext
+  )
 
   step(`\nCompiling server...`)
 

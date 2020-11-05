@@ -9,7 +9,8 @@ export default function compileClient(
 ) {
   const webpackConfig = config.transformWebpackConfig(
     getWebpackConfig(config),
-    packContext
+    packContext,
+    config
   )
 
   step(`\nCompiling client...`)

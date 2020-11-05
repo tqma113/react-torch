@@ -14,7 +14,8 @@ export default async function compile(
 ) {
   const webpackConfig = config.transformWebpackConfig(
     getWebpackConfig(config),
-    packContext
+    packContext,
+    config
   )
 
   const pkgPath = path.resolve(config.dir, 'package.json')

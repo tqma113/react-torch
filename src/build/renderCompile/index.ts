@@ -9,7 +9,8 @@ export default function compileServer(
 ) {
   const webpackConfig = config.transformWebpackConfig(
     getWebpackConfig(config),
-    packContext
+    packContext,
+    config
   )
 
   step(`\nCompiling server...`)

@@ -140,5 +140,6 @@ export type PolyfillInstaller = {
 
 export type WebpackConfigTransform = (
   config: Configuration,
-  packContext: PackContext
+  packContext: PackContext,
+  torchConfig: IntegralTorchConfig
 ) => Configuration

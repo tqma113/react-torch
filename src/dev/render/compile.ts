@@ -17,7 +17,8 @@ export default function compile(
 ) {
   const webpackConfig = config.transformWebpackConfig(
     getWebpackConfig(config),
-    packContext
+    packContext,
+    config
   )
   const compiler = webpack(webpackConfig)
 

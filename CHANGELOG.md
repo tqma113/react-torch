@@ -1,3 +1,12 @@
+## [1.11.9](https://github.com/tqma113/react-torch/compare/v1.11.8...v1.11.9) (2020-11-05)
+
+
+### Features
+
+* **config:** support polyfillInstaller ([0342804](https://github.com/tqma113/react-torch/commit/03428042b2c515857f08e1a5dd71e8c38ddb244e))
+
+
+
 ## [1.11.8](https://github.com/tqma113/react-torch/compare/v1.11.7...v1.11.8) (2020-11-05)
 
 

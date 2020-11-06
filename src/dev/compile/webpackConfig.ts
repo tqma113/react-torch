@@ -22,9 +22,6 @@ function getConfig(config: IntegralTorchConfig): Configuration {
         if (/\.js$/.test(file.name)) {
           file.name = file.name.slice(0, -3)
         }
-        if (/\.css$/.test(file.name)) {
-          file.name = file.name.slice(0, -4)
-        }
       }
       return file
     },

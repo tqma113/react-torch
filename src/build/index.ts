@@ -11,8 +11,9 @@ import { Side, TORCH_DIR } from '../index'
 import { Env } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
+process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+
 export default function build(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
 
   const config = mergeConfig(draftConfig)
 

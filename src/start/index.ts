@@ -23,9 +23,9 @@ export type Result = {
   app: express.Express
 }
 
-export default function start(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
 
+export default function start(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)
 
   config.installPolyfill[process.env.NODE_ENV](config)

@@ -1,3 +1,5 @@
+/// <reference path="global.d.ts" />
+
 export * from './lib/context'
 export * from './lib/hook'
 export * from './lib/page'

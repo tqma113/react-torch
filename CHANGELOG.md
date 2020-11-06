@@ -1,3 +1,12 @@
+## [1.11.13](https://github.com/tqma113/react-torch/compare/v1.11.12...v1.11.13) (2020-11-06)
+
+
+### Bug Fixes
+
+* **all:** env ([49b7811](https://github.com/tqma113/react-torch/commit/49b78112006bc79e0832e09e7cbc182572cd451d))
+
+
+
 ## [1.11.12](https://github.com/tqma113/react-torch/compare/v1.11.11...v1.11.12) (2020-11-05)
 
 

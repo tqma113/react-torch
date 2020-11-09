@@ -1,21 +1,36 @@
+import path from 'path'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
-import createRouter from '../../lib/router'
-import getRoutes from './getRoutes'
-import { createErrorElement } from '../../lib/error'
-import { connect } from '../../lib/context'
-import { Side } from '../../index'
-import { getViewAndStoreFromPage } from '../../lib/page'
-import { requireDocument, isPromise } from '../../lib/utils'
-import type { Route, Render } from '../../lib/router'
+import createRouter from '../lib/router'
+import { createErrorElement } from '../lib/error'
+import { connect } from '../lib/context'
+import { Side,
+  TORCH_DIR,
+  TORCH_SERVER_DIR,
+  TORCH_ROUTES_FILE_NAME, } from '../index'
+import { getViewAndStoreFromPage } from '../lib/page'
+import { requireDocument, isPromise } from '../lib/utils'
+import type { Route, Render } from '../lib/router'
 import type { Request, Response, NextFunction } from 'express'
-import type { DocumentProps } from '../../lib/document'
-import type { GlobalContextType } from '../../lib/context'
+import type { DocumentProps } from '../lib/document'
+import type { GlobalContextType } from '../lib/context'
 import type {
   IntegralTorchConfig,
   ClientContext,
   ServerContext,
-} from '../../index'
+} from '../index'
+
+function getRoutes(config: IntegralTorchConfig) {
+  const outputPath = path.join(
+    config.dir,
+    TORCH_DIR,
+    TORCH_SERVER_DIR,
+    TORCH_ROUTES_FILE_NAME
+  )
+  const module = require(outputPath)
+  return module.default || module
+}
+
 
 export default function createRender(config: IntegralTorchConfig) {
   let routes: Route[] = getRoutes(config)
@@ -76,7 +91,7 @@ export default function createRender(config: IntegralTorchConfig) {
         const data: DocumentProps = {
           dir: config.dir,
           title: config.title,
-          publicPath: '',
+          cdn: config.cdn,
           context: clientContext,
           element,
           container: 'root',

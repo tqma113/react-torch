@@ -56,6 +56,7 @@ const getServerWebpackConfig = (config: Configuration): Configuration => {
 }
 
 const config: TorchConfig = {
+  port: 3000,
   dir: path.resolve(__dirname),
   document: path.resolve(__dirname, './document'),
   createServer: () => server,

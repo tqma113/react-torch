@@ -13,7 +13,7 @@ import {
   Env,
   TORCH_DIR,
   TORCH_CLIENT_DIR,
-  TORCH_PUBLIC_DIR,
+  TORCH_PUBLIC_PATH,
   TORCH_ASSETS_FILE_NAME,
 } from '../index'
 import type { TorchConfig } from '../index'
@@ -50,14 +50,8 @@ export default function start(draftConfig: TorchConfig) {
 
     // static file route
     app.use(
-      '/__torch',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
-    )
-
-    // static file route
-    app.use(
       '/',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_PUBLIC_DIR))
+      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
     )
 
     // static assets
@@ -66,6 +60,7 @@ export default function start(draftConfig: TorchConfig) {
         config.dir,
         TORCH_DIR,
         TORCH_CLIENT_DIR,
+        TORCH_PUBLIC_PATH,
         TORCH_ASSETS_FILE_NAME
       )
       res.locals.assets = getAssets(require(assertPath))

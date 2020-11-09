@@ -5,7 +5,8 @@ import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { babelConfig } from '../../lib/config'
-import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
+import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
+import SetManifestPlugin from './SetManifestPlugin'
 import type { Configuration, Plugin } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -29,6 +30,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
 
   const plugins: Plugin[] = [
     new ManifestPlugin(manifestPluginOption),
+    new SetManifestPlugin(),
     new IgnorePlugin(/^\.\/locale$/, /moment$/),
     new HotModuleReplacementPlugin(),
   ]
@@ -51,8 +53,8 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'cheap-module-eval-source-map',
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
-      publicPath: '/__torch/',
+      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH),
+      publicPath: `/${TORCH_PUBLIC_PATH}/`,
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
       pathinfo: true,

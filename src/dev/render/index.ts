@@ -80,7 +80,7 @@ export default async function createRender(
         const data: DocumentProps = {
           dir: config.dir,
           title: config.title,
-          publicPath: '/__torch/',
+          cdn: config.cdn,
           context: clientContext,
           element,
           container: 'root',

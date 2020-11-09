@@ -14,7 +14,7 @@ export type DocumentProps = {
   context: Context
   container: string
   element: ReactElement
-  publicPath: string
+  cdn: string
   assets: {
     vendor: string
     index: string
@@ -31,7 +31,7 @@ export default function createDocument({
   context,
   container,
   element,
-  publicPath,
+  cdn,
   assets,
   state,
   mode,
@@ -49,8 +49,8 @@ export default function createDocument({
   const scriptElements = scripts.map(getScript)
 
   const assetsScriptElement = [
-    getSrcScript(`${publicPath}${assets.vendor}`, 'vendor'),
-    getSrcScript(`${publicPath}${assets.index}`, 'index'),
+    getSrcScript(`${cdn}${assets.vendor}`, 'vendor'),
+    getSrcScript(`${cdn}${assets.index}`, 'index'),
   ]
 
   return (

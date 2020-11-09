@@ -13,6 +13,7 @@ export const TORCH_DIR = '.torch'
 export const TORCH_CLIENT_DIR = 'client'
 export const TORCH_SERVER_DIR = 'server'
 export const TORCH_PUBLIC_DIR = 'public'
+export const TORCH_PUBLIC_PATH = '__torch'
 export const TORCH_SRC_DIR = 'src'
 export const TORCH_MIDDLEWARE_DIR = 'middleware'
 export const TORCH_MDLW_FILE_NAME = 'middleware.js'
@@ -54,14 +55,15 @@ export type TorchConfig = {
   dir?: string
   src?: string
   public?: string
+  cdn?: string
   middleware?: string | false
   document?: string | false
   ssr?: boolean
   title?: string
   favicon?: string | boolean
   styleMode?: PreloadType
-  transformWebpackConfig?: WebpackConfigTransform
   createServer?: ServerCreater
+  transformWebpackConfig?: WebpackConfigTransform
   installPolyfill?: Partial<PolyfillInstaller>
 }
 
@@ -71,14 +73,15 @@ export type IntegralTorchConfig = {
   dir: string
   src: string
   public: string
+  cdn: string
   middleware: string | false
   document: string
   ssr: boolean
   title: string
   favicon: string | false
   styleMode: PreloadType
-  transformWebpackConfig: WebpackConfigTransform
   createServer: ServerCreater | false
+  transformWebpackConfig: WebpackConfigTransform
   installPolyfill: PolyfillInstaller
 }
 

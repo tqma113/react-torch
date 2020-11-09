@@ -77,6 +77,8 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     [Env.Production]: config.installPolyfill?.[Env.Production] || noop,
   }
 
+  const cdn = config.cdn || ''
+
   return {
     title,
     dir,
@@ -84,6 +86,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     port,
     src: srcDir,
     public: publicDir,
+    cdn,
     middleware,
     document,
     favicon,

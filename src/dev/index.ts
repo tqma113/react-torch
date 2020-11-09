@@ -23,6 +23,7 @@ import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_DIR,
+  TORCH_PUBLIC_PATH
 } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
@@ -83,8 +84,8 @@ export default function dev(draftConfig: TorchConfig) {
 
     // client compiled static file route
     app.use(
-      '/__torch',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
+      `/${TORCH_PUBLIC_PATH}`,
+      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH))
     )
 
     // static file route
@@ -101,9 +102,7 @@ export default function dev(draftConfig: TorchConfig) {
 
     // 开发模式用 webpack-dev-middleware 获取 assets
     app.use((req, res, next) => {
-      res.locals.assets = getAssets(
-        res.locals.webpackStats.toJson().assetsByChunkName
-      )
+      res.locals.assets = res.locals.webpackStats.assets
       next()
     })
 
@@ -157,15 +156,4 @@ export default function dev(draftConfig: TorchConfig) {
     server.on('error', reject)
     server.on('listening', () => resolve({ server, app }))
   })
-}
-
-function getAssets(stats: Record<string, string | string[]>) {
-  return Object.keys(stats).reduce(
-    (result: Record<string, string>, assetName) => {
-      const value = stats[assetName]
-      result[assetName] = Array.isArray(value) ? value[0] : value
-      return result
-    },
-    {}
-  )
 }

@@ -4,7 +4,7 @@ import TerserPlugin from 'terser-webpack-plugin'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { babelConfig } from '../../lib/config'
-import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
+import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -29,10 +29,10 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'source-map',
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
+      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH),
+      publicPath: `/${TORCH_PUBLIC_PATH}/`,
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,
-      publicPath: '/__torch/',
     },
     optimization: {
       splitChunks: {

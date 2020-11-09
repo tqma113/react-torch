@@ -1,3 +1,12 @@
+## [1.11.14](https://github.com/tqma113/react-torch/compare/v1.11.13...v1.11.14) (2020-11-09)
+
+
+### Bug Fixes
+
+* **dev:** compile css minifest ([eb30006](https://github.com/tqma113/react-torch/commit/eb3000692d99da943c79dddd4fb97606fa859d00))
+
+
+
 ## [1.11.13](https://github.com/tqma113/react-torch/compare/v1.11.12...v1.11.13) (2020-11-06)
 
 

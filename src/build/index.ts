@@ -14,7 +14,6 @@ import type { TorchConfig, TinyContext, PackContext } from '../index'
 process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
 
 export default function build(draftConfig: TorchConfig) {
-
   const config = mergeConfig(draftConfig)
 
   config.installPolyfill[process.env.NODE_ENV](config)

@@ -4,10 +4,12 @@ import { createMemoryHistory } from 'torch-history'
 import createRouter from '../lib/router'
 import { createErrorElement } from '../lib/error'
 import { connect } from '../lib/context'
-import { Side,
+import {
+  Side,
   TORCH_DIR,
   TORCH_SERVER_DIR,
-  TORCH_ROUTES_FILE_NAME, } from '../index'
+  TORCH_ROUTES_FILE_NAME,
+} from '../index'
 import { getViewAndStoreFromPage } from '../lib/page'
 import { requireDocument, isPromise } from '../lib/utils'
 import type { Route, Render } from '../lib/router'
@@ -30,7 +32,6 @@ function getRoutes(config: IntegralTorchConfig) {
   const module = require(outputPath)
   return module.default || module
 }
-
 
 export default function createRender(config: IntegralTorchConfig) {
   let routes: Route[] = getRoutes(config)

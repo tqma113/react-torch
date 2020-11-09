@@ -23,7 +23,7 @@ import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_DIR,
-  TORCH_PUBLIC_PATH
+  TORCH_PUBLIC_PATH,
 } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
@@ -85,7 +85,9 @@ export default function dev(draftConfig: TorchConfig) {
     // client compiled static file route
     app.use(
       `/${TORCH_PUBLIC_PATH}`,
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH))
+      express.static(
+        path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH)
+      )
     )
 
     // static file route

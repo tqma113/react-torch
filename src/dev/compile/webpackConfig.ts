@@ -53,7 +53,12 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'cheap-module-eval-source-map',
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH),
+      path: path.join(
+        config.dir,
+        TORCH_DIR,
+        TORCH_CLIENT_DIR,
+        TORCH_PUBLIC_PATH
+      ),
       publicPath: `/${TORCH_PUBLIC_PATH}/`,
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,

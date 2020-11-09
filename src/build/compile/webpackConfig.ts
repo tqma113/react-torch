@@ -29,7 +29,12 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'source-map',
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH),
+      path: path.join(
+        config.dir,
+        TORCH_DIR,
+        TORCH_CLIENT_DIR,
+        TORCH_PUBLIC_PATH
+      ),
       publicPath: `/${TORCH_PUBLIC_PATH}/`,
       filename: `js/[name]-[contenthash:6].js`,
       chunkFilename: `js/[name]-[contenthash:6].js`,

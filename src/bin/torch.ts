@@ -15,7 +15,7 @@ program
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
     process.env.NODE_ENV = process.env.NODE_ENV || Env.Development
-    
+
     let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {
@@ -41,7 +41,7 @@ program
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
     process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
-    
+
     let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {

@@ -1,3 +1,12 @@
+## [1.11.15](https://github.com/tqma113/react-torch/compare/v1.11.14...v1.11.15) (2020-11-09)
+
+
+### Features
+
+* **config:** cdn ([46e3156](https://github.com/tqma113/react-torch/commit/46e315663e90e41d595e13ed659cd6b6a99ee1bc))
+
+
+
 ## [1.11.14](https://github.com/tqma113/react-torch/compare/v1.11.13...v1.11.14) (2020-11-09)
 
 

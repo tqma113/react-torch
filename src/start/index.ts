@@ -10,7 +10,6 @@ import createDefaultServer from '../lib/server'
 import { info, error as errorlog, choosePort } from '../lib/utils'
 import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
 import {
-  Env,
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_PATH,
@@ -22,8 +21,6 @@ export type Result = {
   server: http.Server
   app: express.Express
 }
-
-process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
 
 export default function start(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)

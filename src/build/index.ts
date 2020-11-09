@@ -8,10 +8,7 @@ import copyPublic from './copyPublic'
 import { mergeConfig } from '../lib/config'
 import { step, info, error } from '../lib/utils'
 import { Side, TORCH_DIR } from '../index'
-import { Env } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
-
-process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
 
 export default function build(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)

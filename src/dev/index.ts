@@ -32,8 +32,6 @@ export type Result = {
   app: express.Express
 }
 
-process.env.NODE_ENV = process.env.NODE_ENV || Env.Development
-
 export default function dev(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)
 

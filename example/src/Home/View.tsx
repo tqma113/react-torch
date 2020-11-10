@@ -11,8 +11,7 @@ export default function () {
   const handleClick = () => {}
   return () => (
     <div>
-      Home {state.count}{' '}
-      <button onClick={() => Increate}>Increate</button>
+      Home {state.count} <button onClick={() => Increate}>Increate</button>
       <hr />
       <a href="/about">about</a>
       <hr />

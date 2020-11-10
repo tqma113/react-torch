@@ -60,7 +60,7 @@ export default async function createRender(
               context: serverContext,
               params,
             })
-            const [view, store] = getViewAndStoreFromPage(page)
+            const { Component, store } = getViewAndStoreFromPage(page)
 
             const globalContext: GlobalContextType = {
               location,
@@ -68,7 +68,7 @@ export default async function createRender(
               context: serverContext,
               params,
             }
-            const element = connect(view)(globalContext)()
+            const element = connect(Component)(globalContext)()
             return [element, store.getState()] as const
           } catch (err) {
             return [createErrorElement(err.stack), {}] as const

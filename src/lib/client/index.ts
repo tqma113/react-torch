@@ -61,9 +61,9 @@ try {
         cannotMatchPage(location.pathname, globalContext)
       } else {
         const page = await pageCreator(globalContext)
-        const [view, store] = getViewAndStoreFromPage(page)
+        const { Component, store } = getViewAndStoreFromPage(page)
 
-        const component = connect(view)(globalContext)
+        const component = connect(Component)(globalContext)
         ReactDOM.render(component(), containerElement)
 
         store.subscribe(() => {
@@ -87,13 +87,13 @@ try {
       cannotMatchPage(location.pathname, globalContext)
     } else {
       const page = await pageCreator(globalContext)
-      const [view, store] = getViewAndStoreFromPage(page)
+      const { Component, store } = getViewAndStoreFromPage(page)
 
       if (context.ssr) {
         store.__UNSAFE_SET_STATE__(state)
       }
 
-      const component = connect(view)(globalContext)
+      const component = connect(Component)(globalContext)
 
       if (context.ssr) {
         ReactDOM.hydrate(component(), containerElement)
@@ -114,8 +114,8 @@ try {
   console.error(err)
 }
 
-function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
-  return Array.isArray(input)
+function isFunction<Args, R, S>(input: ((args: Args) => R) | S): input is ((args: Args) => R) {
+  return input && Object.toString.call(input) === '[object Function]'
 }
 
 function createNoopStore(): StoreLike<any> {
@@ -132,6 +132,24 @@ function createNoopStore(): StoreLike<any> {
   }
 }
 
+function noop() {}
+
+const noopPage = {
+  store: createNoopStore(),
+  willCreate: noop,
+  willUnmount: noop
+}
+
 function getViewAndStoreFromPage(page: Page) {
-  return isArray(page) ? page : ([page, createNoopStore()] as const)
+  if (isFunction(page)) {
+    return {
+      Component: page,
+      ...noopPage
+    }
+  } else {
+    return {
+      ...noopPage,
+      ...page
+    }
+  }
 }

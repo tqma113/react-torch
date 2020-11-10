@@ -4,7 +4,19 @@ import type { Params } from 'torch-router'
 import type { Context } from '../../index'
 import type { StoreLike } from '../store'
 
-export type Page = [() => JSX.Element, StoreLike<any>] | (() => JSX.Element)
+export type PageLifeCycle = {
+  willCreate: () => Promise<void>
+  willUnmount: (nextLocation: Location) => Promise<void>
+}
+
+export type Page =
+  | (() => JSX.Element)
+  | {
+    Component: (() => JSX.Element)
+    store?: StoreLike<any>
+    willCreate?: () => Promise<void>
+    willUnmount?: (nextLocation: Location) => Promise<void>
+  }
 
 export type CreaterProps = {
   location: Location
@@ -31,10 +43,29 @@ export const isTorchPage = (input: any): input is PageCreater => {
   return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
 }
 
-export const getViewAndStoreFromPage = (page: Page) => {
-  return isArray(page) ? page : ([page, createNoopStore()] as const)
+
+function noop() {}
+
+const noopPage = {
+  store: createNoopStore(),
+  willCreate: noop,
+  willUnmount: noop
 }
 
-function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
-  return Array.isArray(input)
+export function getViewAndStoreFromPage(page: Page) {
+  if (isFunction(page)) {
+    return {
+      Component: page,
+      ...noopPage
+    }
+  } else {
+    return {
+      ...noopPage,
+      ...page
+    }
+  }
+}
+
+function isFunction<Args, R, S>(input: ((args: Args) => R) | S): input is ((args: Args) => R) {
+  return input && Object.toString.call(input) === '[object Function]'
 }

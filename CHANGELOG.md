@@ -1,3 +1,12 @@
+## [1.11.18](https://github.com/tqma113/react-torch/compare/v1.11.17...v1.11.18) (2020-11-10)
+
+
+### Bug Fixes
+
+* **page:** life cycle ([2275ff8](https://github.com/tqma113/react-torch/commit/2275ff8e47d93ca11172141764a062769e270348))
+
+
+
 ## [1.11.17](https://github.com/tqma113/react-torch/compare/v1.11.16...v1.11.17) (2020-11-10)
 
 

@@ -6,7 +6,7 @@ import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
 import { Side } from '../../index'
 import { getViewAndStoreFromPage } from '../../lib/page'
-import { requireDocument, isPromise } from '../../lib/utils'
+import { requireDocument } from '../../lib/utils'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
 import type { GlobalContextType } from '../../lib/context'
@@ -37,11 +37,10 @@ export default async function createRender(
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pct, params) => {
-      if (pct === null) {
+    const render: Render = async (pageCreator, params) => {
+      if (pageCreator === null) {
         next()
       } else {
-        const pageCreator = isPromise(pct) ? await pct : pct
         const serverContext: ServerContext = {
           ...packContext,
           req,
@@ -69,7 +68,7 @@ export default async function createRender(
               context: serverContext,
               params,
             }
-            const element = connect(view)(globalContext)
+            const element = connect(view)(globalContext)()
             return [element, store.getState()] as const
           } catch (err) {
             return [createErrorElement(err.stack), {}] as const
@@ -100,11 +99,9 @@ export default async function createRender(
       }
     }
 
-    try {
-      applyRouter(location.pathname, render)
-    } catch (err) {
+    applyRouter(location.pathname, render).catch((err) => {
       res.status(502)
       res.send(err.stack)
-    }
+    })
   }
 }

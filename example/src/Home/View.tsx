@@ -1,15 +1,18 @@
 import React from 'react'
-import store from './Model'
+import store from './store'
 
 export default function () {
   console.log('update')
-  const state = store.state
-  const actions = store.actions
+  const state = store.getState()
+
+  const Increate = () => {
+    store.dispatch({ type: 'INCREMENT' })
+  }
   const handleClick = () => {}
   return () => (
     <div>
       Home {state.count}{' '}
-      <button onClick={() => actions.INCREASE()}>Increate</button>
+      <button onClick={() => Increate}>Increate</button>
       <hr />
       <a href="/about">about</a>
       <hr />

@@ -11,7 +11,7 @@ import {
   TORCH_ROUTES_FILE_NAME,
 } from '../index'
 import { getViewAndStoreFromPage } from '../lib/page'
-import { requireDocument, isPromise } from '../lib/utils'
+import { requireDocument } from '../lib/utils'
 import type { Route, Render } from '../lib/router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../lib/document'
@@ -47,11 +47,10 @@ export default function createRender(config: IntegralTorchConfig) {
     history.push(req.url)
     const location = history.location
 
-    const render: Render = async (pct, params) => {
-      if (pct === null) {
+    const render: Render = async (pageCreator, params) => {
+      if (pageCreator === null) {
         next()
       } else {
-        const pageCreator = isPromise(pct) ? await pct : pct
         const serverContext: ServerContext = {
           req,
           res,
@@ -80,7 +79,7 @@ export default function createRender(config: IntegralTorchConfig) {
               context: serverContext,
               params,
             }
-            const element = connect(view)(globalContext)
+            const element = connect(view)(globalContext)()
             return [element, store.getState()] as const
           } catch (err) {
             return [createErrorElement(err.stack || err.message), {}] as const
@@ -112,11 +111,9 @@ export default function createRender(config: IntegralTorchConfig) {
       }
     }
 
-    try {
-      router(location.pathname, render)
-    } catch (err) {
+    router(location.pathname, render).catch((err) => {
       res.status(502)
-      res.send(err)
-    }
+      res.send(err.stack)
+    })
   }
 }

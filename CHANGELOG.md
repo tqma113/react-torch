@@ -1,3 +1,18 @@
+## [1.11.17](https://github.com/tqma113/react-torch/compare/v1.11.16...v1.11.17) (2020-11-10)
+
+
+### Features
+
+* **page:** add lifecycle ([09b53be](https://github.com/tqma113/react-torch/commit/09b53be2636aec6d5450a4083bcd1933be138bce))
+* **page:** lifecycle run ([4fcddc1](https://github.com/tqma113/react-torch/commit/4fcddc12f54b21d0d5e0b5ddbde6e051df98ac69))
+
+
+### Performance Improvements
+
+* **client:** handle error ([37606bc](https://github.com/tqma113/react-torch/commit/37606bc1727e98f2610430ae55694b327c092002))
+
+
+
 ## [1.11.16](https://github.com/tqma113/react-torch/compare/v1.11.15...v1.11.16) (2020-11-09)
 
 

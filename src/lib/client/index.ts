@@ -34,7 +34,7 @@ try {
   const history = createBrowserHistory({ window })
   const router = createRouter($routes)
 
-  let willUnmount: (nextLocation: Location) => Promise<void> = noop
+  let destoryPage: (nextLocation: Location) => Promise<void> | void = noop
 
   const cannotMatchPage = (
     pathname: string,
@@ -63,16 +63,11 @@ try {
         cannotMatchPage(location.pathname, globalContext)
       } else {
         const page = await pageCreator(globalContext)
-        const {
-          Component,
-          store,
-          willCreate,
-          willUnmount: wu,
-        } = standardizePage(page)
-        await willCreate()
-        willUnmount = wu
+        const { store, beforeCreate, create, destory } = standardizePage(page)
+        await beforeCreate()
+        destoryPage = destory
 
-        const component = connect(Component)(globalContext)
+        const component = connect(await create())(globalContext)
         ReactDOM.render(component(), containerElement)
 
         store.subscribe(() => {
@@ -81,7 +76,7 @@ try {
       }
     }
 
-    await willUnmount(location)
+    await destoryPage(location)
 
     router(location.pathname, render)
   }
@@ -99,20 +94,18 @@ try {
       cannotMatchPage(location.pathname, globalContext)
     } else {
       const page = await pageCreator(globalContext)
-      const { Component, store, willCreate, willUnmount: wu } = standardizePage(
-        page
-      )
+      const { store, beforeCreate, create, destory } = standardizePage(page)
 
       if (context.ssr) {
         store.__UNSAFE_SET_STATE__(state)
-        willCreate()
+        beforeCreate()
       } else {
-        await willCreate()
+        await beforeCreate()
       }
 
-      willUnmount = wu
+      destoryPage = destory
 
-      const component = connect(Component)(globalContext)
+      const component = connect(await create())(globalContext)
 
       if (context.ssr) {
         ReactDOM.hydrate(component(), containerElement)
@@ -159,15 +152,15 @@ function noop() {
 
 const noopPage = {
   store: createNoopStore(),
-  willCreate: noop,
-  willUnmount: noop,
+  beforeCreate: () => Promise.resolve(),
+  destory: () => Promise.resolve(),
 }
 
 function standardizePage(page: Page): StandardPage {
   if (isFunction(page)) {
     return {
-      Component: page,
       ...noopPage,
+      create: async () => page,
     }
   } else {
     return {

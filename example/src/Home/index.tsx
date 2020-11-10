@@ -45,12 +45,12 @@ const Home = createPage(async ({ history, context }) => {
   return {
     Component: getView(history, context),
     store,
-    willCreate: async () => {
-      console.log('home willCreate')
+    create: async () => {
+      return getView(history, context)
     },
-    willUnmount: async (location) => {
-      console.log(location, 'home')
-    }
+    destory: async (location) => {
+      console.log(location, 'home destory')
+    },
   }
 })
 

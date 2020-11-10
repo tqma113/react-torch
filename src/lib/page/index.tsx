@@ -5,15 +5,17 @@ import type { Context } from '../../index'
 import type { StoreLike } from '../store'
 
 export type BasePage = {
-  Component: () => JSX.Element
   store?: StoreLike<any>
-  willCreate?: () => Promise<void>
-  willUnmount?: (nextLocation: Location) => Promise<void>
+  beforeCreate?: () => Promise<void> | void
+  create: () => Promise<PageView> | PageView
+  destory?: (nextLocation: Location) => Promise<void> | void
 }
+
+export type PageView = () => JSX.Element
 
 export type StandardPage = Required<BasePage>
 
-export type Page = (() => JSX.Element) | BasePage
+export type Page = PageView | BasePage
 
 export type CreaterProps = {
   location: Location
@@ -40,21 +42,17 @@ export const isTorchPage = (input: any): input is PageCreater => {
   return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
 }
 
-function noop() {
-  return Promise.resolve()
-}
-
 const noopPage = {
   store: createNoopStore(),
-  willCreate: noop,
-  willUnmount: noop,
+  beforeCreate: () => Promise.resolve(),
+  destory: () => Promise.resolve(),
 }
 
 export function standardizePage(page: Page): StandardPage {
   if (isFunction(page)) {
     return {
       ...noopPage,
-      Component: page,
+      create: async () => page,
     }
   } else {
     return {

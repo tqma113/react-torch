@@ -60,11 +60,11 @@ export default async function createRender(
               context: serverContext,
               params,
             }
-            const { Component, store, willCreate } = standardizePage(
+            const { store, beforeCreate, create } = standardizePage(
               await pageCreator(globalContext)
             )
-            await willCreate()
-            const element = connect(Component)(globalContext)()
+            await beforeCreate()
+            const element = connect(await create())(globalContext)()
             return [element, store.getState()] as const
           } catch (err) {
             return [createErrorElement(err.stack), {}] as const

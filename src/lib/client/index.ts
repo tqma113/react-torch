@@ -4,11 +4,11 @@ import createRouter from '../router'
 import { connect } from '../context'
 import { createErrorElement } from '../error'
 import $routes from '@routes'
-import type { Listener } from 'torch-history'
+import type { Listener, Location } from 'torch-history'
 import type { TorchData } from '../../index'
 import type { GlobalContextType } from '../context'
 import type { StoreLike } from '../store'
-import type { Page } from '../page'
+import type { Page, StandardPage } from '../page'
 import type { Render } from '../router'
 
 try {
@@ -34,6 +34,8 @@ try {
   const history = createBrowserHistory({ window })
   const router = createRouter($routes)
 
+  let willUnmount: (nextLocation: Location) => Promise<void> = noop
+
   const cannotMatchPage = (
     pathname: string,
     globalContext: GlobalContextType
@@ -47,7 +49,6 @@ try {
   const listener: Listener = async ({ location }) => {
     const render: Render = async (pageCreator, params) => {
       const location = history.location
-
       const globalContext: GlobalContextType = {
         location,
         history,
@@ -57,11 +58,19 @@ try {
         },
         params,
       }
+
       if (pageCreator === null) {
         cannotMatchPage(location.pathname, globalContext)
       } else {
         const page = await pageCreator(globalContext)
-        const { Component, store } = getViewAndStoreFromPage(page)
+        const {
+          Component,
+          store,
+          willCreate,
+          willUnmount: wu,
+        } = standardizePage(page)
+        await willCreate()
+        willUnmount = wu
 
         const component = connect(Component)(globalContext)
         ReactDOM.render(component(), containerElement)
@@ -71,6 +80,8 @@ try {
         })
       }
     }
+
+    await willUnmount(location)
 
     router(location.pathname, render)
   }
@@ -83,15 +94,23 @@ try {
       context,
       params,
     }
+
     if (pageCreator === null) {
       cannotMatchPage(location.pathname, globalContext)
     } else {
       const page = await pageCreator(globalContext)
-      const { Component, store } = getViewAndStoreFromPage(page)
+      const { Component, store, willCreate, willUnmount: wu } = standardizePage(
+        page
+      )
 
       if (context.ssr) {
         store.__UNSAFE_SET_STATE__(state)
+        willCreate()
+      } else {
+        await willCreate()
       }
+
+      willUnmount = wu
 
       const component = connect(Component)(globalContext)
 
@@ -114,8 +133,10 @@ try {
   console.error(err)
 }
 
-function isFunction<Args, R, S>(input: ((args: Args) => R) | S): input is ((args: Args) => R) {
-  return input && Object.toString.call(input) === '[object Function]'
+function isFunction<Args, R, S>(
+  input: ((args: Args) => R) | S
+): input is (args: Args) => R {
+  return input && typeof input === 'function'
 }
 
 function createNoopStore(): StoreLike<any> {
@@ -132,24 +153,26 @@ function createNoopStore(): StoreLike<any> {
   }
 }
 
-function noop() {}
+function noop() {
+  return Promise.resolve()
+}
 
 const noopPage = {
   store: createNoopStore(),
   willCreate: noop,
-  willUnmount: noop
+  willUnmount: noop,
 }
 
-function getViewAndStoreFromPage(page: Page) {
+function standardizePage(page: Page): StandardPage {
   if (isFunction(page)) {
     return {
       Component: page,
-      ...noopPage
+      ...noopPage,
     }
   } else {
     return {
       ...noopPage,
-      ...page
+      ...page,
     }
   }
 }

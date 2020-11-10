@@ -5,7 +5,7 @@ import compile from './compile'
 import { createErrorElement } from '../../lib/error'
 import { connect } from '../../lib/context'
 import { Side } from '../../index'
-import { getViewAndStoreFromPage } from '../../lib/page'
+import { standardizePage } from '../../lib/page'
 import { requireDocument } from '../../lib/utils'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
@@ -54,20 +54,16 @@ export default async function createRender(
 
         const getElementAndState = async () => {
           try {
-            const page = await pageCreator({
-              location,
-              history,
-              context: serverContext,
-              params,
-            })
-            const { Component, store } = getViewAndStoreFromPage(page)
-
             const globalContext: GlobalContextType = {
               location,
               history,
               context: serverContext,
               params,
             }
+            const { Component, store, willCreate } = standardizePage(
+              await pageCreator(globalContext)
+            )
+            await willCreate()
             const element = connect(Component)(globalContext)()
             return [element, store.getState()] as const
           } catch (err) {

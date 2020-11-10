@@ -10,7 +10,7 @@ import {
   TORCH_SERVER_DIR,
   TORCH_ROUTES_FILE_NAME,
 } from '../index'
-import { getViewAndStoreFromPage } from '../lib/page'
+import { standardizePage } from '../lib/page'
 import { requireDocument } from '../lib/utils'
 import type { Route, Render } from '../lib/router'
 import type { Request, Response, NextFunction } from 'express'
@@ -65,20 +65,16 @@ export default function createRender(config: IntegralTorchConfig) {
         }
         const getElementAndState = async () => {
           try {
-            const page = await pageCreator({
-              location,
-              history,
-              context: serverContext,
-              params,
-            })
-            const { Component, store } = getViewAndStoreFromPage(page)
-
             const globalContext: GlobalContextType = {
               location,
               history,
               context: serverContext,
               params,
             }
+            const { Component, store, willCreate } = standardizePage(
+              await pageCreator(globalContext)
+            )
+            await willCreate()
             const element = connect(Component)(globalContext)()
             return [element, store.getState()] as const
           } catch (err) {

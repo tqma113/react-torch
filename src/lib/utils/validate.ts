@@ -9,6 +9,8 @@ export function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
   return Array.isArray(input)
 }
 
-export function isFunction<Args, R, S>(input: ((args: Args) => R) | S): input is ((args: Args) => R) {
-  return input && Object.toString.call(input) === '[object Function]'
+export function isFunction<Args, R, S>(
+  input: ((args: Args) => R) | S
+): input is (args: Args) => R {
+  return input && typeof input === 'function'
 }

@@ -16,7 +16,6 @@ import type { Context } from '../../../src/index'
 // }
 
 const getView = (history: History, context: Context) => () => {
-  console.log('update')
   const state = store.getState()
 
   const INCREASE = () => {
@@ -43,7 +42,16 @@ const getView = (history: History, context: Context) => () => {
 }
 
 const Home = createPage(async ({ history, context }) => {
-  return { Component: getView(history, context), store }
+  return {
+    Component: getView(history, context),
+    store,
+    willCreate: async () => {
+      console.log('home willCreate')
+    },
+    willUnmount: async (location) => {
+      console.log(location, 'home')
+    }
+  }
 })
 
 export default Home

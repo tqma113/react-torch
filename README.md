@@ -11,7 +11,7 @@ A react framework.
 
 ## Getting Started
 
-#### Create Project
++ Create Project
 
 ```shell
 > mkdir your-project
@@ -21,7 +21,7 @@ A react framework.
 > npm init -y
 ```
 
-#### Install Dependences
++ Install Dependences
 
 ```shell
 > npm install react react-dom react-torch typescript
@@ -29,7 +29,7 @@ A react framework.
 
 > Without Typescripts: `npm install react react-dom react-torch`
 
-#### Add Scripts
++ Add Scripts
 
 Add follow code in `package.json`
 
@@ -47,7 +47,7 @@ Add follow code in `package.json`
 }
 ```
 
-#### Add `src` and `index`
++ Add `src` and `index`
 
 ```ts
 // src/index.ts
@@ -59,7 +59,7 @@ export default [
 ]
 ```
 
-#### Add Page
++ Add Page
 
 ```ts
 // src/home/index.ts
@@ -121,19 +121,19 @@ export default createPage(async ({ history, context }) => {
 
 ```
 
-#### Start With Development
++ Start With Development
 
 ```shell
 npm run dev
 ```
 
-#### Build
++ Build
 
 ```shell
 npm run build
 ```
 
-#### Start After Build In Production
++ Start After Build In Production
 
 ```shell
 npm start

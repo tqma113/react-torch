@@ -5,7 +5,7 @@ import start from '../start'
 import { requireConfig } from '../lib/config'
 import { Env } from '../index'
 
-program.version('1.0.12').name('torch')
+program.version('1.11.20').name('torch')
 
 program
   .command('dev')

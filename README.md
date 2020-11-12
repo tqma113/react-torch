@@ -151,3 +151,7 @@ Please see our [contributing.md](https://github.com/tqma113/react-torch/contribu
 ## Author
 
 Ma Tianqi([@tqma113](https://github.com/tqma113))
+
+## License
+
+[MIT](./LICENSE)

@@ -1,11 +1,14 @@
 import program from 'commander'
+
 import dev from '../dev'
 import build from '../build'
 import start from '../start'
 import { requireConfig } from '../lib/config'
 import { Env } from '../index'
 
-program.version('1.11.20').name('torch')
+const pkg = require('../../package.json')
+
+program.version(pkg.version).name(pkg.name)
 
 program
   .command('dev')

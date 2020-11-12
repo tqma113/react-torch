@@ -54,7 +54,7 @@ Add follow code in `package.json`
 export default [
     {
         path: '/',
-        controller: () => import('./home/Controller')
+        module: () => import('./home/Controller')
     }
 ]
 ```
@@ -65,18 +65,61 @@ export default [
 ```ts
 // src/home/index.ts
 import React from 'react'
-import { createPage } from 'react-torch/page'
-import { createStore } from 'react-torch/store'
+import { createPage } from '../../../src'
+import store from './store'
+import './style.css'
+import type { History } from 'torch-history'
+import type { Context } from '../../../src/index'
 
-export default createPage((history, context) => {
+// const ignorePropsChanged = View => {
+//   let MemoizedView = (props) => {
+//     let view = React.useMemo(() => {
+//       return <View />
+//     }, [])
 
-  return [
-    () => {
-      return <div>about</div>
+//   return view
+//   }
+// }
+
+const getView = (history: History, context: Context) => () => {
+  const state = store.getState()
+
+  const INCREASE = () => {
+    store.dispatch({ type: 'INCREMENT' })
+  }
+
+  const handleClick = () => {
+    history.push('/test')
+  }
+
+  return (
+    <div>
+      Home {state.count} <button onClick={() => INCREASE()}>Increate</button>
+      <hr />
+      <a href="/about">about</a>
+      <hr />
+      <a href="/test">test</a>
+      <hr />
+      <a className="test" onClick={handleClick}>
+        test
+      </a>
+    </div>
+  )
+}
+
+export default createPage(async ({ history, context }) => {
+  return {
+    Component: getView(history, context),
+    store,
+    create: async () => {
+      return getView(history, context)
     },
-    createStore({}, {})
-  ]
+    destory: async (location) => {
+      console.log(location, 'home destory')
+    },
+  }
 })
+
 ```
 
 #### Start With Development

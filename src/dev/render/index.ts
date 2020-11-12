@@ -1,12 +1,16 @@
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
-import createRouter from '../../lib/router'
+
 import compile from './compile'
-import { createErrorElement } from '../../lib/error'
+
+import createRouter from '../../lib/router'
 import { connect } from '../../lib/context'
-import { Side } from '../../index'
 import { standardizePage } from '../../lib/page'
 import { requireDocument } from '../../lib/utils'
+import { createErrorElement } from '../../lib/error'
+
+import { Side } from '../../index'
+
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../lib/document'
 import type { GlobalContextType } from '../../lib/context'
@@ -22,15 +26,15 @@ export default async function createRender(
   config: IntegralTorchConfig,
   packContext: PackContext
 ) {
+  let router: Router
   const update = (routes: Route[]) => {
     router = createRouter(routes)
   }
-  await compile(config, packContext, update)
-
-  let router: Router
   const applyRouter = (path: string, render: Render) => {
     return router(path, render)
   }
+
+  await compile(config, packContext, update)
 
   return function (req: Request, res: Response, next: NextFunction) {
     const history = createMemoryHistory()
@@ -60,17 +64,22 @@ export default async function createRender(
               context: serverContext,
               params,
             }
-            const { store, beforeCreate, create } = standardizePage(
+
+            const { store, beforeCreate, create, created } = standardizePage(
               await pageCreator(globalContext)
             )
+
             await beforeCreate()
-            const element = connect(await create())(globalContext)()
+            const component = await create()
+            await created()
+
+            const element = connect(component)(globalContext)
             return [element, store.getState()] as const
           } catch (err) {
             return [createErrorElement(err.stack), {}] as const
           }
         }
-        const createHtml = requireDocument(config)
+
         const [element, state] = await getElementAndState()
         const data: DocumentProps = {
           dir: config.dir,
@@ -86,8 +95,10 @@ export default async function createRender(
           styles: res.locals.styles,
           scripts: res.locals.scripts,
         }
+        const createHtml = requireDocument(config)
         const html = createHtml(data)
         const stream = ReactDOMServer.renderToNodeStream(html)
+
         res.status(200)
         res.setHeader('Content-type', 'text/html')
         res.write('<!DOCTYPE html>')

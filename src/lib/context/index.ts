@@ -1,7 +1,8 @@
 import React from 'react'
+
+import type { Params } from 'torch-router'
 import type { History, Location } from 'torch-history'
 import type { Context } from '../..'
-import type { Params } from 'torch-router'
 
 export type GlobalContextType = {
   location: Location
@@ -23,7 +24,7 @@ export const connect = (component: React.ComponentType) => ({
   history,
   context,
   params,
-}: GlobalContextType) => () =>
+}: GlobalContextType) =>
   React.createElement(GlobalContext.Provider, {
     value: {
       location,

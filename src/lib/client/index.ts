@@ -34,8 +34,15 @@ try {
   const history = createBrowserHistory({ window })
   const router = createRouter($routes)
 
-  let destoryPage: (nextLocation: Location) => Promise<void> | void = noop
-  let unsubscribe: () => void = noop
+  let hook: {
+    beforeDestory: (nextLocation: Location) => Promise<void> | void
+    destoryed: (nextLocation: Location) => Promise<void> | void
+    unsubscribe: () => void
+  } = {
+    beforeDestory: noop,
+    destoryed: noop,
+    unsubscribe: noop,
+  }
 
   const cannotMatchPage = (
     pathname: string,
@@ -43,7 +50,7 @@ try {
   ) => {
     const error = new Error(`Unknow path: ${pathname}`)
     const msg = error.stack || error.message
-    const element = connect(() => createErrorElement(msg))(globalContext)()
+    const element = connect(() => createErrorElement(msg))(globalContext)
     ReactDOM.render(element, containerElement)
   }
 
@@ -64,20 +71,34 @@ try {
         cannotMatchPage(location.pathname, globalContext)
       } else {
         const page = await pageCreator(globalContext)
-        const { store, beforeCreate, create, destory } = standardizePage(page)
-        await beforeCreate()
-        destoryPage = destory
+        const {
+          store,
+          beforeCreate,
+          create,
+          created,
+          beforeDestory,
+          destroyed,
+        } = standardizePage(page)
 
-        const component = connect(await create())(globalContext)
-        ReactDOM.render(component(), containerElement)
-        unsubscribe = store.subscribe(() => {
-          ReactDOM.render(component(), containerElement)
+        hook.beforeDestory = beforeDestory
+        hook.destoryed = destroyed
+
+        await beforeCreate()
+        const component = await create()
+        await created()
+
+        const element = connect(component)(globalContext)
+        ReactDOM.render(element, containerElement)
+
+        hook.unsubscribe = store.subscribe(() => {
+          ReactDOM.render(element, containerElement)
         })
       }
     }
 
-    await destoryPage(location)
-    unsubscribe()
+    await hook.beforeDestory(location)
+    hook.unsubscribe()
+    await hook.destoryed(location)
 
     router(location.pathname, render)
   }
@@ -95,7 +116,17 @@ try {
       cannotMatchPage(location.pathname, globalContext)
     } else {
       const page = await pageCreator(globalContext)
-      const { store, beforeCreate, create, destory } = standardizePage(page)
+      const {
+        store,
+        beforeCreate,
+        create,
+        created,
+        beforeDestory,
+        destroyed,
+      } = standardizePage(page)
+
+      hook.beforeDestory = beforeDestory
+      hook.destoryed = destroyed
 
       if (context.ssr) {
         store.__UNSAFE_SET_STATE__(state)
@@ -104,18 +135,19 @@ try {
         await beforeCreate()
       }
 
-      destoryPage = destory
+      const component = await create()
+      await created()
 
-      const component = connect(await create())(globalContext)
+      const element = connect(component)(globalContext)
 
       if (context.ssr) {
-        ReactDOM.hydrate(component(), containerElement)
+        ReactDOM.hydrate(element, containerElement)
       } else {
-        ReactDOM.render(component(), containerElement)
+        ReactDOM.render(element, containerElement)
       }
 
-      unsubscribe = store.subscribe(() => {
-        ReactDOM.render(component(), containerElement)
+      hook.unsubscribe = store.subscribe(() => {
+        ReactDOM.render(element, containerElement)
       })
 
       history.listen(listener)
@@ -153,8 +185,10 @@ function noop() {
 
 const noopPage = {
   store: createNoopStore(),
-  beforeCreate: () => Promise.resolve(),
-  destory: () => Promise.resolve(),
+  beforeCreate: () => {},
+  created: () => {},
+  beforeDestory: () => {},
+  destroyed: () => {},
 }
 
 function standardizePage(page: Page): StandardPage {

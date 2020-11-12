@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import isRoot from 'is-root'
 import inquirer from 'inquirer'
 import detect from 'detect-port-alt'
+
 import { clear, getProcessForPort } from './index'
 
 const isInteractive = process.stdout.isTTY

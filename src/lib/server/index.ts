@@ -5,6 +5,7 @@ import compression from 'compression'
 import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
+
 import type { IntegralTorchConfig } from '../../index'
 
 export default function createServer(config: IntegralTorchConfig) {

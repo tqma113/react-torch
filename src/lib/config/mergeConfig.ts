@@ -1,12 +1,14 @@
 import path from 'path'
+
 import {
+  Env,
   PreloadType,
   TORCH_SRC_DIR,
   TORCH_PUBLIC_DIR,
   TORCH_MIDDLEWARE_DIR,
   TORCH_FAVICON_FILE_NAME,
 } from '../../index'
-import { Env } from '../../index'
+
 import type {
   TorchConfig,
   IntegralTorchConfig,

@@ -3,6 +3,7 @@ import gulp from 'gulp'
 import uglify from 'gulp-uglify'
 import plumber from 'gulp-plumber'
 import cleanCSS from 'gulp-clean-css'
+
 import { TORCH_DIR, TORCH_PUBLIC_DIR, TORCH_CLIENT_DIR } from '../../index'
 
 export default function copyPublic(dir: string) {

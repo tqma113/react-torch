@@ -1,14 +1,18 @@
 import { createNoopStore } from '../store'
-import type { History, Location } from 'torch-history'
+
 import type { Params } from 'torch-router'
+import type { History, Location } from 'torch-history'
 import type { Context } from '../../index'
 import type { StoreLike } from '../store'
 
 export type BasePage = {
   store?: StoreLike<any>
+
   beforeCreate?: () => Promise<void> | void
   create: () => Promise<PageView> | PageView
-  destory?: (nextLocation: Location) => Promise<void> | void
+  created?: () => Promise<void> | void
+  beforeDestory?: (nextLocation: Location) => Promise<void> | void
+  destroyed?: (nextLocation: Location) => Promise<void> | void
 }
 
 export type PageView = () => JSX.Element
@@ -44,8 +48,10 @@ export const isTorchPage = (input: any): input is PageCreater => {
 
 const noopPage = {
   store: createNoopStore(),
-  beforeCreate: () => Promise.resolve(),
-  destory: () => Promise.resolve(),
+  beforeCreate: () => {},
+  created: () => {},
+  beforeDestory: () => {},
+  destroyed: () => {},
 }
 
 export function standardizePage(page: Page): StandardPage {

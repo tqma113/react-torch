@@ -3,8 +3,10 @@ import { IgnorePlugin } from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
+
 import { babelConfig } from '../../lib/config'
 import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
+
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 

@@ -1,6 +1,8 @@
-import getWebpackConfig from './webpackConfig'
 import webpack from 'webpack'
+
+import getWebpackConfig from './webpackConfig'
 import { step, info } from '../../lib/utils'
+
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compileClient(

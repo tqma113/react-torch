@@ -2,7 +2,9 @@ import fs from 'fs'
 import vm from 'vm'
 import path from 'path'
 import { transformFileSync } from '@babel/core'
+
 import babelConfig from './babelConfig'
+
 import type { TorchConfig } from '../../index'
 
 enum Extension {

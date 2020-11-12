@@ -35,6 +35,7 @@ try {
   const router = createRouter($routes)
 
   let destoryPage: (nextLocation: Location) => Promise<void> | void = noop
+  let unsubscribe: () => void = noop
 
   const cannotMatchPage = (
     pathname: string,
@@ -69,14 +70,14 @@ try {
 
         const component = connect(await create())(globalContext)
         ReactDOM.render(component(), containerElement)
-
-        store.subscribe(() => {
+        unsubscribe = store.subscribe(() => {
           ReactDOM.render(component(), containerElement)
         })
       }
     }
 
     await destoryPage(location)
+    unsubscribe()
 
     router(location.pathname, render)
   }
@@ -113,7 +114,7 @@ try {
         ReactDOM.render(component(), containerElement)
       }
 
-      store.subscribe(() => {
+      unsubscribe = store.subscribe(() => {
         ReactDOM.render(component(), containerElement)
       })
 

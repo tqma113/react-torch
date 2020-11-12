@@ -1,3 +1,12 @@
+## [1.11.19](https://github.com/tqma113/react-torch/compare/v1.11.18...v1.11.19) (2020-11-12)
+
+
+### Bug Fixes
+
+* **client:** store unsubscribe ([ae51a5f](https://github.com/tqma113/react-torch/commit/ae51a5f12d4a55d02a4bc0894ee230aab7505f89))
+
+
+
 ## [1.11.18](https://github.com/tqma113/react-torch/compare/v1.11.17...v1.11.18) (2020-11-10)
 
 

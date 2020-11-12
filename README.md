@@ -61,7 +61,6 @@ export default [
 
 #### Add Page
 
-
 ```ts
 // src/home/index.ts
 import React from 'react'

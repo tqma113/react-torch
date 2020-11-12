@@ -43,13 +43,12 @@ const getView = (history: History, context: Context) => () => {
 
 const Home = createPage(async ({ history, context }) => {
   return {
-    Component: getView(history, context),
     store,
     create: async () => {
       return getView(history, context)
     },
-    destory: async (location) => {
-      console.log(location, 'home destory')
+    beforeDestory: async (location) => {
+      console.log(location, 'home beforeDestory')
     },
   }
 })

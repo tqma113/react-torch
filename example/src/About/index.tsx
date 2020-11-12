@@ -10,7 +10,7 @@ const Component = () => {
 }
 
 const About = createPage(() => {
-  return { store, create: async () => Component }
+  return { store, create: () => Component }
 })
 
 export default About

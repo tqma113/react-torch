@@ -7,6 +7,7 @@ import {
   TORCH_PUBLIC_DIR,
   TORCH_MIDDLEWARE_DIR,
   TORCH_FAVICON_FILE_NAME,
+  TORCH_DOCUMENT_CONTAINER
 } from '../../index'
 
 import type {
@@ -58,6 +59,8 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     ? path.resolve(dir, config.document)
     : DEFAULT_DOCUMENT_PATH
 
+  const container = config.container || TORCH_DOCUMENT_CONTAINER
+
   const favicon = config.favicon
     ? config.favicon === true
       ? path.resolve(publicDir, TORCH_FAVICON_FILE_NAME)
@@ -91,6 +94,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     cdn,
     middleware,
     document,
+    container,
     favicon,
     ssr,
     styleMode,

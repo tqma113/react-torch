@@ -95,7 +95,7 @@ export default function createRender(config: IntegralTorchConfig) {
           cdn: config.cdn,
           context: clientContext,
           element,
-          container: 'root',
+          container: config.container,
           state,
           mode: config.styleMode,
           ...res.locals,

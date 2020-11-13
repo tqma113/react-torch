@@ -21,6 +21,7 @@ export const TORCH_DOCUMENT_FILE_NAME = 'document.js'
 export const TORCH_ROUTES_FILE_NAME = 'routes.js'
 export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 export const TORCH_FAVICON_FILE_NAME = 'favicon.ico'
+export const TORCH_DOCUMENT_CONTAINER = 'root'
 
 export enum Env {
   Development = 'development',
@@ -58,6 +59,7 @@ export type TorchConfig = {
   cdn?: string
   middleware?: string | false
   document?: string | false
+  container?: string | false
   ssr?: boolean
   title?: string
   favicon?: string | boolean
@@ -76,6 +78,7 @@ export type IntegralTorchConfig = {
   cdn: string
   middleware: string | false
   document: string
+  container: string
   ssr: boolean
   title: string
   favicon: string | false

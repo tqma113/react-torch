@@ -1,3 +1,17 @@
+## [1.11.20](https://github.com/tqma113/react-torch/compare/v1.11.19...v1.11.20) (2020-11-13)
+
+
+### Bug Fixes
+
+* **cli:** version name ([e0d6803](https://github.com/tqma113/react-torch/commit/e0d6803d9be7b960d1f1d08b281c52cba859d2b0))
+
+
+### Features
+
+* **config:** support container ([a594b11](https://github.com/tqma113/react-torch/commit/a594b1101ec5f9c481117ec1c9116765241c9f6d))
+
+
+
 ## [1.11.19](https://github.com/tqma113/react-torch/compare/v1.11.18...v1.11.19) (2020-11-12)
 
 

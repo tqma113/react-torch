@@ -8,8 +8,7 @@ import type { Listener, Location } from 'torch-history'
 import type { TorchData } from '../../index'
 import type { GlobalContextType } from '../context'
 import type { StoreLike } from '../store'
-import type { Page, StandardPage } from '../page'
-import type { Render } from '../router'
+import type { Page, PageCreater, StandardPage } from '../page'
 
 try {
   const dataScript = document.getElementById(
@@ -54,63 +53,17 @@ try {
     ReactDOM.render(element, containerElement)
   }
 
-  const listener: Listener = async ({ location }) => {
-    const render: Render = async (pageCreator, params) => {
-      const location = history.location
-      const globalContext: GlobalContextType = {
-        location,
-        history,
-        context: {
-          ...context,
-          ssr: false,
-        },
-        params,
-      }
-
-      if (pageCreator === null) {
-        cannotMatchPage(location.pathname, globalContext)
-      } else {
-        const page = await pageCreator(globalContext)
-        const {
-          store,
-          beforeCreate,
-          create,
-          created,
-          beforeDestory,
-          destroyed,
-        } = standardizePage(page)
-
-        hook.beforeDestory = beforeDestory
-        hook.destoryed = destroyed
-
-        await beforeCreate()
-        const component = await create()
-        await created()
-
-        const element = connect(component)(globalContext)
-        ReactDOM.render(element, containerElement)
-
-        hook.unsubscribe = store.subscribe(() => {
-          ReactDOM.render(element, containerElement)
-        })
-      }
-    }
-
+  const destory = async (location: Location) => {
     await hook.beforeDestory(location)
     hook.unsubscribe()
     await hook.destoryed(location)
-
-    router(location.pathname, render)
   }
 
-  const init: Render = async (pageCreator, params) => {
-    const location = history.location
-    const globalContext: GlobalContextType = {
+  const render = async (pageCreator: PageCreater | null, globalContext: GlobalContextType) => {
+    const {
       location,
-      history,
       context,
-      params,
-    }
+    } = globalContext
 
     if (pageCreator === null) {
       cannotMatchPage(location.pathname, globalContext)
@@ -149,12 +102,40 @@ try {
       hook.unsubscribe = store.subscribe(() => {
         ReactDOM.render(element, containerElement)
       })
-
-      history.listen(listener)
     }
   }
 
-  router(location.pathname, init)
+  const listener: Listener = async ({ location }) => {
+    await destory(location)
+
+    router(location.pathname, async (pageCreator, params) => {
+      const globalContext: GlobalContextType = {
+        location,
+        history,
+        context: {
+          ...context,
+          ssr: false,
+        },
+        params,
+      }
+
+      await render(pageCreator, globalContext)
+    })
+  }
+
+  router(location.pathname, async (pageCreator, params) => {
+    const location = history.location
+    const globalContext: GlobalContextType = {
+      location,
+      history,
+      context,
+      params,
+    }
+
+    await render(pageCreator, globalContext)
+
+    history.listen(listener)
+  })
 } catch (err) {
   console.error(err)
 }

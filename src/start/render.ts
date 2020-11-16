@@ -39,7 +39,7 @@ function getRoutes(config: IntegralTorchConfig) {
 export default function createRender(config: IntegralTorchConfig) {
   const routes: Route[] = getRoutes(config)
 
-  invariant(!routes, 'You need run `build` before run `start`!')
+  invariant(routes, 'You need run `build` before run `start`!')
 
   const router = createRouter(routes)
 

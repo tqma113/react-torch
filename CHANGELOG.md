@@ -1,3 +1,12 @@
+## [1.11.21](https://github.com/tqma113/react-torch/compare/v1.11.20...v1.11.21) (2020-11-16)
+
+
+### Bug Fixes
+
+* **start:** invariant ([e6411b2](https://github.com/tqma113/react-torch/commit/e6411b2ff6484874b9537c6f4c8399e237000768))
+
+
+
 ## [1.11.20](https://github.com/tqma113/react-torch/compare/v1.11.19...v1.11.20) (2020-11-13)
 
 

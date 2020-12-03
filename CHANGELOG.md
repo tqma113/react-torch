@@ -1,3 +1,13 @@
+## [1.11.22](https://github.com/tqma113/react-torch/compare/v1.11.21...v1.11.22) (2020-12-03)
+
+
+### Bug Fixes
+
+* **bin:** add defense ([167fcca](https://github.com/tqma113/react-torch/commit/167fccaf5cea3059afab499f893fc97abc3ab503))
+* **client:** duplicate ([f867f2f](https://github.com/tqma113/react-torch/commit/f867f2f8e2d04e948aa1ab8acfd2a533379c9807))
+
+
+
 ## [1.11.21](https://github.com/tqma113/react-torch/compare/v1.11.20...v1.11.21) (2020-11-16)
 
 

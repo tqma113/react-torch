@@ -3,14 +3,14 @@ import { createPage } from '../../../src'
 import store from './store'
 import './about.css'
 
-const View = () => {
+const Component = () => {
   const state = store.getState()
   console.log('about update')
   return <div>about</div>
 }
 
 const About = createPage(() => {
-  return [View, store]
+  return { store, create: () => Component }
 })
 
 export default About

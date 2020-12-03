@@ -16,7 +16,6 @@ import type { Context } from '../../../src/index'
 // }
 
 const getView = (history: History, context: Context) => () => {
-  console.log('update')
   const state = store.getState()
 
   const INCREASE = () => {
@@ -43,7 +42,15 @@ const getView = (history: History, context: Context) => () => {
 }
 
 const Home = createPage(async ({ history, context }) => {
-  return [getView(history, context), store]
+  return {
+    store,
+    create: async () => {
+      return getView(history, context)
+    },
+    beforeDestory: async (location) => {
+      console.log(location, 'home beforeDestory')
+    },
+  }
 })
 
 export default Home

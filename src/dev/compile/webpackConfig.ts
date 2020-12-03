@@ -1,10 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
-import ManifestPlugin from 'webpack-manifest-plugin'
+import { WebpackManifestPlugin, Options, FileDescriptor } from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+
 import { babelConfig } from '../../lib/config'
-import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
+import SetManifestPlugin from './SetManifestPlugin'
+import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
+
 import type { Configuration, WebpackPluginInstance } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
@@ -13,16 +16,13 @@ function getConfig(config: IntegralTorchConfig): Configuration {
   const appTsConfigPath = path.resolve(config.dir, 'tsconfig.json')
   const useTypeScript = fs.existsSync(appTsConfigPath)
 
-  const manifestPluginOption: ManifestPlugin.Options = {
+  const manifestPluginOption: Options = {
     fileName: './assets.json',
-    map(file: ManifestPlugin.FileDescriptor): ManifestPlugin.FileDescriptor {
+    map(file: FileDescriptor): FileDescriptor {
       // 删除 .js 后缀，方便直接使用 obj.name 来访问
       if (file.name) {
         if (/\.js$/.test(file.name)) {
           file.name = file.name.slice(0, -3)
-        }
-        if (/\.css$/.test(file.name)) {
-          file.name = file.name.slice(0, -4)
         }
       }
       return file
@@ -30,8 +30,9 @@ function getConfig(config: IntegralTorchConfig): Configuration {
   }
 
   const plugins: WebpackPluginInstance[] = [
-    new ManifestPlugin(manifestPluginOption),
-    new IgnorePlugin({ resourceRegExp: /(^\.\/locale$|moment$)/ }),
+    new WebpackManifestPlugin(manifestPluginOption),
+    new SetManifestPlugin(),
+    new IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
     new HotModuleReplacementPlugin(),
   ]
   // TypeScript type checking
@@ -51,10 +52,15 @@ function getConfig(config: IntegralTorchConfig): Configuration {
         path.resolve(__dirname, '../../lib/client/index'),
       ],
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
-      publicPath: '/__torch/',
+      path: path.join(
+        config.dir,
+        TORCH_DIR,
+        TORCH_CLIENT_DIR,
+        TORCH_PUBLIC_PATH
+      ),
+      publicPath: `/${TORCH_PUBLIC_PATH}/`,
       filename: `js/[name].js`,
       chunkFilename: `js/[name].js`,
       pathinfo: true,

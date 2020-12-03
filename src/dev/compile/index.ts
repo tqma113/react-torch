@@ -2,8 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
+
 import getWebpackConfig from './webpackConfig'
 import createCompiler from './createCompiler'
+
 import type { Urls } from '../../lib/utils'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
@@ -12,7 +14,11 @@ export default async function compile(
   packContext: PackContext,
   urls: Urls
 ) {
-  const webpackConfig = config.webpack(getWebpackConfig(config), packContext)
+  const webpackConfig = config.transformWebpackConfig(
+    getWebpackConfig(config),
+    packContext,
+    config
+  )
 
   const pkgPath = path.resolve(config.dir, 'package.json')
   const appName = require(pkgPath).name

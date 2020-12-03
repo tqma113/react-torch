@@ -1,10 +1,25 @@
 import { createNoopStore } from '../store'
-import type { History, Location } from 'torch-history'
+
 import type { Params } from 'torch-router'
+import type { History, Location } from 'torch-history'
 import type { Context } from '../../index'
 import type { StoreLike } from '../store'
 
-export type Page = [() => JSX.Element, StoreLike<any>] | (() => JSX.Element)
+export type BasePage = {
+  store?: StoreLike<any>
+
+  beforeCreate?: () => Promise<void> | void
+  create: () => Promise<PageView> | PageView
+  created?: () => Promise<void> | void
+  beforeDestory?: (nextLocation: Location) => Promise<void> | void
+  destroyed?: (nextLocation: Location) => Promise<void> | void
+}
+
+export type PageView = () => JSX.Element
+
+export type StandardPage = Required<BasePage>
+
+export type Page = PageView | BasePage
 
 export type CreaterProps = {
   location: Location
@@ -31,10 +46,30 @@ export const isTorchPage = (input: any): input is PageCreater => {
   return typeof input === 'function' && input.symbol === TORCH_PAGE_SYMBOL
 }
 
-export const getViewAndStoreFromPage = (page: Page) => {
-  return isArray(page) ? page : ([page, createNoopStore()] as const)
+const noopPage = {
+  store: createNoopStore(),
+  beforeCreate: () => {},
+  created: () => {},
+  beforeDestory: () => {},
+  destroyed: () => {},
 }
 
-function isArray<T, S>(input: ArrayLike<T> | S): input is ArrayLike<T> {
-  return Array.isArray(input)
+export function standardizePage(page: Page): StandardPage {
+  if (isFunction(page)) {
+    return {
+      ...noopPage,
+      create: async () => page,
+    }
+  } else {
+    return {
+      ...noopPage,
+      ...page,
+    }
+  }
+}
+
+function isFunction<Args, R, S>(
+  input: ((args: Args) => R) | S
+): input is (args: Args) => R {
+  return input && typeof input === 'function'
 }

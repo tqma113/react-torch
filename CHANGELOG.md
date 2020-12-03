@@ -1,3 +1,172 @@
+## [1.11.22](https://github.com/tqma113/react-torch/compare/v1.11.21...v1.11.22) (2020-12-03)
+
+
+### Bug Fixes
+
+* **bin:** add defense ([167fcca](https://github.com/tqma113/react-torch/commit/167fccaf5cea3059afab499f893fc97abc3ab503))
+* **client:** duplicate ([f867f2f](https://github.com/tqma113/react-torch/commit/f867f2f8e2d04e948aa1ab8acfd2a533379c9807))
+
+
+
+## [1.11.21](https://github.com/tqma113/react-torch/compare/v1.11.20...v1.11.21) (2020-11-16)
+
+
+### Bug Fixes
+
+* **start:** invariant ([e6411b2](https://github.com/tqma113/react-torch/commit/e6411b2ff6484874b9537c6f4c8399e237000768))
+
+
+
+## [1.11.20](https://github.com/tqma113/react-torch/compare/v1.11.19...v1.11.20) (2020-11-13)
+
+
+### Bug Fixes
+
+* **cli:** version name ([e0d6803](https://github.com/tqma113/react-torch/commit/e0d6803d9be7b960d1f1d08b281c52cba859d2b0))
+
+
+### Features
+
+* **config:** support container ([a594b11](https://github.com/tqma113/react-torch/commit/a594b1101ec5f9c481117ec1c9116765241c9f6d))
+
+
+
+## [1.11.19](https://github.com/tqma113/react-torch/compare/v1.11.18...v1.11.19) (2020-11-12)
+
+
+### Bug Fixes
+
+* **client:** store unsubscribe ([ae51a5f](https://github.com/tqma113/react-torch/commit/ae51a5f12d4a55d02a4bc0894ee230aab7505f89))
+
+
+
+## [1.11.18](https://github.com/tqma113/react-torch/compare/v1.11.17...v1.11.18) (2020-11-10)
+
+
+### Bug Fixes
+
+* **page:** life cycle ([2275ff8](https://github.com/tqma113/react-torch/commit/2275ff8e47d93ca11172141764a062769e270348))
+
+
+
+## [1.11.17](https://github.com/tqma113/react-torch/compare/v1.11.16...v1.11.17) (2020-11-10)
+
+
+### Features
+
+* **page:** add lifecycle ([09b53be](https://github.com/tqma113/react-torch/commit/09b53be2636aec6d5450a4083bcd1933be138bce))
+* **page:** lifecycle run ([4fcddc1](https://github.com/tqma113/react-torch/commit/4fcddc12f54b21d0d5e0b5ddbde6e051df98ac69))
+
+
+### Performance Improvements
+
+* **client:** handle error ([37606bc](https://github.com/tqma113/react-torch/commit/37606bc1727e98f2610430ae55694b327c092002))
+
+
+
+## [1.11.16](https://github.com/tqma113/react-torch/compare/v1.11.15...v1.11.16) (2020-11-09)
+
+
+### Bug Fixes
+
+* **bin:** env ([755939c](https://github.com/tqma113/react-torch/commit/755939c2fbd000b594c8eed26e4292dc64513422))
+
+
+
+## [1.11.15](https://github.com/tqma113/react-torch/compare/v1.11.14...v1.11.15) (2020-11-09)
+
+
+### Features
+
+* **config:** cdn ([46e3156](https://github.com/tqma113/react-torch/commit/46e315663e90e41d595e13ed659cd6b6a99ee1bc))
+
+
+
+## [1.11.14](https://github.com/tqma113/react-torch/compare/v1.11.13...v1.11.14) (2020-11-09)
+
+
+### Bug Fixes
+
+* **dev:** compile css minifest ([eb30006](https://github.com/tqma113/react-torch/commit/eb3000692d99da943c79dddd4fb97606fa859d00))
+
+
+
+## [1.11.13](https://github.com/tqma113/react-torch/compare/v1.11.12...v1.11.13) (2020-11-06)
+
+
+### Bug Fixes
+
+* **all:** env ([49b7811](https://github.com/tqma113/react-torch/commit/49b78112006bc79e0832e09e7cbc182572cd451d))
+
+
+
+## [1.11.12](https://github.com/tqma113/react-torch/compare/v1.11.11...v1.11.12) (2020-11-05)
+
+
+### Features
+
+* **config/transformWebpackConfig:** add argument IntegralTorchConfig ([072ca00](https://github.com/tqma113/react-torch/commit/072ca0039a526166e4dff8599a34839ba7135e72))
+
+
+
+## [1.11.11](https://github.com/tqma113/react-torch/compare/v1.11.10...v1.11.11) (2020-11-05)
+
+
+
+## [1.11.10](https://github.com/tqma113/react-torch/compare/v1.11.9...v1.11.10) (2020-11-05)
+
+
+
+## [1.11.9](https://github.com/tqma113/react-torch/compare/v1.11.8...v1.11.9) (2020-11-05)
+
+
+### Features
+
+* **config:** support polyfillInstaller ([0342804](https://github.com/tqma113/react-torch/commit/03428042b2c515857f08e1a5dd71e8c38ddb244e))
+
+
+
+## [1.11.8](https://github.com/tqma113/react-torch/compare/v1.11.7...v1.11.8) (2020-11-05)
+
+
+### Bug Fixes
+
+* **all:** error handle ([3d785d6](https://github.com/tqma113/react-torch/commit/3d785d6d752ca22a4142ab9f9598376c3f37f4d8))
+
+
+### Performance Improvements
+
+* **server:** optimze min ([ceccc3d](https://github.com/tqma113/react-torch/commit/ceccc3d3c1f23f27bb932de5a13ccd0144e17bb0))
+
+
+
+## [1.11.7](https://github.com/tqma113/react-torch/compare/v1.11.6...v1.11.7) (2020-11-04)
+
+
+### Bug Fixes
+
+* **config:** createServer ([91356f8](https://github.com/tqma113/react-torch/commit/91356f8a57b4804089228a8b8a43321ffa78d47c))
+
+
+
+## [1.11.6](https://github.com/tqma113/react-torch/compare/v1.11.5...v1.11.6) (2020-11-04)
+
+
+### Features
+
+* **config:** express -> server ([57e5918](https://github.com/tqma113/react-torch/commit/57e59184a5d4a4815693b4d5d724bc1322699796))
+
+
+
+## [1.11.5](https://github.com/tqma113/react-torch/compare/v1.11.4...v1.11.5) (2020-11-04)
+
+
+### Features
+
+* **config:** support custome server ([4f860ab](https://github.com/tqma113/react-torch/commit/4f860abbfa56b7e75680ceca9d54d2a674d05c28))
+
+
+
 ## [1.11.4](https://github.com/tqma113/react-torch/compare/v1.11.3...v1.11.4) (2020-10-30)
 
 

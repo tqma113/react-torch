@@ -1,16 +1,18 @@
 import path from 'path'
 import { IgnorePlugin } from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
-import ManifestPlugin from 'webpack-manifest-plugin'
+import { Options, FileDescriptor, WebpackManifestPlugin } from 'webpack-manifest-plugin'
+
 import { babelConfig } from '../../lib/config'
-import { TORCH_DIR, TORCH_CLIENT_DIR } from '../../index'
+import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
+
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
-  const manifestPluginOption: ManifestPlugin.Options = {
+  const manifestPluginOption: Options = {
     fileName: './assets.json',
-    map(file: ManifestPlugin.FileDescriptor): ManifestPlugin.FileDescriptor {
+    map(file: FileDescriptor): FileDescriptor {
       // 删除 .js 后缀，方便直接使用 obj.name 来访问
       if (file.name && /\.js$/.test(file.name)) {
         file.name = file.name.slice(0, -3)
@@ -28,10 +30,15 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     devtool: 'source-map',
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_CLIENT_DIR),
-      filename: `js/[name]-[contenthash].js`,
-      chunkFilename: `js/[name]-[contenthash].js`,
-      publicPath: '/__torch/',
+      path: path.join(
+        config.dir,
+        TORCH_DIR,
+        TORCH_CLIENT_DIR,
+        TORCH_PUBLIC_PATH
+      ),
+      publicPath: `/${TORCH_PUBLIC_PATH}/`,
+      filename: `js/[name]-[contenthash:6].js`,
+      chunkFilename: `js/[name]-[contenthash:6].js`,
     },
     optimization: {
       splitChunks: {
@@ -42,18 +49,19 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       minimizer: [
         new TerserPlugin({
           terserOptions: {
+            ie8: false,
             parse: {
               // we want terser to parse ecma 8 code. However, we don't want it
               // to apply any minfication steps that turns valid ecma 5 code
               // into invalid ecma 5 code. This is why the 'compress' and 'output'
               // sections only apply transformations that are ecma 5 safe
               // https://github.com/facebook/create-react-app/pull/4234
-              ecma: 8,
+              ecma: 2020,
             },
             compress: {
               // ecma: 5, // 默认为5，但目前ts似乎不支持该参数
+              ecma: 5,
               drop_console: true,
-              warnings: false,
               // Disabled because of an issue with Uglify breaking seemingly valid code:
               // https://github.com/facebook/create-react-app/issues/2376
               // Pending further investigation:
@@ -79,9 +87,6 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
           // Use multi-process parallel running to improve the build speed
           // Default number of concurrent runs: os.cpus().length - 1
           parallel: true,
-          // Enable file caching
-          cache: true,
-          sourceMap: false,
         }),
       ],
     },
@@ -117,7 +122,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
     },
     plugins: [
-      new ManifestPlugin(manifestPluginOption),
+      new WebpackManifestPlugin(manifestPluginOption),
       new IgnorePlugin({ resourceRegExp: /(^\.\/locale$|moment$)/ }),
     ],
   }

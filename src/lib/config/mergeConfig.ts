@@ -1,12 +1,20 @@
 import path from 'path'
+
 import {
+  Env,
   PreloadType,
   TORCH_SRC_DIR,
   TORCH_PUBLIC_DIR,
   TORCH_MIDDLEWARE_DIR,
   TORCH_FAVICON_FILE_NAME,
+  TORCH_DOCUMENT_CONTAINER,
 } from '../../index'
-import type { TorchConfig, IntegralTorchConfig } from '../../index'
+
+import type {
+  TorchConfig,
+  IntegralTorchConfig,
+  PolyfillInstaller,
+} from '../../index'
 
 const TITLE = 'React Torch'
 // Tools like Cloud9 rely on this.
@@ -15,6 +23,7 @@ const DEFAULT_DOCUMENT_PATH = path.resolve(__dirname, '../document')
 const DEVELOPMENT_PORT = 3000
 const PRODUCTION_PORT = 80
 const identity = <T>(a: T) => a
+const noop = () => {}
 
 export default function merge(config: TorchConfig): IntegralTorchConfig {
   const title = config.title || TITLE
@@ -50,6 +59,8 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     ? path.resolve(dir, config.document)
     : DEFAULT_DOCUMENT_PATH
 
+  const container = config.container || TORCH_DOCUMENT_CONTAINER
+
   const favicon = config.favicon
     ? config.favicon === true
       ? path.resolve(publicDir, TORCH_FAVICON_FILE_NAME)
@@ -60,7 +71,18 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const styleMode = config.styleMode || PreloadType.Inner
 
-  const webpack = config.webpack ? config.webpack : identity
+  const transformWebpackConfig = config.transformWebpackConfig
+    ? config.transformWebpackConfig
+    : identity
+
+  const createServer = config.createServer || false
+
+  const installPolyfill: PolyfillInstaller = {
+    [Env.Development]: config.installPolyfill?.[Env.Development] || noop,
+    [Env.Production]: config.installPolyfill?.[Env.Production] || noop,
+  }
+
+  const cdn = config.cdn || ''
 
   return {
     title,
@@ -69,11 +91,15 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     port,
     src: srcDir,
     public: publicDir,
+    cdn,
     middleware,
     document,
+    container,
     favicon,
     ssr,
     styleMode,
-    webpack,
+    transformWebpackConfig,
+    createServer,
+    installPolyfill,
   }
 }

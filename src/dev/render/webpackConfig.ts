@@ -1,7 +1,9 @@
 import path from 'path'
+
 import { babelConfig } from '../../lib/config'
 import { getExternals } from '../../lib/utils'
 import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
+
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 

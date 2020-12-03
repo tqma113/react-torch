@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import Cookie from 'js-cookie'
+
 import GlobalContext from '../context'
+
 import type { CookieAttributes } from 'js-cookie'
 
 export const useLocation = () => {

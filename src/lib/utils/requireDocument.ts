@@ -1,10 +1,12 @@
 import path from 'path'
+
 import { hasModuleFile } from './'
 import {
   TORCH_DIR,
   TORCH_SERVER_DIR,
   TORCH_DOCUMENT_FILE_NAME,
 } from '../../index'
+
 import type { IntegralTorchConfig } from '../../index'
 
 export const requireDocument = (config: IntegralTorchConfig) => {

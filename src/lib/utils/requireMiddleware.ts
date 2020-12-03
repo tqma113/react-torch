@@ -1,6 +1,8 @@
 import path from 'path'
+
 import { hasModuleFile } from './'
 import { TORCH_DIR, TORCH_SERVER_DIR, TORCH_MDLW_FILE_NAME } from '../../index'
+
 import type { IntegralTorchConfig, Middlewares } from '../../index'
 
 export const requireMiddleware = (config: IntegralTorchConfig) => {

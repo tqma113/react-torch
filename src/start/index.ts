@@ -4,18 +4,19 @@ import path from 'path'
 import http from 'http'
 import debug from 'debug'
 import express from 'express'
-import createServer from './server'
+
 import createRender from './render'
-import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
 import { mergeConfig } from '../lib/config'
+import createDefaultServer from '../lib/server'
 import { info, error as errorlog, choosePort } from '../lib/utils'
+import { injectMiddleware, injectAssetsMiddleware } from '../lib/middleware'
 import {
-  Env,
   TORCH_DIR,
   TORCH_CLIENT_DIR,
-  TORCH_PUBLIC_DIR,
+  TORCH_PUBLIC_PATH,
   TORCH_ASSETS_FILE_NAME,
 } from '../index'
+
 import type { TorchConfig } from '../index'
 
 export type Result = {
@@ -24,8 +25,11 @@ export type Result = {
 }
 
 export default function start(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = Env.Production
   const config = mergeConfig(draftConfig)
+
+  config.installPolyfill[process.env.NODE_ENV](config)
+
+  const createServer = config.createServer || createDefaultServer
 
   return new Promise<Result>(async (resolve, reject) => {
     const port = await choosePort(config.host, config.port)
@@ -41,18 +45,12 @@ export default function start(draftConfig: TorchConfig) {
     const render = createRender(config)
 
     // custome middlewares
-    attachMiddleware(app, server, config)
-
-    // static file route
-    app.use(
-      '/__torch',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
-    )
+    injectMiddleware(app, server, config)
 
     // static file route
     app.use(
       '/',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_PUBLIC_DIR))
+      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
     )
 
     // static assets
@@ -61,6 +59,7 @@ export default function start(draftConfig: TorchConfig) {
         config.dir,
         TORCH_DIR,
         TORCH_CLIENT_DIR,
+        TORCH_PUBLIC_PATH,
         TORCH_ASSETS_FILE_NAME
       )
       res.locals.assets = getAssets(require(assertPath))
@@ -68,7 +67,7 @@ export default function start(draftConfig: TorchConfig) {
     })
 
     // custome assets middlewares
-    attachAssetsMiddleware(app, server, config)
+    injectAssetsMiddleware(app, server, config)
 
     // page router
     app.use(render)

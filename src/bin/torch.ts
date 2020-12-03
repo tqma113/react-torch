@@ -1,10 +1,14 @@
 import program from 'commander'
+
 import dev from '../dev'
 import build from '../build'
 import start from '../start'
 import { requireConfig } from '../lib/config'
+import { Env } from '../index'
 
-program.version('1.0.12').name('torch')
+const pkg = require('../../package.json')
+
+program.version(pkg.version).name(pkg.name)
 
 program
   .command('dev')
@@ -13,6 +17,8 @@ program
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
+    process.env.NODE_ENV = process.env.NODE_ENV || Env.Development
+
     let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {
@@ -37,6 +43,8 @@ program
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
+    process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+
     let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {
@@ -61,6 +69,8 @@ program
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
   .action(({ dir, port, config = 'torch.config.ts' }) => {
+    process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+
     let draftConfig = requireConfig(config)
 
     if (typeof draftConfig === 'object') {

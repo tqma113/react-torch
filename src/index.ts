@@ -1,3 +1,5 @@
+/// <reference path="global.d.ts" />
+
 export * from './lib/context'
 export * from './lib/hook'
 export * from './lib/page'
@@ -11,6 +13,7 @@ export const TORCH_DIR = '.torch'
 export const TORCH_CLIENT_DIR = 'client'
 export const TORCH_SERVER_DIR = 'server'
 export const TORCH_PUBLIC_DIR = 'public'
+export const TORCH_PUBLIC_PATH = '__torch'
 export const TORCH_SRC_DIR = 'src'
 export const TORCH_MIDDLEWARE_DIR = 'middleware'
 export const TORCH_MDLW_FILE_NAME = 'middleware.js'
@@ -18,11 +21,11 @@ export const TORCH_DOCUMENT_FILE_NAME = 'document.js'
 export const TORCH_ROUTES_FILE_NAME = 'routes.js'
 export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 export const TORCH_FAVICON_FILE_NAME = 'favicon.ico'
+export const TORCH_DOCUMENT_CONTAINER = 'root'
 
 export enum Env {
   Development = 'development',
   Production = 'production',
-  Test = 'test',
 }
 
 export enum Side {
@@ -44,7 +47,7 @@ export enum HistoryType {
 // TYPES
 ///////////////////////////////////////////////////////////////////////////////
 import type { Server } from 'http'
-import type { Request, Response, Application } from 'express'
+import type { Express, Request, Response, Application } from 'express'
 import type { Configuration } from 'webpack'
 
 export type TorchConfig = {
@@ -53,13 +56,17 @@ export type TorchConfig = {
   dir?: string
   src?: string
   public?: string
+  cdn?: string
   middleware?: string | false
   document?: string | false
+  container?: string | false
   ssr?: boolean
   title?: string
   favicon?: string | boolean
   styleMode?: PreloadType
-  webpack?: (config: Configuration, packContext: PackContext) => Configuration
+  createServer?: ServerCreater
+  transformWebpackConfig?: WebpackConfigTransform
+  installPolyfill?: Partial<PolyfillInstaller>
 }
 
 export type IntegralTorchConfig = {
@@ -68,13 +75,17 @@ export type IntegralTorchConfig = {
   dir: string
   src: string
   public: string
+  cdn: string
   middleware: string | false
   document: string
+  container: string
   ssr: boolean
   title: string
   favicon: string | false
   styleMode: PreloadType
-  webpack: (config: Configuration, packContext: PackContext) => Configuration
+  createServer: ServerCreater | false
+  transformWebpackConfig: WebpackConfigTransform
+  installPolyfill: PolyfillInstaller
 }
 
 export type TinyContext = {
@@ -127,3 +138,16 @@ export type ScriptPreload =
       type: PreloadType.Link
       src: string
     }
+
+export type ServerCreater = (config: IntegralTorchConfig) => Express
+
+export type PolyfillInstaller = {
+  [Env.Development]: (config: IntegralTorchConfig) => void
+  [Env.Production]: (config: IntegralTorchConfig) => void
+}
+
+export type WebpackConfigTransform = (
+  config: Configuration,
+  packContext: PackContext,
+  torchConfig: IntegralTorchConfig
+) => Configuration

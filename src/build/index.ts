@@ -1,17 +1,23 @@
 /// <reference path="../global.d.ts" />
 
-import fs from 'fs-extra'
 import path from 'path'
+import fs from 'fs-extra'
+
 import compile from './compile'
-import renderCompile from './renderCompile'
 import copyPublic from './copyPublic'
+import renderCompile from './renderCompile'
 import { mergeConfig } from '../lib/config'
 import { step, info, error } from '../lib/utils'
+
 import { Side, TORCH_DIR } from '../index'
+
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
 export default function build(draftConfig: TorchConfig) {
   const config = mergeConfig(draftConfig)
+
+  config.installPolyfill[process.env.NODE_ENV](config)
+
   const tinyContext: TinyContext = {
     ssr: config.ssr,
     env: process.env.NODE_ENV,

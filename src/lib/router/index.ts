@@ -1,11 +1,13 @@
 import { createRouter } from 'torch-router'
-import { isTorchPage, createPage } from '../page'
+
 import { createErrorElement } from '../error'
+import { isTorchPage, createPage } from '../page'
+
 import type { PageCreater } from '../page'
 import type { DraftRoute, Params } from 'torch-router'
 
 export type Render = (
-  pageCreater: PageCreater | Promise<PageCreater> | null,
+  pageCreater: PageCreater | null,
   params: Params
 ) => Promise<void>
 
@@ -13,12 +15,12 @@ export type RouteModule = PageCreater | Lazy<PageCreater>
 
 export type Route = DraftRoute<RouteModule>
 
-export type Router = (path: string, render: Render) => void
+export type Router = (path: string, render: Render) => Promise<void>
 
 export default function (routes: Route[]): Router {
   const router = createRouter(routes)
 
-  return (path, render) => {
+  return async (path, render) => {
     try {
       const matches = router(path)
       if (matches === null) {
@@ -28,12 +30,12 @@ export default function (routes: Route[]): Router {
         if (isTorchPage(pageCreater)) {
           render(pageCreater, params)
         } else {
-          render(dynamic(pageCreater), params)
+          render(await dynamic(pageCreater), params)
         }
       }
     } catch (err) {
       render(
-        createPage(() => () => createErrorElement(JSON.stringify(err))),
+        createPage(() => () => createErrorElement(err.stack || err.message)),
         {}
       )
     }
@@ -55,7 +57,7 @@ async function dynamic(loader: Lazy<PageCreater>): Promise<PageCreater> {
       return module
     }
   } catch (err) {
-    return createPage(() => () => createErrorElement(JSON.stringify(err)))
+    return createPage(() => () => createErrorElement(err.stack || err.message))
   }
 }
 

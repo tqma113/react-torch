@@ -5,10 +5,10 @@ import path from 'path'
 import http from 'http'
 import debug from 'debug'
 import express from 'express'
-import createServer from './server'
 import compile from './compile'
 import createRender from './render'
-import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
+import createDefaultServer from '../lib/server'
+import { injectMiddleware, injectAssetsMiddleware } from '../lib/middleware'
 import { mergeConfig } from '../lib/config'
 import {
   step,
@@ -23,6 +23,7 @@ import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_DIR,
+  TORCH_PUBLIC_PATH,
 } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
@@ -32,8 +33,11 @@ export type Result = {
 }
 
 export default function dev(draftConfig: TorchConfig) {
-  process.env.NODE_ENV = Env.Development
   const config = mergeConfig(draftConfig)
+
+  config.installPolyfill[Env.Development](config)
+
+  const createServer = config.createServer || createDefaultServer
 
   return new Promise<Result>(async (resolve, reject) => {
     const port = await choosePort(config.host, config.port)
@@ -68,7 +72,7 @@ export default function dev(draftConfig: TorchConfig) {
     const render = await createRender(config, serverContext)
 
     // custome middlewares
-    attachMiddleware(app, server, config)
+    injectMiddleware(app, server, config)
 
     // client compile
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
@@ -78,8 +82,10 @@ export default function dev(draftConfig: TorchConfig) {
 
     // client compiled static file route
     app.use(
-      '/__torch',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
+      `/${TORCH_PUBLIC_PATH}`,
+      express.static(
+        path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH)
+      )
     )
 
     // static file route
@@ -96,14 +102,12 @@ export default function dev(draftConfig: TorchConfig) {
 
     // 开发模式用 webpack-dev-middleware 获取 assets
     app.use((req, res, next) => {
-      res.locals.assets = getAssets(
-        res.locals.webpackStats.toJson().assetsByChunkName
-      )
+      res.locals.assets = res.locals.webpackStats.assets
       next()
     })
 
     // custome assets middlewares
-    attachAssetsMiddleware(app, server, config)
+    injectAssetsMiddleware(app, server, config)
 
     // page router
     app.use(render)
@@ -152,15 +156,4 @@ export default function dev(draftConfig: TorchConfig) {
     server.on('error', reject)
     server.on('listening', () => resolve({ server, app }))
   })
-}
-
-function getAssets(stats: Record<string, string | string[]>) {
-  return Object.keys(stats).reduce(
-    (result: Record<string, string>, assetName) => {
-      const value = stats[assetName]
-      result[assetName] = Array.isArray(value) ? value[0] : value
-      return result
-    },
-    {}
-  )
 }

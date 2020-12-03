@@ -5,9 +5,14 @@ import compression from 'compression'
 import favicon from 'serve-favicon'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
+
 import type { IntegralTorchConfig } from '../../index'
 
 export default function createServer(config: IntegralTorchConfig) {
+  const isDev = process.env.NODE_ENV === 'development'
+  const loggerFormat = isDev ? 'dev' : 'common'
+  const cookieParserSecret = isDev ? 'torch' : '__TORCH__'
+
   const app = express()
 
   // helmet
@@ -22,14 +27,14 @@ export default function createServer(config: IntegralTorchConfig) {
   }
 
   // logger
-  app.use(logger('common'))
+  app.use(logger(loggerFormat))
 
   // body parser
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: false }))
 
   // cookie parser
-  app.use(cookieParser('__TORCH__'))
+  app.use(cookieParser(cookieParserSecret))
 
   return app
 }

@@ -1,7 +1,7 @@
+import open from 'open'
 import chalk from 'chalk'
 import cp from 'child_process'
 import spawn from 'cross-spawn'
-import open from 'open'
 
 const execSync = cp.execSync
 

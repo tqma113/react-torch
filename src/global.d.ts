@@ -14,7 +14,6 @@ declare namespace NodeJS {
 }
 
 interface Window {
-  __TORCH_DATA__: import('./index').TorchData
   __DEV__: boolean
 }
 

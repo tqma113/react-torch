@@ -35,10 +35,6 @@ export default async function compile(
   })
   const middleware = webpackDevMiddleware(compiler, {
     publicPath: 'static',
-    stats: {
-      chunks: false,
-      colors: true,
-    },
     writeToDisk: true,
     serverSideRender: true,
   })

@@ -1,5 +1,4 @@
 import path from 'path'
-import PnpWebpackPlugin from 'pnp-webpack-plugin'
 
 import { babelConfig } from '../../lib/config'
 import { getExternals } from '../../lib/utils'

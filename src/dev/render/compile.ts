@@ -23,11 +23,10 @@ export default function compile(
     packContext,
     config
   )
-  const compiler = webpack(webpackConfig)
 
   return new Promise<void>((resolve, reject) => {
     const serverPath = path.join(config.dir, TORCH_DIR, TORCH_SERVER_DIR)
-    compiler.watch({}, (err, stats) => {
+    webpack(webpackConfig,  (err, stats) => {
       if (err) reject(err)
 
       if (stats) {

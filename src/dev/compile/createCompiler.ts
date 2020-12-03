@@ -34,6 +34,7 @@ export default function createCompiler({
     console.log(chalk.red('Failed to compile.'))
     console.log()
     console.log(err.message || err)
+    console.log(err)
     console.log()
     process.exit(1)
   }

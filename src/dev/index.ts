@@ -102,7 +102,7 @@ export default function dev(draftConfig: TorchConfig) {
 
     // 开发模式用 webpack-dev-middleware 获取 assets
     app.use((req, res, next) => {
-      res.locals.assets = res.locals.webpackStats.assets
+      res.locals.assets = res.locals.webpack.devMiddleware.stats.assets
       next()
     })
 

@@ -45,6 +45,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     optimization: {
       minimize: false,
+      splitChunks: false
     },
     performance: {
       hints: 'warning',
@@ -56,5 +57,10 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     resolveLoader: {},
     externals: getExternals(config.dir),
+    // plugins: [
+    //   new webpack.optimize.LimitChunkCountPlugin({
+    //     maxChunks: 1
+    //   })
+    // ]
   }
 }

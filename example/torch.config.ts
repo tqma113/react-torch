@@ -8,7 +8,6 @@ const getClientWebpackConfig = (
   config: Configuration,
   packContext: PackContext
 ): Configuration => {
-  console.log(config)
   config.module!.rules!.push(
     {
       test: /\.css$/,
@@ -42,6 +41,20 @@ const getClientWebpackConfig = (
 }
 
 const getServerWebpackConfig = (config: Configuration): Configuration => {
+  config.module!.rules!.push(
+    {
+      test: /\.css$/,
+      use: [
+        'null-loader',
+      ],
+    },
+    {
+      test: /\.less$/,
+      use: [
+        'null-loader',
+      ],
+    }
+  )
   config.resolve = {
     ...config.resolve,
     alias: {

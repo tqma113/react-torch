@@ -4,7 +4,7 @@ import type { Server } from 'http'
 import type { Application } from 'express'
 import type { IntegralTorchConfig } from '../../index'
 
-export const attachAssetsMiddleware = (
+export const injectAssetsMiddleware = (
   app: Application,
   server: Server,
   config: IntegralTorchConfig

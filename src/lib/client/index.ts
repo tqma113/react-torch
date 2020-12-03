@@ -59,11 +59,11 @@ try {
     await hook.destoryed(location)
   }
 
-  const render = async (pageCreator: PageCreater | null, globalContext: GlobalContextType) => {
-    const {
-      location,
-      context,
-    } = globalContext
+  const render = async (
+    pageCreator: PageCreater | null,
+    globalContext: GlobalContextType
+  ) => {
+    const { location, context } = globalContext
 
     if (pageCreator === null) {
       cannotMatchPage(location.pathname, globalContext)

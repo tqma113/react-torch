@@ -8,7 +8,7 @@ import express from 'express'
 import compile from './compile'
 import createRender from './render'
 import createDefaultServer from '../lib/server'
-import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
+import { injectMiddleware, injectAssetsMiddleware } from '../lib/middleware'
 import { mergeConfig } from '../lib/config'
 import {
   step,
@@ -72,7 +72,7 @@ export default function dev(draftConfig: TorchConfig) {
     const render = await createRender(config, serverContext)
 
     // custome middlewares
-    attachMiddleware(app, server, config)
+    injectMiddleware(app, server, config)
 
     // client compile
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
@@ -107,7 +107,7 @@ export default function dev(draftConfig: TorchConfig) {
     })
 
     // custome assets middlewares
-    attachAssetsMiddleware(app, server, config)
+    injectAssetsMiddleware(app, server, config)
 
     // page router
     app.use(render)

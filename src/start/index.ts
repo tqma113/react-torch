@@ -9,7 +9,7 @@ import createRender from './render'
 import { mergeConfig } from '../lib/config'
 import createDefaultServer from '../lib/server'
 import { info, error as errorlog, choosePort } from '../lib/utils'
-import { attachMiddleware, attachAssetsMiddleware } from '../lib/middleware'
+import { injectMiddleware, injectAssetsMiddleware } from '../lib/middleware'
 import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,
@@ -45,7 +45,7 @@ export default function start(draftConfig: TorchConfig) {
     const render = createRender(config)
 
     // custome middlewares
-    attachMiddleware(app, server, config)
+    injectMiddleware(app, server, config)
 
     // static file route
     app.use(
@@ -67,7 +67,7 @@ export default function start(draftConfig: TorchConfig) {
     })
 
     // custome assets middlewares
-    attachAssetsMiddleware(app, server, config)
+    injectAssetsMiddleware(app, server, config)
 
     // page router
     app.use(render)

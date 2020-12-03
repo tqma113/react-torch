@@ -83,7 +83,6 @@ try {
 
       if (context.ssr) {
         store.__UNSAFE_SET_STATE__(state)
-        beforeCreate()
       } else {
         await beforeCreate()
       }

@@ -17,7 +17,7 @@ export default function compileServer(
 
   step(`\nCompiling server...`)
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
       if (error) {
         reject(error)

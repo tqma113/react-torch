@@ -17,7 +17,7 @@ export default function compileClient(
 
   step(`\nCompiling client...`)
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
       if (error) {
         reject(error)

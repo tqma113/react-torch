@@ -1,4 +1,5 @@
 import { createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 export type State = {
   count: number
@@ -56,7 +57,7 @@ function counter(state: State, action: Action) {
   }
 }
 
-const reduxStore = createStore(counter, initialState)
+const reduxStore = createStore(counter, initialState, composeWithDevTools())
 
 const store = {
   ...reduxStore,

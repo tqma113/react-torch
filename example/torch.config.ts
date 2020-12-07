@@ -4,6 +4,9 @@ import { Side, PackContext, TorchConfig } from '../src'
 import server from './server'
 import type { Configuration } from 'webpack'
 
+// @ts-ignore
+process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+
 const getClientWebpackConfig = (
   config: Configuration,
   packContext: PackContext

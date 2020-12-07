@@ -7,7 +7,7 @@ import cleanCSS from 'gulp-clean-css'
 import { TORCH_DIR, TORCH_PUBLIC_DIR, TORCH_CLIENT_DIR } from '../../index'
 
 export default function copyPublic(dir: string) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     gulp.task('default', createTask(dir))
 
     const taskFunction: gulp.TaskFunction = (error) => {

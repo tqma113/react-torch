@@ -98,7 +98,8 @@ try {
         ReactDOM.render(element, containerElement)
       }
 
-      hook.unsubscribe = store.subscribe(() => {
+      hook.unsubscribe = store.subscribe(async () => {
+        const element = connect(component)(globalContext)
         ReactDOM.render(element, containerElement)
       })
     }

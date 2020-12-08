@@ -3,7 +3,6 @@ import { createPage } from '../../../src'
 import store from './store'
 import './style.css'
 import type { History } from 'torch-history'
-import type { Context } from '../../../src/index'
 
 // const ignorePropsChanged = View => {
 //   let MemoizedView = (props) => {
@@ -15,7 +14,7 @@ import type { Context } from '../../../src/index'
 //   }
 // }
 
-const getView = (history: History, context: Context) => () => {
+const getView = (history: History) => () => {
   const state = store.getState()
 
   const INCREASE = () => {
@@ -41,11 +40,11 @@ const getView = (history: History, context: Context) => () => {
   )
 }
 
-const Home = createPage(async ({ history, context }) => {
+const Home = createPage(async ({ history }) => {
   return {
     store,
     create: async () => {
-      return getView(history, context)
+      return getView(history)
     },
     beforeDestory: async (location) => {
       console.log(location, 'home beforeDestory')

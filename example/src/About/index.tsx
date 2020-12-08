@@ -4,7 +4,6 @@ import store from './store'
 import './about.css'
 
 const Component = () => {
-  const state = store.getState()
   console.log('about update')
   return <div>about</div>
 }

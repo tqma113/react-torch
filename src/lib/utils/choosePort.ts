@@ -50,7 +50,7 @@ export function choosePort(
       throw new Error(
         chalk.red(`Could not find an open port at ${chalk.bold(host)}.`) +
           '\n' +
-          ('Network error message: ' + err.message || err) +
+          ('Network error message: ' + (err.message || err)) +
           '\n'
       )
     }

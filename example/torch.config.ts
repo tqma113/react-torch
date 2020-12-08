@@ -47,15 +47,11 @@ const getServerWebpackConfig = (config: Configuration): Configuration => {
   config.module!.rules!.push(
     {
       test: /\.css$/,
-      use: [
-        'null-loader',
-      ],
+      use: ['null-loader'],
     },
     {
       test: /\.less$/,
-      use: [
-        'null-loader',
-      ],
+      use: ['null-loader'],
     }
   )
   config.resolve = {

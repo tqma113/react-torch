@@ -38,7 +38,7 @@ declare module 'webpack-manifest-plugin' {
   import { WebpackPluginInstance, Compiler } from 'webpack'
   import { SyncWaterfallHook } from 'tapable'
   export type Options = {
-    fileName: string,
+    fileName: string
     map: (file: FileDescriptor) => FileDescriptor
   }
   export type FileDescriptor = {
@@ -46,10 +46,12 @@ declare module 'webpack-manifest-plugin' {
   }
   export class WebpackManifestPlugin extends WebpackPluginInstance {
     constructor(options: Options)
-    apply(compiler: Compiler): void;
+    apply(compiler: Compiler): void
   }
 
-  export function getCompilerHooks(compiler: Compiler): {
+  export function getCompilerHooks(
+    compiler: Compiler
+  ): {
     afterEmit: SyncWaterfallHook
     beforeEmit: SyncWaterfallHook
   }

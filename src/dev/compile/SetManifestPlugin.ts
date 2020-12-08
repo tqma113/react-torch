@@ -14,12 +14,12 @@ class SetManifestPlugin {
   }
 
   apply(compiler: Compiler) {
-    const { beforeEmit } = getCompilerHooks(compiler);
+    const { beforeEmit } = getCompilerHooks(compiler)
 
     beforeEmit.tap('BatmanPlugin', (manifest: Record<string, string>) => {
       this.assets = manifest
       console.log(manifest)
-      return manifest;
+      return manifest
     })
 
     // afterEmit.tap('BatmanPlugin', (stats: any) => {

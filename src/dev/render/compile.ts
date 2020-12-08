@@ -26,7 +26,7 @@ export default function compile(
 
   return new Promise<void>((resolve, reject) => {
     const serverPath = path.join(config.dir, TORCH_DIR, TORCH_SERVER_DIR)
-    webpack(webpackConfig,  (err, stats) => {
+    webpack(webpackConfig, (err, stats) => {
       if (err) reject(err)
 
       if (stats) {

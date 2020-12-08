@@ -38,11 +38,7 @@ function requireFile(filePath: string): any {
     filenameRelative: finalFilePath,
   })
   if (result && result.code) {
-    try {
-      return runCode(result.code, createContext(finalFilePath))
-    } catch (e) {
-      throw e
-    }
+    return runCode(result.code, createContext(finalFilePath))
   } else {
     throw new Error(`The file: ${filePath} has syntax error`)
   }

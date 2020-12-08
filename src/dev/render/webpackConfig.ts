@@ -45,7 +45,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     },
     optimization: {
       minimize: false,
-      splitChunks: false
+      splitChunks: false,
     },
     performance: {
       hints: 'warning',

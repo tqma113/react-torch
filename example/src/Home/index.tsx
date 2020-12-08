@@ -14,7 +14,7 @@ import './style.css'
 //   }
 // }
 
-const Home = createPage(async ({ history, context }) => {
+const Home = createPage(async ({ history }) => {
   return {
     store,
     create: async () => {
@@ -24,7 +24,7 @@ const Home = createPage(async ({ history, context }) => {
         const INCREASE = () => {
           store.dispatch({ type: 'INCREMENT' })
         }
-      
+
         const handleClick = () => {
           history.push('/test')
         }

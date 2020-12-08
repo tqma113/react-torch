@@ -1,7 +1,11 @@
 import path from 'path'
 import { IgnorePlugin } from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
-import { Options, FileDescriptor, WebpackManifestPlugin } from 'webpack-manifest-plugin'
+import {
+  Options,
+  FileDescriptor,
+  WebpackManifestPlugin,
+} from 'webpack-manifest-plugin'
 
 import { babelConfig } from '../../lib/config'
 import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'

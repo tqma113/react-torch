@@ -1,11 +1,11 @@
 import chalk from 'chalk'
 
-import { clear } from '../../lib/utils'
+import { clear } from '../../internal/utils'
 import formatWebpackMessages from './formatWebpackMessages'
 
 import type Webpack from 'webpack'
 import type { Compiler } from 'webpack'
-import type { Urls } from '../../lib/utils/prepareUrls'
+import type { Urls } from '../../internal/utils/prepareUrls'
 import type { Configuration } from 'webpack'
 
 const isInteractive = process.stdout.isTTY

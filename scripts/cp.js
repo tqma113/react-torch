@@ -7,4 +7,4 @@ const resolve = (file) => [
 ]
 
 fs.copySync(...resolve('global.d.ts'))
-fs.copySync(...resolve('lib/utils/openChrome.applescript'))
+fs.copySync(...resolve('internal/utils/openChrome.applescript'))

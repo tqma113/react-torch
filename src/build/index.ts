@@ -6,8 +6,8 @@ import fs from 'fs-extra'
 import compile from './compile'
 import copyPublic from './copyPublic'
 import renderCompile from './renderCompile'
-import { mergeConfig } from '../lib/config'
-import { step, info, error } from '../lib/utils'
+import { mergeConfig } from '../internal/config'
+import { step, info, error } from '../internal/utils'
 
 import { Side, TORCH_DIR } from '../index'
 

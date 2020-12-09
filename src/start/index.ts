@@ -6,10 +6,10 @@ import debug from 'debug'
 import express from 'express'
 
 import createRender from './render'
-import { mergeConfig } from '../lib/config'
-import createDefaultServer from '../lib/server'
-import { info, error as errorlog, choosePort } from '../lib/utils'
-import { injectMiddleware, injectAssetsMiddleware } from '../lib/middleware'
+import { mergeConfig } from '../internal/config'
+import createDefaultServer from '../internal/server'
+import { info, error as errorlog, choosePort } from '../internal/utils'
+import { injectMiddleware, injectAssetsMiddleware } from '../internal/middleware'
 import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,

@@ -1,7 +1,7 @@
 import webpack from 'webpack'
 
 import getWebpackConfig from './webpackConfig'
-import { step, info } from '../../lib/utils'
+import { step, info } from '../../internal/utils'
 
 import type { IntegralTorchConfig, PackContext } from '../../index'
 

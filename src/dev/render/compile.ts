@@ -2,7 +2,7 @@ import path from 'path'
 import webpack from 'webpack'
 
 import getWebpackConfig from './webpackConfig'
-import { error, warn } from '../../lib/utils'
+import { error, warn } from '../../internal/utils'
 
 import {
   TORCH_DIR,
@@ -10,7 +10,7 @@ import {
   TORCH_ROUTES_FILE_NAME,
 } from '../../index'
 
-import type { Route } from '../../lib/router'
+import type { Route } from '../../router'
 import type { IntegralTorchConfig, PackContext } from '../../index'
 
 export default function compile(

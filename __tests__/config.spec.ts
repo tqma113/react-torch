@@ -1,5 +1,5 @@
 import path from 'path'
-import { mergeConfig, requireConfig } from '../src/lib/config'
+import { mergeConfig, requireConfig } from '../src/internal/config'
 
 describe('config', () => {
   it('mergeCofnig', () => {

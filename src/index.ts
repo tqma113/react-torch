@@ -1,10 +1,11 @@
 /// <reference path="global.d.ts" />
 
-export * from './lib/context'
-export * from './lib/hook'
-export * from './lib/page'
-export * from './lib/store'
-export * from './lib/router'
+export * from './context'
+export * from './hook'
+export * from './page'
+export * from './store'
+export * from './router'
+export * from './component'
 
 ///////////////////////////////////////////////////////////////////////////////
 // CONSTANTS

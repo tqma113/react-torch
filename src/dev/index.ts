@@ -7,16 +7,16 @@ import debug from 'debug'
 import express from 'express'
 import compile from './compile'
 import createRender from './render'
-import createDefaultServer from '../lib/server'
-import { injectMiddleware, injectAssetsMiddleware } from '../lib/middleware'
-import { mergeConfig } from '../lib/config'
+import createDefaultServer from '../internal/server'
+import { injectMiddleware, injectAssetsMiddleware } from '../internal/middleware'
+import { mergeConfig } from '../internal/config'
 import {
   step,
   error as errorlog,
   choosePort,
   prepareUrls,
   openBrowser,
-} from '../lib/utils'
+} from '../internal/utils'
 import {
   Env,
   Side,

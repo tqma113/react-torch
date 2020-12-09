@@ -2,7 +2,7 @@ import React from 'react'
 
 import type { Params } from 'torch-router'
 import type { History, Location } from 'torch-history'
-import type { Context } from '../..'
+import type { Context } from '..'
 
 export type GlobalContextType = {
   location: Location

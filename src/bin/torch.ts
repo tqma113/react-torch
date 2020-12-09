@@ -3,7 +3,7 @@ import program from 'commander'
 import dev from '../dev'
 import build from '../build'
 import start from '../start'
-import { requireConfig } from '../lib/config'
+import { requireConfig } from '../internal/config'
 import { Env } from '../index'
 
 const pkg = require('../../package.json')

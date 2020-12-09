@@ -1,8 +1,8 @@
 import path from 'path'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 
-import { babelConfig } from '../../lib/config'
-import { getExternals } from '../../lib/utils'
+import { babelConfig } from '../../internal/config'
+import { getExternals } from '../../internal/utils'
 import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
 
 import type { Configuration } from 'webpack'

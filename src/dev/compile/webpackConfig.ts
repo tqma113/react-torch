@@ -5,7 +5,7 @@ import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
-import { babelConfig } from '../../lib/config'
+import { babelConfig } from '../../internal/config'
 import SetManifestPlugin from './SetManifestPlugin'
 import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
 

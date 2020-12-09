@@ -3,11 +3,11 @@ import invariant from 'tiny-invariant'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
 
-import createRouter from '../lib/router'
-import { connect } from '../lib/context'
-import { standardizePage } from '../lib/page'
-import { requireDocument } from '../lib/utils'
-import { createErrorElement } from '../lib/error'
+import createRouter from '../router'
+import { connect } from '../context/index'
+import { standardizePage } from '../page'
+import { requireDocument } from '../internal/utils'
+import { createErrorElement } from '../internal/error'
 import {
   Side,
   TORCH_DIR,
@@ -15,10 +15,10 @@ import {
   TORCH_ROUTES_FILE_NAME,
 } from '../index'
 
-import type { Route, Render } from '../lib/router'
+import type { Route, Render } from '../router'
 import type { Request, Response, NextFunction } from 'express'
-import type { DocumentProps } from '../lib/document'
-import type { GlobalContextType } from '../lib/context'
+import type { DocumentProps } from '../internal/document'
+import type { GlobalContextType } from '../context'
 import type {
   IntegralTorchConfig,
   ClientContext,

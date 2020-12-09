@@ -1,6 +1,6 @@
 import { createRouter } from 'torch-router'
 
-import { createErrorElement } from '../error'
+import { createErrorElement } from '../internal/error'
 import { isTorchPage, createPage } from '../page'
 
 import type { PageCreater } from '../page'

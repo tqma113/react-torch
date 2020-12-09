@@ -15,7 +15,7 @@ export default function compileClient(
     config
   )
 
-  step(`\nCompiling client...`)
+  step(`Compiling client...`)
 
   return new Promise<void>((resolve, reject) => {
     webpack(webpackConfig, (error, stats) => {
@@ -30,7 +30,7 @@ export default function compileClient(
             colors: true,
           })
         )
-        info(`\nCompile client finish!\n`)
+        info(`Compile client finish!\n`)
 
         resolve()
       }

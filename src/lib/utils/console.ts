@@ -5,7 +5,7 @@ export const info = (msg: string) => console.log(chalk.green(msg))
 export const warn = (msg: string) => console.log(chalk.yellow(msg))
 
 // @ts-ignore
-export const error = (msg: string) =>
+export const error = (msg: any) =>
   console.log(chalk.red(JSON.stringify(msg.message || msg)))
 
 export const step = (msg: string) => console.log(chalk.cyan(msg))

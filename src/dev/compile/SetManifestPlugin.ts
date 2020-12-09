@@ -18,27 +18,10 @@ class SetManifestPlugin {
 
     beforeEmit.tap('BatmanPlugin', (manifest: Record<string, string>) => {
       this.assets = manifest
-      console.log(manifest)
       return manifest
     })
 
-    // afterEmit.tap('BatmanPlugin', (stats: any) => {
-    //   // @ts-ignore
-    //   stats.assets = this.assets
-    // })
-    // @ts-ignore
-    // compiler.hooks.webpackManifestPluginAfterEmit.tap(
-    //   'SetManifestPlugin',
-    //   (manifest: Record<string, string>) => {
-    //     // 返回 true 以输出 output 结果，否则返回 false
-    //     this.assets = manifest
-    //     return true
-    //   }
-    // )
-
     compiler.hooks.done.tap('SetManifestPlugin', (stats) => {
-      // @ts-ignore
-      console.log(stats, this.assets === stats.assets)
       // @ts-ignore
       stats.assets = this.assets
     })

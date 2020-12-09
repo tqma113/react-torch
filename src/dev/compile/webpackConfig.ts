@@ -45,7 +45,27 @@ function getConfig(config: IntegralTorchConfig): Configuration {
   // TypeScript type checking
 
   if (useTypeScript) {
-    plugins.push(new ForkTsCheckerWebpackPlugin({}))
+    plugins.push(new ForkTsCheckerWebpackPlugin({
+      async: process.env.NODE_ENV === 'development',
+      issue: {
+        // This one is specifically to match during CI tests,
+        // as micromatch doesn't match
+        // '../cra-template-typescript/template/src/App.tsx'
+        // otherwise.
+        include: [
+          '**',
+        ].map((file) => ({ file })),
+        exclude: [
+          '**/src/**/__tests__/**',
+          '**/src/**/?(*.)(spec|test).*',
+          '**/src/setupProxy.*',
+          '**/src/setupTests.*',
+        ].map((file) => ({ file })),
+      },
+      logger: {
+        infrastructure: 'silent',
+      },
+    }))
   }
 
   return {

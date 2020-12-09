@@ -97,11 +97,11 @@ function formatMessage(message: string) {
 }
 
 export default function formatWebpackMessages(json: any) {
-  const formattedErrors = json.errors.map(function (message: string) {
-    return formatMessage(message)
+  const formattedErrors = json.errors.map(function (error: any) {
+    return formatMessage(error.message)
   })
-  const formattedWarnings = json.warnings.map(function (message: string) {
-    return formatMessage(message)
+  const formattedWarnings = json.warnings.map(function (warning: any) {
+    return formatMessage(warning.message)
   })
   const result = { errors: formattedErrors, warnings: formattedWarnings }
   if (result.errors.some(isLikelyASyntaxError)) {

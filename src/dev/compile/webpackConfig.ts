@@ -99,7 +99,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       },
     },
     performance: {
-      hints: false,
+      hints: 'warning',
       maxEntrypointSize: 400000,
     },
     module: {
@@ -128,6 +128,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
     },
     plugins,
+    stats: 'normal'
   }
 }
 

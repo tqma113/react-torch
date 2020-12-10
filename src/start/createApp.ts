@@ -6,6 +6,7 @@ import compile from './dev/compile'
 import createRender from './render'
 import { prepareUrls, Urls } from '../internal/utils'
 import {
+  Env,
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_DIR,
@@ -25,7 +26,7 @@ export default function (draftConfig: TorchConfig) {
 export const createApp = async (config: IntegralTorchConfig) => {
   config.installPolyfill(config)
 
-  const isDev = process.env.NODE_ENV === 'production'
+  const isDev = process.env.NODE_ENV === Env.Development
 
   const staticPath = path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR)
   const publicPath = isDev

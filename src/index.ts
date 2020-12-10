@@ -1,11 +1,9 @@
 /// <reference path="global.d.ts" />
 
-export * from './context'
-export * from './hook'
-export * from './page'
-export * from './store'
-export * from './router'
-export * from './component'
+export * from './start'
+export * from './build'
+export { default as start } from './start/createApp'
+export { default as build } from './build'
 
 ///////////////////////////////////////////////////////////////////////////////
 // CONSTANTS
@@ -67,7 +65,7 @@ export type TorchConfig = {
   styleMode?: PreloadType
   createServer?: ServerCreater
   transformWebpackConfig?: WebpackConfigTransform
-  installPolyfill?: Partial<PolyfillInstaller>
+  installPolyfill?: PolyfillInstaller
 }
 
 export type IntegralTorchConfig = {
@@ -142,13 +140,16 @@ export type ScriptPreload =
 
 export type ServerCreater = (config: IntegralTorchConfig) => Express
 
-export type PolyfillInstaller = {
-  [Env.Development]: (config: IntegralTorchConfig) => void
-  [Env.Production]: (config: IntegralTorchConfig) => void
-}
+export type PolyfillInstaller = (config: IntegralTorchConfig) => void
 
 export type WebpackConfigTransform = (
   config: Configuration,
   packContext: PackContext,
   torchConfig: IntegralTorchConfig
 ) => Configuration
+
+export type ScriptOptions = {
+  dir?: string
+  port?: string
+  config?: string
+}

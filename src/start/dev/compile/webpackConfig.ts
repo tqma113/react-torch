@@ -5,12 +5,12 @@ import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
-import { babelConfig } from '../../internal/config'
+import { babelConfig } from '../../../internal/config'
 import SetManifestPlugin from './SetManifestPlugin'
-import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
+import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../../index'
 
 import type { Configuration, Plugin } from 'webpack'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig } from '../../../index'
 
 function getConfig(config: IntegralTorchConfig): Configuration {
   // Check if TypeScript is setup

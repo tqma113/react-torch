@@ -1,22 +1,18 @@
 /// <reference path="../global.d.ts" />
 
-import path from 'path'
 import http from 'http'
 import debug from 'debug'
-import express from 'express'
 
-import createRender from './render'
 import { mergeConfig } from '../internal/config'
+import { createApp } from './createApp'
 import createDefaultServer from '../internal/server'
-import { info, error as errorlog, choosePort } from '../internal/utils'
-import { injectMiddleware, injectAssetsMiddleware } from '../internal/middleware'
+import { info, error as errorlog, openBrowser } from '../internal/utils'
 import {
-  TORCH_DIR,
-  TORCH_CLIENT_DIR,
-  TORCH_PUBLIC_PATH,
-  TORCH_ASSETS_FILE_NAME,
-} from '../index'
+  injectMiddleware,
+  injectAssetsMiddleware,
+} from '../internal/middleware'
 
+import type express from 'express'
 import type { TorchConfig } from '../index'
 
 export type Result = {
@@ -24,80 +20,56 @@ export type Result = {
   app: express.Express
 }
 
-export default function start(draftConfig: TorchConfig) {
-  const config = mergeConfig(draftConfig)
-
-  config.installPolyfill[process.env.NODE_ENV](config)
-
-  const createServer = config.createServer || createDefaultServer
-
+export default function (draftConfig: TorchConfig) {
   return new Promise<Result>(async (resolve, reject) => {
-    const port = await choosePort(config.host, config.port)
-    if (port === null) {
-      // We have not found a port.
-      process.exit(1)
-    } else {
-      config.port = port
-    }
-
+    const config = mergeConfig(draftConfig)
+    const torch = await createApp(config)
+    const createServer = config.createServer || createDefaultServer
     const app = createServer(config)
     const server = http.createServer(app)
-    const render = createRender(config)
 
     // custome middlewares
     injectMiddleware(app, server, config)
 
-    // static file route
-    app.use(
-      '/',
-      express.static(path.resolve(config.dir, TORCH_DIR, TORCH_CLIENT_DIR))
-    )
+    if (torch.devMiddleware) {
+      app.use(torch.devMiddleware)
+    }
 
-    // static assets
-    app.use((req, res, next) => {
-      const assertPath = path.resolve(
-        config.dir,
-        TORCH_DIR,
-        TORCH_CLIENT_DIR,
-        TORCH_PUBLIC_PATH,
-        TORCH_ASSETS_FILE_NAME
-      )
-      res.locals.assets = getAssets(require(assertPath))
-      next()
-    })
+    // static file route
+    app.use('/', torch.static())
+
+    // static file route
+    if (torch.public) {
+      app.use('/', torch.public())
+    }
+
+    if (torch.hotMiddleware) {
+      app.use(torch.hotMiddleware)
+    }
+
+    // assets middleware
+    app.use(torch.assetsMiddleware)
 
     // custome assets middlewares
     injectAssetsMiddleware(app, server, config)
 
     // page router
-    app.use(render)
+    app.use(torch.render)
 
-    // error handler
-    const errorHandler: express.ErrorRequestHandler = (
-      err: any,
-      req,
-      res,
-      next
-    ) => {
-      res.status(err.status || 500)
-      res.json(err.message)
-    }
-    app.use(errorHandler)
-
-    /**
-     * Event listener for HTTP server "listening" event.
-     */
+    // Event listener for HTTP server "listening" event.
     const onListening = () => {
-      let addr = server.address()
-      let bind =
+      const addr = server.address()
+      const bind =
         typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
-      debug('Listening on ' + bind)
-      info('Listening on ' + bind)
+      debug(`Listening on ${bind}`)
+      if (torch.urls) {
+        openBrowser(torch.urls.localUrlForBrowser)
+      } else {
+        info('Listening on ' + bind)
+      }
     }
 
-    /**
-     * Event listener for HTTP server "error" event.
-     */
+    // Event listener for HTTP server "error" event.
     const onError = (error: any) => {
       if (error.syscall !== 'listen') {
         throw error
@@ -118,24 +90,11 @@ export default function start(draftConfig: TorchConfig) {
       }
     }
 
-    /**
-     * Listen on provided port, on all network interfaces.
-     */
+    // Listen on provided port, on all network interfaces.
     server.listen(config.port)
     server.on('error', onError)
     server.on('listening', onListening)
     server.on('error', reject)
     server.on('listening', () => resolve({ server, app }))
   })
-}
-
-function getAssets(stats: Record<string, string | string[]>) {
-  return Object.keys(stats).reduce(
-    (result: Record<string, string>, assetName) => {
-      const value = stats[assetName]
-      result[assetName] = Array.isArray(value) ? value[0] : value
-      return result
-    },
-    {}
-  )
 }

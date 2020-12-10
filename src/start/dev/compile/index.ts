@@ -5,15 +5,17 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 
 import getWebpackConfig from './webpackConfig'
 import createCompiler from './createCompiler'
+import { Side } from '../../../index'
 
-import type { Urls } from '../../internal/utils'
-import type { IntegralTorchConfig, PackContext } from '../../index'
+import type { Urls } from '../../../internal/utils'
+import type { IntegralTorchConfig, PackContext } from '../../../index'
 
-export default async function compile(
-  config: IntegralTorchConfig,
-  packContext: PackContext,
-  urls: Urls
-) {
+export default async function compile(config: IntegralTorchConfig, urls: Urls) {
+  const packContext: PackContext = {
+    ssr: config.ssr,
+    env: process.env.NODE_ENV,
+    packSide: Side.Client,
+  }
   const webpackConfig = config.transformWebpackConfig(
     getWebpackConfig(config),
     packContext,

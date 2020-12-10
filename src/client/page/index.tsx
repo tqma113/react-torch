@@ -2,7 +2,7 @@ import { createNoopStore } from '../store'
 
 import type { Params } from 'torch-router'
 import type { History, Location } from 'torch-history'
-import type { Context } from '../index'
+import type { Context } from '../../index'
 import type { StoreLike } from '../store'
 
 export type BasePage = {

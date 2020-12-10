@@ -1,13 +1,13 @@
 import path from 'path'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 
-import { babelConfig } from '../../internal/config'
-import { getExternals } from '../../internal/utils'
+import { babelConfig } from '../../../internal/config'
+import { getExternals } from '../../../internal/utils'
 
-import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
+import { TORCH_DIR, TORCH_SERVER_DIR } from '../../../index'
 
 import type { Configuration } from 'webpack'
-import type { IntegralTorchConfig } from '../../index'
+import type { IntegralTorchConfig } from '../../../index'
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
   let entry: Record<string, string> = {

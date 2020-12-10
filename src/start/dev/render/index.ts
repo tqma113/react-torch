@@ -3,29 +3,23 @@ import { createMemoryHistory } from 'torch-history'
 
 import compile from './compile'
 
-import createRouter from '../../router'
-import { connect } from '../../context/index'
-import { standardizePage } from '../../page'
-import { requireDocument } from '../../internal/utils'
-import { createErrorElement } from '../../internal/error'
+import { createRouter, connect, standardizePage } from '../../../client'
+import { requireDocument } from '../../../internal/utils'
+import { createErrorElement } from '../../../internal/error'
 
-import { Side } from '../../index'
+import { Side } from '../../../index'
 
 import type { Request, Response, NextFunction } from 'express'
-import type { DocumentProps } from '../../internal/document'
-import type { GlobalContextType } from '../../context/index'
-import type { Route, Router, Render } from '../../router'
+import type { DocumentProps } from '../../../internal/document'
+import type { GlobalContextType, Route, Router, Render } from '../../../client'
 import type {
   IntegralTorchConfig,
   ServerContext,
   ClientContext,
   PackContext,
-} from '../../index'
+} from '../../../index'
 
-export default async function createRender(
-  config: IntegralTorchConfig,
-  packContext: PackContext
-) {
+export default async function createRender(config: IntegralTorchConfig) {
   let router: Router
   const update = (routes: Route[]) => {
     router = createRouter(routes)
@@ -34,6 +28,11 @@ export default async function createRender(
     return router(path, render)
   }
 
+  const packContext: PackContext = {
+    ssr: config.ssr,
+    env: process.env.NODE_ENV,
+    packSide: Side.Server,
+  }
   await compile(config, packContext, update)
 
   return function (req: Request, res: Response, next: NextFunction) {

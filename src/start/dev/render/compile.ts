@@ -2,16 +2,16 @@ import path from 'path'
 import webpack from 'webpack'
 
 import getWebpackConfig from './webpackConfig'
-import { error, warn } from '../../internal/utils'
+import { error, warn } from '../../../internal/utils'
 
 import {
   TORCH_DIR,
   TORCH_SERVER_DIR,
   TORCH_ROUTES_FILE_NAME,
-} from '../../index'
+} from '../../../index'
 
-import type { Route } from '../../router'
-import type { IntegralTorchConfig, PackContext } from '../../index'
+import type { Route } from '../../../client/router'
+import type { IntegralTorchConfig, PackContext } from '../../../index'
 
 export default function compile(
   config: IntegralTorchConfig,

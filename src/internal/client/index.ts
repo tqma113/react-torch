@@ -1,14 +1,17 @@
 import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'torch-history'
-import createRouter from '../../router'
-import { connect } from '../../context'
+import { connect, createRouter } from '../../client'
 import { createErrorElement } from '../error'
 import $routes from '@routes'
 import type { Listener, Location } from 'torch-history'
 import type { TorchData } from '../../index'
-import type { GlobalContextType } from '../../context'
-import type { StoreLike } from '../../store'
-import type { Page, PageCreater, StandardPage } from '../../page'
+import type {
+  GlobalContextType,
+  StoreLike,
+  Page,
+  PageCreater,
+  StandardPage,
+} from '../../client'
 
 try {
   const dataScript = document.getElementById(

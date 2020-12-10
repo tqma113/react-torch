@@ -14,7 +14,7 @@ export function prepareUrls(
   host: string,
   port: number,
   pathname: string = '/'
-) {
+): Urls {
   const formatUrl = (hostname: string) =>
     url.format({
       protocol,

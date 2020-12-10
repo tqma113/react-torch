@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from '../'
+import { useHistory } from '../hook'
 
 export type LinkProps = React.PropsWithChildren<{
   href: string

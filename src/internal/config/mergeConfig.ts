@@ -1,7 +1,6 @@
 import path from 'path'
 
 import {
-  Env,
   PreloadType,
   TORCH_SRC_DIR,
   TORCH_PUBLIC_DIR,
@@ -77,10 +76,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
 
   const createServer = config.createServer || false
 
-  const installPolyfill: PolyfillInstaller = {
-    [Env.Development]: config.installPolyfill?.[Env.Development] || noop,
-    [Env.Production]: config.installPolyfill?.[Env.Production] || noop,
-  }
+  const installPolyfill: PolyfillInstaller = config.installPolyfill || noop
 
   const cdn = config.cdn || ''
 

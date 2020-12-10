@@ -1,12 +1,14 @@
-import program from 'commander'
+import { Command } from 'commander'
+import chalk from 'chalk'
+import leven from 'leven'
 
-import dev from '../dev'
-import build from '../build'
-import start from '../start'
-import { requireConfig } from '../internal/config'
-import { Env } from '../index'
+import dev from '../scripts/dev'
+import build from '../scripts/build'
+import start from '../scripts/start'
+import type { ScriptOptions } from '../index'
 
 const pkg = require('../../package.json')
+const program = new Command()
 
 program.version(pkg.version).name(pkg.name)
 
@@ -16,24 +18,8 @@ program
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config = 'torch.config.ts' }) => {
-    process.env.NODE_ENV = process.env.NODE_ENV || Env.Development
-
-    let draftConfig = requireConfig(config)
-
-    if (typeof draftConfig === 'object') {
-      if (typeof dir === 'string') {
-        draftConfig.dir = dir
-      }
-
-      if (typeof port === 'string') {
-        draftConfig.port = Number(port)
-      }
-
-      dev(draftConfig)
-    } else {
-      dev({ dir, port })
-    }
+  .action((options: ScriptOptions) => {
+    dev(options)
   })
 
 program
@@ -42,24 +28,8 @@ program
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config = 'torch.config.ts' }) => {
-    process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
-
-    let draftConfig = requireConfig(config)
-
-    if (typeof draftConfig === 'object') {
-      if (typeof dir === 'string') {
-        draftConfig.dir = dir
-      }
-
-      if (typeof port === 'string') {
-        draftConfig.port = Number(port)
-      }
-
-      build(draftConfig)
-    } else {
-      build({ dir, port })
-    }
+  .action((options: ScriptOptions) => {
+    build(options)
   })
 
 program
@@ -68,24 +38,44 @@ program
   .option('-d, --dir <dir>', 'root path')
   .option('-p, --port <port>', 'listening port')
   .option('-c, --config <config>', 'config file path')
-  .action(({ dir, port, config = 'torch.config.ts' }) => {
-    process.env.NODE_ENV = process.env.NODE_ENV || Env.Production
+  .action((options: ScriptOptions) => {
+    start(options)
+  })
 
-    let draftConfig = requireConfig(config)
+// output help information on unknown COMMANDS
+program.arguments('<command>').action((cmd) => {
+  program.outputHelp()
+  console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`))
+  console.log()
+  suggestCommands(cmd)
+})
 
-    if (typeof draftConfig === 'object') {
-      if (typeof dir === 'string') {
-        draftConfig.dir = dir
-      }
+program.on('--help', () => {
+  console.log('')
+  console.log('Example call:')
+  console.log('  $ ' + pkg.name + ' --help')
+})
 
-      if (typeof port === 'string') {
-        draftConfig.port = Number(port)
-      }
+program.parse(process.argv)
 
-      start(draftConfig)
-    } else {
-      start({ dir, port })
+if (!process.argv.slice(2).length) {
+  program.outputHelp()
+}
+
+function suggestCommands(unknownCommand: string) {
+  const availableCommands = program.commands.map((cmd) => cmd._name)
+
+  let suggestion: string | undefined = undefined
+
+  availableCommands.forEach((cmd) => {
+    const isBestMatch =
+      leven(cmd, unknownCommand) < leven(suggestion || '', unknownCommand)
+    if (leven(cmd, unknownCommand) < 3 && isBestMatch) {
+      suggestion = cmd
     }
   })
 
-program.parse(process.argv)
+  if (suggestion) {
+    console.log(`  ` + chalk.red(`Did you mean ${chalk.yellow(suggestion)}?`))
+  }
+}

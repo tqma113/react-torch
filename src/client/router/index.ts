@@ -1,6 +1,6 @@
-import { createRouter } from 'torch-router'
+import { createRouter as cr } from 'torch-router'
 
-import { createErrorElement } from '../internal/error'
+import { createErrorElement } from '../../internal/error'
 import { isTorchPage, createPage } from '../page'
 
 import type { PageCreater } from '../page'
@@ -17,8 +17,8 @@ export type Route = DraftRoute<RouteModule>
 
 export type Router = (path: string, render: Render) => Promise<void>
 
-export default function (routes: Route[]): Router {
-  const router = createRouter(routes)
+export function createRouter(routes: Route[]): Router {
+  const router = cr(routes)
 
   return async (path, render) => {
     try {

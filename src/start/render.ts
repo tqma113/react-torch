@@ -3,9 +3,7 @@ import invariant from 'tiny-invariant'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
 
-import createRouter from '../router'
-import { connect } from '../context/index'
-import { standardizePage } from '../page'
+import { createRouter, connect, standardizePage } from '../client'
 import { requireDocument } from '../internal/utils'
 import { createErrorElement } from '../internal/error'
 import {
@@ -15,10 +13,9 @@ import {
   TORCH_ROUTES_FILE_NAME,
 } from '../index'
 
-import type { Route, Render } from '../router'
 import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../internal/document'
-import type { GlobalContextType } from '../context'
+import type { Route, Render, GlobalContextType } from '../client'
 import type {
   IntegralTorchConfig,
   ClientContext,

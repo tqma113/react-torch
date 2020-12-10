@@ -1,5 +1,5 @@
 import React from 'react'
-import { createPage } from '../../../src'
+import { createPage } from '../../../src/client'
 import store from './store'
 import './about.css'
 

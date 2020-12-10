@@ -1,4 +1,4 @@
-import type { Route } from '../../src'
+import type { Route } from '../../src/client'
 
 const routes: Route[] = [
   {

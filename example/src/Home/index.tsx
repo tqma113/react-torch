@@ -21,18 +21,19 @@ const Home = createPage(async ({ history }) => {
     create: async () => {
       return () => {
         const state = store.getState()
-      
+
         const INCREASE = () => {
           store.dispatch({ type: 'INCREMENT' })
         }
-      
+
         const handleClick = () => {
           history.push('/test')
         }
-      
+
         return (
           <div>
-            Home {state.count} <button onClick={() => INCREASE()}>Increate</button>
+            Home {state.count}{' '}
+            <button onClick={() => INCREASE()}>Increate</button>
             <hr />
             <a href="/about">about</a>
             <hr />

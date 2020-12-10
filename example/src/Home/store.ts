@@ -58,7 +58,7 @@ function counter(state: State, action: Action) {
 
 const reduxStore = createStore(counter, initialState)
 
-export default ()  => ({
+export default () => ({
   ...reduxStore,
   __UNSAFE_SET_STATE__(state: State) {
     reduxStore.dispatch({ type: 'UNSAFE_SETSTATE', preload: state })

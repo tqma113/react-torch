@@ -4,7 +4,7 @@ import http from 'http'
 import debug from 'debug'
 
 import { mergeConfig } from '../internal/config'
-import { createApp } from './createApp'
+import torch, { pureTorch } from './torch'
 import createDefaultServer from '../internal/server'
 import { info, error as errorlog, openBrowser } from '../internal/utils'
 import {
@@ -20,10 +20,16 @@ export type Result = {
   app: express.Express
 }
 
-export default function (draftConfig: TorchConfig) {
+export default torch
+
+export {
+  pureTorch
+}
+
+export function start(draftConfig: TorchConfig) {
   return new Promise<Result>(async (resolve, reject) => {
     const config = mergeConfig(draftConfig)
-    const torch = await createApp(config)
+    const torch = await pureTorch(config)
     const createServer = config.createServer || createDefaultServer
     const app = createServer(config)
     const server = http.createServer(app)

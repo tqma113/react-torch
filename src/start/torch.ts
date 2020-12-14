@@ -19,11 +19,11 @@ import type { RequestHandler } from 'express'
 import type { WebpackDevMiddleware } from 'webpack-dev-middleware'
 import type { NextHandleFunction } from 'connect'
 
-export default function (draftConfig: TorchConfig) {
-  return createApp(mergeConfig(draftConfig))
+export default function torch(draftConfig: TorchConfig) {
+  return pureTorch(mergeConfig(draftConfig))
 }
 
-export const createApp = async (config: IntegralTorchConfig) => {
+export const pureTorch = async (config: IntegralTorchConfig) => {
   config.installPolyfill(config)
 
   const isDev = process.env.NODE_ENV === Env.Development

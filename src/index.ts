@@ -2,7 +2,7 @@
 
 export * from './start'
 export * from './build'
-export { default as start } from './start/createApp'
+export { default as start } from './start'
 export { default as build } from './build'
 
 ///////////////////////////////////////////////////////////////////////////////

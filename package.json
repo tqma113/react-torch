@@ -1,6 +1,6 @@
 {
   "name": "react-torch",
-  "version": "1.11.23",
+  "version": "1.11.24",
   "description": "A lib to server-side render with react.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -12,8 +12,8 @@
     "bin",
     "build.js",
     "build.d.ts",
-    "dev.js",
-    "dev.d.ts",
+    "client.js",
+    "client.d.ts",
     "start.js",
     "start.d.ts",
     "AUTHORS"

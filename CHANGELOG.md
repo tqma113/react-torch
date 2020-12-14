@@ -1,3 +1,12 @@
+## [1.11.23](https://github.com/tqma113/react-torch/compare/v1.11.22...v1.11.23) (2020-12-14)
+
+
+### Bug Fixes
+
+* **client:** store update -> view update ([4c621af](https://github.com/tqma113/react-torch/commit/4c621aff105c19d68d328b24dc0cc4c139c9846c))
+
+
+
 ## [1.11.22](https://github.com/tqma113/react-torch/compare/v1.11.21...v1.11.22) (2020-12-03)
 
 

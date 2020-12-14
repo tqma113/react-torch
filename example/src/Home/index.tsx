@@ -30,6 +30,8 @@ const Home = createPage(async ({ history }) => {
           history.push('/test')
         }
 
+        console.log(state)
+
         return (
           <div>
             Home {state.count}{' '}

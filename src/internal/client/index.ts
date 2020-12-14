@@ -102,6 +102,7 @@ try {
       }
 
       hook.unsubscribe = store.subscribe(() => {
+        const element = connect(component)(globalContext)
         ReactDOM.render(element, containerElement)
       })
     }
@@ -125,6 +126,8 @@ try {
     })
   }
 
+  history.listen(listener)
+
   router(location.pathname, async (pageCreator, params) => {
     const location = history.location
     const globalContext: GlobalContextType = {
@@ -135,8 +138,6 @@ try {
     }
 
     await render(pageCreator, globalContext)
-
-    history.listen(listener)
   })
 } catch (err) {
   console.error(err)

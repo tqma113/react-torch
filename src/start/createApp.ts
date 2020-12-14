@@ -52,22 +52,26 @@ export const createApp = async (config: IntegralTorchConfig) => {
     })
   }
 
+  const devAssetsMiddleware: RequestHandler = (req, res, next) => {
+    res.locals.assets = res.locals.webpackStats.assets
+    next()
+  }
+
+  const prodAssetsMiddleware: RequestHandler = (req, res, next) => {
+    const assertPath = path.resolve(
+      config.dir,
+      TORCH_DIR,
+      TORCH_CLIENT_DIR,
+      TORCH_PUBLIC_PATH,
+      TORCH_ASSETS_FILE_NAME
+    )
+    res.locals.assets = getAssets(require(assertPath))
+    next()
+  }
+
   const assetsMiddleware: RequestHandler = isDev
-    ? (req, res, next) => {
-        res.locals.assets = res.locals.webpackStats.assets
-        next()
-      }
-    : (req, res, next) => {
-        const assertPath = path.resolve(
-          config.dir,
-          TORCH_DIR,
-          TORCH_CLIENT_DIR,
-          TORCH_PUBLIC_PATH,
-          TORCH_ASSETS_FILE_NAME
-        )
-        res.locals.assets = getAssets(require(assertPath))
-        next()
-      }
+    ? devAssetsMiddleware
+    : prodAssetsMiddleware
 
   return {
     static: () => serveStatic(staticPath),

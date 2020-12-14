@@ -1,3 +1,12 @@
+## [1.11.25](https://github.com/tqma113/react-torch/compare/v1.11.24...v1.11.25) (2020-12-14)
+
+
+### Bug Fixes
+
+* **scripts:** start ([5e1abb4](https://github.com/tqma113/react-torch/commit/5e1abb4491fef0eb646155fb25676c324515cf5c))
+
+
+
 ## [1.11.24](https://github.com/tqma113/react-torch/compare/v1.11.23...v1.11.24) (2020-12-14)
 
 

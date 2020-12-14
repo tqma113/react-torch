@@ -22,9 +22,7 @@ export type Result = {
 
 export default torch
 
-export {
-  pureTorch
-}
+export { pureTorch }
 
 export function start(draftConfig: TorchConfig) {
   return new Promise<Result>(async (resolve, reject) => {

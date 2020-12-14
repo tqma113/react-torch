@@ -1,4 +1,4 @@
-import start from '../start'
+import { start } from '../start'
 import { requireConfig } from '../internal/config'
 import { Env, ScriptOptions } from '../index'
 

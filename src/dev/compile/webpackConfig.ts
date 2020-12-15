@@ -128,6 +128,9 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       extensions: ['.js', '.json', '.ts', '.jsx', '.tsx'],
     },
     plugins,
+    stats: {
+      colors: true,
+    }
   }
 }
 

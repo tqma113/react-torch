@@ -1804,6 +1804,14 @@
     "@types/webpack" "*"
     loglevel "^1.6.2"
 
+"@types/webpack-manifest-plugin@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/webpack-manifest-plugin/-/webpack-manifest-plugin-3.0.1.tgz#3460a672c0fd3ffc6d39ef681f6a1625911a67ae"
+  integrity sha512-K/AOmUxL9FKgai+lOwCdMhk0lDImMS2LDAfvLQlDB199zdjtekx+JR/mWxlo9LNFQSfOFs2ZsxxUdh+O76Rqrw==
+  dependencies:
+    "@types/tapable" "*"
+    "@types/webpack" "*"
+
 "@types/webpack-sources@*":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-2.1.0.tgz#8882b0bd62d1e0ce62f183d0d01b72e6e82e8c10"

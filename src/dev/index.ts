@@ -23,7 +23,6 @@ import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_DIR,
-  TORCH_PUBLIC_PATH,
 } from '../index'
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 

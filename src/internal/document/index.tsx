@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { htmlEscapeJsonStringify } from '../utils/htmlescape'
+
 import type {
   Context,
   TorchData,
@@ -79,17 +81,17 @@ export default function createDocument({
           id="__TORCH_DATA__"
           type="application/json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(data).replace(/</g, '\\u003c'),
+            __html: htmlEscapeJsonStringify(data),
           }}
         />
         <script
           type="application/javascript"
           dangerouslySetInnerHTML={{
-            __html: `
+            __html: htmlEscapeJsonStringify(`
             (function() {
               window.__DEV__ = ${context.env === 'development'}
             })()
-          `,
+          `),
           }}
         />
 
@@ -110,7 +112,7 @@ function getInnerStyle(content: string, key?: string | number) {
     <style
       key={key}
       type="text/css"
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: htmlEscapeJsonStringify(content) }}
     />
   )
 }
@@ -135,7 +137,7 @@ function getInnerScript(content: string, key?: string | number) {
       key={key}
       type="application/javascript"
       dangerouslySetInnerHTML={{
-        __html: content.replace(/<\/script/gi, '&lt/script'),
+        __html: htmlEscapeJsonStringify(content),
       }}
     />
   )

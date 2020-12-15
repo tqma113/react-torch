@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import isRoot from 'is-root'
 import inquirer from 'inquirer'
-import detect from 'detect-port-alt'
+import detect from 'detect-port'
 
 import { clear, getProcessForPort } from './index'
 
@@ -11,7 +11,10 @@ export function choosePort(
   host: string,
   defaultPort: number
 ): Promise<number | null> {
-  return detect(defaultPort, host).then(
+  return detect({
+    port: defaultPort,
+    hostname: host
+  }).then(
     (port) =>
       new Promise((resolve) => {
         if (port === defaultPort) {

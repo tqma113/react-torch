@@ -17,7 +17,7 @@ export default function copyPublic(dir: string) {
         resolve()
       }
     }
-    gulp.series('default')(taskFunction)
+    gulp.series('default', taskFunction)
   })
 }
 

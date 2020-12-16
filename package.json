@@ -157,7 +157,6 @@
     "commitizen": "^4.1.2",
     "conventional-changelog": "^3.1.23",
     "conventional-changelog-cli": "^2.1.0",
-    "css-loader": "^4.2.2",
     "jest": "^26.1.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.1",

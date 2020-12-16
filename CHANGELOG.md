@@ -1,3 +1,12 @@
+## [1.11.29](https://github.com/tqma113/react-torch/compare/v1.11.28...v1.11.29) (2020-12-16)
+
+
+### Bug Fixes
+
+* **build:** gulp ([7cd9106](https://github.com/tqma113/react-torch/commit/7cd91066249f2828d510ec309c791ca0aeb43fb0))
+
+
+
 ## [1.11.28](https://github.com/tqma113/react-torch/compare/v1.11.27...v1.11.28) (2020-12-16)
 
 

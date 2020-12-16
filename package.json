@@ -1,6 +1,6 @@
 {
   "name": "react-torch",
-  "version": "1.11.28",
+  "version": "1.11.29",
   "description": "A lib to server-side render with react.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

@@ -10,14 +10,13 @@ export default function copyPublic(dir: string) {
   return new Promise<void>((resolve, reject) => {
     gulp.task('default', createTask(dir))
 
-    const taskFunction: gulp.TaskFunction = (error) => {
+    gulp.series('default')((error) => {
       if (error) {
         reject(error)
       } else {
         resolve()
       }
-    }
-    gulp.series('default', taskFunction)
+    })
   })
 }
 

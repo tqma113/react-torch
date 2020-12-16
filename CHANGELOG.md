@@ -1,3 +1,12 @@
+## [1.11.27](https://github.com/tqma113/react-torch/compare/v1.11.26...v1.11.27) (2020-12-16)
+
+
+### Bug Fixes
+
+* **build:** can't resolve client entry ([0957d4e](https://github.com/tqma113/react-torch/commit/0957d4e4b1beaacac281a1acb216fb41104f7f2e))
+
+
+
 ## [1.11.26](https://github.com/tqma113/react-torch/compare/v1.11.25...v1.11.26) (2020-12-14)
 
 

@@ -38,7 +38,7 @@ export default function build(draftConfig: TorchConfig) {
   renderCompile(config, serverContext)
     .then(() => compile(config, clientContext))
     .then(() => copyPublic(config.dir))
-    .then(() => info('Compile finish!'))
+    .then(() => info('\nCompile finish!'))
     .then(() => process.exit())
     .catch((err) => {
       error(err)

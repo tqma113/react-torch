@@ -1,6 +1,6 @@
 import path from 'path'
+import React from 'react'
 import invariant from 'tiny-invariant'
-import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'torch-history'
 
 import { createRouter, connect, standardizePage } from '../client'
@@ -13,13 +13,14 @@ import {
   TORCH_ROUTES_FILE_NAME,
 } from '../index'
 
-import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../internal/document'
 import type { Route, Render, GlobalContextType } from '../client'
 import type {
   IntegralTorchConfig,
   ClientContext,
   ServerContext,
+  ScriptPreload,
+  StylePreload,
 } from '../index'
 
 function getRoutes(config: IntegralTorchConfig) {
@@ -40,18 +41,19 @@ export default function createRender(config: IntegralTorchConfig) {
 
   const router = createRouter(routes)
 
-  return function (req: Request, res: Response, next: NextFunction) {
-    const history = createMemoryHistory()
-    history.push(req.url)
-    const location = history.location
-
+  return function (
+    url: string,
+    assets: { index: string; vendor: string },
+    scripts: ScriptPreload[],
+    styles: StylePreload[],
+    others: Record<string, any>,
+  ) {
+    const history = createMemoryHistory({ initialEntries: [url] })
     const render: Render = async (pageCreator, params) => {
       if (pageCreator === null) {
-        next()
+        return <></>
       } else {
         const serverContext: ServerContext = {
-          req,
-          res,
           ssr: config.ssr,
           env: process.env.NODE_ENV,
           side: Side.Server,
@@ -65,7 +67,7 @@ export default function createRender(config: IntegralTorchConfig) {
         const getElementAndState = async () => {
           try {
             const globalContext: GlobalContextType = {
-              location,
+              location: history.location,
               history,
               context: serverContext,
               params,
@@ -95,25 +97,18 @@ export default function createRender(config: IntegralTorchConfig) {
           container: config.container,
           state,
           mode: config.styleMode,
-          ...res.locals,
-          assets: res.locals.assets,
-          styles: res.locals.styles,
-          scripts: res.locals.scripts,
+          ...others,
+          assets,
+          styles,
+          scripts,
         }
         const createHtml = requireDocument(config)
-        const html = createHtml(data)
-        const stream = ReactDOMServer.renderToNodeStream(html)
-
-        res.status(200)
-        res.setHeader('Content-type', 'text/html')
-        res.write('<!DOCTYPE html>')
-        stream.pipe(res)
+        return createHtml(data)
       }
     }
 
-    router(location.pathname, render).catch((err) => {
-      res.status(502)
-      res.send(err.stack)
+    return router(history.location.pathname, render).catch((err) => {
+      return createErrorElement(err.stack)
     })
   }
 }

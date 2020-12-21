@@ -98,8 +98,6 @@ export type ClientContext = TinyContext & {
   side: Side.Client
 }
 export type ServerContext = TinyContext & {
-  req: Request
-  res: Response
   side: Side.Server
 }
 

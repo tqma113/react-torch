@@ -1,7 +1,10 @@
 /// <reference path="../global.d.ts" />
 
+import path from 'path'
 import http from 'http'
 import debug from 'debug'
+import ReactDOMServer from 'react-dom/server'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 
 import { mergeConfig } from '../internal/config'
 import torch, { pureTorch } from './torch'
@@ -11,13 +14,19 @@ import {
   injectMiddleware,
   injectAssetsMiddleware,
 } from '../internal/middleware'
+import {
+  TORCH_DIR,
+  TORCH_CLIENT_DIR,
+  TORCH_PUBLIC_PATH,
+  TORCH_ASSETS_FILE_NAME,
+} from '../index'
 
-import type express from 'express'
+import type { Express, RequestHandler } from 'express'
 import type { TorchConfig } from '../index'
 
 export type Result = {
   server: http.Server
-  app: express.Express
+  app: Express
 }
 
 export default torch
@@ -35,8 +44,41 @@ export function start(draftConfig: TorchConfig) {
     // custome middlewares
     injectMiddleware(app, server, config)
 
-    if (torch.devMiddleware) {
-      app.use(torch.devMiddleware)
+    if (torch.compiler) {
+      const middleware = webpackDevMiddleware(torch.compiler, {
+        publicPath: 'static',
+        stats: {
+          chunks: false,
+          colors: true,
+        },
+        writeToDisk: true,
+        serverSideRender: true,
+      })
+      const hotMiddleware = require(`webpack-hot-middleware`)(torch.compiler, {
+        log: false,
+        quiet: true,
+        noInfo: true,
+      })
+      const assetsMiddleware: RequestHandler = (req, res, next) => {
+        res.locals.assets = res.locals.webpackStats.assets
+        next()
+      }
+      app.use(middleware)
+      app.use(hotMiddleware)
+      app.use(assetsMiddleware)
+    } else {
+      const assetsMiddleware: RequestHandler = (req, res, next) => {
+        const assertPath = path.resolve(
+          config.dir,
+          TORCH_DIR,
+          TORCH_CLIENT_DIR,
+          TORCH_PUBLIC_PATH,
+          TORCH_ASSETS_FILE_NAME
+        )
+        res.locals.assets = getAssets(require(assertPath))
+        next()
+      }
+      app.use(assetsMiddleware)
     }
 
     // static file route
@@ -47,18 +89,13 @@ export function start(draftConfig: TorchConfig) {
       app.use('/', torch.public())
     }
 
-    if (torch.hotMiddleware) {
-      app.use(torch.hotMiddleware)
-    }
-
-    // assets middleware
-    app.use(torch.assetsMiddleware)
-
     // custome assets middlewares
     injectAssetsMiddleware(app, server, config)
 
     // page router
-    app.use(torch.render)
+    app.use(() => {
+      torch.render
+    })
 
     // Event listener for HTTP server "listening" event.
     const onListening = () => {
@@ -101,4 +138,15 @@ export function start(draftConfig: TorchConfig) {
     server.on('error', reject)
     server.on('listening', () => resolve({ server, app }))
   })
+}
+
+function getAssets(stats: Record<string, string | string[]>) {
+  return Object.keys(stats).reduce(
+    (result: Record<string, string>, assetName) => {
+      const value = stats[assetName]
+      result[assetName] = Array.isArray(value) ? value[0] : value
+      return result
+    },
+    {}
+  )
 }

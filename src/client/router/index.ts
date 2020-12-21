@@ -9,13 +9,13 @@ import type { DraftRoute, Params } from 'torch-router'
 export type Render = (
   pageCreater: PageCreater | null,
   params: Params
-) => Promise<void>
+) => Promise<JSX.Element>
 
 export type RouteModule = PageCreater | Lazy<PageCreater>
 
 export type Route = DraftRoute<RouteModule>
 
-export type Router = (path: string, render: Render) => Promise<void>
+export type Router = (path: string, render: Render) => Promise<JSX.Element>
 
 export function createRouter(routes: Route[]): Router {
   const router = cr(routes)
@@ -24,17 +24,17 @@ export function createRouter(routes: Route[]): Router {
     try {
       const matches = router(path)
       if (matches === null) {
-        render(null, {})
+        return render(null, {})
       } else {
         const { module: pageCreater, params } = matches
         if (isTorchPage(pageCreater)) {
-          render(pageCreater, params)
+          return render(pageCreater, params)
         } else {
-          render(await dynamic(pageCreater), params)
+          return render(await dynamic(pageCreater), params)
         }
       }
     } catch (err) {
-      render(
+      return render(
         createPage(() => () => createErrorElement(err.stack || err.message)),
         {}
       )

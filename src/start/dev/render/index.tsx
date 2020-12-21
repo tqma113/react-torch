@@ -1,4 +1,4 @@
-import ReactDOMServer from 'react-dom/server'
+import React from 'react'
 import { createMemoryHistory } from 'torch-history'
 
 import compile from './compile'
@@ -9,7 +9,6 @@ import { createErrorElement } from '../../../internal/error'
 
 import { Side } from '../../../index'
 
-import type { Request, Response, NextFunction } from 'express'
 import type { DocumentProps } from '../../../internal/document'
 import type { GlobalContextType, Route, Router, Render } from '../../../client'
 import type {
@@ -17,6 +16,8 @@ import type {
   ServerContext,
   ClientContext,
   PackContext,
+  ScriptPreload,
+  StylePreload,
 } from '../../../index'
 
 export default async function createRender(config: IntegralTorchConfig) {
@@ -35,19 +36,21 @@ export default async function createRender(config: IntegralTorchConfig) {
   }
   await compile(config, packContext, update)
 
-  return function (req: Request, res: Response, next: NextFunction) {
-    const history = createMemoryHistory()
-    history.push(req.url)
-    const location = history.location
+  return function (
+    url: string,
+    assets: { index: string; vendor: string },
+    scripts: ScriptPreload[],
+    styles: StylePreload[],
+    others: Record<string, any>,
+  ) {
+    const history = createMemoryHistory({ initialEntries: [url] })
 
     const render: Render = async (pageCreator, params) => {
       if (pageCreator === null) {
-        next()
+        return <></>
       } else {
         const serverContext: ServerContext = {
           ...packContext,
-          req,
-          res,
           side: Side.Server,
         }
         const clientContext: ClientContext = {
@@ -58,7 +61,7 @@ export default async function createRender(config: IntegralTorchConfig) {
         const getElementAndState = async () => {
           try {
             const globalContext: GlobalContextType = {
-              location,
+              location: history.location,
               history,
               context: serverContext,
               params,
@@ -89,25 +92,18 @@ export default async function createRender(config: IntegralTorchConfig) {
           container: config.container,
           state,
           mode: config.styleMode,
-          ...res.locals,
-          assets: res.locals.assets,
-          styles: res.locals.styles,
-          scripts: res.locals.scripts,
+          ...others,
+          assets,
+          styles,
+          scripts,
         }
         const createHtml = requireDocument(config)
-        const html = createHtml(data)
-        const stream = ReactDOMServer.renderToNodeStream(html)
-
-        res.status(200)
-        res.setHeader('Content-type', 'text/html')
-        res.write('<!DOCTYPE html>')
-        stream.pipe(res)
+        return createHtml(data)
       }
     }
 
-    applyRouter(location.pathname, render).catch((err) => {
-      res.status(502)
-      res.send(err.stack)
+    return applyRouter(history.location.pathname, render).catch((err) => {
+      return createErrorElement(err.stack)
     })
   }
 }

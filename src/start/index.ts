@@ -7,7 +7,7 @@ import ReactDOMServer from 'react-dom/server'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
 import { mergeConfig } from '../internal/config'
-import torch, { pureTorch } from './torch'
+import torch, { pureTorch } from '../torch'
 import createDefaultServer from '../internal/server'
 import { info, error as errorlog, openBrowser } from '../internal/utils'
 import {
@@ -100,7 +100,7 @@ export function start(draftConfig: TorchConfig) {
       const styles = res.locals.styles
       const html = await torch.render(url, assets, scripts, styles, {})
       const stream = ReactDOMServer.renderToNodeStream(html)
-      
+
       res.status(200)
       res.setHeader('Content-type', 'text/html')
       res.write('<!DOCTYPE html>')

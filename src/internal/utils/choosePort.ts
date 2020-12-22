@@ -13,7 +13,7 @@ export function choosePort(
 ): Promise<number | null> {
   return detect({
     port: defaultPort,
-    hostname: host
+    hostname: host,
   }).then(
     (port) =>
       new Promise((resolve) => {

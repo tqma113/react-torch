@@ -46,7 +46,7 @@ export default function createRender(config: IntegralTorchConfig) {
     assets: { index: string; vendor: string },
     scripts: ScriptPreload[],
     styles: StylePreload[],
-    others: Record<string, any>,
+    others: Record<string, any>
   ) {
     const history = createMemoryHistory({ initialEntries: [url] })
     const render: Render = async (pageCreator, params) => {

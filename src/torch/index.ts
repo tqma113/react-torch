@@ -5,12 +5,7 @@ import createDevRender from './dev/render'
 import compile from './dev/compile'
 import createRender from './render'
 import { prepareUrls, Urls } from '../internal/utils'
-import {
-  Env,
-  TORCH_DIR,
-  TORCH_CLIENT_DIR,
-  TORCH_PUBLIC_DIR,
-} from '../index'
+import { Env, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_DIR } from '../index'
 import type { TorchConfig, IntegralTorchConfig } from '../index'
 import type { Compiler } from 'webpack'
 
@@ -43,6 +38,6 @@ export const pureTorch = async (config: IntegralTorchConfig) => {
     public: publicPath ? () => serveStatic(publicPath) : undefined,
     render,
     compiler,
-    urls
+    urls,
   }
 }

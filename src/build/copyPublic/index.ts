@@ -46,14 +46,20 @@ function createTask(dir: string) {
     dir + `/${TORCH_PUBLIC_DIR}/**/*.css`,
   ]
   const minifyCss = () => {
-    return gulp.src(cssSrc).pipe(plumber()).pipe(cleanCSS({}, (details: Record<string, any>) => {
-      let percent = (
-        (details.stats.minifiedSize / details.stats.originalSize) *
-        100
-      ).toFixed(2)
-      let message = `${details.name}(${chalk.green(percent)}%)`
-      log('gulp-clean-css:', message)
-    })).pipe(gulp.dest(dest))
+    return gulp
+      .src(cssSrc)
+      .pipe(plumber())
+      .pipe(
+        cleanCSS({}, (details: Record<string, any>) => {
+          let percent = (
+            (details.stats.minifiedSize / details.stats.originalSize) *
+            100
+          ).toFixed(2)
+          let message = `${details.name}(${chalk.green(percent)}%)`
+          log('gulp-clean-css:', message)
+        })
+      )
+      .pipe(gulp.dest(dest))
   }
 
   return gulp.series(all, minifyJs, minifyCss)

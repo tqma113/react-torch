@@ -1,4 +1,3 @@
-import React from 'react'
 import { createMemoryHistory } from 'torch-history'
 
 import compile from './compile'
@@ -25,7 +24,7 @@ export default async function createRender(config: IntegralTorchConfig) {
   const update = (routes: Route[]) => {
     router = createRouter(routes)
   }
-  const applyRouter = (path: string, render: Render) => {
+  const applyRouter = <RT>(path: string, render: Render<RT>) => {
     return router(path, render)
   }
 
@@ -36,7 +35,7 @@ export default async function createRender(config: IntegralTorchConfig) {
   }
   await compile(config, packContext, update)
 
-  return function (
+  return async function (
     url: string,
     assets: { index: string; vendor: string },
     scripts: ScriptPreload[],
@@ -45,9 +44,9 @@ export default async function createRender(config: IntegralTorchConfig) {
   ) {
     const history = createMemoryHistory({ initialEntries: [url] })
 
-    const render: Render = async (pageCreator, params) => {
+    const render: Render<JSX.Element> = async (pageCreator, params) => {
       if (pageCreator === null) {
-        return <></>
+        return createErrorElement('match error')
       } else {
         const serverContext: ServerContext = {
           ...packContext,

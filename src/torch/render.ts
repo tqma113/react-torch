@@ -1,5 +1,4 @@
 import path from 'path'
-import React from 'react'
 import invariant from 'tiny-invariant'
 import { createMemoryHistory } from 'torch-history'
 
@@ -41,7 +40,7 @@ export default function createRender(config: IntegralTorchConfig) {
 
   const router = createRouter(routes)
 
-  return function (
+  return async function (
     url: string,
     assets: { index: string; vendor: string },
     scripts: ScriptPreload[],
@@ -49,9 +48,9 @@ export default function createRender(config: IntegralTorchConfig) {
     others: Record<string, any>
   ) {
     const history = createMemoryHistory({ initialEntries: [url] })
-    const render: Render = async (pageCreator, params) => {
+    const render: Render<JSX.Element> = async (pageCreator, params) => {
       if (pageCreator === null) {
-        return <></>
+        return createErrorElement('match error')
       } else {
         const serverContext: ServerContext = {
           ssr: config.ssr,

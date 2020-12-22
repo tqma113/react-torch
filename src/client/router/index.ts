@@ -6,16 +6,16 @@ import { isTorchPage, createPage } from '../page'
 import type { PageCreater } from '../page'
 import type { DraftRoute, Params } from 'torch-router'
 
-export type Render = (
+export type Render<RT> = (
   pageCreater: PageCreater | null,
   params: Params
-) => Promise<JSX.Element>
+) => Promise<RT>
 
 export type RouteModule = PageCreater | Lazy<PageCreater>
 
 export type Route = DraftRoute<RouteModule>
 
-export type Router = (path: string, render: Render) => Promise<JSX.Element>
+export type Router = <RT>(path: string, render: Render<RT>) => Promise<RT>
 
 export function createRouter(routes: Route[]): Router {
   const router = cr(routes)

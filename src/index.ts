@@ -46,7 +46,7 @@ export enum HistoryType {
 // TYPES
 ///////////////////////////////////////////////////////////////////////////////
 import type { Server } from 'http'
-import type { Express, Request, Response, Application } from 'express'
+import type { Express, Application } from 'express'
 import type { Configuration } from 'webpack'
 
 export type TorchConfig = {

@@ -26,14 +26,8 @@ export const useParams = () => {
 }
 
 export const useCookie = () => {
-  const { context } = useContext(GlobalContext)
-
   const get = (key: string) => {
-    if (context.side == 'server') {
-      return context.req.cookies?.[key]
-    } else {
-      Cookie.get(key)
-    }
+    return Cookie.get(key)
   }
 
   const set = (
@@ -50,19 +44,11 @@ export const useCookie = () => {
       }
     }
 
-    if (context.side == 'server') {
-      context.res.cookie(key, value, options as any)
-    } else {
-      Cookie.set(key, value, options)
-    }
+    Cookie.set(key, value, options)
   }
 
   const remove = (key: string, options?: CookieAttributes) => {
-    if (context.side == 'server') {
-      context.res.clearCookie(key, options)
-    } else {
-      Cookie.remove(key, options)
-    }
+    Cookie.remove(key, options)
   }
 
   return {

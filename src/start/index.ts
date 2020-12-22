@@ -93,8 +93,18 @@ export function start(draftConfig: TorchConfig) {
     injectAssetsMiddleware(app, server, config)
 
     // page router
-    app.use(() => {
-      torch.render
+    app.use(async (req, res) => {
+      const url = req.url
+      const assets = res.locals.assets
+      const scripts = res.locals.scripts
+      const styles = res.locals.styles
+      const html = await torch.render(url, assets, scripts, styles, {})
+      const stream = ReactDOMServer.renderToNodeStream(html)
+      
+      res.status(200)
+      res.setHeader('Content-type', 'text/html')
+      res.write('<!DOCTYPE html>')
+      stream.pipe(res)
     })
 
     // Event listener for HTTP server "listening" event.

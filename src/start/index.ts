@@ -3,6 +3,7 @@
 import path from 'path'
 import http from 'http'
 import debug from 'debug'
+import serveStatic from 'serve-static'
 import ReactDOMServer from 'react-dom/server'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
@@ -82,11 +83,11 @@ export function start(draftConfig: TorchConfig) {
     }
 
     // static file route
-    app.use('/', torch.static())
+    app.use('/', serveStatic(torch.static()))
 
     // static file route
     if (torch.public) {
-      app.use('/', torch.public())
+      app.use('/', serveStatic(torch.public()))
     }
 
     // custome assets middlewares

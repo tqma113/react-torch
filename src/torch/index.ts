@@ -1,19 +1,35 @@
 import path from 'path'
-import serveStatic from 'serve-static'
 import { mergeConfig } from '../internal/config'
 import createDevRender from './dev/render'
 import compile from './dev/compile'
 import createRender from './render'
 import { prepareUrls, Urls } from '../internal/utils'
 import { Env, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_DIR } from '../index'
-import type { TorchConfig, IntegralTorchConfig } from '../index'
+import type { TorchConfig, IntegralTorchConfig, ScriptPreload, StylePreload } from '../index'
 import type { Compiler } from 'webpack'
+
+export type TorchRender = (
+  url: string,
+  assets: { index: string; vendor: string },
+  scripts: ScriptPreload[],
+  styles: StylePreload[],
+  others: Record<string, any>
+) => Promise<JSX.Element>
+
+export type Torch = {
+  config: IntegralTorchConfig
+  static: () => string
+  public?: () => string
+  render: TorchRender
+  compiler?: Compiler
+  urls?: Urls
+}
 
 export default function torch(draftConfig: TorchConfig) {
   return pureTorch(mergeConfig(draftConfig))
 }
 
-export const pureTorch = async (config: IntegralTorchConfig) => {
+export const pureTorch = async (config: IntegralTorchConfig): Promise<Torch> => {
   config.installPolyfill(config)
 
   const isDev = process.env.NODE_ENV === Env.Development
@@ -35,8 +51,8 @@ export const pureTorch = async (config: IntegralTorchConfig) => {
 
   return {
     config,
-    static: () => serveStatic(staticPath),
-    public: publicPath ? () => serveStatic(publicPath) : undefined,
+    static: () => staticPath,
+    public: publicPath ? () => publicPath : undefined,
     render,
     compiler,
     urls,

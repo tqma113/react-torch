@@ -34,6 +34,7 @@ export const pureTorch = async (config: IntegralTorchConfig) => {
   }
 
   return {
+    config,
     static: () => serveStatic(staticPath),
     public: publicPath ? () => serveStatic(publicPath) : undefined,
     render,

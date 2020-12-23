@@ -39,7 +39,7 @@ export const pureTorch = async (config: IntegralTorchConfig): Promise<Torch> => 
     ? path.resolve(config.dir, TORCH_PUBLIC_DIR)
     : undefined
 
-  const render = isDev ? await createDevRender(config) : createRender(config)
+  const render = isDev ? (await createDevRender(config)) : createRender(config)
 
   let compiler: Compiler | undefined = undefined
   let urls: Urls | undefined = undefined

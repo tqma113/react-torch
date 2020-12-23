@@ -8,7 +8,7 @@ import ReactDOMServer from 'react-dom/server'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
 import { mergeConfig } from '../internal/config'
-import torch, { pureTorch } from '../torch'
+import torch, { pureTorch, Torch, TorchRender } from '../torch'
 import createDefaultServer from '../internal/server'
 import { info, error as errorlog, openBrowser } from '../internal/utils'
 import {
@@ -32,7 +32,7 @@ export type Result = {
 
 export default torch
 
-export { pureTorch }
+export { pureTorch, Torch, TorchRender }
 
 export function start(draftConfig: TorchConfig) {
   return new Promise<Result>(async (resolve, reject) => {

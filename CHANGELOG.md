@@ -1,3 +1,7 @@
+## [1.11.31](https://github.com/tqma113/react-torch/compare/v1.11.30...v1.11.31) (2020-12-23)
+
+
+
 ## [1.11.30](https://github.com/tqma113/react-torch/compare/v1.11.29...v1.11.30) (2020-12-22)
 
 

@@ -21,18 +21,18 @@ const versionIncrements = [
   'prepatch',
   'preminor',
   'premajor',
-  'prerelease'
+  'prerelease',
 ]
 
 const pkgRoot = path.resolve(__dirname, '../')
-const inc = i => semver.inc(currentVersion, i, preId)
-const bin = name => path.resolve(__dirname, '../node_modules/.bin/' + name)
+const inc = (i) => semver.inc(currentVersion, i, preId)
+const bin = (name) => path.resolve(__dirname, '../node_modules/.bin/' + name)
 const run = (bin, args, opts = {}) =>
   execa(bin, args, { stdio: 'inherit', ...opts })
 const dryRun = (bin, args, opts = {}) =>
   console.log(chalk.blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
 const runIfNotDry = isDryRun ? dryRun : run
-const step = msg => console.log(chalk.cyan(msg))
+const step = (msg) => console.log(chalk.cyan(msg))
 
 async function main() {
   let targetVersion = args._[0]
@@ -43,16 +43,20 @@ async function main() {
       type: 'select',
       name: 'release',
       message: 'Select release type',
-      choices: versionIncrements.map(i => `${i} (${inc(i)})`).concat(['custom'])
+      choices: versionIncrements
+        .map((i) => `${i} (${inc(i)})`)
+        .concat(['custom']),
     })
 
     if (release === 'custom') {
-      targetVersion = (await prompt({
-        type: 'input',
-        name: 'version',
-        message: 'Input custom version',
-        initial: currentVersion
-      })).version
+      targetVersion = (
+        await prompt({
+          type: 'input',
+          name: 'version',
+          message: 'Input custom version',
+          initial: currentVersion,
+        })
+      ).version
     } else {
       targetVersion = release.match(/\((.*)\)/)[1]
     }
@@ -65,7 +69,7 @@ async function main() {
   const { yes } = await prompt({
     type: 'confirm',
     name: 'yes',
-    message: `Releasing v${targetVersion}. Confirm?`
+    message: `Releasing v${targetVersion}. Confirm?`,
   })
 
   if (!yes) {
@@ -89,7 +93,7 @@ async function main() {
   step('\nBuilding all packages...')
   if (!skipBuild && !isDryRun) {
     await run('yarn', ['build'])
-      // test generated dts files
+    // test generated dts files
     step('\nVerifying type declarations...')
   } else {
     console.log(`(skipped)`)
@@ -159,16 +163,18 @@ async function publishPackage(version, runIfNotDry) {
   step(`\nPublishing ${pkgName}...`)
   try {
     await runIfNotDry(
-      'yarn', [
+      'yarn',
+      [
         'publish',
         '--new-version',
         version,
         ...(releaseTag ? ['--tag', releaseTag] : []),
         '--access',
-        'public'
-      ], {
+        'public',
+      ],
+      {
         cwd: pkgRoot,
-        stdio: 'pipe'
+        stdio: 'pipe',
       }
     )
     console.log(chalk.green(`Successfully published ${pkgName}@${version}`))
@@ -181,6 +187,6 @@ async function publishPackage(version, runIfNotDry) {
   }
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err)
 })

@@ -11,7 +11,7 @@ A react framework.
 
 ## Getting Started
 
-+ Create Project
+- Create Project
 
 ```shell
 > mkdir your-project
@@ -21,7 +21,7 @@ A react framework.
 > npm init -y
 ```
 
-+ Install Dependences
+- Install Dependences
 
 ```shell
 > npm install react react-dom react-torch typescript
@@ -29,37 +29,37 @@ A react framework.
 
 > Without Typescripts: `npm install react react-dom react-torch`
 
-+ Add Scripts
+- Add Scripts
 
 Add follow code in `package.json`
 
 ```json
 {
-    "scripts": {
-        "dev": "torch dev",
-        "build": "torch build",
-        "start": "yarn dev",
-        "debug": "node --inspect-brk node_modules/.bin/torch dev",
-        "serve": "torch start",
-        "help": "torch --help",
-        "version": "torch --version",
-    }
+  "scripts": {
+    "dev": "torch dev",
+    "build": "torch build",
+    "start": "yarn dev",
+    "debug": "node --inspect-brk node_modules/.bin/torch dev",
+    "serve": "torch start",
+    "help": "torch --help",
+    "version": "torch --version"
+  }
 }
 ```
 
-+ Add `src` and `index`
+- Add `src` and `index`
 
 ```ts
 // src/index.ts
 export default [
-    {
-        path: '/',
-        module: () => import('./home/Controller')
-    }
+  {
+    path: '/',
+    module: () => import('./home/Controller'),
+  },
 ]
 ```
 
-+ Add Page
+- Add Page
 
 ```ts
 // src/home/index.ts
@@ -118,22 +118,21 @@ export default createPage(async ({ history, context }) => {
     },
   }
 })
-
 ```
 
-+ Start With Development
+- Start With Development
 
 ```shell
 npm run dev
 ```
 
-+ Build
+- Build
 
 ```shell
 npm run build
 ```
 
-+ Start After Build In Production
+- Start After Build In Production
 
 ```shell
 npm start

@@ -20,17 +20,9 @@
     "esModuleInterop": true,
     "removeComments": false,
     "jsx": "react",
-    "lib": [
-      "esnext",
-      "dom.iterable",
-      "dom"
-    ],
+    "lib": ["esnext", "dom.iterable", "dom"],
     "rootDir": "./src"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "dist"
-  ]
+  "include": ["src"],
+  "exclude": ["dist"]
 }

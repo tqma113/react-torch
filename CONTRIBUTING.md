@@ -12,10 +12,10 @@
 
 Make sure you have chromedriver installed for your Chrome version. You can install it with
 
-+ brew cask install chromedriver on Mac OS X
-+ chocolatey install chromedriver on Windows
-+ Or manually download the version that matches your installed chrome version (if there's no match, download a version under it, but not above) from the chromedriver repo and add the binary to <next-repo>/node_modules/.bin
-Running all tests:
+- brew cask install chromedriver on Mac OS X
+- chocolatey install chromedriver on Windows
+- Or manually download the version that matches your installed chrome version (if there's no match, download a version under it, but not above) from the chromedriver repo and add the binary to <next-repo>/node_modules/.bin
+  Running all tests:
 
 ```
 npm run test

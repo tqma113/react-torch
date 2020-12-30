@@ -25,7 +25,7 @@
     "release": "node scripts/release.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "postbuild": "node scripts/cp.js",
-    "format": "prettier --write --parser typescript \"{src,__tests__,example}/**/*.ts?(x)\"",
+    "format": "prettier --write .",
     "test": "jest --silent",
     "dev:start": "node -r ts-node/register ./example/start.ts",
     "dev:dev": "node -r ts-node/register ./example/dev.ts",

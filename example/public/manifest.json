@@ -12,9 +12,11 @@
       "32": "static/favicon.ico"
     }
   },
-  "icons": [{
-    "src": "static/favicon.ico",
-    "sizes": "48x48",
-    "type": "image/png"
-  }]
+  "icons": [
+    {
+      "src": "static/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/png"
+    }
+  ]
 }

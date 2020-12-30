@@ -3,23 +3,15 @@ module.exports = {
     'ts-jest': {
       tsConfig: 'tsconfig.json',
     },
-    '__DEV__': false
+    __DEV__: false,
   },
   transform: {
     '.(ts|tsx)': 'ts-jest',
   },
   testEnvironment: 'jsdom',
   testRegex: '/__tests__/.*.(test|spec).(ts|tsx|js)$',
-  moduleFileExtensions: [
-    'js',
-    'ts',
-    'tsx',
-    'json'
-  ],
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    '/__tests__/',
-  ],
+  moduleFileExtensions: ['js', 'ts', 'tsx', 'json'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/__tests__/'],
   coverageThreshold: {
     global: {
       branches: 90,

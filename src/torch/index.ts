@@ -5,7 +5,12 @@ import compile from './dev/compile'
 import createRender from './render'
 import { prepareUrls, Urls } from '../internal/utils'
 import { Env, TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_DIR } from '../index'
-import type { TorchConfig, IntegralTorchConfig, ScriptPreload, StylePreload } from '../index'
+import type {
+  TorchConfig,
+  IntegralTorchConfig,
+  ScriptPreload,
+  StylePreload,
+} from '../index'
 import type { Compiler } from 'webpack'
 
 export type TorchRender = (
@@ -29,7 +34,9 @@ export default function torch(draftConfig: TorchConfig) {
   return pureTorch(mergeConfig(draftConfig))
 }
 
-export const pureTorch = async (config: IntegralTorchConfig): Promise<Torch> => {
+export const pureTorch = async (
+  config: IntegralTorchConfig
+): Promise<Torch> => {
   config.installPolyfill(config)
 
   const isDev = process.env.NODE_ENV === Env.Development
@@ -39,7 +46,7 @@ export const pureTorch = async (config: IntegralTorchConfig): Promise<Torch> => 
     ? path.resolve(config.dir, TORCH_PUBLIC_DIR)
     : undefined
 
-  const render = isDev ? (await createDevRender(config)) : createRender(config)
+  const render = isDev ? await createDevRender(config) : createRender(config)
 
   let compiler: Compiler | undefined = undefined
   let urls: Urls | undefined = undefined

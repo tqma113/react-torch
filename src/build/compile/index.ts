@@ -24,7 +24,7 @@ export default function compileClient(
       } else {
         console.log(
           '[webpack:client:build]',
-          stats.toString({
+          stats!.toString({
             colors: true,
           })
         )

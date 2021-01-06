@@ -1,10 +1,10 @@
-import type { Plugin, Compiler } from 'webpack'
+import type { Compiler } from 'webpack'
 
 export type TestPluginOptions = {}
 
 const defaults: TestPluginOptions = {}
 
-class SetManifestPlugin implements Plugin {
+class SetManifestPlugin {
   options: TestPluginOptions
   assets: object
   constructor(opts?: TestPluginOptions) {

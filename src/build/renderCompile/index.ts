@@ -24,7 +24,7 @@ export default function compileServer(
       } else {
         console.log(
           '[webpack:server:build]',
-          stats.toString({
+          stats!.toString({
             colors: true,
           })
         )

@@ -1,5 +1,4 @@
 import chalk from 'chalk'
-import { Stats } from 'webpack'
 
 const friendlySyntaxErrorLabel = 'Syntax error:'
 
@@ -97,11 +96,11 @@ function formatMessage(message: string) {
   return message.trim()
 }
 
-export default function formatWebpackMessages(json: Stats.ToJsonOutput) {
-  const formattedErrors = json.errors.map(function (message) {
+export default function formatWebpackMessages(json: any) {
+  const formattedErrors = json.errors.map(function (message: string) {
     return formatMessage(message)
   })
-  const formattedWarnings = json.warnings.map(function (message) {
+  const formattedWarnings = json.warnings.map(function (message: string) {
     return formatMessage(message)
   })
   const result = { errors: formattedErrors, warnings: formattedWarnings }

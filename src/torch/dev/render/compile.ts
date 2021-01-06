@@ -30,10 +30,10 @@ export default function compile(
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)
 
-      const statsObj = stats.toJson()
+      const statsObj = stats!.toJson()
       statsObj.errors.forEach(error)
       statsObj.warnings.forEach(warn)
-      statsObj.assets?.forEach((asset) => {
+      statsObj.assets?.forEach((asset: any) => {
         const assetPath = path.join(serverPath, asset.name)
         delete require.cache[require.resolve(assetPath)]
       })

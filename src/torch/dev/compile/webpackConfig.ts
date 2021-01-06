@@ -55,7 +55,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
         path.resolve(__dirname, '../../../internal/client/index'),
       ],
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval-cheap-module-source-map',
     output: {
       path: path.join(
         config.dir,

@@ -48,10 +48,6 @@ export function start(draftConfig: TorchConfig) {
     if (torch.compiler) {
       const middleware = webpackDevMiddleware(torch.compiler, {
         publicPath: 'static',
-        stats: {
-          chunks: false,
-          colors: true,
-        },
         writeToDisk: true,
         serverSideRender: true,
       })
@@ -61,7 +57,7 @@ export function start(draftConfig: TorchConfig) {
         noInfo: true,
       })
       const assetsMiddleware: RequestHandler = (req, res, next) => {
-        res.locals.assets = res.locals.webpackStats.assets
+        res.locals.assets = res.locals.webpack.devMiddleware.stats.assets
         next()
       }
       app.use(middleware)

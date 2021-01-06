@@ -1,6 +1,6 @@
 import path from 'path'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import { Side, PackContext, Env, TorchConfig } from '../src'
+import { Side, PackContext, TorchConfig } from '../src'
 import server from './server'
 import type { Configuration } from 'webpack'
 
@@ -8,7 +8,7 @@ const getClientWebpackConfig = (
   config: Configuration,
   packContext: PackContext
 ): Configuration => {
-  config.module?.rules.push(
+  config.module!.rules!.push(
     {
       test: /\.css$/,
       use: [
@@ -16,7 +16,6 @@ const getClientWebpackConfig = (
           loader: MiniCssExtractPlugin.loader,
           options: {
             publicPath: '__torch/',
-            hmr: packContext.env === Env.Development,
           },
         },
         'css-loader',
@@ -30,7 +29,7 @@ const getClientWebpackConfig = (
       ],
     }
   )
-  config.plugins?.push(
+  config.plugins!.push(
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -42,7 +41,7 @@ const getClientWebpackConfig = (
 }
 
 const getServerWebpackConfig = (config: Configuration): Configuration => {
-  config.module?.rules.push(
+  config.module!.rules!.push(
     {
       test: /\.css$/,
       use: ['null-loader'],

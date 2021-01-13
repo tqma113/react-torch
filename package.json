@@ -153,7 +153,7 @@
     "@types/rimraf": "^2.0.2",
     "@types/serve-favicon": "^2.5.0",
     "@types/terser-webpack-plugin": "^5.0.2",
-    "@types/webpack-dev-middleware": "^3.7.2",
+    "@types/webpack-dev-middleware": "^4.0.0",
     "@types/webpack-manifest-plugin": "^3.0.1",
     "commitizen": "^4.1.2",
     "conventional-changelog": "^3.1.23",

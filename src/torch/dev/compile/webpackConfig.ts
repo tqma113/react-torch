@@ -1,7 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
-import { WebpackManifestPlugin, Options, FileDescriptor } from 'webpack-manifest-plugin'
+import {
+  WebpackManifestPlugin,
+  Options,
+  FileDescriptor,
+} from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 import { babelConfig } from '../../../internal/config'
@@ -33,8 +37,8 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     new WebpackManifestPlugin(manifestPluginOption),
     new SetManifestPlugin(),
     new IgnorePlugin({
-      contextRegExp:  /^\.\/locale$/,
-      resourceRegExp: /moment$/
+      contextRegExp: /^\.\/locale$/,
+      resourceRegExp: /moment$/,
     }),
     new HotModuleReplacementPlugin(),
   ]
@@ -121,7 +125,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
       preset: 'verbose',
       logging: 'info',
       usedExports: false,
-    }
+    },
   }
 }
 

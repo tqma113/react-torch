@@ -114,7 +114,7 @@
     "open": "^7.2.1",
     "path-to-regexp": "^3.1.0",
     "serve-favicon": "^2.5.0",
-    "terser-webpack-plugin": "^5.0.3",
+    "terser-webpack-plugin": "^5.1.1",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "torch-history": "^1.0.1",

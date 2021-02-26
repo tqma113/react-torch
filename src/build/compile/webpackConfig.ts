@@ -1,7 +1,11 @@
 import path from 'path'
 import { IgnorePlugin } from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
-import { WebpackManifestPlugin, Options, FileDescriptor } from 'webpack-manifest-plugin'
+import {
+  WebpackManifestPlugin,
+  Options,
+  FileDescriptor,
+} from 'webpack-manifest-plugin'
 
 import { babelConfig } from '../../internal/config'
 import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
@@ -115,8 +119,8 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     plugins: [
       new WebpackManifestPlugin(manifestPluginOption),
       new IgnorePlugin({
-        contextRegExp:  /^\.\/locale$/,
-        resourceRegExp: /moment$/
+        contextRegExp: /^\.\/locale$/,
+        resourceRegExp: /moment$/,
       }),
     ],
   }

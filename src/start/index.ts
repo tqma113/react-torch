@@ -91,6 +91,9 @@ export function start(draftConfig: TorchConfig) {
 
     // page router
     app.use(async (req, res) => {
+      // https://github.com/webpack-contrib/webpack-hot-middleware/issues/26#issuecomment-651112537
+      if (req.url === "/__webpack_hmr") return
+      
       const url = req.url
       const assets = res.locals.assets
       const scripts = res.locals.scripts

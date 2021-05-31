@@ -1,0 +1,163 @@
+{
+  "name": "react-torch",
+  "version": "1.17.0-alpha.8",
+  "description": "A lib to server-side render with react.",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "bin": {
+    "torch": "./bin/torch.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "build.js",
+    "build.d.ts",
+    "client.js",
+    "client.d.ts",
+    "start.js",
+    "start.d.ts",
+    "server.js",
+    "server.d.ts",
+    "dev.js",
+    "dev.d.ts",
+    "devServer.js",
+    "devServer.d.ts",
+    "AUTHORS"
+  ],
+  "scripts": {
+    "start": "nodemon",
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "release": "node scripts/release.js",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "postbuild": "node scripts/cp.js",
+    "format": "prettier --write .",
+    "test": "jest",
+    "dev:start": "node -r ts-node/register ./example/start.ts",
+    "dev:dev": "node -r ts-node/register ./example/dev.ts",
+    "dev:build": "node -r ts-node/register ./example/build.ts",
+    "debug:start": "node --inspect-brk -r ts-node/register ./example/start.ts",
+    "debug:dev": "node --inspect-brk -r ts-node/register ./example/dev.ts",
+    "commit": "git-cz",
+    "precommit": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tqma113/react-torch.git"
+  },
+  "keywords": [
+    "react",
+    "ssr",
+    "server-side-render"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tqma113/react-torch/issues"
+  },
+  "homepage": "https://github.com/tqma113/react-torch#readme",
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "engines": {
+    "node": ">= 12.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "dependencies": {
+    "@types/redux-logger": "^3.0.8",
+    "address": "^1.1.2",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "commander": "^6.2.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.4",
+    "cross-spawn": "^7.0.3",
+    "debug": "^4.1.1",
+    "detect-port": "^1.3.0",
+    "esbuild": "^0.11.12",
+    "esbuild-loader": "^2.12.0",
+    "express": "^4.17.1",
+    "farrow-http": "^1.10.3",
+    "farrow-pipeline": "^1.10.2",
+    "farrow-react": "^1.10.3",
+    "farrow-schema": "^1.10.3",
+    "fork-ts-checker-webpack-plugin": "^6.2.0",
+    "fs-extra": "^9.0.1",
+    "helmet": "^3.21.3",
+    "inquirer": "^7.3.3",
+    "is-root": "^2.1.0",
+    "leven": "^3.1.0",
+    "morgan": "^1.9.1",
+    "null-loader": "^4.0.0",
+    "open": "^7.2.1",
+    "redux-logger": "^3.0.6",
+    "serve-favicon": "^2.5.0",
+    "tiny-invariant": "^1.1.0",
+    "tiny-warning": "^1.0.3",
+    "torch-history": "^1.0.1",
+    "torch-router": "^1.1.2",
+    "url": "^0.11.0",
+    "vm2": "^3.9.2",
+    "webpack": "^5.36.1",
+    "webpack-dev-middleware": "^4.1.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-manifest-plugin": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/compression": "^1.7.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/debug": "^4.1.5",
+    "@types/detect-port": "^1.3.0",
+    "@types/express": "^4.17.11",
+    "@types/fs-extra": "^9.0.1",
+    "@types/helmet": "0.0.45",
+    "@types/inquirer": "^7.3.1",
+    "@types/jest": "^24.0.19",
+    "@types/mini-css-extract-plugin": "^1.2.2",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.7.8",
+    "@types/react": "^16.9.3",
+    "@types/react-dom": "^16.9.1",
+    "@types/rimraf": "^2.0.2",
+    "@types/serve-favicon": "^2.5.0",
+    "@types/webpack-dev-middleware": "^4.1.0",
+    "@types/webpack-manifest-plugin": "^3.0.1",
+    "commitizen": "^4.1.2",
+    "conventional-changelog": "^3.1.23",
+    "conventional-changelog-cli": "^2.1.0",
+    "css-loader": "^5.0.1",
+    "husky": "^4.3.7",
+    "jest": "^26.6.3",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.1",
+    "lint-staged": "^10.2.13",
+    "mini-css-extract-plugin": "^1.3.3",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.1.1",
+    "pretty-quick": "^3.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "redux": "^4.0.5",
+    "ts-jest": "^26.1.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^4.2.4"
+  }
+}

@@ -8,7 +8,7 @@ import {
   preloadModels,
 } from '../../client'
 import { createErrorElement } from '../error'
-import { runCreater, setupPage } from '../hook'
+import { runCreater, preRender, didMount } from '../hook'
 import $routes from '@routes'
 import type { Params } from 'torch-router'
 import type { Listener, Location } from 'torch-history'
@@ -99,7 +99,7 @@ const render = async (
       store = createStore(state)
       await preloadModels(stateList)
     } else {
-      await Promise.all(setupPage())
+      await Promise.all(preRender())
       await preloadModels()
     }
 
@@ -111,6 +111,8 @@ const render = async (
     } else {
       ReactDOM.render(element, containerElement)
     }
+
+    await Promise.all(didMount())
 
     hook.unsubscribe = store.subscribe(() => {
       const element = React.createElement(

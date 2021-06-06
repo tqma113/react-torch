@@ -1,13 +1,13 @@
 import { createDevServer } from '../dev/createServer'
 import { requireConfig } from '../internal/config'
-import { Env, ScriptOptions } from '../index'
+import { ScriptOptions } from '../index'
 
 export default function ({
   dir,
   port,
   config = 'torch.config.ts',
 }: ScriptOptions) {
-  process.env.NODE_ENV = process.env.NODE_ENV || Env.Development
+  process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
   let draftConfig = requireConfig(config)
 

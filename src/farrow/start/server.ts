@@ -2,17 +2,18 @@ import path from 'path'
 import { Http } from 'farrow-http'
 import { useReactView } from 'farrow-react'
 import { createAsyncPipeline, createContainer } from 'farrow-pipeline'
-import { pureTorch } from '../start'
-import { mergeConfig } from '../internal/config'
+import { pureTorch } from './index'
+import { mergeConfig } from '../../internal/config'
+import { runRender } from '../render'
 import {
   TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_PATH,
   TORCH_ASSETS_FILE_NAME,
-} from '../index'
+} from '../../index'
 import type { RequestInfo, MaybeAsyncResponse } from 'farrow-http'
 import type { Middleware, MiddlewareInput, MaybeAsync } from 'farrow-pipeline'
-import type { TorchConfig, RenderContext, Assets } from '../index'
+import type { TorchConfig, RenderContext, Assets } from '../../index'
 
 export const startServer = (
   draftConfig: TorchConfig,
@@ -42,7 +43,7 @@ export const startServer = (
       pipeline.use(...transits)
 
       pipeline.use(async (input) => {
-        return await torch.render(input)
+        return await runRender(torch.render, input)
       })
       const assertPath = path.resolve(
         config.dir,

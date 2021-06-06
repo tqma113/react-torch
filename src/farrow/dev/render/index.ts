@@ -9,20 +9,20 @@ import {
   connectModels,
   preloadModels,
   getStates,
-} from '../../client'
-import { requireDocument } from '../../internal/utils'
-import { createErrorElement } from '../../internal/error'
-import { runCreater, setupPage } from '../../internal/hook'
+} from '../../../client'
+import { requireDocument } from '../../../internal/utils'
+import { createErrorElement } from '../../../internal/error'
+import { runCreater, setupPage } from '../../../internal/hook'
+import { useRenderContext, useEnvContext } from '../../render'
 
-import type { DocumentProps } from '../../internal/document'
-import type { GlobalContextType, Route, Router } from '../../client'
+import type { DocumentProps } from '../../../internal/document'
+import type { GlobalContextType, Route, Router } from '../../../client'
 import type {
   IntegralTorchConfig,
   ServerContext,
   ClientContext,
   PackContext,
-  RenderContext,
-} from '../../index'
+} from '../../../index'
 
 export type Assets = { index: string; vendor: string } & Record<string, string>
 
@@ -37,15 +37,20 @@ export default async function createRender(config: IntegralTorchConfig) {
     env: process.env.NODE_ENV,
     packSide: 'server',
   }
+
+  useEnvContext(packContext)
+
   await compile(config, packContext, update)
 
-  return async function ({
-    url,
-    assets,
-    scripts,
-    styles,
-    others,
-  }: RenderContext) {
+  return async function () {
+    const {
+      url,
+      assets,
+      scripts,
+      styles,
+      others,
+    } = useRenderContext()
+
     const history = createMemoryHistory({ initialEntries: [url] })
     const { module, params } = await router(history.location.pathname)
 
@@ -63,6 +68,8 @@ export default async function createRender(config: IntegralTorchConfig) {
             ...packContext,
             side: 'client',
           }
+
+          useEnvContext(serverContext)
 
           const getElementAndState = async () => {
             try {

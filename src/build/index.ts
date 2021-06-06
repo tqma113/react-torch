@@ -9,7 +9,7 @@ import renderCompile from './renderCompile'
 import { mergeConfig } from '../internal/config'
 import { step, info, error } from '../internal/utils'
 
-import { Side, TORCH_DIR } from '../index'
+import { TORCH_DIR } from '../index'
 
 import type { TorchConfig, TinyContext, PackContext } from '../index'
 
@@ -24,11 +24,11 @@ export default function build(draftConfig: TorchConfig) {
   }
   const clientContext: PackContext = {
     ...tinyContext,
-    packSide: Side.Client,
+    packSide: 'client',
   }
   const serverContext: PackContext = {
     ...tinyContext,
-    packSide: Side.Server,
+    packSide: 'server',
   }
 
   // remove before

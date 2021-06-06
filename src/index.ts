@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // CONSTANTS
 ///////////////////////////////////////////////////////////////////////////////
-export const TORCH_DIR = '.torch'
+export const TORCH_DIR = 'node_modules/.torch'
 export const TORCH_CLIENT_DIR = 'client'
 export const TORCH_SERVER_DIR = 'server'
 export const TORCH_PUBLIC_DIR = 'public'
@@ -16,15 +16,9 @@ export const TORCH_ASSETS_FILE_NAME = 'assets.json'
 export const TORCH_FAVICON_FILE_NAME = 'favicon.ico'
 export const TORCH_DOCUMENT_CONTAINER = 'root'
 
-export enum Env {
-  Development = 'development',
-  Production = 'production',
-}
+export type Env = 'development' | 'production'
 
-export enum Side {
-  Client = 'client',
-  Server = 'server',
-}
+export type Side = 'client' | 'server'
 
 export enum PreloadType {
   Link = 'link',
@@ -89,10 +83,10 @@ export type PackContext = TinyContext & {
   packSide: Side
 }
 export type ClientContext = TinyContext & {
-  side: Side.Client
+  side: 'client'
 }
 export type ServerContext = TinyContext & {
-  side: Side.Server
+  side: 'server'
 }
 
 export type TorchData = {

@@ -1,15 +1,16 @@
 import { Http } from 'farrow-http'
 import { useReactView } from 'farrow-react'
 import { createAsyncPipeline, createContainer } from 'farrow-pipeline'
-import start from '../dev'
+import start from './index'
 import {
   webpackDevMiddleware,
   useDevContext,
-} from './middleware/webpackDevMiddleware'
-import { webpackHotMiddleware } from './middleware/webpackHotMiddleware'
+} from '../middleware/webpackDevMiddleware'
+import { webpackHotMiddleware } from '../middleware/webpackHotMiddleware'
+import { runRender } from '../render'
 import type { RequestInfo, MaybeAsyncResponse } from 'farrow-http'
 import type { Middleware, MiddlewareInput, MaybeAsync } from 'farrow-pipeline'
-import type { TorchConfig, RenderContext } from '../index'
+import type { TorchConfig, RenderContext } from '../../index'
 
 export const startServer = (
   draftConfig: TorchConfig,
@@ -43,7 +44,7 @@ export const startServer = (
       pipeline.use(...transits)
 
       pipeline.use(async (input) => {
-        return await torch.render(input)
+        return await runRender(torch.render, input)
       })
       const html = await pipeline.run(
         {

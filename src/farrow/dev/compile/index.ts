@@ -5,8 +5,8 @@ import webpack from 'webpack'
 import getWebpackConfig from './webpackConfig'
 import createCompiler from './createCompiler'
 
-import type { Urls } from '../../internal/utils'
-import type { IntegralTorchConfig, PackContext } from '../../index'
+import type { Urls } from '../../../internal/utils'
+import type { IntegralTorchConfig, PackContext } from '../../../index'
 
 export default async function compile(config: IntegralTorchConfig, urls: Urls) {
   const packContext: PackContext = {

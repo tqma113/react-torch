@@ -9,24 +9,24 @@ import {
   connectModels,
   preloadModels,
   getStates,
-} from '../client'
-import { requireDocument } from '../internal/utils'
-import { createErrorElement } from '../internal/error'
-import { runCreater, setupPage } from '../internal/hook'
+} from '../../client'
+import { requireDocument } from '../../internal/utils'
+import { createErrorElement } from '../../internal/error'
+import { runCreater, setupPage } from '../../internal/hook'
+import { useRenderContext, useEnvContext } from '../render'
 import {
   TORCH_DIR,
   TORCH_SERVER_DIR,
   TORCH_ROUTES_FILE_NAME,
-} from '../index'
+} from '../../index'
 
-import type { DocumentProps } from '../internal/document'
-import type { Route, Render, GlobalContextType } from '../client'
+import type { DocumentProps } from '../../internal/document'
+import type { Route, Render, GlobalContextType } from '../../client'
 import type {
   IntegralTorchConfig,
   ClientContext,
   ServerContext,
-  RenderContext,
-} from '../index'
+} from '../../index'
 
 function getRoutes(config: IntegralTorchConfig) {
   const outputPath = path.join(
@@ -46,13 +46,14 @@ export default function createRender(config: IntegralTorchConfig) {
 
   const router = createRouter(routes)
 
-  return async function ({
-    url,
-    assets,
-    scripts,
-    styles,
-    others,
-  }: RenderContext) {
+  return async function () {
+    const {
+      url,
+      assets,
+      scripts,
+      styles,
+      others,
+    } = useRenderContext()
     const history = createMemoryHistory({ initialEntries: [url] })
     const render: Render<JSX.Element> = async (module, params) => {
       if (module === null) {
@@ -69,6 +70,8 @@ export default function createRender(config: IntegralTorchConfig) {
           env: process.env.NODE_ENV,
           side: 'client',
         }
+
+        useEnvContext(serverContext)
 
         const getElementAndState = async () => {
           try {

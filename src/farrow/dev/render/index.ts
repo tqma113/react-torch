@@ -38,11 +38,10 @@ export default async function createRender(config: IntegralTorchConfig) {
     packSide: 'server',
   }
 
-  useEnvContext(packContext)
-
   await compile(config, packContext, update)
 
   return async function () {
+    useEnvContext(packContext)
     const {
       url,
       assets,

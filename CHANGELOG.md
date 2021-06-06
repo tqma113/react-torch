@@ -1,3 +1,12 @@
+# [1.17.0-alpha.11](https://github.com/tqma113/react-torch/compare/v1.17.0-alpha.10...v1.17.0-alpha.11) (2021-06-06)
+
+
+### Bug Fixes
+
+* hook error ([6db347c](https://github.com/tqma113/react-torch/commit/6db347c7e83dcd9a76490739033c55c7d98dd6d4))
+
+
+
 # [1.17.0-alpha.10](https://github.com/tqma113/react-torch/compare/v1.17.0-alpha.9...v1.17.0-alpha.10) (2021-06-06)
 
 

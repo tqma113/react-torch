@@ -1,3 +1,7 @@
+# [1.17.0-alpha.10](https://github.com/tqma113/react-torch/compare/v1.17.0-alpha.9...v1.17.0-alpha.10) (2021-06-06)
+
+
+
 # 1.17.0-alpha.9 (2021-06-06)
 
 

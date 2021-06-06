@@ -1,3 +1,12 @@
+# [1.17.0-alpha.12](https://github.com/tqma113/react-torch/compare/v1.17.0-alpha.11...v1.17.0-alpha.12) (2021-06-06)
+
+
+### Bug Fixes
+
+* webpack path ([a037cc6](https://github.com/tqma113/react-torch/commit/a037cc6d2296e0c1199311b094b8803091275553))
+
+
+
 # [1.17.0-alpha.11](https://github.com/tqma113/react-torch/compare/v1.17.0-alpha.10...v1.17.0-alpha.11) (2021-06-06)
 
 

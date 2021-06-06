@@ -9,12 +9,12 @@ import {
 import { webpackHotMiddleware } from '../middleware/webpackHotMiddleware'
 import { runRender } from '../render'
 import type { RequestInfo, MaybeAsyncResponse } from 'farrow-http'
-import type { Middleware, MiddlewareInput, MaybeAsync } from 'farrow-pipeline'
+import type { MiddlewareInput, MaybeAsync } from 'farrow-pipeline'
 import type { TorchConfig, RenderContext } from '../../index'
 
 export const startServer = (
   draftConfig: TorchConfig,
-  apis: Middleware<RequestInfo, MaybeAsyncResponse>[],
+  apis: MiddlewareInput<RequestInfo, MaybeAsyncResponse>[],
   transits: MiddlewareInput<RenderContext, MaybeAsync<JSX.Element>>[]
 ) => {
   return new Promise<number>(async (resolve, reject) => {

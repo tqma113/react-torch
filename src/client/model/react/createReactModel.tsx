@@ -110,7 +110,7 @@ export const createReactModel = <I extends Initializer>(
         selectedState = latestSelectedState.current
       }
     } catch (err) {
-      if (latestSubscriptionCallbackError.current) {
+      if (latestSubscriptionCallbackError.current && err instanceof Error) {
         err.message += `\nThe error may be correlated with this previous error:\n${latestSubscriptionCallbackError.current.stack}\n\n`
       }
 
@@ -149,7 +149,11 @@ export const createReactModel = <I extends Initializer>(
           // is re-rendered, the selectors are called again, and
           // will throw again, if neither props nor store state
           // changed
-          latestSubscriptionCallbackError.current = err
+          if (err instanceof Error) {
+            latestSubscriptionCallbackError.current = err
+          } else {
+            throw err
+          }
         }
 
         forceRender()

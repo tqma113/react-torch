@@ -92,7 +92,14 @@ export default async function createRender(config: IntegralTorchConfig) {
               return [React.createElement(Comp), store.getState()] as const
             } catch (err) {
               console.error(err)
-              return [createErrorElement(err.stack), {}] as const
+              return [
+                createErrorElement(
+                  err instanceof Error
+                    ? err.stack || err.message
+                    : JSON.stringify(err)
+                ),
+                {},
+              ] as const
             }
           }
 
@@ -122,7 +129,9 @@ export default async function createRender(config: IntegralTorchConfig) {
         }
       } catch (err) {
         console.error(err)
-        return createErrorElement(err.stack)
+        return createErrorElement(
+          err instanceof Error ? err.stack || err.message : JSON.stringify(err)
+        )
       }
     }
 

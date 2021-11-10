@@ -25,6 +25,11 @@ import {
 import type { Express, RequestHandler } from 'express'
 import type { TorchConfig } from '../index'
 
+const REACT_VERSION = ReactDOMServer.version
+const hasPipeStream = REACT_VERSION.startsWith('18')
+
+const ABORT_DELAY = 10000
+
 export type Result = {
   server: http.Server
   app: Express
@@ -98,12 +103,34 @@ export function createDevServer(draftConfig: TorchConfig) {
         styles,
         others: {},
       })
-      const stream = ReactDOMServer.renderToNodeStream(html)
 
-      res.status(200)
-      res.setHeader('Content-type', 'text/html')
-      res.write('<!DOCTYPE html>')
-      stream.pipe(res)
+      if (hasPipeStream) {
+        let didError = false
+        // @ts-ignore
+        const { pipe, abort } = ReactDOMServer.renderToPipeableStream(html, {
+          bootstrapScripts: [assets['main.js']],
+          onCompleteShell() {
+            // If something errored before we started streaming, we set the error code appropriately.
+            res.statusCode = didError ? 500 : 200
+            res.setHeader('Content-type', 'text/html')
+            pipe(res)
+          },
+          onError(x: unknown) {
+            didError = true
+            console.error(x)
+          },
+        })
+        // Abandon and switch to client rendering if enough time passes.
+        // Try lowering this to see the client recover.
+        setTimeout(abort, ABORT_DELAY)
+      } else {
+        const stream = ReactDOMServer.renderToNodeStream(html)
+
+        res.status(200)
+        res.setHeader('Content-type', 'text/html')
+        res.write('<!DOCTYPE html>')
+        stream.pipe(res)
+      }
     })
 
     // Event listener for HTTP server "listening" event.

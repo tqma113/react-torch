@@ -79,7 +79,12 @@ export function createRouter(routes: Route[]): Router {
       return {
         module: {
           pageCreater: createPage(
-            () => () => createErrorElement(err.stack || err.message)
+            () => () =>
+              createErrorElement(
+                err instanceof Error
+                  ? err.stack || err.message
+                  : JSON.stringify(err)
+              )
           ),
           transform: identify,
         },
@@ -106,7 +111,12 @@ async function dynamic(
       return module
     }
   } catch (err) {
-    return createPage(() => () => createErrorElement(err.stack || err.message))
+    return createPage(
+      () => () =>
+        createErrorElement(
+          err instanceof Error ? err.stack || err.message : JSON.stringify(err)
+        )
+    )
   }
 }
 

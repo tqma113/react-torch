@@ -52,10 +52,12 @@ export type CreateStoreOptions<S, RS extends Reducers<S>> = {
   logger?: boolean
 }
 
-export type CreateInternalStoreOptions<S, RS extends Reducers> =
-  CreateStoreOptions<S, RS> & {
-    preloadedState?: PreloadedState<S>
-  }
+export type CreateInternalStoreOptions<
+  S,
+  RS extends Reducers
+> = CreateStoreOptions<S, RS> & {
+  preloadedState?: PreloadedState<S>
+}
 
 export type ActionObject = {
   type: string

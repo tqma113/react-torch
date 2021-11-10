@@ -2,8 +2,7 @@ import path from 'path'
 import { IgnorePlugin } from 'webpack'
 import {
   WebpackManifestPlugin,
-  Options,
-  FileDescriptor,
+  ManifestPluginOptions,
 } from 'webpack-manifest-plugin'
 import { ESBuildMinifyPlugin } from 'esbuild-loader'
 
@@ -13,9 +12,9 @@ import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
 
 export default function getConfig(config: IntegralTorchConfig): Configuration {
-  const manifestPluginOption: Options = {
+  const manifestPluginOption: ManifestPluginOptions = {
     fileName: './assets.json',
-    map(file: FileDescriptor): FileDescriptor {
+    map(file) {
       // 删除 .js 后缀，方便直接使用 obj.name 来访问
       if (file.name && /\.js$/.test(file.name)) {
         file.name = file.name.slice(0, -3)

@@ -91,7 +91,14 @@ export default function createRender(config: IntegralTorchConfig) {
             const Comp = connectContext(connectModels(component))(globalContext)
             return [React.createElement(Comp), store.getState()] as const
           } catch (err) {
-            return [createErrorElement(err.stack || err.message), {}] as const
+            return [
+              createErrorElement(
+                err instanceof Error
+                  ? err.stack || err.message
+                  : JSON.stringify(err)
+              ),
+              {},
+            ] as const
           }
         }
 
@@ -126,7 +133,9 @@ export default function createRender(config: IntegralTorchConfig) {
       return render(module, params)
     } catch (err) {
       console.log(err)
-      return createErrorElement(err.stack)
+      return createErrorElement(
+        err instanceof Error ? err.stack || err.message : JSON.stringify(err)
+      )
     }
   }
 }

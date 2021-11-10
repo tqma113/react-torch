@@ -15,6 +15,9 @@ import type { Listener, Location } from 'torch-history'
 import type { TorchData, Context } from '../../index'
 import type { GlobalContextType, PageModule } from '../../client'
 
+const REACT_VERSION = ReactDOM.version
+const hasPipeStream = REACT_VERSION.startsWith('18')
+
 const dataScript = document.getElementById(
   '__TORCH_DATA__'
 ) as HTMLScriptElement | null
@@ -34,6 +37,25 @@ const { context, container, state }: TorchData = JSON.parse(jsonStr)
 const containerElement = document.querySelector(`#${container}`)
 if (containerElement === null) {
   throw new Error(`The container: ${container} is not exist`)
+}
+
+// @ts-ignore
+const root = hasPipeStream ? ReactDOM.createRoot(container) : null
+const renderDOM = (element: React.ReactElement) => {
+  if (hasPipeStream) {
+    root.render(element)
+  } else {
+    ReactDOM.render(element, containerElement)
+  }
+}
+
+const hydrate = (element: React.ReactElement) => {
+  if (hasPipeStream) {
+    // @ts-ignore
+    ReactDOM.hydrateRoot(containerElement, element)
+  } else {
+    ReactDOM.hydrate(element, containerElement)
+  }
 }
 
 const history = createBrowserHistory({ window })
@@ -58,7 +80,8 @@ const cannotMatchPage = (
   const element = React.createElement(
     connectContext(connectModels(() => createErrorElement(msg)))(globalContext)
   )
-  ReactDOM.render(element, containerElement)
+
+  renderDOM(element)
 }
 
 const destory = async (location: Location) => {
@@ -107,16 +130,16 @@ const render = async (
       connectContext(connectModels(component))(globalContext)
     )
     if (context.ssr) {
-      ReactDOM.hydrate(element, containerElement)
+      hydrate(element)
     } else {
-      ReactDOM.render(element, containerElement)
+      renderDOM(element)
     }
 
     hook.unsubscribe = store.subscribe(() => {
       const element = React.createElement(
         connectContext(connectModels(component))(globalContext)
       )
-      ReactDOM.render(element, containerElement)
+      renderDOM(element)
     })
   }
 }

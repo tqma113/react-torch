@@ -63,6 +63,7 @@ if (!process.argv.slice(2).length) {
 }
 
 function suggestCommands(unknownCommand: string) {
+  // @ts-ignore
   const availableCommands = program.commands.map((cmd) => cmd._name)
 
   let suggestion: string | undefined = undefined

@@ -3,8 +3,7 @@ import path from 'path'
 import { IgnorePlugin, HotModuleReplacementPlugin } from 'webpack'
 import {
   WebpackManifestPlugin,
-  Options,
-  FileDescriptor,
+  ManifestPluginOptions,
 } from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
@@ -19,9 +18,9 @@ function getConfig(config: IntegralTorchConfig): Configuration {
   const appTsConfigPath = path.resolve(config.dir, 'tsconfig.json')
   const useTypeScript = fs.existsSync(appTsConfigPath)
 
-  const manifestPluginOption: Options = {
+  const manifestPluginOption: ManifestPluginOptions = {
     fileName: './assets.json',
-    map(file: FileDescriptor): FileDescriptor {
+    map(file) {
       // 删除 .js 后缀，方便直接使用 obj.name 来访问
       if (file.name) {
         if (/\.js$/.test(file.name)) {

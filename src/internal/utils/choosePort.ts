@@ -1,5 +1,4 @@
 import chalk from 'chalk'
-import isRoot from 'is-root'
 import inquirer from 'inquirer'
 import detect from 'detect-port'
 
@@ -21,7 +20,7 @@ export function choosePort(
           return resolve(port)
         }
         const message =
-          process.platform !== 'win32' && defaultPort < 1024 && !isRoot()
+          process.platform !== 'win32' && defaultPort < 1024 && !(process.getuid && process.getuid() === 0)
             ? `Admin permissions are required to run a server on a port below 1024.`
             : `Something is already running on port ${defaultPort}.`
         if (isInteractive) {

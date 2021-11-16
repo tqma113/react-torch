@@ -101,7 +101,6 @@
     "fs-extra": "^10.0.0",
     "helmet": "^4.6.0",
     "inquirer": "^8.2.0",
-    "is-root": "^3.0.0",
     "leven": "^3.1.0",
     "morgan": "^1.10.0",
     "null-loader": "^4.0.1",

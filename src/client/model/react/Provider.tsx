@@ -15,7 +15,7 @@ const useIsomorphicLayoutEffect =
     ? useLayoutEffect
     : useEffect
 
-import type { ReactModel } from './createReactModel'
+import type { ReactModel } from './create-react-model'
 
 export type ReactModels = {
   [key: string]: ReactModel

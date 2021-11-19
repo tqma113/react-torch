@@ -11,7 +11,7 @@ import {
   InitializerState,
   Model,
 } from '../core'
-import type { ReactModel, ReactModelInitilizer } from './createReactModel'
+import type { ReactModel, ReactModelInitilizer } from './create-react-model'
 
 const useIsomorphicLayoutEffect =
   // tslint:disable-next-line: strict-type-predicates

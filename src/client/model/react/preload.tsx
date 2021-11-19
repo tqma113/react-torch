@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Model } from '../core'
-import type { ReactModelState, ReactModel } from './createReactModel'
+import type { ReactModelState, ReactModel } from './create-react-model'
 
 export type ReactModelArg = {
   Model: ReactModel

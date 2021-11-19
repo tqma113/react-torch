@@ -1,5 +1,5 @@
-import React from 'react'
 import { createNoopStore, StoreLike, StoreFactory } from '../store'
+import type React from 'react'
 import type { Params } from 'torch-router'
 import type { History, Location } from 'torch-history'
 import type { Context } from '../../index'

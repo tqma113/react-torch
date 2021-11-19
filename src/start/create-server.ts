@@ -15,7 +15,7 @@ import {
   injectAssetsMiddleware,
 } from '../internal/middleware'
 import {
-  TORCH_DIR,
+  OUTPUT_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_PATH,
   TORCH_ASSETS_FILE_NAME,
@@ -43,7 +43,7 @@ export function createServer(draftConfig: TorchConfig) {
     const assetsMiddleware: RequestHandler = (req, res, next) => {
       const assertPath = path.resolve(
         config.dir,
-        TORCH_DIR,
+        OUTPUT_DIR,
         TORCH_CLIENT_DIR,
         TORCH_PUBLIC_PATH,
         TORCH_ASSETS_FILE_NAME

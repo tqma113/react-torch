@@ -2,7 +2,7 @@ import path from 'path'
 import { ESBuildMinifyPlugin } from 'esbuild-loader'
 
 import { getExternals } from '../../internal/utils'
-import { TORCH_DIR, TORCH_SERVER_DIR } from '../../index'
+import { OUTPUT_DIR, TORCH_SERVER_DIR } from '../../index'
 
 import type { Configuration } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
@@ -23,7 +23,7 @@ export default function getConfig(config: IntegralTorchConfig): Configuration {
     context: config.src,
     entry,
     output: {
-      path: path.join(config.dir, TORCH_DIR, TORCH_SERVER_DIR),
+      path: path.join(config.dir, OUTPUT_DIR, TORCH_SERVER_DIR),
       filename: '[name].js',
       libraryTarget: 'commonjs2',
     },

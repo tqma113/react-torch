@@ -5,10 +5,10 @@ import { createAsyncPipeline, createContainer } from 'farrow-pipeline'
 import { pureTorch } from '../start'
 import { mergeConfig } from '../internal/config'
 import {
-  TORCH_DIR,
   TORCH_CLIENT_DIR,
   TORCH_PUBLIC_PATH,
   TORCH_ASSETS_FILE_NAME,
+  OUTPUT_DIR,
 } from '../index'
 import type { RequestInfo, MaybeAsyncResponse } from 'farrow-http'
 import type { Middleware, MiddlewareInput, MaybeAsync } from 'farrow-pipeline'
@@ -46,25 +46,31 @@ export const startServer = (
       })
       const assertPath = path.resolve(
         config.dir,
-        TORCH_DIR,
+        OUTPUT_DIR,
         TORCH_CLIENT_DIR,
         TORCH_PUBLIC_PATH,
         TORCH_ASSETS_FILE_NAME
       )
-      const assets = getAssets(require(assertPath)) as Assets
-      const html = await pipeline.run(
-        {
-          url,
-          assets,
-          scripts: [],
-          styles: [],
-          others: {},
-        },
-        {
-          container,
-        }
-      )
-      return ReactView.render(html)
+
+      try {
+        const assets = getAssets(require(assertPath)) as Assets
+        const html = await pipeline.run(
+          {
+            url,
+            assets,
+            scripts: [],
+            styles: [],
+            others: {},
+          },
+          {
+            container,
+          }
+        )
+
+        return ReactView.render(html)
+      } catch (err) {
+        throw new Error(`Can't find assets info file.`)
+      }
     })
 
     http.listen(torch.config.port, () => {

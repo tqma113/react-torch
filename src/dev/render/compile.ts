@@ -5,6 +5,7 @@ import getWebpackConfig from './webpack-config'
 import { error, warn } from '../../internal/utils'
 
 import {
+  NODE_MODULES,
   TORCH_DIR,
   TORCH_SERVER_DIR,
   TORCH_ROUTES_FILE_NAME,
@@ -26,7 +27,7 @@ export default function compile(
   const compiler = webpack(webpackConfig)
 
   return new Promise<void>((resolve, reject) => {
-    const serverPath = path.join(config.dir, TORCH_DIR, TORCH_SERVER_DIR)
+    const serverPath = path.join(config.dir, NODE_MODULES, TORCH_DIR, TORCH_SERVER_DIR)
     compiler.watch({}, (err, stats) => {
       if (err) reject(err)
 

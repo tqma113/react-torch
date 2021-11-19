@@ -8,7 +8,12 @@ import {
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 import SetManifestPlugin from './set-manifest-plugin'
-import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
+import {
+  NODE_MODULES,
+  TORCH_DIR,
+  TORCH_CLIENT_DIR,
+  TORCH_PUBLIC_PATH,
+} from '../../index'
 
 import type { Configuration, WebpackPluginInstance } from 'webpack'
 import type { IntegralTorchConfig } from '../../index'
@@ -61,6 +66,7 @@ function getConfig(config: IntegralTorchConfig): Configuration {
     output: {
       path: path.join(
         config.dir,
+        NODE_MODULES,
         TORCH_DIR,
         TORCH_CLIENT_DIR,
         TORCH_PUBLIC_PATH

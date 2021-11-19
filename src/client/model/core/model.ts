@@ -1,6 +1,6 @@
 import { createStore } from './store'
 import { createLifeCircleManager } from './lifecircle'
-import { run } from './storeHook'
+import { run } from './store-hook'
 import { isPlainObject, shallowEqual } from './util'
 import type { Reducers, CreateStoreOptions } from './store'
 import type { Store, PreloadedState } from 'redux'

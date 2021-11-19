@@ -175,7 +175,6 @@ function publishStats(
 
 function extractBundles(stats: StatsCompilation): StatsCompilation[] {
   // Stats has modules, single bundle
-  // @ts-ignore
   if (stats.modules) return [stats]
 
   // Stats has children, multiple bundles

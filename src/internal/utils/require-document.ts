@@ -1,6 +1,6 @@
 import path from 'path'
 
-import { hasModuleFile } from './'
+import { hasModuleFile } from '.'
 import {
   TORCH_DIR,
   TORCH_SERVER_DIR,

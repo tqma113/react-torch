@@ -7,7 +7,7 @@ import {
 } from 'webpack-manifest-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
-import SetManifestPlugin from './SetManifestPlugin'
+import SetManifestPlugin from './set-manifest-plugin'
 import { TORCH_DIR, TORCH_CLIENT_DIR, TORCH_PUBLIC_PATH } from '../../index'
 
 import type { Configuration, WebpackPluginInstance } from 'webpack'

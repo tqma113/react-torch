@@ -4,8 +4,8 @@ import path from 'path'
 import fs from 'fs-extra'
 
 import compile from './compile'
-import copyPublic from './copyPublic'
-import renderCompile from './renderCompile'
+import copyPublic from './copy-public'
+import renderCompile from './render-compile'
 import { mergeConfig } from '../internal/config'
 import { step, info, error } from '../internal/utils'
 

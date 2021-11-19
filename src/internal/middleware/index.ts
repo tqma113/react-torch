@@ -1,2 +1,2 @@
-export { injectMiddleware } from './injectMiddleware'
-export { injectAssetsMiddleware } from './injectAssetsMiddleware'
+export { injectMiddleware } from './inject-middleware'
+export { injectAssetsMiddleware } from './inject-assets-middleware'

@@ -14,7 +14,7 @@ export type GlobalContextType = {
 }
 
 function createContext() {
-  return React.createContext<GlobalContextType>({} as any)
+  return React.createContext<GlobalContextType | null>(null)
 }
 
 export const GlobalContext = createContext()

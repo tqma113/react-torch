@@ -5,8 +5,8 @@ import start from '../dev'
 import {
   webpackDevMiddleware,
   useDevContext,
-} from './middleware/webpackDevMiddleware'
-import { webpackHotMiddleware } from './middleware/webpackHotMiddleware'
+} from './middleware/webpack-dev-middleware'
+import { webpackHotMiddleware } from './middleware/webpack-hot-middleware'
 import type { RequestInfo, MaybeAsyncResponse } from 'farrow-http'
 import type { Middleware, MiddlewareInput, MaybeAsync } from 'farrow-pipeline'
 import type { TorchConfig, RenderContext } from '../index'
@@ -45,10 +45,15 @@ export const startServer = (
       pipeline.use(async (input) => {
         return await torch.render(input)
       })
+
+      if (!webpackCTX.assets) {
+        throw new Error(`Can't find webpack compile assets info.`)
+      }
+
       const html = await pipeline.run(
         {
           url,
-          assets: webpackCTX.assets as any,
+          assets: webpackCTX.assets,
           scripts: [],
           styles: [],
           others: {},

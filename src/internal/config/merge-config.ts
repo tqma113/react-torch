@@ -39,7 +39,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
       ? DEVELOPMENT_PORT
       : PRODUCTION_PORT)
 
-  const srcDir = config.src
+  const src = config.src
     ? path.resolve(dir, config.src)
     : path.resolve(dir, TORCH_SRC_DIR)
 
@@ -85,7 +85,7 @@ export default function merge(config: TorchConfig): IntegralTorchConfig {
     dir,
     host,
     port,
-    src: srcDir,
+    src,
     public: publicDir,
     cdn,
     middleware,

@@ -1,4 +1,4 @@
-import { createServer } from '../start/createServer'
+import { createServer } from '../start/create-server'
 import { requireConfig } from '../internal/config'
 import { Env, ScriptOptions } from '../index'
 

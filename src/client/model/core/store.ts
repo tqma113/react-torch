@@ -6,7 +6,7 @@ import {
   applyMiddleware,
 } from 'redux'
 import { createLogger } from 'redux-logger'
-import { hooks } from './storeHook'
+import { hooks } from './store-hook'
 import { forcePlainDataCheck } from './util'
 
 export type { Store, PreloadedState }

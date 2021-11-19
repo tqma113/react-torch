@@ -1,7 +1,7 @@
 import path from 'path'
 import webpack from 'webpack'
 
-import getWebpackConfig from './webpackConfig'
+import getWebpackConfig from './webpack-config'
 import { error, warn } from '../../internal/utils'
 
 import {

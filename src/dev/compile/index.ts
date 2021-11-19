@@ -2,8 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
 
-import getWebpackConfig from './webpackConfig'
-import createCompiler from './createCompiler'
+import getWebpackConfig from './webpack-config'
+import createCompiler from './create-compiler'
 import { Side } from '../../index'
 
 import type { Urls } from '../../internal/utils'
